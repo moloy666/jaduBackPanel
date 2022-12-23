@@ -293,6 +293,28 @@ class Sarathi_model extends CI_Model
         return (!empty($query)) ? $query : null;
     }
 
+    public function get_sub_franchise_ids($franchise_id)
+    {
+        $array=[];
+
+        $query = $this->db->select(field_uid)->where(field_franchise_id, $franchise_id)->get(table_subfranchise);
+        $query = $query->result_array();
+        foreach($query as $i=>$val){
+            $subfranchise_id=$val[field_uid];           
+
+            $query=$this->get_sarathi_ids($subfranchise_id);
+            foreach($query as $i=>$val){
+                $array[]=$val[field_user_id];
+
+                foreach($array as $i=>$val){
+                    $user_id=$array[$i];
+                    $data[$i] = $this->get_sarathi_details_by_user_id($user_id);
+                }
+            }
+        }
+        return $data;
+    }
+
     public function get_sarathi_ids($subfranchise_id){
         $query=$this->db->select(field_user_id)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
         $query=$query->result_array();
@@ -311,4 +333,20 @@ class Sarathi_model extends CI_Model
         }
         return(!empty($query))?$query:[];
     }
+
+    // public function get_sarathi_details_by_user_id($user_id){
+    //     $query=$this->db->select('u.uid as user_id, u.name, u.email, u.mobile, u.status, s.sub_franchise_id')
+    //          ->from('users as u')->join('sarathi as s', 'u.uid=s.user_id')
+    //          ->where('u.uid', $user_id)
+    //          ->where_not_in('u.status', const_deleted)->get();
+    //     $query=$query->row();
+    //     // foreach($query as $i=>$val){
+    //         // $sf_id=$val['sub_franchise_id'];
+    //         $sf_id=$query->sub_franchise_id;
+    //         $query->subfranchise=$this->get_subfranchise_name_by_id($sf_id);
+    //     // }
+    //     return(!empty($query))?$query:[];
+    // }
+
+    
 }

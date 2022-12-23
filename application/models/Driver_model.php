@@ -251,7 +251,7 @@ class Driver_model extends CI_Model
 
     public function get_driver_ids_by_sarathi_id($sarathi_id)
     {
-        $query = $this->db->select(field_user_id)->where(field_sarathi_id, $sarathi_id)->get(table_driver);
+        $query = $this->db->select(field_user_id)->where(field_sarathi_id, $sarathi_id)->order_by(field_id, 'asc')->get(table_driver);
         $query = $query->result_array();
         return (!empty($query)) ? $query : [];
     }
@@ -268,6 +268,6 @@ class Driver_model extends CI_Model
             $sarathi_id = $val['sarathi_id'];
             $query[$i]['sarathi'] = $this->get_sarathi_name_by_sarathi_id($sarathi_id);
         }
-        return (!empty($query)) ? $query : [];
+        return (!empty($query)) ? $query : null;
     }
 }

@@ -1,9 +1,8 @@
 <script>
-    var table=$('#specific_table').val();
-    if(table == 'franchise'){
+    var table = $('#specific_table').val();
+    if (table == 'franchise') {
         fetch_subfranchise();
-    }
-    else{
+    } else {
         var specific_id = $('#specific_id').val();
         get_sarathi_ids(specific_id);
     }
@@ -41,28 +40,24 @@
         });
     }
 
-    function get_sarathi_ids(specific_id){
-
-        console.log(specific_id);
-
+    function get_sarathi_ids(specific_id) {
         $.ajax({
-            type:"POST",
-            url:"<?=base_url('Admin/get_sarathi_ids')?>",
-            data:{
-                "id":specific_id
+            type: "POST",
+            url: "<?= base_url('Admin/get_sarathi_ids') ?>",
+            data: {
+                "id": specific_id
             },
-            error:function(response){
+            error: function(response) {
                 console.log(response);
             },
-            success:function(response){
+            success: function(response) {
                 let data = response.data;
-                $.each(data, function(i, data){
+                $.each(data, function(i, data) {
                     get_sarathi_details(data.user_id);
                 });
             }
         });
     }
-
 
 
     function display_panel_access_list() {
@@ -172,7 +167,7 @@
         });
     }
 
-    var count=1;
+    var count = 1;
 
     function get_sarathi_details(user_id) {
 
@@ -233,7 +228,7 @@
                         </td></tr>`;
 
                         count++;
-                        
+
                         get_panel_access_list();
 
                     });
@@ -374,7 +369,14 @@
                         $('#update_form')[0].reset();
                         $('#close_edit_modal').click();
 
-                        get_sarathi_details();
+                        $('#table_details').html('');
+                        count=1;
+                        if (table == 'franchise') {
+                            fetch_subfranchise();
+                        } else {
+                            var specific_id = $('#specific_id').val();
+                            get_sarathi_ids(specific_id);
+                        }
                     } else {
                         toast(data.message, "center");
                     }
@@ -447,7 +449,7 @@
                         toast(data.message, "center");
                         $('#close_add_modal').click();
                         get_sarathi_details();
-                        
+
                         $('#add_name').val('');
                         $('#add_email').val('');
                         $('#add_mobile').val('');

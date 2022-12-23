@@ -222,12 +222,7 @@ class Franchise extends CI_Controller
 			$specific_id = $data['specific_id']; 
 			$this->init_sarathi_model();
 			if($table==table_franchise){
-				$subfranchise_ids=$this->Sarathi_model->get_sub_franchise($specific_id);
-
-				foreach($subfranchise_ids as $i=>$subfranchise){
-					$subfranchise_id=$subfranchise[field_uid];
-					$data['sarathi_data'][$i]=$this->Sarathi_model->get_sarathi_by_subfranchise_id($subfranchise_id);
-				}
+				$data['sarathi_data']=$this->Sarathi_model->get_sub_franchise_ids($specific_id);
 			}
 			else{
 				$data['sarathi_data'][0]=$this->Sarathi_model->get_sarathi_by_subfranchise_id($specific_id);
@@ -312,6 +307,8 @@ class Franchise extends CI_Controller
 			$status = $this->Franchise_model->get_access_permission($user_id, access_driver_data);
 			if ($status == const_active) {
 				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+				$specific_id = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+
 				$this->load_header();
 				$this->load_sidebar();
 				$this->load->view(view_franchise_driver, $data);
@@ -888,8 +885,6 @@ class Franchise extends CI_Controller
 	}
 
 
-
-
 	public function get_subfranchise_id()
 	{
 		$franchise_id = $this->input->post('id');
@@ -984,6 +979,7 @@ class Franchise extends CI_Controller
 
 		$specific_id = $this->input->post('specific_id');
 		$table = $this->input->post('table');
+
 		if (!empty($specific_id)) {
 			$this->init_login_model();
 			$status = $this->Login_model->get_user_status_by_specific_id($specific_id, $table);
