@@ -1,0 +1,58 @@
+JADURIDE database changes
+tables(moloy)
+
+Admin | Administrator | Franchise | Sub-franchise table 
+            1. user_id
+            2. password
+            3. created_at
+            4. modified_at
+
+Customer table fields 
+            1. uid
+            2. user_id
+            3. created_at
+            4. modified_at
+
+Driver table fields 
+            1. uid
+            2. user_id
+            3. sarathi_id
+            4. vehicle_type_id
+            5. vehicle_number
+            6. created_at
+            7. modified_at
+
+Vehicle_type table fields
+            1. uid
+            2. name
+            3. status
+            4. modified_at
+
+Help table fields
+            1. uid
+            2. user_id
+            3. name
+            4. email
+            5. subject
+            6. message
+            7. created_at
+
+Other tables
+
+Vehicle_audit
+Recharge_details 
+           
+////////////////////////////////////////////////////////////////////////
+
+New Tables (Satam)
+
+Driver_working_status 
+Rides
+Place_destination
+Rate_per_km
+Excess_percentage
+Recharge_history
+Transactions
+
+driver & customer tables have some extra fields (Not needed)
+sarathi table have an extra sub-franchise_id field
