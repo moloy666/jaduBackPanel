@@ -14,13 +14,12 @@ class Driver_model extends CI_Model
     {
         if (!empty($sarathi_id)) {
             $this->db->where('d.sarathi_id', $sarathi_id);
-        } 
+        }
 
         $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
             ->where_not_in('u.status', const_deleted)
             ->where_not_in('u.status', const_pending)->get();
         return $this->db->affected_rows();
-        
     }
 
     public function get_total_active_drivers($sarathi_id)
@@ -30,11 +29,10 @@ class Driver_model extends CI_Model
         }
 
         $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
-        ->where('d.'.field_working_status, const_active)
-        ->where_not_in('u.status', const_deleted)
-        ->where_not_in('u.status', const_pending)->get();
+            ->where('d.' . field_working_status, const_active)
+            ->where_not_in('u.status', const_deleted)
+            ->where_not_in('u.status', const_pending)->get();
         return $this->db->affected_rows();
-
     }
 
     public function get_total_inactive_drivers($sarathi_id)
@@ -43,9 +41,9 @@ class Driver_model extends CI_Model
             $this->db->where('d.sarathi_id', $sarathi_id);
         }
         $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
-        ->where('d.'.field_working_status, const_deactive)
-        ->where_not_in('u.status', const_deleted)
-        ->where_not_in('u.status', const_pending)->get();
+            ->where('d.' . field_working_status, const_deactive)
+            ->where_not_in('u.status', const_deleted)
+            ->where_not_in('u.status', const_pending)->get();
         return $this->db->affected_rows();
     }
 
@@ -248,6 +246,28 @@ class Driver_model extends CI_Model
             ->where('d.user_id', $user_id)
             ->get();
         $query = $query->result_array();
+        return (!empty($query)) ? $query : [];
+    }
+
+    public function get_driver_ids_by_sarathi_id($sarathi_id)
+    {
+        $query = $this->db->select(field_user_id)->where(field_sarathi_id, $sarathi_id)->get(table_driver);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query : [];
+    }
+
+    public function get_driver_details_by_user_id($user_id)
+    {
+        $query = $this->db->select('u.uid as user_id, u.name, u.email, u.mobile, u.status, d.sarathi_id')
+            ->from('users as u')->join('driver as d', 'u.uid=d.user_id')
+            ->where('u.uid', $user_id)
+            ->where_not_in('u.status', const_deleted)
+            ->where_not_in('u.status', const_pending)->get();
+        $query = $query->result_array();
+        foreach ($query as $i => $val) {
+            $sarathi_id = $val['sarathi_id'];
+            $query[$i]['sarathi'] = $this->get_sarathi_name_by_sarathi_id($sarathi_id);
+        }
         return (!empty($query)) ? $query : [];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
 class Admin extends CI_Controller
 {
 	private function load_header($header_data = [], $header_link_data = [])
@@ -4159,6 +4160,30 @@ class Admin extends CI_Controller
 		$user_id = $this->input->post(param_id);
 		$this->init_sarathi_model();
 		$data=$this->Sarathi_model->get_sarathi_details_by_user_id($user_id);
+		if(!empty($data)){
+			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+	}
+
+	public function get_driver_ids_by_sarathi_id(){
+		$sarathi_id=$this->input->post(param_id);
+		$this->init_driver_model();
+		$data=$this->Driver_model->get_driver_ids_by_sarathi_id($sarathi_id);
+		if(!empty($data)){
+			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+	}
+
+	public function get_driver_details_by_user_id(){
+		$user_id=$this->input->post(param_id);
+		$this->init_driver_model();
+		$data=$this->Driver_model->get_driver_details_by_user_id($user_id);
 		if(!empty($data)){
 			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
 		}

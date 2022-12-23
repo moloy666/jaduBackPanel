@@ -1,13 +1,16 @@
 <script>
-   
-
-    // $('#table').dataTable();
+    var table=$('#specific_table').val();
+    if(table == 'franchise'){
+        fetch_subfranchise();
+    }
+    else{
+        var specific_id = $('#specific_id').val();
+        get_sarathi_ids(specific_id);
+    }
 
     get_panel_access_list();
     get_permission_list();
     display_panel_access_list();
-    
-    fetch_subfranchise();
 
     function fetch_subfranchise() {
         let franchise_id = $('#specific_id').val();
@@ -29,12 +32,7 @@
                 str = `<option value=" "> Select Sub Franchise</option>`;
                 $.each(subfranchise, function(i) {
                     str += `<option value="${subfranchise[i].uid}" class="title">${subfranchise[i].name}</option>`;
-
-                    // get_sarathi_details(subfranchise[i].uid);
-
                     get_sarathi_ids(subfranchise[i].uid);
-                    
-
 
                 });
                 $('#select_subfranchise').html(str);
@@ -43,23 +41,22 @@
         });
     }
 
+    function get_sarathi_ids(specific_id){
 
-    function get_sarathi_ids(subfranchise_id){
+        console.log(specific_id);
+
         $.ajax({
             type:"POST",
             url:"<?=base_url('Admin/get_sarathi_ids')?>",
             data:{
-                "id":subfranchise_id
+                "id":specific_id
             },
             error:function(response){
                 console.log(response);
             },
             success:function(response){
-                // console.log(response);
                 let data = response.data;
                 $.each(data, function(i, data){
-                    console.log(data.user_id);
-
                     get_sarathi_details(data.user_id);
                 });
             }
@@ -175,7 +172,7 @@
         });
     }
 
-    var count = 1;
+    var count=1;
 
     function get_sarathi_details(user_id) {
 
@@ -186,7 +183,7 @@
                 "id": user_id
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
 
                 if (response.success) {
                     let data = response.data;
@@ -218,7 +215,7 @@
                         </button>
 
 
-                        <button class="hdrbtn mx-2 edit_user access_update" data-toggle="modal" id=" editbtn"  data-target="#edtView1"  onclick="" data-toggle="tooltip" data-placement="top" title="Edit" disabled>
+                        <button class="hdrbtn mx-2 edit_user access_update" data-toggle="modal" id=" editbtn"  data-target="#edtView1"  onclick="edit_sarathi('${data.user_id}', '${data.name}', '${data.email}', '${data.mobile}')" data-toggle="tooltip" data-placement="top" title="Edit" disabled>
 
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M16.4745 5.40801L18.5917 7.52524M17.8358 3.54289L12.1086 9.27005C11.8131 9.56562 11.6116 9.94206 11.5296 10.3519L11 13L13.6481 12.4704C14.0579 12.3884 14.4344 12.1869 14.7299 11.8914L20.4571 6.16423C21.181 5.44037 21.181 4.26676 20.4571 3.5429C19.7332 2.81904 18.5596 2.81903 17.8358 3.54289Z" stroke="#ef242f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -234,18 +231,14 @@
                         </button> 
                         </div>
                         </td></tr>`;
+
                         count++;
-
-
+                        
                         get_panel_access_list();
 
                     });
-
                     $('#table_details').append(details);
-
-
-                    // $('#table').dataTable();
-
+                    $('#table').dataTable();
 
                 } else {
                     // console.log(response);
@@ -256,6 +249,8 @@
             }
         });
     }
+
+
 
     function get_panel_access_list() {
         $.ajax({
@@ -379,7 +374,7 @@
                         $('#update_form')[0].reset();
                         $('#close_edit_modal').click();
 
-
+                        get_sarathi_details();
                     } else {
                         toast(data.message, "center");
                     }
@@ -391,11 +386,6 @@
             });
         }
     });
-
-
-
-
-
 
 
     // add new user
@@ -456,7 +446,8 @@
                     if (data.success) {
                         toast(data.message, "center");
                         $('#close_add_modal').click();
-                        fetch_subfranchise();
+                        get_sarathi_details();
+                        
                         $('#add_name').val('');
                         $('#add_email').val('');
                         $('#add_mobile').val('');

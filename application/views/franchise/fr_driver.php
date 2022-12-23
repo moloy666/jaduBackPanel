@@ -35,6 +35,7 @@
                             </tr>
                         </thead>
                         <tbody class="text-center" id="table_details">
+                            
                         </tbody>
                     </table>
                 </div>
