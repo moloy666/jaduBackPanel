@@ -50,8 +50,13 @@
                         <div class="col-lg-2">
                             <button type="submit" class="btn btn-primary w-100 access_insert" id="btn_add_ride" data-toggle="modal" data-target="#ride_modal" disabled>Add</button>
                         </div>
+
                         <div class="col-lg-2">
                             <button type="submit" class="btn btn-danger w-100 access_delete" id="btn_delete_ride" data-toggle="modal" data-target="#delete_modal" disabled>Delete</button>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <button type="button" class="btn btn-primary w-100 access_update" id="btn_update_ride" disabled>Edit</button>
                         </div>
                     </div>
                 </div>
@@ -201,13 +206,64 @@
                                 </div>
                             </div>
 
-                            
+
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_add_modal">Close</button>
                     <button type="submit" form="add_ride_form" class="btn btn-success" id="btn_add_ride">Add New Ride</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade custmmodl" id="ride_update_modal" tabindex="-1" role="dialog" aria-labelledby="rideModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Ride Descriptions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form id="add_ride_form"> -->
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <img src="" alt="" id="ride_icon" width="100px">
+                                <!-- <input class="form-control" type="file" name="image_icon"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input class="form-control title" type="hidden" placeholder="Ride Name" name="id" id="ride_id" disabled>
+
+                                <input class="form-control title" type="text" placeholder="Ride Name" name="name" id="ride_name" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea class="form-control" type="text" placeholder="Short Descripion" name="short_desc" id="short_desc"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea class="form-control" type="text" rows="5" placeholder="Long Description" name="long_desc" id="long_desc"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- </form> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_add_modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btn_save_ride_data">Update</button>
                 </div>
             </div>
         </div>

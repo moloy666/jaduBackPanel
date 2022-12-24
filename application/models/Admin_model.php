@@ -1626,4 +1626,21 @@ class Admin_model extends CI_Model
         return($this->db->affected_rows()==1)?true:false;
     }
 
+    public function get_ride_type_details($ride_id){
+        $query=$this->db->get_where(table_ride_service_type, [field_uid=>$ride_id]);
+        $query=$query->result_array();
+        return (!empty($query))?$query[0]:null;
+    }
+
+    public function update_ride_details($ride_id, $short_desc, $long_desc, $specific_id){
+        $data=[
+            "short_description"=>$short_desc,
+            "long_description"=>$long_desc,
+            field_modified_at=>date(field_date),
+            field_modified_by=>$specific_id,
+        ];
+        $this->db->where(field_uid, $ride_id)->update(table_ride_service_type, $data);
+        return($this->db->affected_rows()==1)?true:false;
+    }
+
 }

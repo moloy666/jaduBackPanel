@@ -5,6 +5,7 @@
 </style>
 <script>
     display_service_type();
+    get_panel_access_list();
     // display service names
     function display_service_type() {
         $.ajax({
@@ -17,7 +18,7 @@
                 // console.log(response);
                 if (response.success) {
                     var data = response.data;
-                    var details = '<option value="">Select Services</option>';
+                    var details = '<option value="">Select Service</option>';
                     $.each(data, function(i, data) {
                         details += `<option class="title" value="${data.uid}">${data.name}</option>`;
                     });
@@ -165,9 +166,9 @@
 
         $.ajax({
             type: "POST",
-            url: "<?=apiBaseUrl?>service/addRide",
+            url: "<?= apiBaseUrl ?>service/addRide",
             headers: {
-                'x-api-key': '<?=const_x_api_key?>',
+                'x-api-key': '<?= const_x_api_key ?>',
                 'platform': 'web',
                 'deviceid': ''
             },
@@ -271,7 +272,7 @@
                     if ($('#table_name').val() == 'cabs_under_service_type') {
                         display_cab_names();
                         toast(response.message, "center");
-                        
+
                     }
 
                     $('#delete_modal').modal('hide');
@@ -293,5 +294,81 @@
             var data = response.data;
             $('#specific_id').val(data);
         }
+    });
+
+    function get_panel_access_list() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('administrator/get_panel_access_list') ?>",
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                let permission = response.data.permission;
+                let data = permission.split(",");
+                $.each(data, function(i) {
+
+                    $('.' + data[i]).removeAttr('disabled', 'disabled');
+                    // console.log(data[i]);
+                });
+            }
+        });
+    }
+
+    $('#btn_update_ride').click(function() {
+        let ride_id = $('#ride_type').val();
+        if (ride_id != '') {
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url('administrator/get_ride_type_details') ?>",
+                data: {
+                    "id": ride_id
+                },
+                error: function(response) {
+                    console.log(response);
+                },
+                success: function(response) {
+                    let data = response.data;
+
+                    $('#ride_id').val(data.uid);
+                    $('#ride_name').val(data.name);
+                    $('#short_desc').val(data.short_description);
+                    $('#long_desc').val(data.long_description);
+                    $('#ride_icon').attr('src', '<?=apiBaseUrl?>'+ data.image);
+
+                    $('#ride_update_modal').modal('show');
+                }
+            });
+        }
+        else{
+            toast("Select Ride Type to Update", 'center');
+        }
+    });
+
+    $('#btn_save_ride_data').click(function(){
+        $.ajax({
+            type:"POST",
+            url:"<?=base_url('administrator/update_ride_details')?>",
+            data:{
+                "id":$('#ride_id').val(),
+                "short":$('#short_desc').val(),
+                "long":$('#long_desc').val(),
+                "specific_id":$('#specific_id').val()
+            },
+            error:function(response){
+                console.log(response);
+            },
+            success:function(response){
+                // console.log(response);
+                if(response.success){
+                    toast(response.message, 'center');
+                    $('#ride_update_modal').modal('hide');
+
+                }
+                else{
+                    toast(response.message, 'center');
+                }
+            }
+        });
     });
 </script>

@@ -590,7 +590,7 @@ class Sarathi extends CI_Controller
                 $this->load_sidebar();
                 $this->load->view('sarathi/services');
                 $this->load_footer();
-                $this->load->view('sarathi/inc/sarathi_custom_js/incentives_js');
+                $this->load->view('sarathi/inc/sarathi_custom_js/services_js');
             } else {
                 redirect(base_url(WEB_PORTAL_SARATHI . '/dashboard'));
             }

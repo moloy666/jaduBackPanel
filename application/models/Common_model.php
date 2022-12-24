@@ -196,40 +196,40 @@ class Common_model extends CI_Model {
     // ==================================== //
 
     public function get_total_customers($franchise_id){
+
+        $customer=0;
         
         $query=$this->db->select(field_uid)->where(field_franchise_id, $franchise_id)->get(table_subfranchise);
         $query=$query->result_array();
         foreach($query as $i=>$val){
             $sf_id=$val[field_uid];
-            $data=$this->get_sarathi_of_sub_franchise($sf_id);
+            $sarathi[]=$this->get_sarathi_of_sub_franchise($sf_id);
+            // foreach($sarathi as $i=>$val){
+            //     $sarathi_id = $sarathi[$i];
+            //     $driver[]=$this->get_total_driver_of_sarathi($sarathi_id);
+            // }
+
         }
-        return $data;
+        return print_r($sarathi);
     }
 
     private function get_sarathi_of_sub_franchise($subfranchise_id){
         $query=$this->db->select(field_uid)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
         $query=$query->result_array();
-        foreach($query as $i=>$val){
-            $sarathi_id=$val[field_uid];
-            $data=$this->get_total_driver_of_sarathi($sarathi_id);
-        }
-        return $data;
+        return $query;
     }
 
-    function get_total_driver_of_sarathi($sarathi_id){
-        $data=0;
+    private function get_total_driver_of_sarathi($sarathi_id){
+        
         $query=$this->db->select(field_uid)->where(field_sarathi_id, $sarathi_id)->get(table_driver);
         $query=$query->result_array();
-        foreach($query as $i=>$val){
-            $driver_id=$val[field_uid];
-            $data = $data + $this->get_total_customer_of_driver($driver_id);
-        }
-        return $data;
+        return $query;
     }
 
     private function get_total_customer_of_driver($driver_id){
-        $this->db->distinct(field_customer_id)->select(field_customer_id)->where(field_driver_id, $driver_id);
-        return $this->db->affected_rows();
+        $query = $this->db->distinct(field_customer_id)->select(field_customer_id)->where(field_driver_id, $driver_id);
+        $query=$query->result_array();
+        return $query;
     }
 
 

@@ -409,6 +409,9 @@ $route['administrator/get_hotel_details'] = 'Admin/get_hotel_details';
 $route['administrator/active_hotel'] = 'Admin/active_hotel';
 $route['administrator/deactive_hotel'] = 'Admin/deactive_hotel';
 
+$route['administrator/get_ride_type_details'] = 'Admin/get_ride_type_details';
+$route['administrator/update_ride_details'] = 'Admin/update_ride_details';
+
 
 
 

@@ -17,10 +17,11 @@
                 // console.log(response);
                 if (response.success) {
                     toast(response.message, 'right');
+                    $('#message').text('Use Mobile Number As Default Password');
 
                     setTimeout(function() {
                         window.location = response.redirect;
-                    }, 1000);
+                    }, 2000);
 
                 } else {
                     toast(response.message, 'right');

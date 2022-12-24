@@ -42,7 +42,10 @@ class Hotel extends CI_Controller
 
     private function is_user_logged_in()
     {
-        $logged_in = (!empty($this->session->userdata(session_hotel_name))) ? true : false;
+        $this->init_hotel_model();
+        $hotel_id = $this->session->userdata(session_hotel_id);
+        $status = $this->Hotel_model->check_user_status($hotel_id);
+        $logged_in = (!empty($this->session->userdata(session_hotel_name)) && $status==const_active) ? true : false;
         return $logged_in;
     }
 

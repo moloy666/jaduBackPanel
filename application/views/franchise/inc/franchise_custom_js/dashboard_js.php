@@ -16,7 +16,7 @@
                 "id": $('#specific_id').val()
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
 
                 let data = JSON.parse(response);
 
@@ -67,7 +67,6 @@
         type: "GET",
         success: function(response) {
             let data = JSON.parse(response);
-            console.log('sarathi data');
             let html = '';
             $.each(data, function(i) {
 

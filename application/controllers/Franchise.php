@@ -515,7 +515,7 @@ class Franchise extends CI_Controller
 				$this->load_sidebar();
 				$this->load->view('franchise/fr_services', $data);
 				$this->load_footer();
-				$this->load->view('franchise/inc/franchise_custom_js/incentives_js');
+				$this->load->view('franchise/inc/franchise_custom_js/services_js');
 			} else {
 				$user_type = ($this->uri->segment(1));
 				redirect(base_url($user_type . '/dashboard'));
@@ -858,7 +858,7 @@ class Franchise extends CI_Controller
 					'inactive' => $this->Common_model->get_total_inactive_drivers($specific_id),
 					'total' => $this->Common_model->get_total_drivers($specific_id)
 				],
-				// 'totalCustomers' => $this->Common_model->get_total_customers($specific_id),
+				'totalCustomers' => $this->Common_model->get_total_customers($specific_id),
 				// 'totalCarRunning' =>  $this->Common_model->get_total_car_running(),
 			];
 			echo json_encode($data);

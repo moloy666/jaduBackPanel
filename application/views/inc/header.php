@@ -3,7 +3,7 @@
         <!-- START HEADER-->
         <header class="header">
             <div class="page-brand">
-                <a class="link" href="index.html">
+                <a class="link" href="<?=base_url('administrator/dashboard')?>">
                     <span class="brand">
                         <span class="brand-tip"><img src="<?= base_url() ?>assets/images/logos/logo.png" alt="" width="140"></span>
                     </span>
@@ -36,7 +36,7 @@
                             <li class="dropdown-menu-header">
                                 <div>
                                     <span><strong>9 New</strong> Messages</span>
-                                    <a class="pull-right" href="mailbox.html">view all</a>
+                                    <a class="pull-right" href="">view all</a>
                                 </div>
                             </li>
                             <li class="list-group list-group-divider scroller" data-height="240px" data-color="#71808f">

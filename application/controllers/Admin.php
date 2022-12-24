@@ -386,7 +386,7 @@ class Admin extends CI_Controller
 
 		$file = fopen('php://output', 'w');
 
-		$header = array('#', $companion, "Payment Mode", "Amount", "Date");
+		$header = array('#', $companion, "Payment Mode", "Amount (₹)", "Date");
 		fputcsv($file, $header);
 		foreach ($ride_data as $i => $line) {
 			fputcsv($file, $line);
@@ -4191,4 +4191,33 @@ class Admin extends CI_Controller
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
+
+	public function get_ride_type_details(){
+		$ride_id=$this->input->post(param_id);
+		$this->init_admin_model();
+		$data=$this->Admin_model->get_ride_type_details($ride_id);
+		if(!empty($data)){
+			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+	}
+
+	public function update_ride_details(){
+		$ride_id=$this->input->post(param_id);
+		$short_desc=$this->input->post('short');
+		$long_desc=$this->input->post('long');
+		$specific_id = $this->input->post(param_specific_id);
+		$this->init_admin_model();
+		$update=$this->Admin_model->update_ride_details($ride_id, $short_desc, $long_desc, $specific_id);
+		if($update){
+			$this->response(["success" => true, "message" => "Ride Description Updated Successfully"], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "Something went wrong"], 200);
+		}
+	}
+
+
 }

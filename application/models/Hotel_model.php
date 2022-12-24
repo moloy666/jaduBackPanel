@@ -10,8 +10,15 @@ class Hotel_model extends CI_Model
 
     }
 
+    public function check_user_status($hotel_id){
+        $query=$this->db->select(field_status)->where(field_uid, $hotel_id)->get(table_hotel);
+        $query=$query->result_array();
+        return(!empty($query))?$query[0][field_status]: const_deleted;
+    }
+
     public function check_value_exist($value, $field_name){
-        $query = $this->db->where([$field_name => $value])->get(table_hotel);
+        $this->db->where([$field_name => $value])
+        ->where_not_in(field_status, const_deleted)->get(table_hotel);
         return($this->db->affected_rows()==1)?true:false;
     }
 

@@ -202,8 +202,9 @@ class Franchise_model extends CI_Model
         $query = $query->result_array();
         return (!empty($query)) ? $query : null;
     }
-    public function get_sarathi_ids($subfranchise_id)
-    {
+
+    public function get_sarathi_ids($subfranchise_id){
+        
         $query = $this->db->select(field_uid)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
         $query = $query->result_array();
         return (!empty($query)) ? $query : null;

@@ -314,4 +314,61 @@
             }
         });
     }
+
+    $('#btn_update_ride').click(function() {
+        let ride_id = $('#ride_type').val();
+        if (ride_id != '') {
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url('administrator/get_ride_type_details') ?>",
+                data: {
+                    "id": ride_id
+                },
+                error: function(response) {
+                    console.log(response);
+                },
+                success: function(response) {
+                    let data = response.data;
+
+                    $('#ride_id').val(data.uid);
+                    $('#ride_name').val(data.name);
+                    $('#short_desc').val(data.short_description);
+                    $('#long_desc').val(data.long_description);
+                    $('#ride_icon').attr('src', '<?=apiBaseUrl?>'+ data.image);
+
+                    $('#ride_update_modal').modal('show');
+                }
+            });
+        }
+        else{
+            toast("Select Ride Type to Update", 'center');
+        }
+    });
+
+    $('#btn_save_ride_data').click(function(){
+        $.ajax({
+            type:"POST",
+            url:"<?=base_url('administrator/update_ride_details')?>",
+            data:{
+                "id":$('#ride_id').val(),
+                "short":$('#short_desc').val(),
+                "long":$('#long_desc').val(),
+                "specific_id":$('#specific_id').val()
+            },
+            error:function(response){
+                console.log(response);
+            },
+            success:function(response){
+                // console.log(response);
+                if(response.success){
+                    toast(response.message, 'center');
+                    $('#ride_update_modal').modal('hide');
+
+                }
+                else{
+                    toast(response.message, 'center');
+                }
+            }
+        });
+    });
 </script>

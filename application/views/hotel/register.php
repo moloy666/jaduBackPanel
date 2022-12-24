@@ -56,6 +56,10 @@
             </div>
 
             <div class="form-group text-center">
+                <strong id="message" class="text-primary"></strong>
+            </div>
+
+            <div class="form-group text-center">
                 <span>Already have an account ! <a href="<?= base_url('hotel') ?>">Login</a></span>
             </div>
 
