@@ -1,15 +1,16 @@
 <script>
-    var table = $('#specific_table').val();
-    if (table == 'franchise') {
-        fetch_subfranchise();
-    } else {
-        var specific_id = $('#specific_id').val();
-        get_sarathi_ids(specific_id);
-    }
+    // var table = $('#specific_table').val();
+    // if (table == 'franchise') {
+    //     fetch_subfranchise();
+    // } else {
+    //     var specific_id = $('#specific_id').val();
+    //     get_sarathi_ids(specific_id);
+    // }
 
     get_panel_access_list();
     get_permission_list();
     display_panel_access_list();
+    fetch_subfranchise();
 
     function fetch_subfranchise() {
         let franchise_id = $('#specific_id').val();
@@ -31,14 +32,43 @@
                 str = `<option value=" "> Select Sub Franchise</option>`;
                 $.each(subfranchise, function(i) {
                     str += `<option value="${subfranchise[i].uid}" class="title">${subfranchise[i].name}</option>`;
-                    get_sarathi_ids(subfranchise[i].uid);
-
                 });
                 $('#select_subfranchise').html(str);
+
+                $('#table').dataTable();
 
             },
         });
     }
+
+    function fetch_subfranchise_id() {
+        let franchise_id = $('#specific_id').val();
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('administrator/fetch_subfranchise') ?>",
+            data: {
+                "franchise_id": franchise_id
+            },
+            async: false,
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                // console.log(response);
+
+                var subfranchise = response.data;
+                var str = "";
+                str = `<option value=" "> Select Sub Franchise</option>`;
+                $.each(subfranchise, function(i) {
+                    get_sarathi_ids(subfranchise[i].uid);
+
+                });
+            },
+        });
+    }
+
+
+
 
     function get_sarathi_ids(specific_id) {
         $.ajax({
@@ -190,7 +220,7 @@
                         } else {
                             user_status = '';
                         }
-                        details += `<tr>
+                        details = `<tr>
                         <td>${count}</td>
                         <td class="title"><a href="<?= base_url($this->session->userdata(session_franchise_table) . "/sarathi/driver/") ?>${data.user_id}">${data.name}</a></td>
                         <td>${data.email}</td>
@@ -233,6 +263,7 @@
 
                     });
                     $('#table_details').append(details);
+
                     $('#table').dataTable();
 
                 } else {
@@ -370,9 +401,9 @@
                         $('#close_edit_modal').click();
 
                         $('#table_details').html('');
-                        count=1;
+                        count = 1;
                         if (table == 'franchise') {
-                            fetch_subfranchise();
+                            fetch_subfranchise_id();
                         } else {
                             var specific_id = $('#specific_id').val();
                             get_sarathi_ids(specific_id);
@@ -448,12 +479,20 @@
                     if (data.success) {
                         toast(data.message, "center");
                         $('#close_add_modal').click();
-                        get_sarathi_details();
-
                         $('#add_name').val('');
                         $('#add_email').val('');
                         $('#add_mobile').val('');
                         $('#select_subfranchise').val(' ');
+
+                        $('#table_details').html('');
+                        count = 1;
+                        if (table == 'franchise') {
+                            fetch_subfranchise_id();
+                        } else {
+                            var specific_id = $('#specific_id').val();
+                            get_sarathi_ids(specific_id);
+                        }
+
                     } else {
                         toast(data.message, "center");
                     }
@@ -488,14 +527,22 @@
                 success: function(data) {
                     if (data.success) {
                         toast(data.message, "center");
-                        get_sarathi_details();
+
                         $('#close_delete_modal').click();
+                        $('#table_details').html('');
+                        count = 1;
+                        if (table == 'franchise') {
+                            fetch_subfranchise_id();
+                        } else {
+                            var specific_id = $('#specific_id').val();
+                            get_sarathi_ids(specific_id);
+                        }
                     } else {
                         toast(data.message, "center");
                     }
                 },
                 error: function() {
-                    alert(JSON.stringify(data));
+                    console.log(data);;
                 }
             });
 

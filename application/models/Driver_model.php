@@ -249,6 +249,7 @@ class Driver_model extends CI_Model
         return (!empty($query)) ? $query : [];
     }
 
+
     public function get_driver_ids_by_sarathi_id($sarathi_id)
     {
         $query = $this->db->select(field_user_id)->where(field_sarathi_id, $sarathi_id)->order_by(field_id, 'asc')->get(table_driver);
@@ -269,5 +270,78 @@ class Driver_model extends CI_Model
             $query[$i]['sarathi'] = $this->get_sarathi_name_by_sarathi_id($sarathi_id);
         }
         return (!empty($query)) ? $query : null;
+    }
+
+    public function get_driver_data_of_franchise($franchise_id)
+    {
+
+        $array = [];
+        $driver_ids = [];
+
+        $query = $this->db->select(field_uid)->where(field_franchise_id, $franchise_id)->get(table_subfranchise);
+        $query = $query->result_array();
+
+        foreach ($query as $i => $val) {
+            $subfranchise_id = $val[field_uid];
+            $query = $this->get_sarathi_ids($subfranchise_id);
+
+            foreach ($query as $i => $val) {
+
+                $sarathi_id = $val[field_uid];
+                $array = $this->get_driver_ids_by_sarathi_id($sarathi_id);
+
+                foreach ($array as $i => $val) {
+                    $driver_ids[] = $array[$i];
+
+                    foreach ($driver_ids as $i => $val) {
+                        $user_id = $driver_ids[$i]['user_id'];
+                        $data[$i] = $this->get_driver_details_by_user_id($user_id);
+                    }
+                }
+            }
+        }
+        return $data;
+    }
+
+    public function get_driver_data_of_subfranchise($subfranchise_id)
+    {
+
+        $array = [];
+        $driver_ids = [];
+
+        $query = $this->get_sarathi_ids($subfranchise_id);
+
+        foreach ($query as $i => $val) {
+
+            $sarathi_id = $val[field_uid];
+            $array = $this->get_driver_ids_by_sarathi_id($sarathi_id);
+
+            foreach ($array as $i => $val) {
+                $driver_ids[] = $array[$i];
+
+                foreach ($driver_ids as $i => $val) {
+                    $user_id = $driver_ids[$i]['user_id'];
+                    $data[$i] = $this->get_driver_details_by_user_id($user_id);
+                }
+            }
+        }
+        return $data;
+    }
+
+
+
+
+    public function get_driver_by_sarathi_id($sarathi_id)
+    {
+        $query = $this->db->select('u.uid as user_id, u.name')->from('users as u')->join('driver as d', 'u.uid=d.user_id')->where('d.sarathi_id', $sarathi_id)->get();
+        $query = $query->result_array();
+        return $query;
+    }
+
+    public function get_sarathi_ids($subfranchise_id)
+    {
+        $query = $this->db->select(field_uid)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
+        $query = $query->result_array();
+        return $query;
     }
 }

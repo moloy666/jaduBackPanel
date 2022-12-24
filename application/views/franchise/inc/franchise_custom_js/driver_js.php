@@ -1,12 +1,16 @@
 <script>
-    var table = $('#specific_table').val();
+    // var table = $('#specific_table').val();
 
-    if (table == 'franchise') {
-        get_subfranchise_ids();
-    } else {
-        let subfranchise_id = $('#specific_id').val();
-        get_sarathi_id(subfranchise_id);
-    }
+    // if (table == 'franchise') {
+    //     get_subfranchise_ids();
+    // } else {
+    //     let subfranchise_id = $('#specific_id').val();
+    //     get_sarathi_id(subfranchise_id);
+    // }
+
+    get_panel_access_list();
+
+    $('#table').dataTable();
 
     function get_subfranchise_ids() {
         $.ajax({
@@ -19,7 +23,8 @@
                 console.log(response)
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
+                
                 let data = response.data;
                 $.each(data, function(i, data) {
                     get_sarathi_id(data.uid);
@@ -40,6 +45,8 @@
                 console.log(response)
             },
             success: function(response) {
+                console.log(response);
+
                 let data = response.data;
                 $.each(data, function(i, data) {
                     get_driver_ids(data.uid);
@@ -57,6 +64,7 @@
                 'id': sarathi_id
             },
             success: function(response) {
+                console.log(response);
 
                 let data = response.data;
                 $.each(data, function(i, data) {
@@ -82,7 +90,7 @@
                 console.log(response);
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
 
                 let data = response.data;
                 let details = '';
@@ -144,7 +152,6 @@
                     get_panel_access_list();
                 });
                 $('#table_details').append(details);
-                $('#table').dataTable();
             }
         });
     }
@@ -198,7 +205,7 @@
         let specific_id = $('#specific_id').val();
         if (state.checked == true) {
             $.ajax({
-                url: "<?= base_url(WEB_PORTAL_FRANCHISE.'/active_driver') ?>",
+                url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/active_driver') ?>",
                 type: "post",
                 data: {
                     "id": user_id,
@@ -219,7 +226,7 @@
             });
         } else {
             $.ajax({
-                url: "<?= base_url(WEB_PORTAL_FRANCHISE.'/deactive_driver') ?>",
+                url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/deactive_driver') ?>",
                 type: "post",
                 data: {
                     "id": user_id,
@@ -263,7 +270,7 @@
 
         if (flag == 0) {
             $.ajax({
-                url: "<?= base_url(WEB_PORTAL_FRANCHISE.'/update_driver')  ?>",
+                url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/update_driver')  ?>",
                 type: "post",
                 data: {
                     "id": id,
@@ -280,9 +287,9 @@
                         $('#update_form')[0].reset();
                         $('#close_edit_modal').click();
 
-                        $('#table_details').html('');   
+                        $('#table_details').html('');
 
-                        count=1;
+                        count = 1;
                         if (table == 'franchise') {
                             get_subfranchise_ids();
                         } else {
@@ -302,26 +309,27 @@
         }
     });
 
-  
+
     //delete
     $('#table_details').on('click', '.delete_user', function() {
         let id = $(this).attr('data');
         $('#btn_delete_data').click(function() {
             $.ajax({
                 type: "post",
-                url: "<?= base_url(WEB_PORTAL_FRANCHISE.'/delete_driver') ?>",
+                url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/delete_driver') ?>",
                 data: {
                     "id": id,
-                    "specific_id":$('#specific_id').val(),
-                    "table":$('#specific_table').val()
+                    "specific_id": $('#specific_id').val(),
+                    "table": $('#specific_table').val()
                 },
+                async: false,
                 success: function(data) {
                     if (data.success) {
                         toast(data.message, "center");
                         $('#close_delete_modal').click()
 
-                        $('#table_details').html('');   
-                        count=1;
+                        $('#table_details').html('');
+                        count = 1;
                         if (table == 'franchise') {
                             get_subfranchise_ids();
                         } else {

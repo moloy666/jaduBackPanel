@@ -225,12 +225,8 @@ class Franchise extends CI_Controller
 				$data['sarathi_data']=$this->Sarathi_model->get_sub_franchise_ids($specific_id);
 			}
 			else{
-				$data['sarathi_data'][0]=$this->Sarathi_model->get_sarathi_by_subfranchise_id($specific_id);
+				$data['sarathi_data']=$this->Sarathi_model->get_sarathi_ids_of_subfranchise($specific_id);
 			}
-
-			// echo"<pre>";
-			// print_r($data['sarathi_data']);
-			// die();
 						
 			$this->load_header();
 			$this->load_sidebar();
@@ -307,7 +303,19 @@ class Franchise extends CI_Controller
 			$status = $this->Franchise_model->get_access_permission($user_id, access_driver_data);
 			if ($status == const_active) {
 				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
-				$specific_id = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+				$specific_id = $data['specific_id'];
+				$this->init_driver_model();
+				if($table==table_franchise){
+					$data['driver_data']=$this->Driver_model->get_driver_data_of_franchise($specific_id);
+				}
+				else{
+					$data['driver_data']=$this->Driver_model->get_driver_data_of_subfranchise($specific_id);
+				}
+
+				// echo"<pre>";
+				// print_r($data['driver_data']);
+				// // print_r($specific_id);
+				// die();
 
 				$this->load_header();
 				$this->load_sidebar();

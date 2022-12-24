@@ -293,8 +293,8 @@ class Sarathi_model extends CI_Model
         return (!empty($query)) ? $query : null;
     }
 
-    public function get_sub_franchise_ids($franchise_id)
-    {
+    public function get_sub_franchise_ids($franchise_id){
+
         $array=[];
 
         $query = $this->db->select(field_uid)->where(field_franchise_id, $franchise_id)->get(table_subfranchise);
@@ -312,8 +312,26 @@ class Sarathi_model extends CI_Model
                 }
             }
         }
-        return $data;
+        return (!empty($data))?$data:[];
     }
+
+    public function get_sarathi_ids_of_subfranchise($subfranchise_id)
+    {
+        $array=[];
+            $query=$this->get_sarathi_ids($subfranchise_id);
+            foreach($query as $i=>$val){
+                $array[]=$val[field_user_id];
+
+                foreach($array as $i=>$val){
+                    $user_id=$array[$i];
+                    $data[$i] = $this->get_sarathi_details_by_user_id($user_id);
+                }
+            }
+            return (!empty($data))?$data:[];
+    }
+
+
+
 
     public function get_sarathi_ids($subfranchise_id){
         $query=$this->db->select(field_user_id)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
