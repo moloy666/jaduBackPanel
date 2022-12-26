@@ -901,6 +901,7 @@ class Admin_model extends CI_Model
     public function get_permission_list_franchise()
     {
         $this->db->where_not_in(field_uid, access_franchise_data);
+        $this->db->where_not_in(field_uid, 'permission_customers');
         $this->db->order_by('hash_id', 'asc');
         $query = $this->db->get('permission_list');
         $query = $query->result_array();
@@ -910,6 +911,8 @@ class Admin_model extends CI_Model
     {
         $this->db->where_not_in(field_uid, access_franchise_data);
         $this->db->where_not_in(field_uid, access_subfranchise_data);
+        $this->db->where_not_in(field_uid, 'permission_customers');
+
         $this->db->order_by('hash_id', 'asc');
         $query = $this->db->get('permission_list');
         $query = $query->result_array();
@@ -922,6 +925,7 @@ class Admin_model extends CI_Model
         $this->db->where_not_in(field_uid, access_sarathi_data);
         $this->db->where_not_in(field_uid, 'permission_settings');
         $this->db->where_not_in(field_uid, 'permission_driver');
+        $this->db->where_not_in(field_uid, 'permission_customers');
 
         $this->db->order_by('hash_id', 'asc');
         $query = $this->db->get('permission_list');

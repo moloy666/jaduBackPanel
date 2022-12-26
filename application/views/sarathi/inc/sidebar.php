@@ -38,12 +38,12 @@
              <li class="heading">FEATURES</li>
              <!-- <li class="heading"><?= $this->session->userdata(sarathi_session_achivements) ?></li> -->
 
-             <li>
+             <!-- <li>
                  <a href="<?= base_url('sarathi/customers') ?>" id="customers" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'customers') ? 'active' : '' ?>">
                      <i class="sidebar-item-icon fa fa-users"></i>
                      <span class="nav-label">Customers</span>
                  </a>
-             </li>
+             </li> -->
 
              <li>
                  <a href="<?= base_url(WEB_PORTAL_SARATHI . '/recharge') ?>" id="recharge_page">

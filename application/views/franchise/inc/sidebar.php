@@ -38,12 +38,12 @@
              <!-- <li class="heading"><?=$this->session->userdata(fr_session_call_booking)?></li> -->
 
 
-             <li>
+             <!-- <li>
                  <a href="<?= base_url($user_type . '/customers') ?>" id="customers" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'customers') ? 'active' : '' ?>">
                      <i class="sidebar-item-icon fa fa-users"></i>
                      <span class="nav-label">Customers</span>
                  </a>
-             </li>
+             </li> -->
 
              <?php
                 if ($user_type == user_type_franchise) {

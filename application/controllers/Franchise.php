@@ -172,7 +172,7 @@ class Franchise extends CI_Controller
 
 			if ($this->session->userdata(session_franchise_type_id) == 'user_franchise') {
 				$this->init_franchise_model();
-				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table); 
+				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
 
 				$this->load_header();
 				$this->load_sidebar();
@@ -218,16 +218,15 @@ class Franchise extends CI_Controller
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 			$this->init_franchise_model();
-			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table); 
-			$specific_id = $data['specific_id']; 
+			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+			$specific_id = $data['specific_id'];
 			$this->init_sarathi_model();
-			if($table==table_franchise){
-				$data['sarathi_data']=$this->Sarathi_model->get_sub_franchise_ids($specific_id);
+			if ($table == table_franchise) {
+				$data['sarathi_data'] = $this->Sarathi_model->get_sub_franchise_ids($specific_id);
+			} else {
+				$data['sarathi_data'] = $this->Sarathi_model->get_sarathi_ids_of_subfranchise($specific_id);
 			}
-			else{
-				$data['sarathi_data']=$this->Sarathi_model->get_sarathi_ids_of_subfranchise($specific_id);
-			}
-						
+
 			$this->load_header();
 			$this->load_sidebar();
 			$this->load->view(view_franchise_sarathi, $data);
@@ -239,37 +238,38 @@ class Franchise extends CI_Controller
 		}
 	}
 
-	public function view_customers(){
+	// public function view_customers(){
 
-		if ($this->is_user_logged_in()) {
-			$user_id = $this->session->userdata(session_franchise_user_id);
-			$table = $this->session->userdata(session_franchise_table);
-			$this->init_franchise_model();
-			$specific_id = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
-			$this->init_sarathi_model();
-			if($table==table_franchise){
-				$subfranchise_ids=$this->Sarathi_model->get_sub_franchise($specific_id);
+	// 	if ($this->is_user_logged_in()) {
+	// 		$user_id = $this->session->userdata(session_franchise_user_id);
+	// 		$table = $this->session->userdata(session_franchise_table);
+	// 		$this->init_franchise_model();
+	// 		$specific_id = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+	// 		$data['specific_id']=$specific_id;
+	// 		$this->init_sarathi_model();
+	// 		if($table==table_franchise){
+	// 			$subfranchise_ids=$this->Sarathi_model->get_sub_franchise($specific_id);
 
-				foreach($subfranchise_ids as $i=>$subfranchise){
-					$subfranchise_id=$subfranchise[field_uid];
-					$data['sarathi_data'][$i]=$this->Sarathi_model->get_sarathi_by_subfranchise_id($subfranchise_id);
-				}
-			}
-			else{
-				$data['sarathi_data'][0]=$this->Sarathi_model->get_sarathi_by_subfranchise_id($specific_id);
-			}
-						
-			$this->load_header();
-			$this->load_sidebar();
-			$this->load->view('franchise/fr_customers', $data);
-			$this->load_footer();
-			// $this->load->view('franchise/inc/franchise_custom_js/sarathi_js');
-		} else {
-			$user_type = ($this->uri->segment(1));
-			redirect(base_url($user_type));
-		}
-	}
-	
+	// 			foreach($subfranchise_ids as $i=>$subfranchise){
+	// 				$subfranchise_id=$subfranchise[field_uid];
+	// 				$data['sarathi_data'][$i]=$this->Sarathi_model->get_sarathi_by_subfranchise_id($subfranchise_id);
+	// 			}
+	// 		}
+	// 		else{
+	// 			$data['sarathi_data'][0]=$this->Sarathi_model->get_sarathi_by_subfranchise_id($specific_id);
+	// 		}
+
+	// 		$this->load_header();
+	// 		$this->load_sidebar();
+	// 		$this->load->view('franchise/fr_customers', $data);
+	// 		$this->load_footer();
+	// 		// $this->load->view('franchise/inc/franchise_custom_js/sarathi_js');
+	// 	} else {
+	// 		$user_type = ($this->uri->segment(1));
+	// 		redirect(base_url($user_type));
+	// 	}
+	// }
+
 	public function view_sarathi_details($user_id)
 	{
 		if ($this->is_user_logged_in()) {
@@ -305,11 +305,10 @@ class Franchise extends CI_Controller
 				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
 				$specific_id = $data['specific_id'];
 				$this->init_driver_model();
-				if($table==table_franchise){
-					$data['driver_data']=$this->Driver_model->get_driver_data_of_franchise($specific_id);
-				}
-				else{
-					$data['driver_data']=$this->Driver_model->get_driver_data_of_subfranchise($specific_id);
+				if ($table == table_franchise) {
+					$data['driver_data'] = $this->Driver_model->get_driver_data_of_franchise($specific_id);
+				} else {
+					$data['driver_data'] = $this->Driver_model->get_driver_data_of_subfranchise($specific_id);
 				}
 
 				// echo"<pre>";
@@ -322,12 +321,10 @@ class Franchise extends CI_Controller
 				$this->load->view(view_franchise_driver, $data);
 				$this->load_footer();
 				$this->load->view('franchise/inc/franchise_custom_js/driver_js');
-			}
-			else{
+			} else {
 				$user_type = ($this->uri->segment(1));
 				redirect(base_url($user_type . '/dashboard'));
 			}
-			
 		} else {
 			$user_type = ($this->uri->segment(1));
 			redirect(base_url($user_type));
@@ -721,7 +718,7 @@ class Franchise extends CI_Controller
 		}
 	}
 
-	
+
 
 	public function view_settings()
 	{
@@ -848,23 +845,20 @@ class Franchise extends CI_Controller
 		$specific_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
 
 		$user_type = $this->uri->segment(1);
-		if ($user_type == value_franchise) {
 
-			$data = [
-				'totalSubFranchise' => $this->Common_model->get_total_sub_franchise($specific_id),
-				'totalSarathi' => $this->Common_model->get_total_sarathi($specific_id),
-				'drivers' => [
-					'active' => $this->Common_model->get_total_active_drivers($specific_id),
-					'inactive' => $this->Common_model->get_total_inactive_drivers($specific_id),
-					'total' => $this->Common_model->get_total_drivers($specific_id)
-				],
-				'totalCustomers' => $this->Common_model->get_total_customers($specific_id),
-				// 'totalCarRunning' =>  $this->Common_model->get_total_car_running(),
-			];
-			echo json_encode($data);
-		} else {
-			echo json_encode('data not found');
-		}
+		$data = [
+			'totalSubFranchise' => $this->Common_model->get_total_sub_franchise($specific_id),
+			'totalSarathi' => $this->Common_model->get_total_sarathi($specific_id),
+			'drivers' => [
+				'active' => $this->Common_model->get_total_active_drivers($specific_id),
+				'inactive' => $this->Common_model->get_total_inactive_drivers($specific_id),
+				'total' => $this->Common_model->get_total_drivers($specific_id)
+			],
+			'totalCustomers' => $this->Common_model->get_total_customers($specific_id),
+			'totalRevenue' =>  $this->Common_model->get_total_revenue($specific_id),
+			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status($specific_id),
+		];
+		echo json_encode($data);
 	}
 
 	public function get_subfranchise_dashboard_data()
@@ -874,22 +868,21 @@ class Franchise extends CI_Controller
 		$subfranchise_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
 
 		$user_type = $this->uri->segment(1);
-		if ($user_type == value_franchise) {
 
-			$data = [
-				'totalSarathi' => $this->Common_model->get_total_sarathi_of_sub_franchise($subfranchise_id),
-				'drivers' => [
-					'active' => $this->Common_model->get_total_active_driver_of_sub_franchise($subfranchise_id),
-					'inactive' => $this->Common_model->get_total_inactive_driver_of_sub_franchise($subfranchise_id),
-					'total' => $this->Common_model->get_total_driver_of_sub_franchise($subfranchise_id)
-				],
-				// 'totalCustomers' => $this->Common_model->get_total_customers($specific_id),
-				// 'totalCarRunning' =>  $this->Common_model->get_total_car_running(),
-			];
-			echo json_encode($data);
-		} else {
-			echo json_encode('data not found');
-		}
+		$data = [
+			'totalSarathi' => $this->Common_model->get_total_sarathi_of_sub_franchise($subfranchise_id),
+			'drivers' => [
+				'active' => $this->Common_model->get_total_active_driver_of_sub_franchise($subfranchise_id),
+				'inactive' => $this->Common_model->get_total_inactive_driver_of_sub_franchise($subfranchise_id),
+				'total' => $this->Common_model->get_total_driver_of_sub_franchise($subfranchise_id)
+			],
+			'totalCustomers' => $this->Common_model->get_total_customers_of_subfranchise($subfranchise_id),
+			'totalRevenue' =>  $this->Common_model->get_total_revenue_of_subfranchise($subfranchise_id),
+			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($subfranchise_id),
+
+
+		];
+		echo json_encode($data);
 	}
 
 
@@ -1142,14 +1135,51 @@ class Franchise extends CI_Controller
 	}
 
 	public function get_panel_access_list()
-    {
-        $this->init_common_model();
-        $user_id = $this->session->userdata(session_franchise_user_id);
-        $data = $this->Common_model->get_panel_access_list($user_id);
-        if (!empty($data)) {
-            $this->response(["success" => true, "message" => "Found..", "data" => $data], 200);
-        } else {
-            $this->response(["success" => false, "message" => "Not Found.."], 200);
-        }
-    }
+	{
+		$this->init_common_model();
+		$user_id = $this->session->userdata(session_franchise_user_id);
+		$data = $this->Common_model->get_panel_access_list($user_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "Found..", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Not Found.."], 200);
+		}
+	}
+
+
+	public function getsarathiData()
+	{
+		$specific_id = $this->input->post(param_specific_id);
+		$table = $this->input->post(param_table);
+		$this->init_common_model();
+		if ($table == table_franchise) {
+			$data = $this->Common_model->getSarahiData_for_franchise($specific_id);
+		} else {
+			$data = $this->Common_model->getSarahiData_for_subfranchise($specific_id);
+		}
+
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "Found..", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Not Found.."], 200);
+		}
+	}
+
+	public function get_customers_data()
+	{
+		$specific_id = $this->input->post(param_specific_id);
+		$table = $this->input->post(param_table);
+		$this->init_common_model();
+		if ($table == table_franchise) {
+			$data = $this->Common_model->get_customer_for_franchise($specific_id);
+		} else {
+			$data = $this->Common_model->get_customer_for_subfranchise($specific_id);
+		}
+
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "Customers Found..", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Not Found.."], 200);
+		}
+	}
 }

@@ -1,3 +1,8 @@
+<style>
+    .title {
+        text-transform: capitalize;
+    }
+</style>
 <script type="text/javascript">
     $('#dashboard_page').addClass('active');
 
@@ -16,7 +21,7 @@
                 "id": $('#specific_id').val()
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
 
                 let data = JSON.parse(response);
 
@@ -26,8 +31,11 @@
                 $(".totalSubFranchise").text(data.totalSubFranchise);
                 $(".totalSarathi").text(data.totalSarathi);
                 $(".totalOngoingRide").text(data.drivers.active);
-
                 $(".totalRegisteredCustomers").text(data.totalCustomers);
+                $(".totalRevenue").text(data.totalRevenue);
+                $("#growth").text(data.totalRevenueStatus);
+
+
             },
             error: function(response) {
                 console.log(response);
@@ -52,6 +60,10 @@
                 $(".totalInactiveDrivers").text(data.drivers.inactive);
                 $(".totalSarathi").text(data.totalSarathi);
                 $(".totalOngoingRide").text(data.drivers.active);
+                $(".totalRegisteredCustomers").text(data.totalCustomers);
+                $(".totalRevenue").text(data.totalRevenue);
+                $("#growth").text(data.totalRevenueStatus);
+
             },
             error: function(response) {
                 console.log(response);
@@ -63,23 +75,33 @@
     var driverCount = [];
 
     $.ajax({
-        url: "<?= base_url('sarathiData') ?>",
-        type: "GET",
+        url: "<?= base_url('franchise/getsarathiData') ?>",
+        type: "POST",
+        data: {
+            "specific_id": $('#specific_id').val(),
+            "table": $('#specific_table').val()
+        },
         success: function(response) {
-            let data = JSON.parse(response);
+            // console.log(response);
+            let data = response.data;
+
             let html = '';
-            $.each(data, function(i) {
+            $.each(data, function(i, data) {
+                if (data.name != undefined) {
+                    sarathiName.push(data.name);
+                    driverCount.push(data.totalDrivers);
 
-                sarathiName.push(data[i].name);
-                driverCount.push(data[i].totalDrivers);
-
-                html += '<tr>' +
-                    '<td class="title">' + data[i].name + '</td>' +
-                    '<td class="text-center">' + data[i].refferal_code + '</td>' +
-                    '<td>' + data[i].total_km_purchased + '</td>' +
-                    '<td>' + data[i].joined + '</td>' +
-                    '<td>' + data[i].totalDrivers + '</td>' +
-                    '</tr>';
+                    html += '<tr>' +
+                        '<td class="title">' + data.name + '</td>' +
+                        '<td class="text-center">' + data.refferal_code + '</td>' +
+                        '<td>' + data.total_km_purchased + '</td>' +
+                        '<td>' + data.joined + '</td>' +
+                        '<td>' + data.totalDrivers + '</td>' +
+                        '</tr>';
+                }
+                else{
+                    html+='';
+                }
             });
             $('.sarathiRelatedDataTable').html(html);
             $('#example-table').dataTable();
@@ -87,7 +109,7 @@
             load_sarathi_chart();
         },
         error: function(response) {
-            console.log(JSON.stringify(response));
+            console.log((response));
         }
     });
 

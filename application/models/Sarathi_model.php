@@ -17,8 +17,11 @@ class Sarathi_model extends CI_Model
 
     public function getDriversCount($sarathi_id)
     {
-        $this->db->where(field_sarathi_id, $sarathi_id);
-        $this->db->get(table_driver);
+        $this->db->select('u.'.field_uid)->from(table_users.' as u')
+        ->join(table_driver.' as d', 'u.uid=d.user_id')
+        ->where('d.'.field_sarathi_id, $sarathi_id)
+        ->where_not_in('u.'.field_status, const_deleted)
+        ->where_not_in('u.'.field_status, const_pending)->get();
         return $this->db->affected_rows();
     }
 

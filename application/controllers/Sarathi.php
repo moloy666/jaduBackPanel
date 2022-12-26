@@ -400,34 +400,34 @@ class Sarathi extends CI_Controller
 
     ///////////////////// SIDE PANEL ACCESS //////////////////////////////
 
-    public function view_customers()
-    {
-        if ($this->is_sarathi_logged_in()) {
-            $this->init_sarathi_model();
-            $user_id = $this->session->userdata(session_sarathi_user_id);
-            $sarathi_id = $this->Sarathi_model->get_sarathi_id_by_user_id($user_id);
-            $driver_ids = $this->Sarathi_model->get_driver_ids($sarathi_id);
-            foreach ($driver_ids as $i => $driver) {
-                $driver_id = $driver[field_uid];
-                $customer_ids_list = $this->Sarathi_model->get_customer_ids($driver_id);
-                foreach ($customer_ids_list as $customer_id) {
-                    $cid = $customer_id['customer_id'];
-                    $customer[] = $this->Sarathi_model->get_customers_details($cid);
-                }
-            }
-            $data['customer'] = $customer;
+    // public function view_customers()
+    // {
+    //     if ($this->is_sarathi_logged_in()) {
+    //         $this->init_sarathi_model();
+    //         $user_id = $this->session->userdata(session_sarathi_user_id);
+    //         $sarathi_id = $this->Sarathi_model->get_sarathi_id_by_user_id($user_id);
+    //         $driver_ids = $this->Sarathi_model->get_driver_ids($sarathi_id);
+    //         foreach ($driver_ids as $i => $driver) {
+    //             $driver_id = $driver[field_uid];
+    //             $customer_ids_list = $this->Sarathi_model->get_customer_ids($driver_id);
+    //             foreach ($customer_ids_list as $customer_id) {
+    //                 $cid = $customer_id['customer_id'];
+    //                 $customer[] = $this->Sarathi_model->get_customers_details($cid);
+    //             }
+    //         }
+    //         $data['customer'] = $customer;
 
-            // echo"<pre>";
-            // print_r($data);die();
+    //         // echo"<pre>";
+    //         // print_r($data);die();
 
-            $this->load_header();
-            $this->load_sidebar();
-            $this->load->view('sarathi/customers', $data);
-            $this->load_footer();
-        } else {
-            redirect(base_url(WEB_PORTAL_SARATHI . '/index'));
-        }
-    }
+    //         $this->load_header();
+    //         $this->load_sidebar();
+    //         $this->load->view('sarathi/customers', $data);
+    //         $this->load_footer();
+    //     } else {
+    //         redirect(base_url(WEB_PORTAL_SARATHI . '/index'));
+    //     }
+    // }
 
     public function view_places()
     {

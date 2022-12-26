@@ -411,6 +411,7 @@ define('param_specific_id', 'specific_id');
 define('param_user_id', 'user_id');
 define('param_key', 'key');
 define('param_panel_list', 'panel_list');
+define('param_table', 'table');
 
 /////////////////////////////////////////////////////
 define('session_franchise_id', 'franchise_id');

@@ -260,4 +260,6 @@ class Customers_model extends CI_Model
         $query=$query->result_array();
         return (!empty($query))?$query:[];
     }
+
+    
 }
