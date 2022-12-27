@@ -34,6 +34,13 @@
              <li class="heading">FEATURES</li>
              <!-- <li class="heading"><?= $this->session->userdata(session_fare_list) ?></li> -->
 
+             <li>
+                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/ride_details') ?>" id="" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'ride_details') ? 'active' : '' ?>">
+                     <i class="sidebar-item-icon fa fa-life-bouy"></i>
+                     <span class="nav-label">Ride Details</span>
+                 </a>
+             </li>
+
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {

@@ -176,6 +176,7 @@
             $(".totalInactiveDrivers").text(data.drivers.inactive); 
 
             $(".totalCarRunning").text(data.totalCarRunning); 
+            
             $(".totalRegisteredCustomers").text(data.totalCustomers);    
             $(".totalFranchise").text(data.totalFranchise);
             $(".totalSubFranchise").text(data.totalSubFranchise);      

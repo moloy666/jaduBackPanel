@@ -158,49 +158,8 @@
         });
     });
 
+ 
     /////// display car list
-
-
-
-    // function calculate_distance(origin, destination) {
-    //     let directionsService = new google.maps.DirectionsService();
-    //     let directionsRenderer = new google.maps.DirectionsRenderer();
-    //     // directionsRenderer.setMap(map); // Existing map object displays directions
-    //     // Create route from existing points used for markers
-
-    //     let route = {
-    //         origin: origin,
-    //         destination: destination,
-    //         travelMode: 'DRIVING'
-    //     }
-
-    //     directionsService.route(route,
-    //         function(response, status) { // anonymous function to capture directions
-    //             if (status !== 'OK') {
-    //                 console.log('Directions request failed due to ' + status);
-    //                 console.log(response);
-    //                 return;
-    //             } else {
-    //                 // directionsRenderer.setDirections(response); // Add route to the map
-    //                 var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
-    //                 // console.log(directionsData);
-    //                 if (!directionsData) {
-    //                     console.log('Directions request failed');
-    //                     return;
-    //                 } else {
-    //                     // console.log(" Driving distance is " + directionsData.distance.text + " (" + directionsData.duration.text + ").");
-    //                     // console.log(" Driving distance is " + directionsData.distance.value + " (" + directionsData.duration.value + ").");
-
-    //                     location_distance = directionsData.distance.value;
-    //                     location_duration = directionsData.duration.value;
-
-    //                     console.log(location_distance + " " + location_duration);
-    //                 }
-    //             }
-    //         }
-    //     );
-    // }
-
 
     $('#btn_car_list').click(function() {
 
@@ -291,20 +250,14 @@
             }
         }
 
-        // let data = {
-        //     'origin': {
-        //         'lat': lat_origin,
-        //         'lng': lang_origin
-        //     },
-        //     'destination': {
-        //         'lat': lat_destination,
-        //         'lng': lang_destination
-        //     }
-        // };
 
+       // https://jaduridedev.v-xplore.com/customers/CUSTOMER_99741e712854bc707851396c634c4997_1666944749/ride/list?service=SERVICE_CAR
+
+        var customer_id=$('#customer_id').val();
 
         $.ajax({
-            url: 'https://jaduridedev.v-xplore.com/customers/ride/list?service=SERVICE_CAR',
+           
+            url: `<?=apiBaseUrl?>customers/${customer_id}/ride/list?service=SERVICE_CAR`,
             type: "POST",
             headers: {
                 "x-api-key": '<?= const_x_api_key ?>',
@@ -342,9 +295,7 @@
                         $('#wait_time').text(data.waitTime);
                     });
 
-                    // $('.preloader-backdrop').show();
-                    // setTimeout(()=>{$('.preloader-backdrop').hide();}, 3000);
-
+                   
                     $('#cab_details').html(details);
                     $('#cab_list').show();
                     $('#txt_distance').show();
@@ -391,7 +342,7 @@
                 },
                 "waypoints": []
             },
-            "locationText": [{
+            "locationsText": [{
                 "startAddress": destination_from,
                 "endAddress": destination_to
             }, ],
@@ -399,27 +350,10 @@
             "duration": duration
         }
 
-        // let data={
-        //     "distance": distance,
-        //     "duration": duration,
-        //     "locations": {
-        //         "origin": {
-        //             "lat": lat_origin,
-        //             "lng": lang_origin
-        //         },
-        //         "destination": {
-        //             "lat": lat_destination,
-        //             "lng": lang_destination
-        //         },
-        //         "waypoints": []
-        //     }
-        // }
-
-        // console.log(data);
 
         $.ajax({
             type: "POST",
-            url: `https://jaduridedev.v-xplore.com/customers/users/${customer_id}/initiateBooking`,
+            url: `<?=apiBaseUrl?>customers/users/${customer_id}/initiateBooking`,
             headers: {
                 "x-api-key": '<?= const_x_api_key ?>',
                 "platform": "web",

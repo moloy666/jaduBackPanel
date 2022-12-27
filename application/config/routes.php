@@ -269,6 +269,7 @@ $route['administrator/achivements'] = 'admin/view_achivements';
 $route['administrator/coupons'] = 'admin/view_coupons';
 $route['administrator/places'] = 'admin/view_places';
 $route['administrator/hotel'] = 'admin/view_hotel';
+$route['administrator/ride_details'] = 'admin/view_ride_details';
 
 
 $route['administrator/franchise_details/(:any)'] = 'Admin/franchise_details/$1';

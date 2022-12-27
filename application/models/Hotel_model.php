@@ -53,5 +53,10 @@ class Hotel_model extends CI_Model
         return(!empty($query))?$query[0]:[];
     }
 
+    public function get_booking_details($hotel_id){
+        $query = $this->db->where(field_customer_id, $hotel_id)->get('ride_normal');
+        $query = $query->result_array();
+        return (!empty($query))?$query:null;
+    }
 
 }

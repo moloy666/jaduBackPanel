@@ -22,8 +22,8 @@ class Driver_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function get_total_active_drivers($sarathi_id)
-    {
+    public function get_total_active_drivers($sarathi_id){
+
         if (!empty($sarathi_id)) {
             $this->db->where('d.sarathi_id', $sarathi_id);
         }
@@ -53,14 +53,15 @@ class Driver_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function get_total_car_running($specific_id)
+    public function get_total_car_running($sarathi_id)
     {
-        if (!empty($specific_id)) {
-            $this->db->where([field_working_status => const_active, field_sarathi_id => $specific_id]);
-        } else {
-            $this->db->where([field_working_status => const_active]);
+         if (!empty($sarathi_id)) {
+            $this->db->where('d.sarathi_id', $sarathi_id);
         }
-        $this->db->get(table_driver);
+        $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
+            ->where('d.' . field_working_status, const_active)
+            ->where_not_in('u.status', const_deleted)
+            ->where_not_in('u.status', const_pending)->get();
         return $this->db->affected_rows();
     }
 

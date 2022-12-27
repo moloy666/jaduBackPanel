@@ -183,6 +183,32 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function view_ride_details()
+	{
+		if ($this->is_user_logged_in()) {
+			// if ($this->session->userdata(field_type_id) == const_user_admin) {
+			// 	$admin_id = $this->session->userdata(session_admin_specific_id);
+			// 	$this->init_admin_model();
+			// 	$status = $this->Admin_model->get_access_permission($admin_id, access_incentives_scheme);
+			// } else {
+			// 	$status = const_active;
+			// }
+			// if ($status == const_active) {
+
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view('ride_details');
+				$this->load_footer();
+				$this->load->view('inc/custom_js/ride_details_js');
+
+			// } else {
+			// 	redirect(base_url('administrator/dashboard'));
+			// }
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function view_rental_slabs()
 	{
 		if ($this->is_user_logged_in()) {

@@ -225,5 +225,16 @@ class Hotel extends CI_Controller
         }
     }
 
-  
+    public function get_booking_details(){
+        $hotel_id=$this->session->userdata(session_hotel_id);
+        $this->init_hotel_model();
+        $data=$this->Hotel_model->get_booking_details($hotel_id);
+        if(!empty($data)){
+            $this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+        }
+        else{
+            $this->response(["success" => true, "message" => "Not Found"], 200);
+        }
+    }
+
 }

@@ -10,38 +10,74 @@
         <div class="page-content fade-in-up">
             <div class="row align-items-center mb-2">
                 <div class="col-md-8">
-                    <h3>Book Ride</h3>
-                    <input type="hidden" value="<?=$this->session->userdata(session_hotel_id)?>" id="hotel_id">
+                    <h3>Ride Details</h3>
                 </div>
             </div>
 
             <div class="card mb-2 d-flex justify-content-center">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-3 col-md-3">
                             <div class="form-group">
-                                <input class="form-control p-2" type="text" placeholder="Enter Customer Code" id="booking_id">
+                                <strong class="ml-1 mb-3">Ride Stage</strong>
+
+                                <select class="form-control" id="ride_stage">
+                                    <option value="0">Select Ride Stage</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="started">Started</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group d-flex">
+                                <input type="checkbox" class="mr-3 ml-2" id="schedule_ride" style="height:auto; width:20px; cursor:pointer">
+                                <strong>
+                                    <label for="schedule_ride" class="mt-2" style="cursor:pointer">Show Schedule Ride</label>
+                                </strong>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <strong class="ml-1 mb-3">From</strong>
+
+                                <input type="date" class="form-control" id="ride_from" placeholder="Ride From" style="height:40px;"  max="<?= date('Y-m-d') ?>">
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-4">
-                            <button type="submit" class="bgdarkred btn w-100" id="btn_search">Search</button>
+                        <div class="col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <strong class="ml-1 mb-3">To</strong>
+                                <input type="date" class="form-control" id="ride_to" placeholder="Ride To" style="height:40px;" max="<?= date('Y-m-d') ?>">
+                            </div>
                         </div>
+
+                        <div class="col-lg-3 col-md-3">
+                            <div class="form-group mt-4">
+                                <button class="btn btn-primary w-100" style="display:none;" id="btn_search">Search</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
 
-            <div class="card p-2 mb-2" style="display:none" id="table">
+            <div class="card p-2 mb-2" id="ride_details">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">Image</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">Current Location</th>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Customer</th>
+                                <th class="text-center">Driver</th>
+                                <th class="text-center">Origin</th>
+                                <th class="text-center">Destination</th>
+                                <th class="text-center">Service Type</th>
+                                <th class="text-center">Fare</th>
+                                <th class="text-center">Ride Type</th>
+                                <th class="text-center">Start Time</th>
+                                <th class="text-center">End Time</th>
                             </tr>
                         </thead>
                         <tbody class="text-center" id="table_details">
@@ -50,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="card p-2 mb-2">
+            <!-- <div class="card p-2 mb-2">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
@@ -104,12 +140,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="map" id="map">
 
-            </div>
-            <div class="card p-3 mb-2" style="display:none" id="cab_list">
+            <!-- <div class="card p-3 mb-2" style="display:none" id="cab_list">
                 <div class="col-lg-12 col-md-3" id="txt_distance" style="display:none;">
                     <div class="form-group">
                         <strong class="mr-3">Distance : <span id="distance"></span></strong>
@@ -120,7 +154,7 @@
                 <div class="cab d-flex flex-wrap justify-content-start" id="cab_details">
 
                 </div>
-            </div>
+            </div> -->
 
             <div class="card" id="confirm_pickup_ride" style="display:none;">
                 <div class="card-body">
@@ -178,7 +212,7 @@
     </div>
 
     <input type="hidden" id="onCallRideId">
-    
+
     <div class="loaderbg" style="display: none;">
 
     </div>
@@ -196,3 +230,5 @@
             left: 0;
         }
     </style>
+
+ 

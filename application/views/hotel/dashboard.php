@@ -106,87 +106,20 @@
     .ibox .dashboard-card {
         height: 8rem;
     }
-</style>
-
-<!-- <script type="text/javascript">
-    $.ajax({
-        url: "<?= base_url('administrator/dashboardData') ?>",
-        type: "GET",
-        success: function(response) {
-            let data = JSON.parse(response);
-            $(".totalSarathi").text(data.totalSarathi);
-
-            $(".totalDrivers").text(data.drivers.total);
-            $(".totalActiveDrivers").text(data.drivers.active);
-            $(".totalInactiveDrivers").text(data.drivers.inactive);
-            $(".totalCarRunning").text(data.totalCarRunning);
-            $(".totalRegisteredCustomers").text(data.totalCustomers);
-            $(".totalFranchise").text(data.totalFranchise);
-            $(".totalSubFranchise").text(data.totalSubFranchise);
-            $(".totalRevenue").text(data.totalRevenue);
-            $(".revenueStatus").text(data.revenueStatus);
-
-            // console.log(data.revenueStatus);
-
-        },
-        error: function(response) {
-            console.log(response);
-        }
-    });
-
-    var sarathiName = [];
-    var driverCount = [];
-
-    $.ajax({
-        url: "<?= base_url('sarathiData') ?>",
-        type: "GET",
-        success: function(response) {
-            let data = JSON.parse(response);
-            // console.log(data);
-            let html = '';
-            $.each(data, function(i) {
-
-                sarathiName.push(data[i].name);
-                driverCount.push(data[i].totalDrivers);
-
-                html += '<tr>' +
-                    '<td class="title">' + data[i].name + '</td>' +
-                    '<td>' + data[i].refferal_code + '</td>' +
-                    '<td>' + data[i].total_km_purchased + '</td>' +
-                    '<td>' + data[i].joined + '</td>' +
-                    '<td>' + data[i].totalDrivers + '</td>' +
-                    '</tr>';
-            });
-            $('.sarathiRelatedDataTable').html(html);
-            $('#example-table').dataTable();
-
-            load_sarathi_chart();
-        },
-        error: function(response) {
-            console.log(JSON.stringify(response));
-        }
-    });
-
-    function load_sarathi_chart() {
-        var xValues = sarathiName;
-        var yValues = driverCount;
-
-        new Chart("myChart", {
-            type: "line",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: "rgba(255, 255, 255,1.0)",
-                    borderColor: "rgba(244, 3, 252,1)",
-                    data: yValues
-                }]
-            },
-        });
-    }
-</script> -->
-
-<style>
     .title {
         text-transform: capitalize;
     }
 </style>
+
+<script>
+    $.ajax({
+        type:"POST",
+        url:"<?=base_url('hotel/get_booking_details')?>",
+        error:function(response){
+            console.log(response);
+        },
+        success:function(response){
+            console.log(response);
+        }
+    });
+</script>
