@@ -774,4 +774,16 @@ class Sarathi extends CI_Controller
             $this->response(["success" => false, "message" => "Not Found.."], 200);
         }
     }
+
+    public function download_recharge_history(){
+        $user_id=$this->session->userdata(session_sarathi_id);
+        $this->init_sarathi_model();
+        $data = $this->Sarathi_model-> get_recharge_histiry_of_sarathi($user_id);
+
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view(view_sarathi_recharge_history, $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output("ride_history.pdf", "D");
+        
+    }
 }

@@ -11,44 +11,37 @@
             <div class="row align-items-center mb-2">
                 <div class="col-md-8">
                     <h3>Book Ride</h3>
-                    <input type="hidden" value="<?=$this->session->userdata(session_hotel_id)?>" id="hotel_id">
+                    <input type="hidden" value="<?= $this->session->userdata(session_hotel_id) ?>" id="hotel_id">
                 </div>
             </div>
 
             <div class="card mb-2 d-flex justify-content-center">
+                <div class="card-header">
+                    <strong>Guest Details</strong>
+                </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-4">
                             <div class="form-group">
-                                <input class="form-control p-2" type="text" placeholder="Enter Customer Code" id="booking_id">
+                                <input class="form-control" type="text" placeholder="Guest Name" id="name" autocomplete="off" minlength="3">
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-4">
-                            <button type="submit" class="bgdarkred btn w-100" id="btn_search">Search</button>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="Mobile Number" id="mobile" autocomplete="off" max="10">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <input class="form-control" type="email" placeholder="Enter Email" id="email" autocomplete="off">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-            <div class="card p-2 mb-2" style="display:none" id="table">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="thead-light">
-                            <tr>
-                                <th class="text-center">Image</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">Current Location</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center" id="table_details">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
             <div class="card p-2 mb-2">
                 <div class="card-body">
@@ -178,7 +171,7 @@
     </div>
 
     <input type="hidden" id="onCallRideId">
-    
+
     <div class="loaderbg" style="display: none;">
 
     </div>

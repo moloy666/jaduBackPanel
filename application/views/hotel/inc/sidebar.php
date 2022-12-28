@@ -35,7 +35,7 @@
              <li>
                  <a href="<?=base_url('hotel/call_booking')?>" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'call_booking') ? 'active' : '' ?>">
                      <i class="sidebar-item-icon fa fa-users"></i>
-                     <span class="nav-label">Call Booking</span>
+                     <span class="nav-label">Booking</span>
                  </a>
              </li>
 

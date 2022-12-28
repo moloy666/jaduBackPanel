@@ -284,7 +284,7 @@
 
                                 <small><strong>₹${data.price}</strong></small>
                             </div>
-                            <button class="btn btn-primary w-100 mb-2" style="display:block" onclick="book_customer(this, '${data.type}', '${data.price}')">Book</button>
+                            <button class="btn btn-primary w-100 mb-2" style="display:block" onclick="book_customer(this, '${data.id}', '${data.price}')">Book</button>
                             </div>
                             `;
                         $('#wait_time').text(data.waitTime);

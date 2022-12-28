@@ -85,7 +85,7 @@
               </div>
               <div class="col-sm-9">
                 <p class="text-muted mb-0 title" id="txt_address"></p>
-                <input type="text" id="mobile" class="form-control txtbox">
+                <input type="text" id="address" class="form-control txtbox">
               </div>
             </div>
             <hr>

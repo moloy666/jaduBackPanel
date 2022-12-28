@@ -5,6 +5,7 @@
     
 
     // url: `https://jaduridedev.v-xplore.com/sarathi/users/${sarathi_id}/recharge/history`,
+
     $(document).ready(function() {
         var sarathi_id = $('#sarathi_id').val();
         $.ajax({
@@ -39,4 +40,7 @@
             }
         });
     });
+
+
+ 
 </script>

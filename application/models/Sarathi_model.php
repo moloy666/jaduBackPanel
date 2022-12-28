@@ -17,11 +17,11 @@ class Sarathi_model extends CI_Model
 
     public function getDriversCount($sarathi_id)
     {
-        $this->db->select('u.'.field_uid)->from(table_users.' as u')
-        ->join(table_driver.' as d', 'u.uid=d.user_id')
-        ->where('d.'.field_sarathi_id, $sarathi_id)
-        ->where_not_in('u.'.field_status, const_deleted)
-        ->where_not_in('u.'.field_status, const_pending)->get();
+        $this->db->select('u.' . field_uid)->from(table_users . ' as u')
+            ->join(table_driver . ' as d', 'u.uid=d.user_id')
+            ->where('d.' . field_sarathi_id, $sarathi_id)
+            ->where_not_in('u.' . field_status, const_deleted)
+            ->where_not_in('u.' . field_status, const_pending)->get();
         return $this->db->affected_rows();
     }
 
@@ -39,7 +39,8 @@ class Sarathi_model extends CI_Model
         }
     }
 
-    public function condition_to_get_sarathi(){ // display sarathi list
+    public function condition_to_get_sarathi()
+    { // display sarathi list
 
         $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status . ',' . table_sarathi . '.' . field_subfranchise_id);
         $this->db->from(table_users);
@@ -152,13 +153,12 @@ class Sarathi_model extends CI_Model
         if ($update) {
             $deleted = $this->db->where(field_user_id, $user_id)->delete(table_permission);
             if ($deleted) {
-                $permission=$this->db->insert_batch(table_permission, $access);
-                if($permission){
-                    $exist=$this->userid_exists($user_id, field_user_id, table_panel_access_permissions);
-                    if($exist){
+                $permission = $this->db->insert_batch(table_permission, $access);
+                if ($permission) {
+                    $exist = $this->userid_exists($user_id, field_user_id, table_panel_access_permissions);
+                    if ($exist) {
                         $this->db->where(field_user_id, $user_id)->update(table_panel_access_permissions, $panel);
-                    }
-                    else{
+                    } else {
                         $this->db->insert(table_panel_access_permissions, $panel);
                     }
                     return ($this->db->affected_rows() == 1) ? true : false;
@@ -194,7 +194,7 @@ class Sarathi_model extends CI_Model
                 $permission = $this->db->insert_batch(table_permission, $access);
                 if ($permission) {
                     $this->db->insert(table_panel_access_permissions, $panel);
-                    return ($this->db->affected_rows() > 0)? true : false;
+                    return ($this->db->affected_rows() > 0) ? true : false;
                 }
             }
         } else
@@ -296,63 +296,66 @@ class Sarathi_model extends CI_Model
         return (!empty($query)) ? $query : null;
     }
 
-    public function get_sub_franchise_ids($franchise_id){
+    public function get_sub_franchise_ids($franchise_id)
+    {
 
-        $array=[];
+        $array = [];
 
         $query = $this->db->select(field_uid)->where(field_franchise_id, $franchise_id)->get(table_subfranchise);
         $query = $query->result_array();
-        foreach($query as $i=>$val){
-            $subfranchise_id=$val[field_uid];           
+        foreach ($query as $i => $val) {
+            $subfranchise_id = $val[field_uid];
 
-            $query=$this->get_sarathi_ids($subfranchise_id);
-            foreach($query as $i=>$val){
-                $array[]=$val[field_user_id];
+            $query = $this->get_sarathi_ids($subfranchise_id);
+            foreach ($query as $i => $val) {
+                $array[] = $val[field_user_id];
 
-                foreach($array as $i=>$val){
-                    $user_id=$array[$i];
+                foreach ($array as $i => $val) {
+                    $user_id = $array[$i];
                     $data[$i] = $this->get_sarathi_details_by_user_id($user_id);
                 }
             }
         }
-        return (!empty($data))?$data:[];
+        return (!empty($data)) ? $data : [];
     }
 
     public function get_sarathi_ids_of_subfranchise($subfranchise_id)
     {
-        $array=[];
-            $query=$this->get_sarathi_ids($subfranchise_id);
-            foreach($query as $i=>$val){
-                $array[]=$val[field_user_id];
+        $array = [];
+        $query = $this->get_sarathi_ids($subfranchise_id);
+        foreach ($query as $i => $val) {
+            $array[] = $val[field_user_id];
 
-                foreach($array as $i=>$val){
-                    $user_id=$array[$i];
-                    $data[$i] = $this->get_sarathi_details_by_user_id($user_id);
-                }
+            foreach ($array as $i => $val) {
+                $user_id = $array[$i];
+                $data[$i] = $this->get_sarathi_details_by_user_id($user_id);
             }
-            return (!empty($data))?$data:[];
+        }
+        return (!empty($data)) ? $data : [];
     }
 
 
 
 
-    public function get_sarathi_ids($subfranchise_id){
-        $query=$this->db->select(field_user_id)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
-        $query=$query->result_array();
+    public function get_sarathi_ids($subfranchise_id)
+    {
+        $query = $this->db->select(field_user_id)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
+        $query = $query->result_array();
         return $query;
     }
 
-    public function get_sarathi_details_by_user_id($user_id){
-        $query=$this->db->select('u.uid as user_id, u.name, u.email, u.mobile, u.status, s.sub_franchise_id')
-             ->from('users as u')->join('sarathi as s', 'u.uid=s.user_id')
-             ->where('u.uid', $user_id)
-             ->where_not_in('u.status', const_deleted)->get();
-        $query=$query->result_array();
-        foreach($query as $i=>$val){
-            $sf_id=$val['sub_franchise_id'];
-            $query[$i]['subfranchise']=$this->get_subfranchise_name_by_id($sf_id);
+    public function get_sarathi_details_by_user_id($user_id)
+    {
+        $query = $this->db->select('u.uid as user_id, u.name, u.email, u.mobile, u.status, s.sub_franchise_id')
+            ->from('users as u')->join('sarathi as s', 'u.uid=s.user_id')
+            ->where('u.uid', $user_id)
+            ->where_not_in('u.status', const_deleted)->get();
+        $query = $query->result_array();
+        foreach ($query as $i => $val) {
+            $sf_id = $val['sub_franchise_id'];
+            $query[$i]['subfranchise'] = $this->get_subfranchise_name_by_id($sf_id);
         }
-        return(!empty($query))?$query:[];
+        return (!empty($query)) ? $query : [];
     }
 
     // public function get_sarathi_details_by_user_id($user_id){
@@ -369,5 +372,52 @@ class Sarathi_model extends CI_Model
     //     return(!empty($query))?$query:[];
     // }
 
-    
+
+    public function get_recharge_histiry_of_sarathi($user_id)
+    {
+        $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ',' . field_paid_to_user_id . ',' . field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status);
+        $this->db->where(field_user_id, $user_id);
+        $query = $this->db->get(table_recharge_history);
+        $query = $query->result_array();
+
+        $final_arr = [];
+        foreach ($query as $key => $value) {
+            $paid_to_user_name = "";
+            if (!empty($value[field_paid_to_user_id])) {
+                $paid_to_user_name = $this->get_user_name_by_id($value[field_paid_to_user_id]);
+            }
+            if ($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID) {
+                $final_arr[] = [
+                    key_recharge_type => STATIC_RECHARGE_TO_DRIVER,
+                    key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_TO_DRIVER)),
+                    key_price => $value[field_recharge_amount],
+                    key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
+                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN . ' ' . $value[field_recharge_amount],
+                    key_date => date("d\nF", strtotime($value[field_created_at])),
+                    key_color_code => color_recharge_paid
+                ];
+            } else {
+                $final_arr[] = [
+                    key_recharge_type => STATIC_RECHARGE_FOR_SELF,
+                    key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_FOR_SELF)),
+                    key_price => $value[field_recharge_amount],
+                    key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
+                    key_description => 'Recharge for ' .  STATIC_RUPEE_SIGN . ' ' . $value[field_recharge_amount],
+                    key_date => date("d\nF", strtotime($value[field_created_at])),
+                    key_color_code => color_recharge_self
+                ];
+            }
+        }
+        return (!empty($query)) ? $final_arr : [];
+    }
+
+    private function get_user_name_by_id($user_id){
+        $this->db->select(field_name);
+        $this->db->limit(1);
+        $this->db->where(field_id, $user_id);
+        $query = $this->db->get(table_users);
+        $query = $query->result_array();
+        $query = (!empty($query)) ? $query[0] : "";
+        return (!empty($query)) ? $query[field_name] : "";       
+    }
 }

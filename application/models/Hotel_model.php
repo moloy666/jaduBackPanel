@@ -54,9 +54,20 @@ class Hotel_model extends CI_Model
     }
 
     public function get_booking_details($hotel_id){
-        $query = $this->db->where(field_customer_id, $hotel_id)->get('ride_normal');
+        $query = $this->db->where([field_customer_id =>$hotel_id, field_ride_status=>const_completed])->get('ride_normal');
         $query = $query->result_array();
+        foreach($query as $i=>$val){
+            $query[$i]['locationText']=json_decode($val['locationText']);
+            $query[$i]['extra_data']=json_decode($val['extra_data']);
+            $query[$i]['driver']=$this->get_driver_data_by_id($val['driver_id']);
+        }
         return (!empty($query))?$query:null;
     }
 
+    public function get_driver_data_by_id($driver_id){
+        $query = $this->db->select('u.name, u.mobile, u.dob, u.gender')->from(table_users.' as u')->join(table_driver.' as d', 'u.uid=d.user_id')
+        ->where('d.uid', $driver_id)->get();
+        $query = $query->result_array();
+        return (!empty($query))?$query:null;
+    }
 }

@@ -22,14 +22,14 @@
                                 <strong class="ml-1 mb-3">Ride Stage</strong>
 
                                 <select class="form-control" id="ride_stage">
-                                    <option value="0">Select Ride Stage</option>
+                                    <option value="">Select Ride Stage</option>
                                     <option value="completed">Completed</option>
                                     <option value="started">Started</option>
                                 </select>
                             </div>
 
                             <div class="form-group d-flex">
-                                <input type="checkbox" class="mr-3 ml-2" id="schedule_ride" style="height:auto; width:20px; cursor:pointer">
+                                <input type="checkbox" class="mr-3 ml-2" id=" " style="height:auto; width:20px; cursor:pointer">
                                 <strong>
                                     <label for="schedule_ride" class="mt-2" style="cursor:pointer">Show Schedule Ride</label>
                                 </strong>
@@ -54,7 +54,7 @@
 
                         <div class="col-lg-3 col-md-3">
                             <div class="form-group mt-4">
-                                <button class="btn btn-primary w-100" style="display:none;" id="btn_search">Search</button>
+                                <button class="btn btn-primary w-100" id="btn_search">Search</button>
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
             </div>
 
 
-            <div class="card p-2 mb-2" id="ride_details">
+            <div class="card p-2 mb-2" id="ride_details" style="display:none">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">

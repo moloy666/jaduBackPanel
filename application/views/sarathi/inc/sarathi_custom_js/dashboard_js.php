@@ -1,5 +1,5 @@
 <style>
-    .title{
+    .title {
         text-transform: capitalize;
     }
 </style>
@@ -95,7 +95,7 @@
                 text: "Driver Total kM Purchased"
             },
             data: {
-                type:'column',
+                type: 'column',
                 labels: xValues,
                 datasets: [{
                     backgroundColor: "rgba(255, 255, 255,1.0)",
@@ -103,6 +103,11 @@
                     data: yValues
                 }]
             },
+            options: {
+                legend: {
+                    display: false
+                },
+            }
         });
     }
 </script>

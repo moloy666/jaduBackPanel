@@ -98,9 +98,8 @@
                         '<td>' + data.joined + '</td>' +
                         '<td>' + data.totalDrivers + '</td>' +
                         '</tr>';
-                }
-                else{
-                    html+='';
+                } else {
+                    html += '';
                 }
             });
             $('.sarathiRelatedDataTable').html(html);
@@ -127,6 +126,15 @@
                     data: yValues
                 }]
             },
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: "Driver Number Of Sarathi"
+                }
+            }
         });
     }
 </script>

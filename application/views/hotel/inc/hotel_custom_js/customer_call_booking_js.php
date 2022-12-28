@@ -30,63 +30,64 @@
 
     // display customer by code
 
-    $('#btn_search').click(function() {
-        var booking_id = $('#booking_id').val();
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url('administrator/get_customer_by_booking_id') ?>",
-            data: {
-                "booking_id": booking_id
-            },
-            error: function(response) {
-                console.log(response);
-            },
-            success: function(response) {
-                if (response.success) {
-                    var data = response.data;
-                    var details = '';
-                    $.each(data, function(i, data) {
-                        details += `
-                            <tr>
-                                <td><image src="${apiBaseUrl}${data.profile_image}" width="50px"></td>
-                                <td class="title">${data.name}<input type="hidden" value="${data.customer_id}" id="customer_id"></td>
-                                <td>${data.email}</td>
-                                <td>${data.mobile}</td>
-                                <td>
-                                <label class="switch">
-                                    <input type="checkbox" id="check_status" onclick="default_location(this, '${data.lat}', '${data.lng}')">
-                                    <span class="slider round"></span>
-                                </label>
-                            </tr>
-                            `;
-                        $('#table').show();
-                        $('#table_details').html(details);
-                    });
+    // $('#btn_search').click(function() {
+    //     var booking_id = $('#booking_id').val();
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?= base_url('administrator/get_customer_by_booking_id') ?>",
+    //         data: {
+    //             "booking_id": booking_id
+    //         },
+    //         error: function(response) {
+    //             console.log(response);
+    //         },
+    //         success: function(response) {
+    //             if (response.success) {
+    //                 var data = response.data;
+    //                 var details = '';
+    //                 $.each(data, function(i, data) {
+    //                     details += `
+    //                         <tr>
+    //                             <td><image src="${apiBaseUrl}${data.profile_image}" width="50px"></td>
+    //                             <td class="title">${data.name}<input type="hidden" value="${data.customer_id}" id="customer_id"></td>
+    //                             <td>${data.email}</td>
+    //                             <td>${data.mobile}</td>
+    //                             <td>
+    //                             <label class="switch">
+    //                                 <input type="checkbox" id="check_status" onclick="default_location(this, '${data.lat}', '${data.lng}')">
+    //                                 <span class="slider round"></span>
+    //                             </label>
+    //                         </tr>
+    //                         `;
+    //                     $('#table').show();
+    //                     $('#table_details').html(details);
+    //                 });
 
 
-                } else {
-                    toast(response.message, "center");
-                    $('#table').hide();
-                }
-            }
-        });
-    });
+    //             } else {
+    //                 toast(response.message, "center");
+    //                 $('#table').hide();
+    //             }
+    //         }
+    //     });
+    // });
 
     // display customer current location
 
-    function default_location(element, lat, lng) {
-        if (element.checked == true) {
-            $('#lat_origin').val(lat);
-            $('#lang_origin').val(lng);
-            element.removeAttribute("checked");
-            get_address_by_lat_lng(lat, lng);
+    // function default_location(element, lat, lng) {
+    //     if (element.checked == true) {
+    //         $('#lat_origin').val(lat);
+    //         $('#lang_origin').val(lng);
+    //         element.removeAttribute("checked");
+    //         get_address_by_lat_lng(lat, lng);
 
-        } else {
-            $('#lat_origin').val('');
-            $('#lang_origin').val('');
-            $('#destination_from').val('');
-        }
-    }
+    //     } else {
+    //         $('#lat_origin').val('');
+    //         $('#lang_origin').val('');
+    //         $('#destination_from').val('');
+    //     }
+    // }
+
 
     function get_address_by_lat_lng(lat, lng) {
         var lat = lat;
@@ -171,6 +172,10 @@
         let lat_destination = $('#lat_destination').val();
         let lang_destination = $('#lang_destination').val();
 
+        let guest_name = $('#name').val();
+        let guest_email = $('#email').val();
+        let guest_mobile = $('#mobile').val();
+
         var location_distance = 0;
         var location_duration = 0;
 
@@ -184,6 +189,16 @@
             toast("Enter Destination Location", "center");
         }
 
+        if (guest_name.length < 3) {
+            flag = 1;
+            toast("Name must contain atleast 3 letters", "center");
+        }
+        
+        if (guest_mobile.length != 10) {
+            flag = 1;
+            toast("Name must contain 10 digits", "center");
+        }
+               
         let origin = {
             'lat': parseFloat(lat_origin),
             'lng': parseFloat(lang_origin)
@@ -250,10 +265,10 @@
                 "waypoints": []
             }
         }
-        var customer_id=$('#customer_id').val();
-  
+        var hotel_id = $('#hotel_id').val();
+
         $.ajax({
-            url: `<?=apiBaseUrl?>customers/${customer_id}/ride/list?service=SERVICE_CAR`,
+            url: `<?= apiBaseUrl ?>customers/${hotel_id}/ride/list?service=SERVICE_CAR`,
             type: "POST",
             headers: {
                 "x-api-key": '<?= const_x_api_key ?>',
@@ -280,12 +295,11 @@
                         <div class="card m-2 col-lg-2 col-md-2">
                             <img class="card-img-top" src="${data.imageUrl}" alt="vehicle image cap">
                             <div class="card-body d-flex justify-content-around">
-
                                 <small class="title mr-3"><strong>${data.type}</strong></small>
-
                                 <small><strong>₹${data.price}</strong></small>
                             </div>
-                            <button class="btn btn-primary w-100 mb-2" style="display:block" onclick="book_customer(this, '${data.type}', '${data.price}')">Book</button>
+                            <input type="number" class="form-control mb-1" placeholder="Enter Fare Price" id="price_${data.id}">
+                            <button class="btn btn-primary w-100 mb-2" style="display:block" onclick="book_customer(this, '${data.id}', '${data.price}')">Book</button>
                             </div>
                             `;
                         $('#wait_time').text(data.waitTime);
@@ -313,7 +327,6 @@
     function book_customer(element, service_type_id, fare) {
 
         let hotel_id = $('#hotel_id').val();
-        let customer_id = $('#customer_id').val();
         let lat_origin = $('#lat_origin').val();
         let lang_origin = $('#lang_origin').val();
         let lat_destination = $('#lat_destination').val();
@@ -325,8 +338,14 @@
         let destination_from = $('#destination_from').val();
         let destination_to = $('#destination_to').val();
 
+        let name = $('#name').val();
+        let email = $('#email').val();
+        let mobile = $('#mobile').val();
+
+        let custom_price = $('#price_' + service_type_id).val();
+
         let data = {
-            "serviceId": "SERVICE_CAR",
+            "serviceId": "SERVICE_HOTEL",
             "fareServiceTypeId": service_type_id,
             "fare": fare,
             "paymentMethod": "cash",
@@ -347,14 +366,21 @@
             }],
             "distance": distance,
             "duration": duration,
+            "extraData": {
+                "hotel": {
+                    "customerName": name,
+                    "email": email,
+                    "mobile": mobile,
+                    "hotelExtraCharges": custom_price
+                }
+            }
         }
 
         // console.log(data);
 
-  
         $.ajax({
             type: "POST",
-            url: `<?=apiBaseUrl?>customers/users/${hotel_id}/initiateBooking`,
+            url: `<?= apiBaseUrl ?>customers/users/${hotel_id}/initiateBooking`,
             headers: {
                 "x-api-key": '<?= const_x_api_key ?>',
                 "platform": "web",
@@ -367,7 +393,7 @@
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 if (response.status) {
                     $('#cab_list').hide();
                     $('#confirm_pickup_ride').show();

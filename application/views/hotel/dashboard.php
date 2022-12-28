@@ -3,80 +3,68 @@
     <div class="page-content fade-in-up">
         <div class="row">
 
-
-            <!-- <div class="col-lg-3 col-md-6">
-                <div class="ibox bg-warning color-white widget-stat">
-                    <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Drivers</div>
-                        <h2 class="m-b-5 font-strong totalDrivers">0</h2>
-
-                        <div><i class="fa fa-level-up m-r-5"></i><small><strong>Active</strong> <span class="totalActiveDrivers"></span></small></div>
-                        <div><i class="fa fa-level-down m-r-5"></i><small><strong>Inctive</strong> <span class="totalInactiveDrivers"></span></small></div>
-                    </div>
-                </div>
-            </div> -->
-
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Customer</div>
+                        <div class="m-b-5">Total Guest</div>
                         <h2 class="m-b-5 font-strong totalCustomers">0</h2>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-lg-3 col-md-6">
-                <div class="ibox bg-info color-white widget-stat">
-                    <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total revenue generated</div>
-                        <h2 class="m-b-5 font-strong totalRevenue">0</h2>
-                        <i class="widget-stat-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="27.636" viewBox="0 0 19 27.636">
-                                <path id="rupee-svgrepo-com" d="M25,7.454V4H6V7.454h6.045a5.17,5.17,0,0,1,4.862,3.454H6v3.454H16.907a5.171,5.171,0,0,1-4.862,3.454H6v4.17l9.648,9.648h4.885L10.17,21.272h1.876a8.648,8.648,0,0,0,8.46-6.909H25V10.909H20.505a8.52,8.52,0,0,0-1.6-3.454Z" transform="translate(-6 -4)" fill="#fff" />
-                            </svg>
-                        </i>
-                        <div><i class="fa fa-level-up m-r-5"></i><small><strong class="revenueStatus">0</strong> % Improvement</small></div>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
 
-        <!-- <div class="row">
-            <div class="col-md-6">
+        <div class="row">
+            <div class="col">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Data</div>
+                        <div class="ibox-title">Guest Wise Data</div>
                     </div>
                     <div class="ibox-body">
-                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>Joined At</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>Joined At</th>
-                                </tr>
-                            </tfoot>
-                            <tbody class="sarathiRelatedDataTable">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="table" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Guest</th>
+                                        <th>Mobile</th>
+                                        <th>Fare</th>
+                                        <th>Commission</th>
+                                        <th>Driver</th>
+                                        <th>Mobile</th>
+                                        <th>Origin</th>
+                                        <th>Destination</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Guest</th>
+                                        <th>Mobile</th>
+                                        <th>Fare</th>
+                                        <th>Commission</th>
+                                        <th>Driver</th>
+                                        <th>Mobile</th>
+                                        <th>Origin</th>
+                                        <th>Destination</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="guest_details">
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
 
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="ibox">
                     <div class="ibox-head">
                         <div class="ibox-title"> Data</div>
@@ -85,9 +73,9 @@
                         <canvas id="myChart" style="width:100%;height: 44rem;"></canvas>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-        </div> -->
+        </div>
 
     </div>
     <!-- END PAGE CONTENT-->
@@ -106,6 +94,7 @@
     .ibox .dashboard-card {
         height: 8rem;
     }
+
     .title {
         text-transform: capitalize;
     }
@@ -113,13 +102,40 @@
 
 <script>
     $.ajax({
-        type:"POST",
-        url:"<?=base_url('hotel/get_booking_details')?>",
-        error:function(response){
+        type: "POST",
+        url: "<?= base_url('hotel/get_booking_details') ?>",
+        error: function(response) {
             console.log(response);
         },
-        success:function(response){
+        success: function(response) {
             console.log(response);
+            let data = response.data;
+            let details = '';
+            $.each(data, function(i, data) {
+                let location = data.locationText.length - 1;
+                let driver_index = data.driver.length - 1;
+
+                details += `
+                <tr>
+                    <td>${i+1}</td>
+                    <td>${data.extra_data.hotel.customerName}</td>
+                    <td>${data.extra_data.hotel.mobile}</td>
+                    <td>₹ ${data.fare}</td>
+                    <td>₹ ${data.extra_data.hotel.hotelExtraCharges} (₹${parseInt(data.extra_data.hotel.hotelExtraCharges) - parseInt(data.fare)})</td>
+                    <td>${data.driver[driver_index].name}</td>
+                    <td>${data.driver[driver_index].mobile}</td>
+                    <td>${data.locationText[location].startAddress}</td>
+                    <td>${data.locationText[location].endAddress}</td>
+                    <td>${data.rideStartDateTime}</td>
+                    <td>${data.rideEndDateTime}</td>
+                </tr>
+                `;
+
+                $('.totalCustomers').html(i + 1);
+            });
+            $('#guest_details').html(details);
+            $('#table').dataTable();
+
         }
     });
 </script>

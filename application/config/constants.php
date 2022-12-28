@@ -274,6 +274,7 @@ define('field_extra_time_fare', 'extraRideTimeFare');
 define('field_working_status', 'working_status');
 define('field_customer_id', 'customer_id');
 define('field_permission', 'permission');
+define('field_ride_status', 'ride_status');
 
 
 ////////////////////////////////////////////////////////////////
@@ -338,6 +339,7 @@ define('const_unresolved', 'UNRESOLVED');
 define('const_delivery_guidelines', 'delivery_guidelines');
 
 define('const_success', 'success');
+define('const_completed', 'completed');
 
 
 //////////////////////////////////////////////////////
@@ -536,3 +538,43 @@ define('fr_session_coupon', 'fr_coupon');
 define('const_user_admin', 'user_admin');
 define('value_razorpay_key', 'razorpay_key');
 define('value_google_api_key', 'google_api_key');
+
+
+/////////////////////////////////////////////////
+
+define('field_recharge_type', 'recharge_type');
+define('field_recharge_amount', 'recharge_amount');
+define('field_original_km', 'original_km');
+define('field_extra_km', 'extra_km');
+
+define('field_paid_to_user_id', 'paid_to_user_id');
+define('field_payment_status', 'payment_status');
+define('field_payment_mode', 'payment_mode');
+define('table_recharge_history', 'recharge_history');
+define('STATIC_RECHARGE_TYPE_RECEIVED', 'received');
+define('STATIC_RECHARGE_TYPE_PAID', 'paid');
+define('STATIC_RECHARGE_MODE_CASH', 'cash');
+define('STATIC_RECHARGE_MODE_ONLINE', 'online');
+define('STATIC_RECHARGE_FOR_SELF', 'Self Recharge');
+define('STATIC_RECHARGE_TO_DRIVER', 'Recharged Driver');
+define('STATIC_RUPEE_SIGN', '₹');
+
+
+define('key_dashboard_data', 'dashboardData');
+define('key_short_detail', 'shortDetail');
+
+define('key_transaction_for', 'transactionFor');
+define('key_purchesed_km', 'purchesedKm');
+define('key_recharge_type', 'rechargeType');
+
+define('key_reports', 'reports');
+define('key_details', 'details');
+define('key_activities', 'activities');
+
+define('key_price', 'price');
+define('key_description', 'description');
+define('key_date','date');
+define('key_color_code', 'color_code');
+define('color_recharge_paid', '#FF061F');
+define('color_recharge_self', '#1FAE15');
+

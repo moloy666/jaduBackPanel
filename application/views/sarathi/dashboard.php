@@ -122,7 +122,7 @@ foreach ($sarathi_data as $data) {
                         <div class="ibox-title">Driver Total KM Purchased</div>
                     </div>
                     <div class="ibox-body">
-                        <canvas id="myChart" style="width:100%;height: 44rem;"></canvas>
+                        <canvas id="myChart" style="width:100%;height: 24rem;"></canvas>
                     </div>
                 </div>
             </div>

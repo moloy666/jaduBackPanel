@@ -1,6 +1,25 @@
 <script>
     // ride_details();
 
+    function get_current_date() {
+        $.ajax({
+            type: "GET",
+            url: "<?= base_url('admin/get_current_datetime') ?>",
+            async:false,
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                let date = response.date;
+                // $('#date').val(date);
+
+                $('#ride_from').val(date);
+                $('#ride_to').val(date);
+            }
+        });
+    }
+
+
     $('#ride_stage').change(() => {
         if ($('#ride_from').val() != '' && $('#ride_to').val() != '') {
             if ($('#ride_stage').val() == '0') {
@@ -32,7 +51,6 @@
         }
     });
 
-
     $('#btn_search').click(() => {
         ride_details();
     });
@@ -40,6 +58,8 @@
     ride_details();
 
     function ride_details() {
+
+        get_current_date();
 
         let ride_stage = $('#ride_stage').val();
         let ride_from = $('#ride_from').val();
@@ -51,11 +71,12 @@
             $("#schedule_ride").prop('checked', false);
             schedule = false;
         }
-        // url: `<?= apiBaseUrl ?>ride/history/all?ride_stage=${ride_stage}&from=${ride_from}&to=${ride_to}&schedule=${schedule}`,
+
 
         $.ajax({
             type: "GET",
-            url: `<?= apiBaseUrl ?>ride/history/all`,
+            url: `<?= apiBaseUrl ?>ride/history/all?ride_stage=${ride_stage}&from=${ride_from}&to=${ride_to}&schedule=${schedule}`,
+            // url: `<?= apiBaseUrl ?>ride/history/all`,
             headers: {
                 "x-api-key": '<?= const_x_api_key ?>',
                 "platform": "web",
@@ -65,32 +86,32 @@
                 console.log(response);
             },
             success: function(response) {
+                $('#table_details').html('');
                 console.log(response);
                 let data = response.data;
                 let details = '';
                 let customer_gender = '';
                 let driver_gender = '';
                 $.each(data, function(i, data) {
-                        let last_des =  data.destinations.length - 1;
-                        if(data.customer.gender.toLowerCase() == 'male') {
-                            customer_gender='(M)';
-                        }
-                        else{
-                            customer_gender='(F)';
-                        }
+                    let last_des = data.destinations.length - 1;
+                    
+                    if (data.customer.gender.toLowerCase() == 'male') {
+                        customer_gender = '(M)';
+                    } else {
+                        customer_gender = '(F)';
+                    }
 
-                        if(data.driver.gender.toLowerCase() == 'male') {
-                            driver_gender='(M)';
-                        }
-                        else{
-                            driver_gender='(F)';
-                        }
-                    details = `
+                    if (data.driver.gender.toLowerCase() == 'male') {
+                        driver_gender = '(M)';
+                    } else {
+                        driver_gender = '(F)';
+                    }
+                    details += `
                     <tr>
                         <td class="text-center">${i+1}</td>
 
-                        <td class="text-left">                            
-                            <div>
+                        <td class="text-left name_column">                            
+                            <div class="p-0">
                                 <span class="name img_name">${data.customer.name} ${customer_gender}</span>
                             </div>
                             <div class="background">
@@ -98,8 +119,8 @@
                             </div>
                         </td>
 
-                        <td class="text-left">    
-                            <div class="img">                                
+                        <td class="text-left name_column">    
+                            <div class="p-0">                                
                                 <span class="name">${data.driver.name} ${driver_gender}</span>
                             </div>
                             <div class="background">
@@ -134,9 +155,9 @@
 
                     </tr>`;
 
-                    $('#table_details').append(details);
                 });
-
+                $('#table_details').html(details);
+                $('#ride_details').show();
                 $('#table').dataTable();
             }
         });
@@ -144,23 +165,27 @@
 </script>
 
 <style>
-    .img-profile{
+    .img-profile {
         width: 50px;
         height: 50px;
         border-radius: 2rem;
     }
 
-    .name{
+    .name {
         font-weight: bold;
         font-size: small;
     }
 
-    .background{
+    .name_column {
+        width: 200px;
+    }
+
+    .background {
         /* background-color: wheat; */
         font-size: 11px;
     }
 
-    .title{
+    .title {
         text-transform: capitalize;
     }
 </style>
