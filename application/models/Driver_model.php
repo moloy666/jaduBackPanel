@@ -301,7 +301,7 @@ class Driver_model extends CI_Model
                 }
             }
         }
-        return $data;
+        return (!empty($data))?$data:[];
     }
 
     public function get_driver_data_of_subfranchise($subfranchise_id)

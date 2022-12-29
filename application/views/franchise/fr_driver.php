@@ -39,7 +39,6 @@
                             <?php
                             $count=1;
                             foreach ($driver_data as $i => $value) {
-
                                 if (!empty($value)) { ?>
                                     <tr id="row_<?= $value[0]['user_id'] ?>">
                                         <td class="text-center"><?= $count?></td>

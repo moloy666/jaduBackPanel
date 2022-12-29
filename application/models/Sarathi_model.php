@@ -373,6 +373,17 @@ class Sarathi_model extends CI_Model
     // }
 
 
+    public function get_user_name_by_id($user_id){
+        $this->db->select(field_name);
+        $this->db->limit(1);
+        $this->db->where(field_uid, $user_id);
+        $query = $this->db->get(table_users);
+        $query = $query->result_array();
+        $query = (!empty($query)) ? $query[0] : "";
+        return (!empty($query)) ? $query[field_name] : "";       
+    }
+
+
     public function get_recharge_histiry_of_sarathi($user_id)
     {
         $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ',' . field_paid_to_user_id . ',' . field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status);
@@ -385,6 +396,7 @@ class Sarathi_model extends CI_Model
             $paid_to_user_name = "";
             if (!empty($value[field_paid_to_user_id])) {
                 $paid_to_user_name = $this->get_user_name_by_id($value[field_paid_to_user_id]);
+                // $paid_to_user_name = ($value[field_paid_to_user_id]);
             }
             if ($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID) {
                 $final_arr[] = [
@@ -392,7 +404,8 @@ class Sarathi_model extends CI_Model
                     key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_TO_DRIVER)),
                     key_price => $value[field_recharge_amount],
                     key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
-                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN . ' ' . $value[field_recharge_amount],
+                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN .''.$value[field_recharge_amount],
+
                     key_date => date("d\nF", strtotime($value[field_created_at])),
                     key_color_code => color_recharge_paid
                 ];
@@ -411,13 +424,5 @@ class Sarathi_model extends CI_Model
         return (!empty($query)) ? $final_arr : [];
     }
 
-    private function get_user_name_by_id($user_id){
-        $this->db->select(field_name);
-        $this->db->limit(1);
-        $this->db->where(field_id, $user_id);
-        $query = $this->db->get(table_users);
-        $query = $query->result_array();
-        $query = (!empty($query)) ? $query[0] : "";
-        return (!empty($query)) ? $query[field_name] : "";       
-    }
+   
 }

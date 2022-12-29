@@ -15,8 +15,8 @@ foreach ($sarathi_data as $data) {
                     <div class="ibox-head">
                         <div class="ibox-title">Sarathi Recharge History</div>
 
-                        <form action="<?=base_url('sarathi/download_recharge_history')?>">
-                            <button type="submit" class="btn btn-primary" id="btn_pdf">PDF</button>
+                        <form action="<?=base_url('sarathi/download_recharge_history')?>" method="POST">
+                            <button type="submit" class="btn btnround btn-success my-1" id="btn_pdf">PDF</button>
                         </form>
 
                     </div>
@@ -44,6 +44,7 @@ foreach ($sarathi_data as $data) {
                                 </tr>
                             </tfoot>
                             <tbody id="recharge_history">
+
                                 
                             </tbody>
                         </table>

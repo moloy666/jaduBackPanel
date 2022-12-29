@@ -61,7 +61,7 @@
              </li>
 
              <li>
-                 <a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver_location') ?>" id="driver_location_page">
+                 <a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver/location') ?>" id="driver_location_page">
                      <i class="sidebar-item-icon fa fa-map-marker"></i>
                      <span class="nav-label">Driver Location</span>
                  </a>

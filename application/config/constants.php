@@ -538,6 +538,7 @@ define('fr_session_coupon', 'fr_coupon');
 define('const_user_admin', 'user_admin');
 define('value_razorpay_key', 'razorpay_key');
 define('value_google_api_key', 'google_api_key');
+define('value_sos_number', 'sos_number');
 
 
 /////////////////////////////////////////////////

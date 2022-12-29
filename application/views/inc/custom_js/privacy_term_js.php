@@ -348,6 +348,11 @@
         get_key_details(key);
     });
 
+    $('#sos_number').click(function() {
+        let key = '<?= value_sos_number ?>';
+        get_key_details(key);
+    });
+
     function get_key_details(key) {
         $.ajax({
             type: "POST",
@@ -359,7 +364,7 @@
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 let data = response.data;
                 let details = '';
                 $.each(data, function(i, data) {
@@ -375,9 +380,21 @@
                     </td>
                     `;
                 });
-                if (key == '<?= value_razorpay_key ?>') $('#razorPayKey').html(details);
+                if (key == '<?= value_razorpay_key ?>') {
+                    $('#razorPayKey').html(details);
+                    $('.ibox-title').text('Razorpay Key');
 
-                if (key == '<?= value_google_api_key ?>') $('#googleApiKey').html(details);
+                }
+                if (key == '<?= value_google_api_key ?>'){
+                    $('#googleApiKey').html(details);
+                    $('.ibox-title').text('Google Api Key');
+
+                } 
+                if (key == '<?= value_sos_number ?>'){
+                    $('#sosNumberUser').html(details);
+                    $('.ibox-title').text('SOS Number');
+
+                }
             }
         });
     }

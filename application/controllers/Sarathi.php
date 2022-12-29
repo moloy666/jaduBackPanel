@@ -351,7 +351,7 @@ class Sarathi extends CI_Controller
             // $this->load->view('sarathi/inc/sarathi_custom_js/sarathi_documents_js');
 
         } else {
-            redirect(base_url(WEB_PORTAL_SARATHI . '/index'));            //  sarathi_login
+            redirect(base_url(WEB_PORTAL_SARATHI . '/index'));  //  sarathi_login
         }
     }
 
@@ -776,14 +776,21 @@ class Sarathi extends CI_Controller
     }
 
     public function download_recharge_history(){
-        $user_id=$this->session->userdata(session_sarathi_id);
+        $user_id=$this->session->userdata(session_sarathi_user_id);
         $this->init_sarathi_model();
-        $data = $this->Sarathi_model-> get_recharge_histiry_of_sarathi($user_id);
+        $data['sarathi']=$this->Sarathi_model->get_user_name_by_id($user_id);
+        $data['sarathi_data'] = $this->Sarathi_model-> get_recharge_histiry_of_sarathi($user_id);
 
+        // $this->load_header();
+        // $this->load_sidebar();
+        // $this->load->view('sarathi/download_recharge_history', $data);
+        // $this->load_footer();
+
+        $name = 'recharge_history_'.time();
         $mpdf = new \Mpdf\Mpdf();
-        $html = $this->load->view(view_sarathi_recharge_history, $data, true);
+        $html = $this->load->view('sarathi/download_recharge_history', $data, true);
         $mpdf->WriteHTML($html);
-        $mpdf->Output("ride_history.pdf", "D");
+        $mpdf->Output($name.".pdf", "D");
         
     }
 }

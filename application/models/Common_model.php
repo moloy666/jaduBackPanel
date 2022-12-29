@@ -552,10 +552,10 @@ class Common_model extends CI_Model
 
             foreach ($result_array as $i => $value) {
                 $sarathi_id = $value[field_uid];
-                $revenue+=$this->get_revenue_of_each_sarathi($sarathi_id);
-            }    
+                $revenue += $this->get_revenue_of_each_sarathi($sarathi_id);
+            }
         }
-        return (!empty($revenue))?$revenue:0;
+        return (!empty($revenue)) ? $revenue : 0;
     }
 
     public function get_total_revenue_of_last_month($franchise_id)
@@ -569,33 +569,34 @@ class Common_model extends CI_Model
 
             foreach ($result_array as $i => $value) {
                 $sarathi_id = $value[field_uid];
-                $revenue+=$this->get_last_month_revenue($sarathi_id);
-            }    
+                $revenue += $this->get_last_month_revenue($sarathi_id);
+            }
         }
-        return (!empty($revenue))?$revenue:0;
+        return (!empty($revenue)) ? $revenue : 0;
     }
 
     public function get_total_revenue_of_last_month_of_sf($sf_id)
     {
         $revenue = 0;
-       
+
         $result_array = $this->get_sarathi_of_sub_franchise($sf_id);
 
         foreach ($result_array as $i => $value) {
             $sarathi_id = $value[field_uid];
-            $revenue+=$this->get_last_month_revenue($sarathi_id);
-        }    
-        return (!empty($revenue))?$revenue:0;
+            $revenue += $this->get_last_month_revenue($sarathi_id);
+        }
+        return (!empty($revenue)) ? $revenue : 0;
     }
 
-    public function get_total_revenue_of_subfranchise($sf_id){
+    public function get_total_revenue_of_subfranchise($sf_id)
+    {
         $revenue = 0;
         $result_array = $this->get_sarathi_of_sub_franchise($sf_id);
         foreach ($result_array as $i => $value) {
             $sarathi_id = $value[field_uid];
-            $revenue+=$this->get_revenue_of_each_sarathi($sarathi_id);
-        }    
-        return (!empty($revenue))?$revenue:0;
+            $revenue += $this->get_revenue_of_each_sarathi($sarathi_id);
+        }
+        return (!empty($revenue)) ? $revenue : 0;
     }
 
     private function get_revenue_of_each_sarathi($sarathi_id)
@@ -612,32 +613,92 @@ class Common_model extends CI_Model
         return (!empty($query)) ? $query[0]['total_amount'] : 0;
     }
 
-    public function get_revenue_status($specific_id){
-        $current_rev=$this->get_total_revenue($specific_id);
-        $last_rev=$this->get_total_revenue_of_last_month($specific_id);
+    public function get_revenue_status($specific_id)
+    {
+        $current_rev = $this->get_total_revenue($specific_id);
+        $last_rev = $this->get_total_revenue_of_last_month($specific_id);
         $growth = (($current_rev - $last_rev) / $last_rev) * 100;
-        return (!empty($growth))? round($growth) : null;
+        return (!empty($growth)) ? round($growth) : null;
     }
 
-    public function get_revenue_status_of_subfranchise($subfranchise_id){
-        $current_rev=$this->get_total_revenue_of_subfranchise($subfranchise_id);
-        $last_rev=$this->get_total_revenue_of_last_month_of_sf($subfranchise_id);
+    public function get_revenue_status_of_subfranchise($subfranchise_id)
+    {
+        $current_rev = $this->get_total_revenue_of_subfranchise($subfranchise_id);
+        $last_rev = $this->get_total_revenue_of_last_month_of_sf($subfranchise_id);
         $growth = (($current_rev - $last_rev) / $last_rev) * 100;
-        return (!empty($growth))? round($growth) : null;
+        return (!empty($growth)) ? round($growth) : null;
     }
 
-    private function get_last_month_revenue($specific_id){
+    private function get_last_month_revenue($specific_id)
+    {
 
-        $query=$this->db->select('SUM(hrt.amount) as total_amount')
-        ->from(table_history_ride_transactions . ' as hrt')
-        ->join('driver as d', 'hrt.driver_id=d.uid')
-        ->join('sarathi as s','d.sarathi_id=s.uid')
-        ->where('d.sarathi_id', $specific_id)
-        ->where('hrt.'.field_status, const_success)
-        ->where('hrt.created_at < (DATE_SUB(NOW(), INTERVAL 1 MONTH))', NULL, FALSE)
-        ->get();
+        $query = $this->db->select('SUM(hrt.amount) as total_amount')
+            ->from(table_history_ride_transactions . ' as hrt')
+            ->join('driver as d', 'hrt.driver_id=d.uid')
+            ->join('sarathi as s', 'd.sarathi_id=s.uid')
+            ->where('d.sarathi_id', $specific_id)
+            ->where('hrt.' . field_status, const_success)
+            ->where('hrt.created_at < (DATE_SUB(NOW(), INTERVAL 1 MONTH))', NULL, FALSE)
+            ->get();
         $query = $query->result_array();
-        return (!empty($query)) ? $query[0]['total_amount'] : 0;           
+        return (!empty($query)) ? $query[0]['total_amount'] : 0;
+    }
+
+    /////////////////////////////////////////////////////////////
+
+    public function display_driver_location($franchise_id)
+    {
+        $query = $this->db->select(field_uid)->where(field_franchise_id, $franchise_id)->get(table_subfranchise);
+        $query = $query->result_array();
+        foreach ($query as $i => $val) {
+            $sf_id = $val[field_uid];
+            $array_result = $this->get_sarathi_of_sub_franchise($sf_id);
+            foreach ($array_result as $i => $val) {
+                $sarathi_id = $val[field_uid];
+                $driver = $this->driver_location($sarathi_id);
+                foreach ($driver as $i => $val) {
+                    $location[] = $val;
+                }
+                unset($query[$i][field_uid]);
+            }
+        }
+        return $location;
+    }
+
+
+
+    public function display_driver_location_of_subfranchise($sf_id)
+    {
+        $query = $this->db->select(field_uid)->where(field_subfranchise_id, $sf_id)->get(table_sarathi);
+        $query = $query->result_array();
+        foreach ($query as $i => $val) {
+            $sarathi_id = $val[field_uid];
+            $driver = $this->driver_location($sarathi_id);
+            foreach ($driver as $i => $val) {
+                $location[] = $val;
+            }
+            unset($query[$i][field_uid]);
+        }
+        return (!empty($location)) ? $location : null;
+    }
+
+    private function driver_location($sarathi_id)
+    {
+        $this->db->select('d.uid as driver_id, d.current_lat as lat, d.current_lng as lng, u.name as driver_name, d.working_status_current_value as driver_status');
+        $this->db->from('driver as d');
+        $this->db->join('users as u', 'u.uid = d.user_id');
+        $this->db->where('d.sarathi_id', $sarathi_id);
+        $this->db->where('u.status', const_active);
+        $this->db->where_not_in('d.current_lat', 'NULL');
+        $this->db->where_not_in('d.current_lng', 'NULL');
+        $this->db->where_not_in('d.working_status_current_value', 'NULL');
+        $query = $this->db->get();
+        $query = $query->result_array();
+
+        foreach ($query as $i => $val) {
+            $query[$i]['driver_name'] = ucwords($val['driver_name']);
+        }
+        return (!empty($query)) ? $query : [];
     }
 
 

@@ -85,6 +85,18 @@
                 }
                 ?>
 
+             <?php
+                if ($this->session->userdata(fr_session_driver_data) == "active" || $this->session->userdata(fr_session_driver_data) == const_active) { ?>
+                 <li>
+                     <a href="<?= base_url($user_type . '/driver/location') ?>" id="dl_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'location') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-life-bouy"></i>
+                         <span class="nav-label">Driver Location</span>
+                     </a>
+                 </li>
+             <?php
+                }
+                ?>
+
 
              <?php
                 if ($this->session->userdata(fr_session_incentive) == "active" || $this->session->userdata(fr_session_incentive) == const_active) { ?>

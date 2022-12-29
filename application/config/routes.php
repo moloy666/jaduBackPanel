@@ -97,6 +97,7 @@ $route['franchise/unresolve_reports'] = 'franchise/view_unresolve_reports';
 $route['franchise/customers'] = 'franchise/view_customers';
 $route['franchise/profile'] = 'franchise/view_profile';
 $route['franchise/places'] = 'franchise/view_places';
+$route['franchise/driver/location'] = 'franchise/view_driver_location';
 
 
 $route['franchise/subfranchise/sarathi/(:any)'] = 'franchise/view_subfranchise_details/$1';
@@ -126,6 +127,7 @@ $route['subfranchise/unresolve_reports'] = 'franchise/view_unresolve_reports';
 $route['subfranchise/customers'] = 'franchise/view_customers';
 $route['subfranchise/profile'] = 'franchise/view_profile';
 $route['subfranchise/places'] = 'franchise/view_places';
+$route['subfranchise/driver/location'] = 'franchise/view_driver_location';
 
 
 $route['subfranchise/sarathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
@@ -176,6 +178,8 @@ $route['sarathi/resolve_reports'] = 'sarathi/view_resolve_reports';
 $route['sarathi/unresolve_reports'] = 'sarathi/view_unresolve_reports';
 $route['sarathi/customers'] = 'sarathi/view_customers';
 $route['sarathi/places'] = 'sarathi/view_places';
+
+$route['sarathi/driver/location'] = 'sarathi/driver_location';
 
 //////////////////////////////////////////////////////////////////////////////
 $route['administrator/dashboardData'] = 'Admin/getDashboardData';

@@ -54,6 +54,12 @@
                         <div class="shadow-lg bg-white rounded settings-left-box helpline_number">Google Api Key</div>
                     </div>
 
+                    <!-- sos number -->
+
+                    <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#sosNumber" aria-expanded="false" aria-controls="googleKey" id="sos_number">
+                        <div class="shadow-lg bg-white rounded settings-left-box sos_number">SOS Number</div>
+                    </div>
+
                     <!-- helpline number -->
 
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#manage_helpline_number" aria-expanded="false" aria-controls="helpline_number" id="helpline_number">
@@ -117,6 +123,31 @@
 
             <div class="col-md-9">
                 <input type="hidden" id="url_name">
+
+                <div id="sosNumber" class="collapse" data-parent="#accordion">
+                    <div class="ibox color-black widget-stat">
+                        <div class="ibox-head">
+                            <div class="ibox-title">SOS Number</div>
+                        </div>
+                        <div class="ibox-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sosNumberUser" class=''>
+                                        
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <h2 class="m-b-5 font-strong totalSarathi"></h2>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- razorpay key  -->
 

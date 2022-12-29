@@ -6,6 +6,8 @@
     }
 </style>
 <div class="content-wrapper">
+    <input type="hidden" value="<?=$specific_id?>" id="specific_id">
+    <input type="hidden" value="<?=$this->session->userdata(session_franchise_table)?>" id="specific_table">
     <div class='d-flex justify-content-center'>
         <div id="map" class="d-flex justify-content-center align-items-center"></div>
     </div>
@@ -13,15 +15,19 @@
 
 <script type="text/javascript">
    
-    $('#driver_location_page ').addClass('active');
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('sarathi/display_driver_location') ?>",
+            url: "<?= base_url('franchise/display_driver_location') ?>",
+            data:{
+                "specific_id":$('#specific_id').val(),
+                "table":$('#specific_table').val()
+            },
             error: function(response) {
                 console.log(response);
             },
             success: function(response) {
+                console.log(response);
                 if (response.success) {
                     var locations = response.data;
                     initMap(locations);
@@ -46,7 +52,7 @@
         };
 
         map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 6,
+            zoom: 12,
             center: myLatLng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });

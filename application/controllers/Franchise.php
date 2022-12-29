@@ -311,11 +311,6 @@ class Franchise extends CI_Controller
 					$data['driver_data'] = $this->Driver_model->get_driver_data_of_subfranchise($specific_id);
 				}
 
-				// echo"<pre>";
-				// print_r($data['driver_data']);
-				// // print_r($specific_id);
-				// die();
-
 				$this->load_header();
 				$this->load_sidebar();
 				$this->load->view(view_franchise_driver, $data);
@@ -334,14 +329,40 @@ class Franchise extends CI_Controller
 	public function view_driver_details()
 	{
 		if ($this->is_user_logged_in()) {
-			$franchise_user_id = $this->session->userdata(session_franchise_user_id);
+			$user_id = $this->session->userdata(session_franchise_user_id);
+			$table = $this->session->userdata(session_franchise_table);
+
 			$this->init_franchise_model();
-			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($franchise_user_id);
+			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
 			$this->load_header();
 			$this->load_sidebar();
 			$this->load->view(view_franchise_sarathi, $data);
 			$this->load_footer();
 			$this->load->view('franchise/inc/franchise_custom_js/sarathi_js');
+		} else {
+			$user_type = ($this->uri->segment(1));
+			redirect(base_url($user_type));
+		}
+	}
+
+	public function view_driver_location()
+	{
+		if ($this->is_user_logged_in()) {
+			$user_id = $this->session->userdata(session_franchise_user_id);
+			$table = $this->session->userdata(session_franchise_table);
+			$this->init_franchise_model();
+			$status = $this->Franchise_model->get_access_permission($user_id, access_driver_data);
+			if ($status == const_active) {
+				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view('franchise/fr_driver_location', $data);
+				$this->load_footer();
+			} else {
+				$user_type = ($this->uri->segment(1));
+				redirect(base_url($user_type));
+			}
 		} else {
 			$user_type = ($this->uri->segment(1));
 			redirect(base_url($user_type));
@@ -1180,6 +1201,24 @@ class Franchise extends CI_Controller
 			$this->response(["success" => true, "message" => "Customers Found..", "data" => $data], 200);
 		} else {
 			$this->response(["success" => false, "message" => "Not Found.."], 200);
+		}
+	}
+
+	public function display_driver_location()
+	{
+		$specific_id = $this->input->post(param_specific_id);
+		$table = $this->input->post('table');
+
+		$this->init_common_model();
+		if ($table  == table_franchise) {
+			$data = $this->Common_model->display_driver_location($specific_id);
+		} else {
+			$data = $this->Common_model->display_driver_location_of_subfranchise($specific_id);
+		}
+		if (!empty($data)) {
+			$this->response(['success' => true, 'message' => 'found', 'data' => $data], 200);
+		} else {
+			$this->response(['success' => false, 'message' => 'Driver Locations Not Found', 'data' => $data], 200);
 		}
 	}
 }

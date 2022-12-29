@@ -363,10 +363,11 @@ class Admin extends CI_Controller
 			// $this->load->view(view_ride_history, $data);
 			// $this->load_footer();
 
+			$name = 'ride_history_'.time();
 			$mpdf = new \Mpdf\Mpdf();
 			$html = $this->load->view(view_ride_history, $data, true);
 			$mpdf->WriteHTML($html);
-			$mpdf->Output("ride_history.pdf", "D");
+			$mpdf->Output($name.".pdf", "D");
 		} else {
 			redirect(base_url());
 		}
