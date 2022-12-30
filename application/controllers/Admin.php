@@ -35,7 +35,6 @@ class Admin extends CI_Controller
 	}
 
 
-
 	private function init_login_model()
 	{
 		$this->load->model(model_login);
@@ -153,6 +152,31 @@ class Admin extends CI_Controller
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	public function view_dormant_account()
+	{
+
+		if ($this->is_user_logged_in()) {
+			// if ($this->session->userdata(field_type_id) == const_user_admin) {
+			// 	$admin_id = $this->session->userdata(session_admin_specific_id);
+			// 	$this->init_admin_model();
+			// 	$status = $this->Admin_model->get_access_permission($admin_id, access_incentives_scheme);
+			// } else {
+			// 	$status = const_active;
+			// }
+			// if ($status == const_active) {
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view('dormant_account');
+				$this->load_footer();
+				$this->load->view('inc/custom_js/incentives_js');
+			// } else {
+			// 	redirect(base_url('administrator/dashboard'));
+			// }
 		} else {
 			redirect(base_url());
 		}
@@ -507,8 +531,7 @@ class Admin extends CI_Controller
 		echo json_encode($user_count);
 	}
 
-	public function update_user_profile()
-	{
+	public function update_user_profile(){
 		// $user_id = $this->input->post(param_id);
 		$user_id = $this->session->userdata(field_user_id);
 		$name = $this->input->post(param_name);
@@ -2546,6 +2569,47 @@ class Admin extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function download_progress_report($specific_id){
+		$this->init_admin_model();
+		$this->init_sarathi_model();
+		$this->init_driver_model();
+		$this->init_customer_model();
+		$this->init_franchise_model();
+		$this->init_sub_franchise_model();
+		$this->init_sarathi_details_model();
+
+
+		$data = [
+			'totalSarathi' => $this->Sarathi_model->get_total_sarathi(),
+			'drivers' => [
+				'active' => $this->Driver_model->get_total_active_drivers($specific_id),
+				'inactive' => $this->Driver_model->get_total_inactive_drivers($specific_id),
+				'total' => $this->Driver_model->get_total_drivers($specific_id)
+			],
+			'totalCustomers' => $this->Customers_model->get_total_customers($specific_id),
+			'totalFranchise' => $this->Franchise_model->get_total_franchise(),
+			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(), // Franchise specific id
+			'totalCarRunning' =>  $this->Driver_model->get_total_car_running($specific_id),
+			'totalRevenue'=> $this->Admin_model->get_total_revenue($specific_id),
+			'revenueStatus'=> $this->Admin_model->get_revenue_status($specific_id),
+			'totalKmPurchase'=> $this->Sarathi_details_model->total_km_purchase($specific_id),
+			'driver_data' => $this->Driver_model->getdriverData($specific_id)
+
+
+		];
+
+		$name = 'progress_report_'.time();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('progress_report', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($name.".pdf", "D");
+
+		// $this->load_header();
+        // $this->load_sidebar();
+        // $this->load->view('progress_report', $data);
+        // $this->load_footer();
+	}
+
 	public function getsarathiData()
 	{
 		$this->init_sarathi_model();
@@ -2751,8 +2815,7 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function total_km_purchase()
-	{	#----------sarathi panel
+	public function total_km_purchase(){	#----------sarathi panel
 		$sarathi_id = $this->input->post(param_id);
 		$this->init_sarathi_details_model();
 		$km_purchase = $this->Sarathi_details_model->total_km_purchase($sarathi_id);
@@ -4246,5 +4309,15 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function get_dormant_account_details(){
+		$this->init_admin_model();
+		$data=$this->Admin_model->get_dormant_account_details();
+		if(!empty($data)){
+			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+	}
 
 }

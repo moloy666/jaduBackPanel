@@ -19,10 +19,6 @@
               Add New <i class="fa fa-plus ml-2"></i>
             </button>
 
-            <button type="button" class="btn bgred ml-3 btnround" data-toggle="modal" data-target="#credential_modal">
-               <i class="fa fa-plus ml-2"></i>
-            </button>
-
           </div>
         </div>
       </div>
@@ -204,58 +200,7 @@
     </div>
   </div>
 
-  <div class="modal fade custmmodl" id="credential_modal" tabindex="-1" role="dialog" aria-labelledby="edtView1Title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">User Credentials</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            
-            <div class="col-md-6">
-              <div class="form-group">
-                <strong>User Id</strong>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input class="form-control" type="text"  placeholder="Your User Name" value="aman@gmail.com" id="username" disabled>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <strong>Default Password</strong>                
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input class="form-control" type="email"  placeholder="Your Default Password" value="7980265926" id="default_password" disabled>
-              </div>
-            </div>
-
-            <div class="col-md-12">
-              <div class="form-group text-center">
-                <small><strong>*Note : <i>User can change password in their profile section</i></strong></small>
-                
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_edit_modal">Close</button>
-          <button type="submit" class="btn btn-success" id="btn_update_data">Save</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
+ 
   <script>
     get_permission_list();
     display_panel_access_list();
@@ -592,7 +537,6 @@
               $('#close_add_modal').click();
               $('#add_data_form')[0].reset();
               get_admin_details();
-              display_user_credentials(email, mobile);
             } else {
               toast(data.message, "center");
             }
@@ -651,11 +595,5 @@
       });
     }
 
-    function display_user_credentials(email, mobile){
-
-    }
-
-    // <a href="<?= base_url('administrator/admin/remarks/') ?>${admin[i].uid}" class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Remarks" >            
-    // <img src="<?= base_url('assets/images/remark_icon.png') ?>" alt="" width="18px" class="mb-3">         
-    // </a>
+    
   </script>

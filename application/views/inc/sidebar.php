@@ -182,6 +182,12 @@
                 }
                 ?>
 
+             <!-- <li>
+                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/dormant_account') ?>" id="driver_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'dormant_account') ? 'active' : '' ?>">
+                     <i class="sidebar-item-icon fa fa-users"></i>
+                     <span class="nav-label">Dormant Account</span>
+                 </a>
+             </li> -->
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {

@@ -31,8 +31,8 @@
                             </label>
 
 
-                            <p class="text-muted m-0" id="txt_mobile">mobile</p>
-                            <p class="text-muted" id="txt_email">email</p>
+                            <p class="m-0" id="txt_mobile">mobile</p>
+                            <p class="" id="txt_email">email</p>
 
 
                             <div class="d-flex align-items-center justify-content-center">

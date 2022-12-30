@@ -7,6 +7,30 @@ foreach ($sarathi_data as $data) {
 
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
+
+    <div class="mt-2 row">
+        <div class="col-lg-6">
+            <?php if ($this->session->userdata(session_sarathi_status) != const_active) { ?>
+                <div class="div mt-2">
+                    <div class="form-group">
+                        <strong class="text-danger">Your Account Is Currently Not Active !</strong>
+                    </div>
+                </div>
+            <?php
+            } ?>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group float-right">
+                <form action="<?= base_url('administrator/download_progress_report/') . $sarathi_id ?>" method="post" target="_blank">
+                    <button type="submit" class="btn bgred ml-3 btnround">
+                        Download Progress Report
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="page-content fade-in-up">
         <div class="row">
             <div class="col-lg-3 col-md-6">
@@ -72,6 +96,8 @@ foreach ($sarathi_data as $data) {
                 </div>
             </div>
 
+
+
         </div>
 
         <div class="row">
@@ -83,34 +109,34 @@ foreach ($sarathi_data as $data) {
                     </div>
                     <div class="ibox-body">
                         <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                            <thead class="">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>KM Purchased</th>
-                                    <th>Vehicle Type</th>
-                                    <th>Vehicle Number</th>
-                                    <th>Joined At</th>
+                            <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                                <thead class="">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>KM Purchased</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Vehicle Number</th>
+                                        <th>Joined At</th>
 
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>KM Purchased</th>
-                                    <th>Vehicle Type</th>
-                                    <th>Vehicle Number</th>
-                                    <th>Joined At</th>
-                                    
-                                </tr>
-                            </tfoot>
-                            <tbody class="driverRelatedDataTable">
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>KM Purchased</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Vehicle Number</th>
+                                        <th>Joined At</th>
+
+                                    </tr>
+                                </tfoot>
+                                <tbody class="driverRelatedDataTable">
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>

@@ -45,7 +45,7 @@
                         <td>
                         <div>
 
-                        <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${driver[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge Driver" disabled>                        
+                        <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${driver[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge Driver">                        
                           <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
                         </button>
 

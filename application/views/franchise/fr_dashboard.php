@@ -1,10 +1,33 @@
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
-    <div class="page-content fade-in-up">
 
+    <div class="mt-2 row">
+        <div class="col-lg-6">
+            <?php if ($this->session->userdata(session_franchise_status) != const_active) { ?>
+                <div class="div mt-2">
+                    <div class="form-group">
+                        <strong class="text-danger">Your Account Is Currently Not Active !</strong>
+                    </div>
+                </div>
+            <?php
+            } ?>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group float-right">
+                <form action="<?= base_url(WEB_PORTAL_FRANCHISE . '/download_progress_report/') . $specific_level_user_id ?>" method="post" target="_blank">
+                    <button type="submit" class="btn bgred ml-3 btnround">
+                        Download Progress Report
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-content fade-in-up">
         <input type="hidden" value="<?= $specific_level_user_id ?>" id="specific_id">
         <input type="hidden" value="<?= $this->session->userdata(session_franchise_table) ?>" id="specific_table">
-
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-warning color-white widget-stat">

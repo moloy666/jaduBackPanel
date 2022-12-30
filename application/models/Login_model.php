@@ -50,6 +50,27 @@ class Login_model extends CI_Model
         return (!empty($query)) ? $query[0] : null;
     }
 
+    /////////////////////
+
+    public function get_franchise_details_on_condition($email, $password, $type_id, $table)
+    {
+   
+        $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_type_id . ',' . $table . '.' . field_password.','.field_profile_image.','. $table.'.'.field_uid.' as specific_id, users.status');
+        $this->db->from(table_users);
+        $this->db->join(table_user_type, table_users . '.' . field_type_id . '=' . table_user_type . '.' . field_uid);
+        $this->db->join($table, table_users . '.' . field_uid . '=' . $table . '.' . field_user_id);
+
+        $this->db->where(table_users . '.' . field_email, $email);
+        $this->db->where($table . '.' . field_password, $password);
+        $this->db->where(table_users . '.' . field_type_id, $type_id);
+
+        $this->db->where_not_in(table_users . '.' . field_status, const_deleted);
+
+        $query = $this->db->get();
+        $query = $query->result();
+        return (!empty($query)) ? $query[0] : null;
+    }
+
     public function display_user_profile($user_id)
     {
         $this->db->where(field_uid, $user_id);
@@ -101,7 +122,7 @@ class Login_model extends CI_Model
 
     public function get_sarathi_details_on_condition($email, $mobile){
 
-        $this->db->where(['email'=> $email, 'mobile'=> $mobile, 'status'=> const_active]);
+        $this->db->where(['email'=> $email, 'mobile'=> $mobile])->where_not_in(field_status, const_deleted);
         $query = $this->db->get('users');
         $query = $query->result();
         return (!empty($query)) ? $query[0] : null;

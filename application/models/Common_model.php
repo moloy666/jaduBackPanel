@@ -723,4 +723,10 @@ class Common_model extends CI_Model
         }
         return (!empty($query)) ? $query[0] : [];
     }
+
+    public function get_status_by_user_id($user_id){
+        $query = $this->db->select(field_status)->where(field_uid, $user_id)->get(table_users);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_status]:const_deactive;
+    }
 }

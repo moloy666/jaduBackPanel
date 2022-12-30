@@ -17,18 +17,22 @@ class Franchise extends CI_Controller
 		$this->load->view(franchise_page_footer_link, $footer_link_data);
 	}
 
-	// private function is_user_logged_in(){
-	// 	$logged_in = (!empty($this->session->userdata(session_franchise_name))) ? true : false;
-	// 	return $logged_in;
-	// }
-
-	private function is_user_logged_in()
-	{
+	private function is_user_active(){
 		$user_id = $this->session->userdata(session_franchise_user_id);
 		$this->init_login_model();
 		$status = $this->Login_model->get_user_status_by_user_id($user_id);
 
 		$logged_in = (!empty($this->session->userdata(session_franchise_name)) && $status == const_active) ? true : false;
+		return $logged_in;
+	}
+
+	private function is_user_logged_in()
+	{
+		// $user_id = $this->session->userdata(session_franchise_user_id);
+		// $this->init_login_model();
+		// $status = $this->Login_model->get_user_status_by_user_id($user_id);
+
+		$logged_in = (!empty($this->session->userdata(session_franchise_name))) ? true : false;
 		return $logged_in;
 	}
 
@@ -152,6 +156,8 @@ class Franchise extends CI_Controller
 
 			$this->session->set_userdata(fr_session_places, $this->Franchise_model->get_access_permission($user_id, access_places));
 			$this->session->set_userdata(fr_session_coupon, $this->Franchise_model->get_access_permission($user_id, access_coupon));
+
+			$this->session->set_userdata(session_franchise_status, $this->Common_model->get_status_by_user_id($user_id));
 
 			$this->load_header();
 			$this->load_sidebar();
@@ -371,7 +377,7 @@ class Franchise extends CI_Controller
 
 	public function view_incentives()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -396,7 +402,7 @@ class Franchise extends CI_Controller
 
 	public function view_call_booking()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -421,7 +427,7 @@ class Franchise extends CI_Controller
 
 	public function view_rental_slabs()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -446,7 +452,7 @@ class Franchise extends CI_Controller
 
 	public function view_rental_features()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -471,7 +477,7 @@ class Franchise extends CI_Controller
 
 	public function view_rental_details()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -496,7 +502,7 @@ class Franchise extends CI_Controller
 
 	public function view_fare_list()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -521,7 +527,7 @@ class Franchise extends CI_Controller
 
 	public function view_services()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -546,7 +552,7 @@ class Franchise extends CI_Controller
 
 	public function view_compliments()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -572,7 +578,7 @@ class Franchise extends CI_Controller
 	public function view_achivements()
 	{
 
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 			$this->init_franchise_model();
@@ -596,7 +602,7 @@ class Franchise extends CI_Controller
 
 	public function view_help()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -621,7 +627,7 @@ class Franchise extends CI_Controller
 
 	public function view_feedback()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -646,7 +652,7 @@ class Franchise extends CI_Controller
 
 	public function view_resolve_reports()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -671,7 +677,7 @@ class Franchise extends CI_Controller
 
 	public function view_unresolve_reports()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -696,7 +702,7 @@ class Franchise extends CI_Controller
 
 	public function view_places()
 	{
-		if ($this->is_user_logged_in()) {
+		if ($this->is_user_active()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
 
@@ -797,7 +803,7 @@ class Franchise extends CI_Controller
 			$type_id = $type->uid;
 			$this->session->set_userdata(session_franchise_user_type, $user_type_name);		// name => franchise || subfranchise
 			if (!empty($email) && !empty($password)) {
-				$user_details = $this->Login_model->get_user_details_on_condition($email, $password, $type_id, $table);
+				$user_details = $this->Login_model->get_franchise_details_on_condition($email, $password, $type_id, $table);
 				if (!empty($user_details)) {
 
 					$this->session->set_userdata(session_franchise_type_id, $user_details->type_id);
@@ -805,6 +811,7 @@ class Franchise extends CI_Controller
 					$this->session->set_userdata(session_franchise_name, $user_details->name);
 					$this->session->set_userdata(session_franchise_user_id, $user_details->uid);
 					$this->session->set_userdata(session_franchise_profile_image, $user_details->profile_image);
+					$this->session->set_userdata(session_franchise_status, $user_details->status);
 
 
 					if ($this->session->userdata(session_franchise_type_id) == "user_franchise") {
@@ -840,6 +847,7 @@ class Franchise extends CI_Controller
 		$this->session->unset_userdata(session_sarathi_data);
 		$this->session->unset_userdata(session_driver_data);
 		$this->session->unset_userdata(session_customers_data);
+		$this->session->unset_userdata(session_franchise_status);
 
 		$this->session->unset_userdata(fr_session_incentive);
 		$this->session->unset_userdata(fr_session_call_booking);
@@ -900,10 +908,51 @@ class Franchise extends CI_Controller
 			'totalCustomers' => $this->Common_model->get_total_customers_of_subfranchise($subfranchise_id),
 			'totalRevenue' =>  $this->Common_model->get_total_revenue_of_subfranchise($subfranchise_id),
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($subfranchise_id),
-
-
 		];
 		echo json_encode($data);
+	}
+
+	public function download_progress_report($specific_id){
+		$table = $this->session->userdata(session_franchise_table);
+		$this->init_common_model();
+		if($table == table_franchise){
+			$data = [
+				'totalSubFranchise' => $this->Common_model->get_total_sub_franchise($specific_id),
+				'totalSarathi' => $this->Common_model->get_total_sarathi($specific_id),
+				'drivers' => [
+					'active' => $this->Common_model->get_total_active_drivers($specific_id),
+					'inactive' => $this->Common_model->get_total_inactive_drivers($specific_id),
+					'total' => $this->Common_model->get_total_drivers($specific_id)
+				],
+				'totalCustomers' => $this->Common_model->get_total_customers($specific_id),
+				'totalRevenue' =>  $this->Common_model->get_total_revenue($specific_id),
+				'revenueStatus' =>  $this->Common_model->get_revenue_status($specific_id),
+				'totalCarRunning' =>  $this->Common_model->get_total_active_drivers($specific_id),
+				'sarathi_data' => $this->Common_model->getSarahiData_for_franchise($specific_id),
+				'totalKmPurchase' =>  0,
+			];
+		}
+		else{
+			$data = [
+				'totalSarathi' => $this->Common_model->get_total_sarathi_of_sub_franchise($specific_id),
+				'drivers' => [
+					'active' => $this->Common_model->get_total_active_driver_of_sub_franchise($specific_id),
+					'inactive' => $this->Common_model->get_total_inactive_driver_of_sub_franchise($specific_id),
+					'total' => $this->Common_model->get_total_driver_of_sub_franchise($specific_id)
+				],
+				'totalCustomers' => $this->Common_model->get_total_customers_of_subfranchise($specific_id),
+				'totalRevenue' =>  $this->Common_model->get_total_revenue_of_subfranchise($specific_id),
+				'revenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($specific_id),
+				'totalCarRunning' =>  $this->Common_model->get_total_active_driver_of_sub_franchise($specific_id),
+				'sarathi_data' => $this->Common_model->getSarahiData_for_subfranchise($specific_id),
+				'totalKmPurchase' =>  0,
+			];
+		}
+		$name = 'progress_report_'.time();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('franchise/fr_progress_report', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($name.".pdf", "D");
 	}
 
 

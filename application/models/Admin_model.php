@@ -1647,4 +1647,10 @@ class Admin_model extends CI_Model
         return($this->db->affected_rows()==1)?true:false;
     }
 
+    public function get_dormant_account_details(){
+        $query = $this->db->where(field_status, const_deactive)->get(table_users);
+        $query = $query->result_array();
+        return(!empty($query))?$query:[];
+    }
+
 }

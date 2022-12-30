@@ -23,6 +23,16 @@ class Sarathi extends CI_Controller
 
     private function is_sarathi_logged_in()
     {
+        // $user_id = $this->session->userdata(session_sarathi_user_id);
+        // $this->init_login_model();
+        // $status = $this->Login_model->get_sarathi_status_by_user_id($user_id);
+
+        $logged_in = (!empty($this->session->userdata(session_sarathi_name))) ? true : false;
+        return $logged_in;
+    }
+
+    private function is_sarathi_active()
+    {
         $user_id = $this->session->userdata(session_sarathi_user_id);
         $this->init_login_model();
         $status = $this->Login_model->get_sarathi_status_by_user_id($user_id);
@@ -160,6 +170,7 @@ class Sarathi extends CI_Controller
     {
         if ($this->is_sarathi_logged_in()) {
             $this->init_sarathi_model();
+            $this->init_common_model();
             $user_id = $this->session->userdata(session_sarathi_user_id);
             // $this->session->set_userdata(sarathi_session_driver_data, $this->Admin_model->get_access_permission($user_id, access_driver_data));
 
@@ -177,8 +188,12 @@ class Sarathi extends CI_Controller
             $this->session->set_userdata(sarathi_session_places, $this->Sarathi_model->get_access_permission($user_id, access_places));
             $this->session->set_userdata(sarathi_session_coupon, $this->Sarathi_model->get_access_permission($user_id, access_coupon));
 
+			$this->session->set_userdata(session_sarathi_status, $this->Common_model->get_status_by_user_id($user_id));
+
+
             $this->init_sarathi_details_model();
             $data['sarathi_data'] = $this->Sarathi_details_model->get_all_sarathi_details($user_id);
+
             $this->load_header();
             $this->load_sidebar();
             $this->load->view(view_sarathi_dashboard, $data);
@@ -207,8 +222,7 @@ class Sarathi extends CI_Controller
     }
 
 
-    public function sarathi_details()
-    {  //  sarathi/driver
+    public function sarathi_details(){  //  sarathi/driver
 
         if ($this->is_sarathi_logged_in()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
@@ -228,8 +242,7 @@ class Sarathi extends CI_Controller
         }
     }
 
-    public function show_pending_drivers($user_id)
-    {   // open pending driver document page
+    public function show_pending_drivers($user_id){   // open pending driver document page
         $this->init_sarathi_details_model();
 
         $user['user_id'] = $user_id;
@@ -456,7 +469,7 @@ class Sarathi extends CI_Controller
 
     public function view_incentives()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
 
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
@@ -481,7 +494,7 @@ class Sarathi extends CI_Controller
 
     public function view_call_booking()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_call_booking);
@@ -501,7 +514,7 @@ class Sarathi extends CI_Controller
 
     public function view_rental_slabs()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_ride_rental);
@@ -521,7 +534,7 @@ class Sarathi extends CI_Controller
 
     public function view_rental_features()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_ride_rental);
@@ -541,7 +554,7 @@ class Sarathi extends CI_Controller
 
     public function view_rental_details()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_ride_rental);
@@ -561,7 +574,7 @@ class Sarathi extends CI_Controller
 
     public function view_fare_list()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_fare_management);
@@ -581,7 +594,7 @@ class Sarathi extends CI_Controller
 
     public function view_services()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_service_ride);
@@ -601,7 +614,7 @@ class Sarathi extends CI_Controller
 
     public function view_compliments()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_compliments);
@@ -622,7 +635,7 @@ class Sarathi extends CI_Controller
 
     public function view_achivements()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_achivements);
@@ -645,7 +658,7 @@ class Sarathi extends CI_Controller
 
     public function view_help()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_help);
@@ -665,7 +678,7 @@ class Sarathi extends CI_Controller
 
     public function view_feedback()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
 
@@ -683,7 +696,7 @@ class Sarathi extends CI_Controller
 
     public function view_resolve_reports()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_reports);
@@ -705,7 +718,7 @@ class Sarathi extends CI_Controller
 
     public function view_unresolve_reports()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();
             $status = $this->Sarathi_model->get_access_permission($user_id, access_reports);
@@ -751,8 +764,7 @@ class Sarathi extends CI_Controller
         }
     }
 
-    public function get_customer_details()
-    {
+    public function get_customer_details(){
         $customer_id = $this->input->post(param_id);
         $this->init_customer_model();
         $data = $this->Customers_model->get_customer_details($customer_id);

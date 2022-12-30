@@ -26,8 +26,8 @@
 
                             </label>
 
-                            <p class="text-muted m-0" id="txt_mobile">mobile</p>
-                            <p class="text-muted" id="txt_email">email</p>
+                            <p class="m-0" id="txt_mobile">mobile</p>
+                            <p class="" id="txt_email">email</p>
 
                             <div class="d-flex align-items-center justify-content-center">
                                 <button type="submit" class="btn btn-sm btn-primary " id="btn_update_image" style="display:none;">Update Image</button>
