@@ -1542,8 +1542,13 @@ class Admin_model extends CI_Model
     public function get_revenue_status($specific_id){
         $last_rev=$this->get_last_month_revenue($specific_id);
         $current_rev=$this->get_currrent_revenue($specific_id);
-        $growth = (($current_rev - $last_rev) / $last_rev) * 100;
-        return (!empty($growth))? round($growth) : null;
+        if($last_rev!=0){
+            $growth = (($current_rev - $last_rev) / $last_rev) * 100;
+            return (!empty($growth))? round($growth) : null;
+        }
+        else{
+            return 0;
+        }
     }
 
   

@@ -345,4 +345,14 @@ class Driver_model extends CI_Model
         $query = $query->result_array();
         return $query;
     }
+
+
+    public function driver_progress($user_id){
+        $query=$this->db->select('u.name, u.email, u.mobile, d.vehicle_number, d.total_km_purchased, d.wallet_value, d.totalTravelled, totalRideTime')->from(table_users.' as u')->join(table_driver.' as d','u.uid=d.user_id')
+        ->where('u.uid', $user_id)->get();
+
+        $query = $query->result_array();
+        return(!empty($query))?$query[0]:[];
+
+    }
 }

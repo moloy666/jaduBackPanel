@@ -424,5 +424,12 @@ class Sarathi_model extends CI_Model
         return (!empty($query)) ? $final_arr : [];
     }
 
+    public function get_user_details($sarathi_id){
+        $query = $this->db->select('u.name, u.mobile, u.email, u.status')->from(table_users.' as u')
+        ->join(table_sarathi.' as s', 'u.uid=s.user_id')->where('s.uid', $sarathi_id)->get();
+        $query = $query->result_array();
+        return(!empty($query))?$query[0]:[];
+    }
+
    
 }

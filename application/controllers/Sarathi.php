@@ -444,7 +444,7 @@ class Sarathi extends CI_Controller
 
     public function view_places()
     {
-        if ($this->is_sarathi_logged_in()) {
+        if ($this->is_sarathi_active()) {
 
             $user_id = $this->session->userdata(session_sarathi_user_id);
             $this->init_sarathi_model();

@@ -156,7 +156,7 @@
                         <div class="ibox-title">Sarathi Wise Data</div>
                     </div>
                     <div class="ibox-body">
-                        <canvas id="myChart" style="width:100%;height: 44rem;"></canvas>
+                        <canvas id="myChart" style="width:100%;height: 24rem;"></canvas>
                     </div>
                 </div>
             </div>

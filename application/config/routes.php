@@ -286,7 +286,7 @@ $route['administrator/customers/ride_history_csv/(:any)'] = 'Admin/ride_history_
 
 $route['administrator/admin/remarks/(:any)'] = 'Admin/view_display_remarks/$1';
 $route['administrator/admin/details/(:any)'] = 'Admin/view_admin_details/$1';
-$route['administrator/admin/download_progress_report/(:any)'] = 'Admin/download_progress_report/$1';
+$route['administrator/download_progress_report/(:any)'] = 'Admin/download_progress_report/$1';
 
 //////////////////////////////////////////////////////////////////////////////
 

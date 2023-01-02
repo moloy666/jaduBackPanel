@@ -143,8 +143,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="" id="parent_id" >
-                                    <input class="form-control" type="text" placeholder="Enter Name" id="parent_name" disabled>
+                                    <input class="form-control" type="hidden" placeholder="" id="parent_id" >
+                                    <input class="form-control title" type="text" placeholder="Enter Name" id="parent_name" disabled>
                                 </div>
                             </div>
                           

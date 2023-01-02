@@ -930,6 +930,7 @@ class Franchise extends CI_Controller
 				'totalCarRunning' =>  $this->Common_model->get_total_active_drivers($specific_id),
 				'sarathi_data' => $this->Common_model->getSarahiData_for_franchise($specific_id),
 				'totalKmPurchase' =>  0,
+				'user_details'=>$this->Common_model->get_user_details($specific_id, $table)
 			];
 		}
 		else{
@@ -946,6 +947,7 @@ class Franchise extends CI_Controller
 				'totalCarRunning' =>  $this->Common_model->get_total_active_driver_of_sub_franchise($specific_id),
 				'sarathi_data' => $this->Common_model->getSarahiData_for_subfranchise($specific_id),
 				'totalKmPurchase' =>  0,
+				'user_details'=>$this->Common_model->get_user_details($specific_id, $table)
 			];
 		}
 		$name = 'progress_report_'.time();

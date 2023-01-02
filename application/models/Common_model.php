@@ -729,4 +729,11 @@ class Common_model extends CI_Model
         $query = $query->result_array();
         return(!empty($query))?$query[0][field_status]:const_deactive;
     }
+
+    public function get_user_details($specific_id, $table){
+        $query = $this->db->select('u.name, u.mobile, u.email, u.status')->from(table_users.' as u')
+        ->join($table.' as t', 'u.uid=t.user_id')->where('t.uid', $specific_id)->get();
+        $query = $query->result_array();
+        return (!empty($query))?$query[0]:[];
+    }
 }

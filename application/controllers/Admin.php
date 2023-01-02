@@ -2578,6 +2578,15 @@ class Admin extends CI_Controller
 		$this->init_sub_franchise_model();
 		$this->init_sarathi_details_model();
 
+		if($specific_id == table_administrator){
+			$view = 'progress_report';
+			$specific_id='';
+
+		}
+		else{
+			$view = 'sarathi/sarathi_progress';
+			
+		}
 
 		$data = [
 			'totalSarathi' => $this->Sarathi_model->get_total_sarathi(),
@@ -2588,19 +2597,20 @@ class Admin extends CI_Controller
 			],
 			'totalCustomers' => $this->Customers_model->get_total_customers($specific_id),
 			'totalFranchise' => $this->Franchise_model->get_total_franchise(),
-			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(), // Franchise specific id
+			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(),  // Franchise specific id
 			'totalCarRunning' =>  $this->Driver_model->get_total_car_running($specific_id),
 			'totalRevenue'=> $this->Admin_model->get_total_revenue($specific_id),
 			'revenueStatus'=> $this->Admin_model->get_revenue_status($specific_id),
 			'totalKmPurchase'=> $this->Sarathi_details_model->total_km_purchase($specific_id),
-			'driver_data' => $this->Driver_model->getdriverData($specific_id)
-
-
+			'driver_data' => $this->Driver_model->getdriverData($specific_id),
+			'user_details'=>$this->Sarathi_model->get_user_details($specific_id),
+			'sarathi_data' => $this->Sarathi_model->getSarahiData()
 		];
+		
 
 		$name = 'progress_report_'.time();
         $mpdf = new \Mpdf\Mpdf();
-        $html = $this->load->view('progress_report', $data, true);
+        $html = $this->load->view($view, $data, true);
         $mpdf->WriteHTML($html);
         $mpdf->Output($name.".pdf", "D");
 
@@ -4318,6 +4328,27 @@ class Admin extends CI_Controller
 		else{
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
+	}
+
+	public function driver_progress($user_id){
+		$this->init_driver_model();
+		$data['data'] = $this->Driver_model->driver_progress($user_id);
+
+		// echo"<pre>";
+		// print_r($data);
+		// die();
+		
+		$name = 'progress_report_'.time();
+        $mpdf = new \Mpdf\Mpdf();
+		$mpdf->showImageErrors = true;
+        $html = $this->load->view('driver_progress', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($name.".pdf", "I");
+
+		// $this->load_header();
+        // $this->load_sidebar();
+        // $this->load->view('driver_progress', $data);
+        // $this->load_footer();
 	}
 
 }

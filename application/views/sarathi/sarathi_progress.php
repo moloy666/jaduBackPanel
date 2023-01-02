@@ -33,6 +33,7 @@
         height: 120px;
         width: 200px;
     }
+
 </style>
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
@@ -40,7 +41,9 @@
     <div class="page-content fade-in-up">
 
         <div class="report">
-            <p style="text-align:center;"><strong>JaduRide Progress Report</strong></p>
+            <p style="text-align:center;"><strong>JaduRide</strong></p>
+            <p style="text-align:center;"><strong>Progress Report Of <?=ucwords($user_details['name'])?></strong></p>
+
             <div class="table-responsive ">
                 <table class="table table-striped table-bordered table-hover report_details" id="table" cellspacing="0" width="100%">
                     <tr>
@@ -65,30 +68,8 @@
                                 <h2 class="m-b-5 font-strong totalCarRunning"><?= $totalCarRunning ?></h2>
                             </div>
                         </td>
+
                     </tr>
-
-                    <tr>
-                        <td>
-                            <div>
-                                <div class="m-b-5">Registered Subfranchise</div>
-                                <h2 class="m-b-5 font-strong totalsf"><?= $totalFranchise ?></h2>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <div class="m-b-5">Registered Subfranchise</div>
-                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSubFranchise ?></h2>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <div class="m-b-5">Registered Subfranchise</div>
-                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSubFranchise ?></h2>
-                            </div>
-                        </td>
-                    </tr>
-
-
                     <tr>
                         <td>
                             <div>
@@ -121,58 +102,58 @@
 
         <div class="row table_details">
             <div class="col-md-12">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <div class="ibox-title">Sarathi Wise Data</div>
-                    </div>
-                    <div class="ibox-body">
-                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>KM Purchased</th>
-                                    <th>Joined At</th>
-                                    <th>Number Of Driver</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>KM Purchased</th>
-                                    <th>Joined At</th>
-                                    <th>Number Of Driver</th>
-                                </tr>
-                            </tfoot>
-                            <tbody class="sarathiRelatedDataTable">
-                                <?php
-                                if (!empty($sarathi_data)) {
-                                    foreach ($sarathi_data as $i => $val) {
-                                        if (!empty($val)) { ?>
-                                            <tr>
-                                                <td class="title"><?= $i + 1 ?></td>
-                                                <td class="title"><?= $val['name'] ?> </td>
-                                                <td class="text-center"><?= $val['refferal_code'] ?> </td>
-                                                <td><?= $val['total_km_purchased'] ?> </td>
-                                                <td><?= $val['joined'] ?> </td>
-                                                <td><?= $val['totalDrivers'] ?> </td>
-                                            </tr>
-                                <?php
-                                        }
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='6'>Record Not Available</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="ibox-head">
+                    <div class="ibox-title">Driver Wise Data</div>
                 </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                        <thead class="">
+                            <tr>
+                                <th>Name</th>
+                                <th>KM Purchased</th>
+                                <th>Vehicle Type</th>
+                                <th>Vehicle Number</th>
+                                <th>Joined At</th>
+
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>KM Purchased</th>
+                                <th>Vehicle Type</th>
+                                <th>Vehicle Number</th>
+                                <th>Joined At</th>
+
+                            </tr>
+                        </tfoot>
+                        <tbody class="driverRelatedDataTable">
+                            <?php
+                            if (!empty($driver_data)) {
+                                foreach ($driver_data as $i => $val) {
+                            ?>
+                                    <tr>
+                                        <td class="title"><?= $val['name'] ?></td>
+                                        <td><?= $val['total_km_purchased'] . ' KM' ?></td>
+                                        <td class="title"><?= $val['vehicle_name'] ?></td>
+                                        <td><?= $val['vehicle_number'] ?></td>
+                                        <td><?= $val['joined'] ?></td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>No Record Found</td></tr>";
+                            }
+                            ?>
+
+
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
+
     </div>
     <!-- END PAGE CONTENT-->
 
