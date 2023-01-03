@@ -51,11 +51,11 @@
             </div> -->
 
        
-            <div>
-                <strong id="txt_report">Progress Report of <?= $data['name'] ?></strong>
-            </div>
-
-          
+            
+            <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p>
+            <p style="text-align:center;"><strong id="txt_report">JaduRide Driver</strong></p>
+            <p style="text-align:center;"><strong id="txt_report">Progress Report of <?= $data['name'] ?></strong></p>
+                      
             <div class="table-responsive ">
                 <table class="table table-striped table-bordered table-hover report_details" id="table" cellspacing="0" width="100%">
                     <tr>
@@ -86,6 +86,22 @@
                             <div>
                                 <div class="m-b-5">Total KM Purchased</div>
                                 <h2 class="m-b-5 font-strong totalKmPurchased"><?= $data['total_km_purchased'] ?> KM</h2>
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <div class="m-b-5" style="margin-bottom:10px;">Ride Type</div>
+                                <h3 class="m-b-5 font-strong totalRegisteredCustomers"><?= $data['ride'] ?></h3>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div>
+                                <div class="m-b-5" style="margin-bottom:10px;">Cab Type</div>
+                                <h3 class="m-b-5 font-strong totalKmPurchased"><?= $data['cab'] ?></h3>
                             </div>
                         </td>
 

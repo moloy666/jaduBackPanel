@@ -312,4 +312,30 @@
             }
         });
     });
+
+    get_panel_access_list();
+
+    function get_panel_access_list() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(WEB_PORTAL_SARATHI.'/get_panel_access_list') ?>",
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                let permission = response.data.permission;
+                let data = permission.split(",");
+                let access='';
+
+                $.each(data, function(i) {
+                    // text.slice(0, 5);
+
+                    access = data[i].slice(7, (data[i].length)).replace('_', ' ')  +' || '+access;
+                });
+                $('#panel').html(access);
+            }
+        });
+    }
+
+
 </script>

@@ -43,6 +43,19 @@
                         <span class="slider round"></span></label>
                         </td>
                         <td>
+                            <div>
+
+                            <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Export as PDF" onclick="download_ride_history('${driver[i].user_id}')">            
+                            <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
+                            </button>
+
+                            <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Export as CSV" onclick="download_ride_history_csv('${driver[i].user_id}')">            
+                            <img src="<?= base_url('assets/images/xls.png') ?>" alt="" width="20px" class="mb-3">         
+                            </button>
+
+                            </div>
+                            </td>
+                        <td>
                         <div>
 
                         <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${driver[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge Driver">                        
@@ -63,13 +76,25 @@
                     $('#table').dataTable();
                     get_panel_access_list();
                 } else {
-                    console.log(response);
+                    // console.log(response);
+                    $('#table').dataTable();
+
                 }
             },
             error: function(response) {
                 console.log(response);
             }
         });
+    }
+
+    function download_ride_history(user_id) {
+        var url = `<?= base_url('administrator/driver/ride_history/') ?>${user_id}`;
+        window.open(url, '_blank');
+    }
+
+    function download_ride_history_csv(user_id) {
+        var url = `<?= base_url('administrator/driver/ride_history_csv/') ?>${user_id}`;
+        window.open(url, '_blank');
     }
 
     $('#pending_driver_details').click(function() {
@@ -339,7 +364,7 @@
     function get_panel_access_list() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(WEB_PORTAL_SARATHI.'/get_panel_access_list') ?>",
+            url: "<?= base_url(WEB_PORTAL_SARATHI . '/get_panel_access_list') ?>",
             error: function(response) {
                 console.log(response);
             },

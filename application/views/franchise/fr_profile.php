@@ -150,7 +150,7 @@
         <div class="mt-2" id="accordionExample">
             <div class="card">
                 <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="cursor:pointer">
-                    <strong class="text-primary">Access List</strong>
+                    <strong class="text-primary">Access List : <span id="panel" class="title"></span></strong>
                 </div>
 
                 <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">

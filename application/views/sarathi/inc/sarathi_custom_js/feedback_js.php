@@ -38,7 +38,9 @@
                     $('#table').dataTable();
                 }
                 else{
-                    console.log(response);
+                    // console.log(response);
+                    $('#table').dataTable();
+
                 }
             },
         })

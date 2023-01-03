@@ -26,7 +26,9 @@
         <div class="page-content fade-in-up">
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
-                    <h5 class="text-primary">Ride History Of <?= ucwords($username) ?></h5>
+                    <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p> 
+                    <p style="text-align:center;"><strong>JaduRide Driver</strong></p> 
+                    <p style="text-align:center;"><strong>Ride History Of <?= ucwords($username) ?></strong></p> 
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">

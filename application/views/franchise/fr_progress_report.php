@@ -33,7 +33,8 @@
         height: 120px;
         width: 200px;
     }
-    #txt_report{
+
+    #txt_report {
         margin-bottom: 10px;
     }
 </style>
@@ -43,8 +44,10 @@
     <div class="page-content fade-in-up">
 
         <div class="report">
+            <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p>
+
             <p style="text-align:center"><strong>JaduRide</strong></p>
-            <p style="text-align:center"><strong>Progress Report Of <?= ucwords($user_details['name']);?></strong></p>
+            <p style="text-align:center"><strong>Progress Report Of <?= ucwords($user_details['name']); ?></strong></p>
             <div class="table-responsive ">
                 <table class="table table-striped table-bordered table-hover report_details" id="table" cellspacing="0" width="100%">
                     <tr>

@@ -227,7 +227,8 @@ class Driver_model extends CI_Model
 
         $this->db->from(table_driver . ' as d');
         $this->db->join(table_users . ' as u', 'd.user_id = u.uid', 'left');
-        $this->db->join(table_vehicle_type . ' as v', 'v.uid = d.vehicle_type_id');
+        $this->db->join(table_vehicle_type . ' as v', 'v.uid = d.vehicle_type_id', 'left');
+        $this->db->where('d.working_status', const_active);
         $this->db->where('d.sarathi_id', $sarathi_id);
         $this->db->where_not_in('u.status', const_deleted);
         $query = $this->db->get();
@@ -348,11 +349,27 @@ class Driver_model extends CI_Model
 
 
     public function driver_progress($user_id){
-        $query=$this->db->select('u.name, u.email, u.mobile, d.vehicle_number, d.total_km_purchased, d.wallet_value, d.totalTravelled, totalRideTime')->from(table_users.' as u')->join(table_driver.' as d','u.uid=d.user_id')
+        $query=$this->db->select('u.name, u.email, u.mobile, d.vehicle_number, d.total_km_purchased, d.wallet_value, d.totalTravelled, d.totalRideTime, d.service_type_id, d.cabs_under_service_type')->from(table_users.' as u')->join(table_driver.' as d','u.uid=d.user_id')
         ->where('u.uid', $user_id)->get();
 
         $query = $query->result_array();
+        foreach($query as $i=>$val){
+            $query[$i]['ride'] = $this->get_ride_name_by_id($val['service_type_id']);
+            $query[$i]['cab'] = $this->get_cab_name_by_id($val['cabs_under_service_type']);
+        }
         return(!empty($query))?$query[0]:[];
 
+    }
+
+    private function get_ride_name_by_id($ride_id){
+        $query = $this->db->select(field_name)->where(field_uid, $ride_id)->get(table_ride_service_type);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0][field_name]:null;
+    }
+
+    private function get_cab_name_by_id($cab_id){
+        $query = $this->db->select(field_name)->where(field_uid, $cab_id)->get(table_cabs_under_service_type);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0][field_name]:null;
     }
 }

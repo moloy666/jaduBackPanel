@@ -150,8 +150,7 @@ class Common_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function get_total_sarathi($specific_id)
-    {    // get sarathi of each subfranchise
+    public function get_total_sarathi($specific_id){    // get sarathi of each subfranchise
         $sarathi = 0;
         $query = $this->db->select(field_uid)->where(field_franchise_id, $specific_id)->get(table_subfranchise);
         $query = $query->result_array();
@@ -164,7 +163,11 @@ class Common_model extends CI_Model
 
     public function get_sarathi_of_subfranchise($subfranchise_id)
     {
-        $this->db->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
+        $query = $this->db->select('u.'.field_uid)->from(table_users.' as u')
+        ->join(table_sarathi.' as s', 'u.uid=s.user_id')
+        ->where('s.'.field_subfranchise_id, $subfranchise_id)
+        ->where_not_in('u.'.field_status, const_deleted)->get();
+        $query = $query->result_array();
         return $this->db->affected_rows();
     }
 
@@ -617,6 +620,9 @@ class Common_model extends CI_Model
     {
         $current_rev = $this->get_total_revenue($specific_id);
         $last_rev = $this->get_total_revenue_of_last_month($specific_id);
+        if($last_rev==0){
+            return 0;
+        }
         $growth = (($current_rev - $last_rev) / $last_rev) * 100;
         return (!empty($growth)) ? round($growth) : null;
     }

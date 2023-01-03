@@ -41,7 +41,9 @@
     <div class="page-content fade-in-up">
 
         <div class="report">
-            <p style="text-align:center;"><strong>JaduRide</strong></p>
+            <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p>
+
+            <p style="text-align:center;"><strong>JaduRide Sarathi</strong></p>
             <p style="text-align:center;"><strong>Progress Report Of <?=ucwords($user_details['name'])?></strong></p>
 
             <div class="table-responsive ">

@@ -4343,7 +4343,7 @@ class Admin extends CI_Controller
 		$mpdf->showImageErrors = true;
         $html = $this->load->view('driver_progress', $data, true);
         $mpdf->WriteHTML($html);
-        $mpdf->Output($name.".pdf", "I");
+        $mpdf->Output($name.".pdf", "D");
 
 		// $this->load_header();
         // $this->load_sidebar();

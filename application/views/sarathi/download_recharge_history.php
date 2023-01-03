@@ -16,9 +16,7 @@
         width: max-content;
         height: 40px;
     }
-    .ibox-title{
-        color:royalblue;
-    }
+
 </style>
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
@@ -28,7 +26,10 @@
             <div class="col">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Recharge History Of <?=ucwords($sarathi)?></div>
+                       
+                        <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p>
+                        <p style="text-align:center;"><strong> JaduRide Sarathi</strong></p>
+                        <p style="text-align:center;"><strong> Recharge History Of <?=ucwords($sarathi)?></strong></p>
                     </div>
                     <div class="ibox-body">
                         <table class="table table-striped table-bordered table-hover" id="" cellspacing="0" width="100%">

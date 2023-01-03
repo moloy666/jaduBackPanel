@@ -67,10 +67,14 @@
                 driverName.push(data[i].name);
                 driverKmPurchased.push(data[i].total_km_purchased);
 
+                if(data[i].vehicle_name==null){
+                    data[i].vehicle_name='-';
+                }
+
                 html += `<tr>
                     <td class="title"> ${data[i].name}</td>
                     <td> ${data[i].total_km_purchased} KM</td>
-                    <td class="title"> ${data[i].vehicle_name}</td>
+                    <td class="title text-center"> ${data[i].vehicle_name}</td>
                     <td> ${data[i].vehicle_number}</td>
                     <td> ${data[i].joined}</td>
                     </tr>`;

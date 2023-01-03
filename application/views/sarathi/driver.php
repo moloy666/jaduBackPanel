@@ -12,7 +12,7 @@ foreach ($sarathi_data as $data) {
         <div class="page-content fade-in-up">
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
-                    <h4 class="text-primary">Total KM Purchased : <span id="sarathi_km_purchased"> <?=$total_km_purchased?></span></h4>
+                    <h4 class="text-primary">Total KM Purchased : <span id="sarathi_km_purchased"> <?=$total_km_purchased?></span> Km</h4>
                 </div>
             </div>
             <div align="right">
@@ -53,6 +53,7 @@ foreach ($sarathi_data as $data) {
                                 <th class="text-center">Mobile</th>
                                 <th class="text-center">Total KM Purchased</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Ride History</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
