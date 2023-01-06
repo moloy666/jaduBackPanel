@@ -384,9 +384,8 @@ class Sarathi_model extends CI_Model
     }
 
 
-    public function get_recharge_histiry_of_sarathi($user_id)
-    {
-        $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ',' . field_paid_to_user_id . ',' . field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status);
+    public function get_recharge_histiry_of_sarathi($user_id){
+        $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ','. field_paid_to_user_id . ','. field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status . ',' . field_note . ',' . field_payment_id);
         $this->db->where(field_user_id, $user_id);
         $query = $this->db->get(table_recharge_history);
         $query = $query->result_array();
@@ -394,35 +393,46 @@ class Sarathi_model extends CI_Model
         $final_arr = [];
         foreach ($query as $key => $value) {
             $paid_to_user_name = "";
-            if (!empty($value[field_paid_to_user_id])) {
+            if(!empty($value[field_paid_to_user_id])){
                 $paid_to_user_name = $this->get_user_name_by_id($value[field_paid_to_user_id]);
-                // $paid_to_user_name = ($value[field_paid_to_user_id]);
             }
-            if ($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID) {
+            if($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID){
+
+                $rechargeBy = '';
+                if( $value[field_note] != NULL || !empty($value[field_note]) ){
+                    $rechargeBy = $value[field_note];
+                }else if($value[field_payment_id] != NULL){
+                    $rechargeBy = STATIC_TEXT_SELF_RECHARGED_BY_DRIVER;
+                }else{
+                    $rechargeBy = STATIC_TEXT_RECHARGED_BY_SARATHI;
+                }
+
                 $final_arr[] = [
                     key_recharge_type => STATIC_RECHARGE_TO_DRIVER,
                     key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_TO_DRIVER)),
-                    key_price => $value[field_recharge_amount],
+                    key_price=> $value[field_recharge_amount],
                     key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
-                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN .''.$value[field_recharge_amount],
-
+                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN . ' ' .$value[field_recharge_amount],
                     key_date => date("d\nF", strtotime($value[field_created_at])),
-                    key_color_code => color_recharge_paid
+                    key_color_code => color_recharge_paid,
+                    key_recharge_note => ucwords($rechargeBy)
                 ];
-            } else {
+            }else{
                 $final_arr[] = [
                     key_recharge_type => STATIC_RECHARGE_FOR_SELF,
                     key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_FOR_SELF)),
                     key_price => $value[field_recharge_amount],
                     key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
-                    key_description => 'Recharge for ' .  STATIC_RUPEE_SIGN . ' ' . $value[field_recharge_amount],
+                    key_description => 'Recharge for '.  STATIC_RUPEE_SIGN . ' ' .$value[field_recharge_amount],
                     key_date => date("d\nF", strtotime($value[field_created_at])),
-                    key_color_code => color_recharge_self
+                    key_color_code => color_recharge_self,
+                    key_recharge_note => STATIC_RECHARGE_FOR_SELF
                 ];
             }
         }
         return (!empty($query)) ? $final_arr : [];
     }
+
 
     public function get_user_details($sarathi_id){
         $query = $this->db->select('u.name, u.mobile, u.email, u.status')->from(table_users.' as u')

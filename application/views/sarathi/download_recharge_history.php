@@ -40,6 +40,7 @@
                                     <th>Price (₹)</th>
                                     <th>Purchased KM</th>
                                     <th>Description</th>
+                                    <th>Recharge Note</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
@@ -51,6 +52,7 @@
                                     <th>Price (₹)</th>
                                     <th>Purchased KM</th>
                                     <th>Description</th>
+                                    <th>Recharge Note</th>
                                     <th>Date</th>
                                 </tr>
                             </tfoot>
@@ -65,6 +67,7 @@
                                             <td><?= $val['price'] ?></td>
                                             <td><?= $val['purchesedKm'] ?></td>
                                             <td><?= $val['description'] ?></td>
+                                            <td><?= $val['rechargeNote'] ?></td>
                                             <td><?= $val['date'] ?></td>
                                         </tr>
                                 <?php

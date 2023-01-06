@@ -96,37 +96,61 @@
                 </div>
             </div>
 
-            <div class="mt-4" id="accordionExample" style="cursor:pointer">
-                <div class="card">
-                    <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <strong class="text-primary">Access List</strong>
-                    </div>
+            <div class="card my-2 p-3">
+                <div class="table-responsive" >
+                    <h5 class="text-danger mb-4">Recharge History</h5>
+                    <table class="table table-bordered" id="table_recharge_history">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Recharge Type</th>
+                                <th>Price</th>
+                                <th>Purchased KM</th>
+                                <th>Description</th>
+                                <th>Recharge Note</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recharge_history">
 
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="table">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th class="text-center">#</th>
-                                            <th class="text-center">Permission</th>
-                                            <th class="text-center">Status</th>
-                                            <th class="text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-center" id="table_access">
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
         </div>
-        <!-- END PAGE CONTENT-->
+
+        <div class="mt-4" id="accordionExample" style="cursor:pointer">
+            <div class="card">
+                <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <strong class="text-primary">Access List</strong>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Permission</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center" id="table_access">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT-->
     </div>
     </div>
     <!-- BEGIN THEME CONFIG PANEL-->
@@ -636,4 +660,41 @@
                 }
             });
         }
+
+
+        $(document).ready(function() {
+            var sarathi_id = $('#sarathi_id').val();
+            $.ajax({
+                type: "get",
+                url: `<?= apiBaseUrl ?>sarathi/users/${sarathi_id}/recharge/history`,
+                headers: {
+                    'x-api-key': '<?= const_x_api_key ?>',
+                    'platform': 'web',
+                    'deviceid': ''
+                },
+
+                success: function(response) {
+                    console.log(response);
+                    let recharge_details = response.data;
+                    let recharge_history = '';
+                    $.each(recharge_details, function(i) {
+
+                        recharge_history += `<tr>
+                        <td>${i+1}</td>
+                        <td>${recharge_details[i].rechargeType}</td>
+                        <td>${recharge_details[i].price}</td>                      
+                        <td>${recharge_details[i].purchesedKm}</td>                      
+                        <td>${recharge_details[i].description}</td>    
+                        <td>${recharge_details[i].rechargeNote}</td>                      
+                        <td>${recharge_details[i].date}</td>                                        
+                        </tr>`;
+                    });
+                    $('#recharge_history').html(recharge_history);
+                    $("#table_recharge_history").dataTable();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
     </script>

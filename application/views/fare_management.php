@@ -2,6 +2,7 @@
     <div class="content-wrapper">
         <!-- START PAGE CONTENT-->
         <div class="page-content fade-in-up">
+
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Fare List Management</h3>
@@ -16,6 +17,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="card p-2">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table">

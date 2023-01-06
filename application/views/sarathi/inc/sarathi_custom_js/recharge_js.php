@@ -29,6 +29,7 @@
                         <td>${recharge_details[i].price}</td>                      
                         <td>${recharge_details[i].purchesedKm}</td>                      
                         <td>${recharge_details[i].description}</td>                      
+                        <td>${recharge_details[i].rechargeNote}</td>                      
                         <td>${recharge_details[i].date}</td>                                        
                         </tr>`;
                 });

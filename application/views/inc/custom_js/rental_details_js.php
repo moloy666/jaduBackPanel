@@ -168,8 +168,14 @@
                     // uid ( slabs_id)
                     details += `
                     <tr>
-                        <td class="text-center"><input type="checkbox" onclick="check(this, '${data.uid}', '${ride_id}')" id="slab_${data.uid}" style="cursor:pointer"></td>
-                        <th class="text-center">${data.hr} hr ${data.km} km</th>
+                        <td class="text-center">
+                        <input type="checkbox" onclick="check(this, '${data.uid}', '${ride_id}')" id="slab_${data.uid}" style="cursor:pointer">
+                        </td>
+                        <th class="text-center">
+                            <label for ="slab_${data.uid}" style="cursor:pointer">
+                                ${data.hr} hr ${data.km} km
+                            </label>
+                        </th>
                         <th class="text-center">
                             <input type="text" class="form-control box" id="amount_${data.uid}" placeholder="Amount"></th>
                         <th class="text-center">

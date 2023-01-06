@@ -70,4 +70,39 @@ class Hotel_model extends CI_Model
         $query = $query->result_array();
         return (!empty($query))?$query:null;
     }
+
+    public function display_invoice($ride_id){
+        $query = $this->db->select('service_id, fareServiceTypeId, locationText, extra_data, paymentMethod, currency, driver_id, customer_id as hotel_id')
+        ->where(field_uid, $ride_id)->get(table_ride_normal);
+        $query = $query->result_array();
+        foreach($query as $i=>$val){
+            $query[$i]['service']=$this->get_service_ride_by_id($val['fareServiceTypeId']);
+            $query[$i]['driver']=$this->get_driver_name_by_id($val['driver_id']);
+            $query[$i]['extra_data']=json_decode($val['extra_data']);
+            $query[$i]['locationText']=json_decode($val['locationText']);
+            
+        }
+        return(!empty($query))?$query[0]:[];
+    }
+
+    private function get_service_ride_by_id($service_id){
+        $query = $this->db->select(field_name)->where(field_uid, $service_id)->get(table_ride_service_type);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0][field_name]:null;
+    }
+
+    private function get_driver_name_by_id($driver_id){
+        $query = $this->db->select('u.name')->from(table_users.' as u')->join(table_driver.' as d', 'u.uid=d.user_id')
+        ->where('d.uid', $driver_id)->get();
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_name]:null;
+
+    }
+
+    public function get_hotel_name_by_id($hotel_id){
+        $query = $this->db->select(field_name)->where(field_uid, $hotel_id)->get(table_hotel);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0][field_name]:null;
+    } 
+
 }

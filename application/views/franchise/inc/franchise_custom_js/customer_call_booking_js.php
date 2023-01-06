@@ -299,6 +299,9 @@
                     $('#txt_distance').show();
                     $('#txt_wait_time').show();
 
+                    $('#confirm_pickup_ride').hide();
+
+
                 } else {
                     $('#cab_list').hide();
                     toast("No cab found near by this location", "center");
@@ -396,6 +399,11 @@
         $('#cab_list').hide();
 
         $('#check_status').prop("checked", false);
+    });
+
+    $('#cancle_ride').click(function(){
+        $('#confirm_pickup_ride').hide();
+        // $('#btn_clear').click();
     });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=<?= const_google_api_key ?>"></script>

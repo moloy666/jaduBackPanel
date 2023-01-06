@@ -275,7 +275,8 @@ define('field_working_status', 'working_status');
 define('field_customer_id', 'customer_id');
 define('field_permission', 'permission');
 define('field_ride_status', 'ride_status');
-
+define('field_note', 'note');
+define('field_payment_id', 'payment_id');
 
 ////////////////////////////////////////////////////////////////
 define('value_administrator', 'administrator');
@@ -323,6 +324,7 @@ define('table_panel_access_permissions_list', 'panel_access_permissions_list');
 define('table_panel_access_permissions', 'panel_access_permissions');
 
 define('table_hotel', 'hotel');
+define('table_ride_normal', 'ride_normal');
 
 /////////////////////////////////////////////////////
 define('const_deleted', 'DELETED');
@@ -419,6 +421,8 @@ define('param_table', 'table');
 define('session_franchise_id', 'franchise_id');
 define('session_subfranchise_id', 'subfranchise_id');
 ///////////////////////////////////////////////////////////////////
+define('STATIC_TEXT_SELF_RECHARGED_BY_DRIVER', 'online self recharge by driver');
+define('STATIC_TEXT_RECHARGED_BY_SARATHI', 'recharged by sarathi');
 
 /////////////////////////////moloy start//////////////////////////////////////////
 
@@ -576,6 +580,8 @@ define('key_price', 'price');
 define('key_description', 'description');
 define('key_date','date');
 define('key_color_code', 'color_code');
+define('key_recharge_note', 'rechargeNote');
+
 define('color_recharge_paid', '#FF061F');
 define('color_recharge_self', '#1FAE15');
 

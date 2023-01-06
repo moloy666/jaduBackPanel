@@ -237,4 +237,32 @@ class Hotel extends CI_Controller
         }
     }
 
+
+    public function view_invoice($ride_id){
+
+        $this->init_hotel_model();
+        $data['data'] = $this->Hotel_model->display_invoice($ride_id);
+        $hotel_id = $this->session->userdata(session_hotel_id);
+        $data['hotel'] = $this->Hotel_model->get_hotel_name_by_id($hotel_id);
+
+        // echo"<pre>";
+        // print_r($data);
+        // die();
+       
+        // $this->load_header();
+        // $this->load_sidebar();
+        // $this->load->view('hotel/invoice', $data);
+        // $this->load_footer();
+
+
+        $name = 'invoice_'.time();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('hotel/invoice', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($name.".pdf", "I");
+        
+    }
+
+
+
 }

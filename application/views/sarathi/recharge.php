@@ -29,6 +29,7 @@ foreach ($sarathi_data as $data) {
                                     <th>Price</th>
                                     <th>Purchased KM</th>
                                     <th>Description</th>
+                                    <th>Recharge Note</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@ foreach ($sarathi_data as $data) {
                                     <th>Price</th>
                                     <th>Purchased KM</th>
                                     <th>Description</th>
+                                    <th>Recharge Note</th>
                                     <th>Date</th>
                                 </tr>
                             </tfoot>
@@ -52,6 +54,7 @@ foreach ($sarathi_data as $data) {
                 </div>
             </div>
         </div>
+        
     </div>
     <!-- END PAGE CONTENT-->
 

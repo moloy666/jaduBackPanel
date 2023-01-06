@@ -193,12 +193,12 @@
             flag = 1;
             toast("Name must contain atleast 3 letters", "center");
         }
-        
+
         if (guest_mobile.length != 10) {
             flag = 1;
             toast("Name must contain 10 digits", "center");
         }
-               
+
         let origin = {
             'lat': parseFloat(lat_origin),
             'lng': parseFloat(lang_origin)
@@ -213,9 +213,6 @@
             let directionsService = new google.maps.DirectionsService();
             let directionsRenderer = new google.maps.DirectionsRenderer();
 
-            // directionsRenderer.setMap(map); // Existing map object displays directions
-            // Create route from existing points used for markers
-
             let route = {
                 origin: origin,
                 destination: destination,
@@ -229,9 +226,7 @@
                         console.log(response);
                         return;
                     } else {
-                        // directionsRenderer.setDirections(response); // Add route to the map
-                        var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
-                        // console.log(directionsData);
+                        var directionsData = response.routes[0].legs[0];
                         if (!directionsData) {
                             console.log('Directions request failed');
                             return;
@@ -312,6 +307,9 @@
                     $('#cab_list').show();
                     $('#txt_distance').show();
                     $('#txt_wait_time').show();
+
+                    $('#confirm_pickup_ride').hide();
+
 
                 } else {
                     $('#cab_list').hide();
@@ -425,6 +423,22 @@
         $('#cab_list').hide();
 
         $('#check_status').prop("checked", false);
+    });
+
+    $('#cancle_ride').click(function() {
+        $('#confirm_pickup_ride').hide();
+        // $('#btn_clear').click();
+    });
+
+
+    $('#btn_invoice').click(function(){
+        if($('#onCallRideId').val()==''){
+            toast('Select Your Ride !', 'center');
+        }
+        else{
+            let ride_id=$('#onCallRideId').val();
+            window.location = `<?=base_url(WEB_PORTAL_HOTEL.'/view_invoice/')?>${ride_id}`;
+        }
     });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=<?= const_google_api_key ?>"></script>

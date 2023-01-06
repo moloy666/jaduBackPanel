@@ -13,6 +13,14 @@
                     <h3>Book Ride</h3>
                     <input type="hidden" value="<?= $this->session->userdata(session_hotel_id) ?>" id="hotel_id">
                 </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <button type="button" class="btn bgred mr-3 btnround" id="btn_invoice">
+                          Print Invoice
+                        </button>
+
+                    </div>
+                </div>
             </div>
 
             <div class="card mb-2 d-flex justify-content-center">

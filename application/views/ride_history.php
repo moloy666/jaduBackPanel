@@ -18,7 +18,6 @@
         height: 30px;
     }
 
-
 </style>
 <body>
     <div class="content-wrapper">

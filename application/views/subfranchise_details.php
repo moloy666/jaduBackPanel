@@ -50,6 +50,28 @@
             </div>
 
 
+            <div class="card my-2 p-3">
+                <div class="table-responsive">
+                    <h5 class="text-danger mb-4">Recharge History</h5>
+                    <table class="table table-bordered" id="table_recharge_history">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Recharge Type</th>
+                                <th>Price</th>
+                                <th>Purchased KM</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recharge_history">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
             <div class="mt-4" id="accordionExample" style="cursor:pointer">
                 <div class="card">
                     <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">

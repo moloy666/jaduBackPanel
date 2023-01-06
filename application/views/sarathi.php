@@ -443,6 +443,9 @@
                         <td>
                         <div>
 
+                        <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${sarathi[i].user_id}')">            
+                        <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
+                        </button>
                       
                         <button class="hdrbtn mx-2 view_user" data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${sarathi[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Bank Details">                        
                           <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-2">                  
@@ -486,6 +489,12 @@
           console.log(response);
         }
       });
+    }
+
+
+    function download_recharge_history(user_id) {
+            var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
+            window.open(url, '_blank');
     }
 
     // status change

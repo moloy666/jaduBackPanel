@@ -397,6 +397,39 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function display_ride_history($user_id)	
+	{
+		if ($this->is_user_logged_in()) {
+
+			$user_type = $this->uri->segment(2);
+
+			$this->init_admin_model();
+			$data['username'] = $this->Admin_model->get_name_by_user_id($user_id);
+			if ($user_type == "driver") {
+				$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
+				$data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
+				$data['companion'] = 'Customer';
+			}
+			if ($user_type == "customers") {
+				$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_customer);
+				$data['ride_history'] = $this->Admin_model->get_customer_ride_history($specific_id);
+				$data['companion'] = 'Driver';
+			}
+
+			echo"<pre>";
+			print_r($data);
+			die();
+
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view(view_ride_history, $data);
+			$this->load_footer();
+
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function ride_history_csv($user_id)
 	{
 		$filename = 'ride_history_' . time() . '.csv';
@@ -4334,10 +4367,6 @@ class Admin extends CI_Controller
 		$this->init_driver_model();
 		$data['data'] = $this->Driver_model->driver_progress($user_id);
 
-		// echo"<pre>";
-		// print_r($data);
-		// die();
-		
 		$name = 'progress_report_'.time();
         $mpdf = new \Mpdf\Mpdf();
 		$mpdf->showImageErrors = true;
@@ -4345,10 +4374,20 @@ class Admin extends CI_Controller
         $mpdf->WriteHTML($html);
         $mpdf->Output($name.".pdf", "D");
 
-		// $this->load_header();
-        // $this->load_sidebar();
-        // $this->load->view('driver_progress', $data);
-        // $this->load_footer();
 	}
+
+
+	public function download_sarathi_recharge_history($user_id){
+        $this->init_sarathi_model();
+        $data['sarathi']=$this->Sarathi_model->get_user_name_by_id($user_id);
+        $data['sarathi_data'] = $this->Sarathi_model-> get_recharge_histiry_of_sarathi($user_id);
+
+        $name = 'recharge_history_'.time();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('sarathi/download_recharge_history', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($name.".pdf", "D");
+        
+    }
 
 }
