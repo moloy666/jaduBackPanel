@@ -146,6 +146,10 @@
                                 <td>
                                 <div>
 
+                                <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${data[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
+                                <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
+                                </button>
+
                                
                                 <button class="hdrbtn mx-2 editUser access_update" data-toggle="modal" id="editbtn"  data-target="#edtView1"  onclick="edit_subfranchise('${data[i].user_id}' , '${data[i].name}' , '${data[i].email}' , '${data[i].mobile}')" disabled>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,6 +177,28 @@
             },
             error: function(data) {
                 console.log(data);
+            }
+        });
+    }
+
+    function fetch_recharge_package(user_id) {
+        let user_type = '<?=value_user_sub_franchise?>';
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('administrator/get_packages') ?>",
+            data: {
+                "user_type": user_type
+            },
+            error: function(response) {},
+            success: function(response) {
+                var data = response.data;
+                var details = ' <option value="">Select Recharge Package</option>';
+                $.each(data, function(i, data) {
+                    details += `<option class="title" value="${data.uid}">${data.name}</option>`;
+                });
+                $('#select_package').html(details);
+
             }
         });
     }

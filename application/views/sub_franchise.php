@@ -242,6 +242,46 @@
             </div>
         </div>
     </div>
+
+    <!-- recharge details view modal -->
+    <div class="modal fade custmmodl" id="rechView1" tabindex="-1" role="dialog" aria-labelledby="rechView1Title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title bank-modal-title" id="exampleModalLongTitle">Rechage Package</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mx-4">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                <input class="form-control  mb-3" type="text" placeholder="Sub Franchise Id" id='' style="height:40px;background-color:transparent;">
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select class="form-control" id="select_package">
+                                    <option value="0" class="form-control">Select Recharge Package</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal" id="close_edit_modal">Close</button>
+                    <button type="button" class="btn  btn-success" id="btn_recharge">Recharge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -405,6 +445,9 @@
                                 <td>
                                 <div>
 
+                                <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
+                                <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
+                                </button>
                                 
                                 <button class="hdrbtn mx-2 view_user  " data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Bank details">                        
                                 <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-3">                  
@@ -430,7 +473,7 @@
                         $('#table').dataTable();
 
                         get_panel_access_list();
-                        
+
                         get_user_request_permission();
 
                         $('#admin_access_list').multiselect();
@@ -445,6 +488,29 @@
                 }
             });
         }
+
+        function fetch_recharge_package(user_id) {
+            let user_type = '<?= end($this->uri->segments) ?>';
+
+            $.ajax({
+                type: "post",
+                url: "<?= base_url('administrator/get_packages') ?>",
+                data: {
+                    "user_type": user_type
+                },
+                error: function(response) {},
+                success: function(response) {
+                    var data = response.data;
+                    var details = ' <option value="">Select Recharge Package</option>';
+                    $.each(data, function(i, data) {
+                        details += `<option class="title" value="${data.uid}">${data.name}</option>`;
+                    });
+                    $('#select_package').html(details);
+
+                }
+            });
+        }
+
 
         function status(state, uid) {
 

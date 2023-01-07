@@ -737,9 +737,33 @@ class Common_model extends CI_Model
     }
 
     public function get_user_details($specific_id, $table){
-        $query = $this->db->select('u.name, u.mobile, u.email, u.status')->from(table_users.' as u')
+        $query = $this->db->select('u.name, u.mobile, u.email, u.status, t.uid as specific_id')->from(table_users.' as u')
         ->join($table.' as t', 'u.uid=t.user_id')->where('t.uid', $specific_id)->get();
         $query = $query->result_array();
         return (!empty($query))?$query[0]:[];
+    }
+
+    public function get_packages($user_type){
+        $query = $this->db->select(field_id .",". field_name)
+        ->where([field_user_type_id=>$user_type, field_status=>const_active])->get(table_packages);
+        $query = $query->result_array();
+        return (!empty($query))?$query:[];
+    }
+
+    public function getRatePerKm(){
+        $this->db->select(field_rate_per_km);
+        $this->db->limit(1);
+        $this->db->order_by(field_created_at, value_sort_dir_desc);
+        $query = $this->db->get(table_rate_per_km);
+        $query = $query->result_array();
+        return $query[0][field_rate_per_km];
+    }
+
+    public function get_extra_percentage_km_by_user_type($user_type){
+        $this->db->select(field_percentage);
+        $this->db->where(field_user_type_id, $user_type);
+        $query = $this->db->get(table_excess_percentage);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query[0][field_percentage] : null ;
     }
 }

@@ -184,6 +184,7 @@ define('view_franchise_details', 'franchise_details');
 define('view_incentives', 'incentives');
 define('view_ride_history', 'ride_history');
 define('view_services', 'services');
+define('view_packages', 'packages');
 
 ////////////////////////////////////////////////////////////////////
 define('view_sarathi_profile', 'sarathi/sarathi_profile');
@@ -277,6 +278,7 @@ define('field_permission', 'permission');
 define('field_ride_status', 'ride_status');
 define('field_note', 'note');
 define('field_payment_id', 'payment_id');
+define('field_user_type_id', 'user_type_id');
 
 ////////////////////////////////////////////////////////////////
 define('value_administrator', 'administrator');
@@ -325,6 +327,7 @@ define('table_panel_access_permissions', 'panel_access_permissions');
 
 define('table_hotel', 'hotel');
 define('table_ride_normal', 'ride_normal');
+define('table_packages', 'packages');
 
 /////////////////////////////////////////////////////
 define('const_deleted', 'DELETED');
@@ -361,6 +364,7 @@ define('KEY_CUSTOMER', 'CUSTOMER');
 define('KEY_GID', 'GROUP');
 define('KEY_BANK_DETAILS', 'BANK_DETAILS');
 define('KEY_HOTEL', 'HOTEL');
+define('KEY_PACKAGES', 'PACKAGES');
 
 
 /////////////////////////////////////////
@@ -372,6 +376,7 @@ define('UID_CUSTOMER_PREFIX', 'CUSTOMER_');
 define('UID_GID_PREFIX', 'GROUP_');
 define('UID_BANK_DETAILS_PREFIX', 'BANK_DETAILS_');
 define('UID_HOTEL_PREFIX', 'HOTEL_');
+define('UID_PACKAGES_PREFIX', 'PACKAGES_');
 
 
 /////////////////////////////////////////////
@@ -474,6 +479,7 @@ define('access_feedback', 'permission_feedback');
 define('access_reports', 'permission_reports');
 define('access_places', 'permission_places');
 define('access_coupon', 'permission_coupon');
+define('access_packages', 'packages');
 
 
 
@@ -500,8 +506,7 @@ define('session_feedback', 'feedback');
 define('session_reports', 'reports');
 define('session_places', 'places');
 define('session_coupon', 'coupon');
-
-
+define('session_packages', 'packages');
 
 //////////////////////////////////////////////////////////////
 
@@ -584,4 +589,18 @@ define('key_recharge_note', 'rechargeNote');
 
 define('color_recharge_paid', '#FF061F');
 define('color_recharge_self', '#1FAE15');
+///////////////////////////////////////////
+
+define('value_sort_dir_asc', 'asc');
+define('value_sort_dir_desc', 'desc');
+define('field_rate_per_km', 'rate_per_km');
+define('table_rate_per_km', 'rate_per_km');
+define('field_percentage', 'percentage');
+define('table_excess_percentage', 'excess_percentage');
+
+define('key_id', 'id');
+define('key_name','name');
+define('unit_km', 'KM');
+
+
 

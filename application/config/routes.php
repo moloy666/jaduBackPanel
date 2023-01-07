@@ -275,6 +275,8 @@ $route['administrator/places'] = 'admin/view_places';
 $route['administrator/hotel'] = 'admin/view_hotel';
 $route['administrator/ride_details'] = 'admin/view_ride_details';
 $route['administrator/dormant_account'] = 'admin/view_dormant_account';
+$route['administrator/packages'] = 'admin/view_packages';
+
 
 
 $route['administrator/franchise_details/(:any)'] = 'Admin/franchise_details/$1';
@@ -287,7 +289,8 @@ $route['administrator/customers/ride_history_csv/(:any)'] = 'Admin/ride_history_
 $route['administrator/admin/remarks/(:any)'] = 'Admin/view_display_remarks/$1';
 $route['administrator/admin/details/(:any)'] = 'Admin/view_admin_details/$1';
 $route['administrator/download_progress_report/(:any)'] = 'Admin/download_progress_report/$1';
-$route['administrator/driver/display_ride_history//(:any)'] = 'Admin/display_ride_history/$1';
+
+$route['administrator/driver/ride_history/(:any)'] = 'Admin/ride_history/$1';
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -423,6 +426,17 @@ $route['administrator/update_ride_details'] = 'Admin/update_ride_details';
 
 $route['administrator/get_dormant_account_details'] = 'Admin/get_dormant_account_details';
 
+
+/////////////////////////////////////////////////////////////////////////////
+
+$route['administrator/get_user_details'] = 'Admin/get_user_details';
+$route['administrator/get_packages'] = 'Admin/get_packages';
+$route['administrator/get_package_details'] = 'Admin/get_package_details';
+$route['administrator/add_packages'] = 'Admin/add_packages';
+$route['administrator/update_packages'] = 'Admin/update_packages';
+$route['administrator/active_packages'] = 'Admin/active_packages';
+$route['administrator/deactive_packages'] = 'Admin/deactive_packages';
+$route['administrator/delete_packages'] = 'Admin/delete_packages';
 
 
 

@@ -1519,143 +1519,223 @@ class Admin_model extends CI_Model
         if (empty($sarathi_id)) {
 
             $query = $this->db->select('SUM(amount) as total_amount')
-            ->where(field_status, const_success)
-            ->get(table_history_ride_transactions);
+                ->where(field_status, const_success)
+                ->get(table_history_ride_transactions);
             $query = $query->result_array();
             return (!empty($query)) ? $query[0]['total_amount'] : 0;
-
         } else {
 
             $query = $this->db->select('SUM(hrt.amount) as total_amount')
                 ->from(table_history_ride_transactions . ' as hrt')
                 ->join('driver as d', 'hrt.driver_id=d.uid')
-                ->join('sarathi as s','d.sarathi_id=s.uid')
+                ->join('sarathi as s', 'd.sarathi_id=s.uid')
                 ->where('d.sarathi_id', $sarathi_id)
-                ->where('hrt.'.field_status, const_success)
+                ->where('hrt.' . field_status, const_success)
                 ->get();
             $query = $query->result_array();
 
-            return (!empty($query)) ?$query[0]['total_amount'] : 0;
+            return (!empty($query)) ? $query[0]['total_amount'] : 0;
         }
     }
 
-    public function get_revenue_status($specific_id){
-        $last_rev=$this->get_last_month_revenue($specific_id);
-        $current_rev=$this->get_currrent_revenue($specific_id);
-        if($last_rev!=0){
+    public function get_revenue_status($specific_id)
+    {
+        $last_rev = $this->get_last_month_revenue($specific_id);
+        $current_rev = $this->get_currrent_revenue($specific_id);
+        if ($last_rev != 0) {
             $growth = (($current_rev - $last_rev) / $last_rev) * 100;
-            return (!empty($growth))? round($growth) : null;
-        }
-        else{
+            return (!empty($growth)) ? round($growth) : null;
+        } else {
             return 0;
         }
     }
 
-  
-    private function get_currrent_revenue($specific_id){
-        if(!empty($specific_id)){
+
+    private function get_currrent_revenue($specific_id)
+    {
+        if (!empty($specific_id)) {
             $query = $this->db->select('SUM(hrt.amount) as total_amount')
-            ->from(table_history_ride_transactions . ' as hrt')
-            ->join('driver as d', 'hrt.driver_id=d.uid')
-            ->join('sarathi as s','d.sarathi_id=s.uid')
-            ->where('d.sarathi_id', $specific_id)
-            ->where('hrt.'.field_status, const_success)
-            ->get();
+                ->from(table_history_ride_transactions . ' as hrt')
+                ->join('driver as d', 'hrt.driver_id=d.uid')
+                ->join('sarathi as s', 'd.sarathi_id=s.uid')
+                ->where('d.sarathi_id', $specific_id)
+                ->where('hrt.' . field_status, const_success)
+                ->get();
             $query = $query->result_array();
-            return (!empty($query)) ?$query[0]['total_amount'] : 0;
-        }
-        else{
+            return (!empty($query)) ? $query[0]['total_amount'] : 0;
+        } else {
             $query = $this->db->select('SUM(amount) as total_amount')
-            ->where(field_status, const_success)
-            ->get(table_history_ride_transactions);
+                ->where(field_status, const_success)
+                ->get(table_history_ride_transactions);
             $query = $query->result_array();
             return (!empty($query)) ? $query[0]['total_amount'] : 0;
         }
-      
     }
 
-    private function get_last_month_revenue($specific_id){
-        if(!empty($specific_id)){
+    private function get_last_month_revenue($specific_id)
+    {
+        if (!empty($specific_id)) {
 
-            $query=$this->db->select('SUM(hrt.amount) as total_amount')
-            ->from(table_history_ride_transactions . ' as hrt')
-            ->join('driver as d', 'hrt.driver_id=d.uid')
-            ->join('sarathi as s','d.sarathi_id=s.uid')
-            ->where('d.sarathi_id', $specific_id)
-            ->where('hrt.'.field_status, const_success)
-            ->where('hrt.created_at < (DATE_SUB(NOW(), INTERVAL 1 MONTH))', NULL, FALSE)
-            ->get();
+            $query = $this->db->select('SUM(hrt.amount) as total_amount')
+                ->from(table_history_ride_transactions . ' as hrt')
+                ->join('driver as d', 'hrt.driver_id=d.uid')
+                ->join('sarathi as s', 'd.sarathi_id=s.uid')
+                ->where('d.sarathi_id', $specific_id)
+                ->where('hrt.' . field_status, const_success)
+                ->where('hrt.created_at < (DATE_SUB(NOW(), INTERVAL 1 MONTH))', NULL, FALSE)
+                ->get();
             $query = $query->result_array();
             return (!empty($query)) ? $query[0]['total_amount'] : 0;
-        }
-        else{
+        } else {
             $query = $this->db->select('SUM(amount) as total_amount')
-            ->where('created_at < (DATE_SUB(NOW(), INTERVAL 1 MONTH))', NULL, FALSE)
-            ->where(field_status, const_success) 
-            ->get(table_history_ride_transactions);
+                ->where('created_at < (DATE_SUB(NOW(), INTERVAL 1 MONTH))', NULL, FALSE)
+                ->where(field_status, const_success)
+                ->get(table_history_ride_transactions);
             $query = $query->result_array();
             return (!empty($query)) ? $query[0]['total_amount'] : 0;
         }
-        
     }
 
 
     //////////////// Hotel  details ////////////////////
 
-    public function get_hotel_details(){
-        $query=$this->db->where_not_in(field_status, const_deleted)->get(table_hotel);
-        $query=$query->result_array();
-        return(!empty($query))?$query:[];
+    public function get_hotel_details()
+    {
+        $query = $this->db->where_not_in(field_status, const_deleted)->get(table_hotel);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query : [];
     }
 
-    public function active_hotel($uid){
-        $data=[
-            field_status=>const_active,
-            field_modified_at=>date(field_date)
+    public function active_hotel($uid)
+    {
+        $data = [
+            field_status => const_active,
+            field_modified_at => date(field_date)
         ];
         $this->db->where(field_uid, $uid)->update(table_hotel, $data);
-        return($this->db->affected_rows()==1)?true:false;
+        return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function deactive_hotel($uid){
-        $data=[
-            field_status=>const_deactive,
-            field_modified_at=>date(field_date)
+    public function deactive_hotel($uid)
+    {
+        $data = [
+            field_status => const_deactive,
+            field_modified_at => date(field_date)
         ];
         $this->db->where(field_uid, $uid)->update(table_hotel, $data);
-        return($this->db->affected_rows()==1)?true:false;
+        return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function delete_hotel($uid){
-        $data=[
-            field_status=>const_deleted,
-            field_modified_at=>date(field_date)
+    public function delete_hotel($uid)
+    {
+        $data = [
+            field_status => const_deleted,
+            field_modified_at => date(field_date)
         ];
         $this->db->where(field_uid, $uid)->update(table_hotel, $data);
-        return($this->db->affected_rows()==1)?true:false;
+        return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function get_ride_type_details($ride_id){
-        $query=$this->db->get_where(table_ride_service_type, [field_uid=>$ride_id]);
-        $query=$query->result_array();
-        return (!empty($query))?$query[0]:null;
+    public function get_ride_type_details($ride_id)
+    {
+        $query = $this->db->get_where(table_ride_service_type, [field_uid => $ride_id]);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query[0] : null;
     }
 
-    public function update_ride_details($ride_id, $short_desc, $long_desc, $specific_id){
-        $data=[
-            "short_description"=>$short_desc,
-            "long_description"=>$long_desc,
-            field_modified_at=>date(field_date),
-            field_modified_by=>$specific_id,
+    public function update_ride_details($ride_id, $short_desc, $long_desc, $specific_id)
+    {
+        $data = [
+            "short_description" => $short_desc,
+            "long_description" => $long_desc,
+            field_modified_at => date(field_date),
+            field_modified_by => $specific_id,
         ];
         $this->db->where(field_uid, $ride_id)->update(table_ride_service_type, $data);
-        return($this->db->affected_rows()==1)?true:false;
+        return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function get_dormant_account_details(){
+    public function get_dormant_account_details()
+    {
         $query = $this->db->where(field_status, const_deactive)->get(table_users);
         $query = $query->result_array();
-        return(!empty($query))?$query:[];
+        return (!empty($query)) ? $query : [];
     }
 
+    public function get_package_details($user_type)
+    {
+        $query = $this->db->where([field_user_type_id => $user_type])
+            ->where_not_in(field_status, const_deleted)->get(table_packages);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query : null;
+    }
+
+    public function add_packages($uid, $user_type_id, $name)
+    {
+        $data = [
+            field_uid => $uid,
+            field_user_type_id => $user_type_id,
+            field_name => $name,
+            field_status => const_active,
+            field_created_at => date(field_date),
+            field_modified_at => date(field_date)
+        ];
+
+        $this->db->where([field_name => $name])->where_not_in(field_status, const_deleted)->get(table_packages);
+        $row = $this->db->affected_rows();
+        if ($row > 0) {
+            return false;
+        } else {
+            $this->db->insert(table_packages, $data);
+            return ($this->db->affected_rows() === 1) ? true : false;
+        }
+    }
+
+    public function update_packages($uid, $name)
+    {
+        $data = [
+            field_name => $name,
+            field_modified_at => date(field_date)
+        ];
+
+        $this->db->where(field_name, $name)->where_not_in(field_status, const_deleted)->get(table_packages);
+        $row = $this->db->affected_rows();
+        if ($row > 0) {
+            return false;
+        } else {
+            $this->db->where(field_uid, $uid)->update(table_packages, $data);
+            return ($this->db->affected_rows() === 1) ? true : false;
+        }
+    }
+
+    public function deactive_packages($uid)
+    {
+        $data = [
+            field_status => const_deactive,
+            field_modified_at => date(field_date)
+        ];
+        $this->db->where(field_uid, $uid)->update(table_packages, $data);
+        return ($this->db->affected_rows() === 1) ? true : false;
+    }
+
+    public function active_packages($uid)
+    {
+        $data = [
+            field_status => const_active,
+            field_modified_at => date(field_date)
+        ];
+        $this->db->where(field_uid, $uid)->update(table_packages, $data);
+        return ($this->db->affected_rows() === 1) ? true : false;
+    }
+
+    public function delete_packages($uid)
+    {
+        $data = [
+            field_status => const_deleted,
+            field_created_at => date(field_date),
+            field_modified_at => date(field_date)
+        ];
+        $this->db->where(field_uid, $uid)->update(table_packages, $data);
+        return ($this->db->affected_rows() === 1) ? true : false;
+    }
 }

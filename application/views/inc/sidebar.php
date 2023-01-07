@@ -1,4 +1,5 @@
  <!-- START SIDEBAR-->
+
  <nav class="page-sidebar" id="sidebar">
      <div id="sidebar-collapse">
          <div class="admin-block d-flex">
@@ -287,6 +288,29 @@
                 }
                 ?>
 
+
+             <?php
+                if ($this->session->userdata(field_type_id) == "user_admin") {
+                    if ($this->session->userdata(session_packages) == "active" || $this->session->userdata(session_packages) == const_active) { ?>
+                     <li>
+                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/packages') ?>" id="coupon" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'packages') ? 'active' : '' ?>">
+                             <i class="sidebar-item-icon fa fa-money"></i>
+                             <span class="nav-label">Packages</span>
+                         </a>
+                     </li>
+                 <?php
+                    }
+                } else { ?>
+                 <li>
+                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/packages') ?>" id="coupon" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'packages') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-gift"></i>
+                         <span class="nav-label">Packages</span>
+                     </a>
+                 </li>
+             <?php
+                }
+                ?>
+
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
                     if ($this->session->userdata(session_ride_rental) == "active" || $this->session->userdata(session_ride_rental) == const_active) { ?>
@@ -496,94 +520,6 @@
                 }
                 ?>
 
-
-
-             <!-- <li>
-                 <a href="#multiReports" data-toggle="collapse" aria-expanded="false" aria-controls="multiReports" class="<?= (!empty($uri_last_segment) && ($uri_last_segment == 'resolve_reports' || $uri_last_segment == 'unresolve_reports')) ? 'active' : '' ?>">
-                     <i class="sidebar-item-icon fa fa-bug"></i>
-                     <span class="nav-label">Reports</span>
-                 </a>
-             </li>
-
-             <div id="multiReports" class="collapse multi-collapse side-menu metismenu">
-                 <li>
-                     <a href="<?= base_url('administrator/resolve_reports') ?>" class="">
-                         <i class="sidebar-item-icon fa fa-gear"></i>
-                         <span class="nav-label">Resolved Reports</span>
-                     </a>
-                 </li>
-
-                 <li>
-                     <a href="<?= base_url('administrator/unresolve_reports') ?>" class="">
-                         <i class="sidebar-item-icon fa fa-gear"></i>
-                         <span class="nav-label">Unresolved Reports</span>
-                     </a>
-                 </li>
-             </div> -->
-
-
-
-             <!--<li>
-                        <a href="content-management.html">
-                            <i class="sidebar-item-icon fa fa-th-large"></i>
-                            <span class="nav-label">Content Management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="scheme-manageemnt.html">
-                            <i class="sidebar-item-icon fa fa-th"></i>
-                            <span class="nav-label">Scheme Manageemnt</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="coupon-management.html">
-                            <i class="sidebar-item-icon fa fa-gift"></i>
-                            <span class="nav-label">Coupon Management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="access-management.html">
-                            <i class="sidebar-item-icon fa fa-gears"></i>
-                            <span class="nav-label">Access Management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="financial-management.html">
-                            <i class="sidebar-item-icon fa fa-gear"></i>
-                            <span class="nav-label">Financial Management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="km-settings.html">
-                            <i class="sidebar-item-icon fa fa-sun-o"></i>
-                            <span class="nav-label">KM Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="commission-settings.html">
-                            <i class="sidebar-item-icon fa fa-snowflake-o"></i>
-                            <span class="nav-label">Commission Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="transaction.html">
-                            <i class="sidebar-item-icon fa fa-money"></i>
-                            <span class="nav-label">Transaction</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="supports.html">
-                            <i class="sidebar-item-icon fa fa-question-circle"></i>
-                            <span class="nav-label">Supports</span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="maps.html">
-                            <i class="sidebar-item-icon fa fa-map-marker"></i>
-                            <span class="nav-label">Maps</span>
-                        </a>
-                    </li> -->
          </ul>
      </div>
  </nav>

@@ -240,7 +240,7 @@
                     }
                 },
                 error: function(data) {
-                    alert(JSON.stringify(data));
+                   console.log(data);
                 }
             });
         }

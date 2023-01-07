@@ -260,12 +260,11 @@
 
 
     function fetch_recharge_package(user_id) {
-        // console.log(user_id);
         $.ajax({
             type: "get",
-            url: "https://jaduridedev.v-xplore.com/sarathi/driverPackages",
+            url: "<?=apiBaseUrl?>sarathi/driverPackages",
             headers: {
-                'x-api-key': '4c174057-0a6b-4fe8-98df-5699fac7c51a',
+                'x-api-key': '<?=const_x_api_key?>',
                 'platform': 'web',
                 'deviceid': ''
             },
@@ -273,8 +272,8 @@
                 // console.log(response);
             },
             success: function(response) {
-                get_specific_ids(user_id);
                 // console.log(response);
+                get_specific_ids(user_id);
                 var data = response.packages;
                 var details = ' <option value="">Select Recharge Package</option>';
                 $.each(data, function(i, data) {
@@ -312,13 +311,13 @@
         let package_id = $('#select_package').val();
         $.ajax({
             type: "POST",
-            url: `https://jaduridedev.v-xplore.com/sarathi/users/${sarathi_id}/recharge/driver/${driver_id}`,
+            url: `<?=apiBaseUrl?>sarathi/users/${sarathi_id}/recharge/driver/${driver_id}`,
             data: {
                 "selectedPackageId": package_id,
                 "paymentMode": "cash",
             },
             headers: {
-                'x-api-key': '4c174057-0a6b-4fe8-98df-5699fac7c51a',
+                'x-api-key': '<?=const_x_api_key?>',
                 'platform': 'web',
                 'deviceid': ''
             },
@@ -369,7 +368,7 @@
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 let permission = response.data.permission;
                 let data = permission.split(",");
                 $.each(data, function(i) {

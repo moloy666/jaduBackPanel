@@ -397,7 +397,7 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function display_ride_history($user_id)	
+	public function ride_history($user_id)	
 	{
 		if ($this->is_user_logged_in()) {
 
@@ -416,9 +416,9 @@ class Admin extends CI_Controller
 				$data['companion'] = 'Driver';
 			}
 
-			echo"<pre>";
-			print_r($data);
-			die();
+			// echo"<pre>";
+			// print_r($data);
+			// die();
 
 			$this->load_header();
 			$this->load_sidebar();
@@ -950,6 +950,7 @@ class Admin extends CI_Controller
 
 				$this->session->set_userdata(session_places, $this->Admin_model->get_access_permission($admin_id, access_places));
 				$this->session->set_userdata(session_coupon, $this->Admin_model->get_access_permission($admin_id, access_coupon));
+				$this->session->set_userdata(session_packages, $this->Admin_model->get_access_permission($admin_id, access_packages));
 			}
 
 			$this->load_header();
@@ -1140,6 +1141,32 @@ class Admin extends CI_Controller
 				$this->load_sidebar();
 				$this->load->view('driver_location');
 				$this->load_footer();
+
+			} else {
+				redirect(base_url('administrator/dashboard'));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	public function view_packages()
+	{
+		if ($this->is_user_logged_in()) {
+			if ($this->session->userdata(field_type_id) == const_user_admin) {
+				$admin_id = $this->session->userdata(session_admin_specific_id);
+				$this->init_admin_model();
+				$status = $this->Admin_model->get_access_permission($admin_id, access_packages);
+			} else {
+				$status = const_active;
+			}
+			if ($status == const_active) {
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view(view_packages);
+				$this->load_footer();
+				$this->load->view('inc/custom_js/packages_js');
+
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -4389,5 +4416,140 @@ class Admin extends CI_Controller
         $mpdf->Output($name.".pdf", "D");
         
     }
+
+	public function get_user_details(){
+		$user_id = $this->input->post(param_id);
+		$table = $this->input->post(param_table);
+		$this->init_common_model();
+		$data = $this->Common_model->get_user_details($user_id, $table);
+		if(!empty($data)){
+			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+
+	}
+
+	public function get_packages(){
+		$user = $this->input->post('user_type');
+		$user_type = ($user == value_franchise)? value_user_franchise : value_user_sub_franchise;
+		$this->init_common_model();
+
+		$packages_final = [];
+
+		$packages = $this->Common_model->get_packages($user_type);
+		$extra_percentage = $this->Common_model->get_extra_percentage_km_by_user_type($user_type);
+		$rate_per_km = $this->Common_model->getRatePerKm();
+
+		foreach($packages as $key => $value){
+			$price = $value[field_name] * $rate_per_km;
+
+			$packages_final[] = [
+				key_id => $value[field_id],
+				key_name => $value[field_name] ." ". unit_km . " ( + " . $extra_percentage . " % additional )" . " ".STATIC_RUPEE_SIGN.$price,
+			];
+			
+		}
+		
+		if(!empty($packages_final)){
+			$this->response(["success" => true, "message" => "found", "data"=>$packages_final], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+	}
+
+	public function get_package_details(){
+		$user_type = $this->input->post(field_user_type);
+		$this->init_admin_model();
+		$data=$this->Admin_model->get_package_details($user_type);
+		if(!empty($data)){
+			$this->response(["success" => true, "message" => "Data Found Successfully!", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "Data Not Found !"], 200);
+		}
+	}
+
+	public function add_packages(){
+		$name = $this->input->post(param_name);
+		$user_type_id=$this->input->post(field_user_type);
+
+		if(empty($name)){
+			$this->response(["success" => false, "message" => "Enter Package KM"], 200);
+			return;
+		}
+		if(empty($user_type_id)){
+			$this->response(["success" => false, "message" => "Select User Type"], 200);
+			return;
+		}
+		$this->init_uid_server_model();
+		$uid = $this->Uid_server_model->generate_uid(KEY_PACKAGES);
+		$this->init_admin_model();
+		$status = $this->Admin_model->add_packages($uid, $user_type_id, $name);
+		if($status){
+			$this->response(["success" => true, "message" => "Package Save Successfully !"], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
+		}
+	}
+
+	public function update_packages(){
+		$name = $this->input->post(param_name);
+		$uid = $this->input->post(param_id);
+		if(empty($name)){
+			$this->response(["success" => false, "message" => "Enter Package KM"], 200);
+			return;
+		}
+
+		$this->init_admin_model();
+		$status = $this->Admin_model->update_packages($uid, $name);
+		if($status){
+			$this->response(["success" => true, "message" => "Package Save Successfully !"], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
+		}
+	}
+
+	public function active_packages(){
+		$uid=$this->input->post(param_id);
+		$this->init_admin_model();
+		$status = $this->Admin_model->active_packages($uid);
+		if($status){
+			$this->response(["success" => true, "message" => "Package Activate Successfully !"], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
+		}
+	}
+
+	public function deactive_packages(){
+		$uid=$this->input->post(param_id);
+		$this->init_admin_model();
+		$status = $this->Admin_model->deactive_packages($uid);
+		if($status){
+			$this->response(["success" => true, "message" => "Package Deativate Successfully !"], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
+		}
+	}
+
+	public function delete_packages(){
+		$uid=$this->input->post(param_id);
+		$this->init_admin_model();
+		$status = $this->Admin_model->delete_packages($uid);
+		if($status){
+			$this->response(["success" => true, "message" => "Package Deleted Successfully !"], 200);
+		}
+		else{
+			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
+		}
+	}
+
+
 
 }

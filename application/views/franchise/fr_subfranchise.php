@@ -67,6 +67,45 @@
         </div>
     </div>
 
+    <!-- recharge details view modal -->
+    <div class="modal fade custmmodl" id="rechView1" tabindex="-1" role="dialog" aria-labelledby="rechView1Title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title bank-modal-title" id="exampleModalLongTitle">Rechage Package</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mx-4">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                <input class="form-control  mb-3" type="text" placeholder="Sub Franchise Id" id='' style="height:40px;background-color:transparent;">
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select class="form-control" id="select_package">
+                                    <option value="0" class="form-control">Select Recharge Package</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal" id="close_edit_modal">Close</button>
+                    <button type="button" class="btn  btn-success" id="btn_recharge">Recharge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Add new subfranchise modal -->
     <div class="modal fade custmmodl" id="addNewUsr1" tabindex="-1" role="dialog" aria-labelledby="addNewUsr1Title" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -170,7 +209,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <select class="form-control title" id="edit_access_list" placeholder="Select Management" multiple>
-                                        <option value="0">Select Management </option>                                     
+                                        <option value="0">Select Management </option>
                                     </select>
                                 </div>
                             </div>
