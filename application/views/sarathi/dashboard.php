@@ -4,6 +4,7 @@ foreach ($sarathi_data as $data) {
 }
 ?>
 <input type="hidden" value="<?= $sarathi_id ?>" id="sarathi_id">
+<input type="text" value="<?=$this->session->userdata(session_sarathi_user_id)?>" id="user_id">
 
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
@@ -76,7 +77,7 @@ foreach ($sarathi_data as $data) {
                 <div class="ibox bg-warning color-white widget-stat">
                     <div class="ibox-body dashboard-card">
                         <div class="m-b-5">Total KM Purchased Today</div>
-                        <h2 class="m-b-5 font-strong">0</h2>
+                        <h2 class="m-b-5 font-strong totalKmPurchaseToday">0</h2>
                     </div>
                 </div>
             </div>

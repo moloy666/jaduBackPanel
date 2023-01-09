@@ -72,19 +72,18 @@
                                 <h2 class="m-b-5 font-strong totalCarRunning"><?= $totalCarRunning ?></h2>
                             </div>
                         </td>
-
                     </tr>
                     <tr>
                         <td>
                             <div>
                                 <div class="m-b-5">Total KM Purchased</div>
-                                <h2 class="m-b-5 font-strong totalKmPurchased"><?= $totalKmPurchase ?> KM</h2>
+                                <h2 class="m-b-5 font-strong totalKmPurchased"><?= $totalKmPurchased ?> KM</h2>
                             </div>
                         </td>
                         <td>
                             <div>
                                 <div class="m-b-5">Total KM Purchased Today</div>
-                                <h2 class="m-b-5 font-strong">0</h2>
+                                <h2 class="m-b-5 font-strong totalKmPurchasedToday"><?=$totalKmPurchaseToday?> KM</h2>
                             </div>
                         </td>
                         <td>

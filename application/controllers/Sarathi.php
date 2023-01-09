@@ -57,6 +57,11 @@ class Sarathi extends CI_Controller
         $this->load->model(model_common);
     }
 
+    private function init_admin_model()
+	{
+		$this->load->model(model_admin);
+	}
+
 
     private function init_sarathi_model()
     {
@@ -188,7 +193,7 @@ class Sarathi extends CI_Controller
             $this->session->set_userdata(sarathi_session_places, $this->Sarathi_model->get_access_permission($user_id, access_places));
             $this->session->set_userdata(sarathi_session_coupon, $this->Sarathi_model->get_access_permission($user_id, access_coupon));
 
-			$this->session->set_userdata(session_sarathi_status, $this->Common_model->get_status_by_user_id($user_id));
+            $this->session->set_userdata(session_sarathi_status, $this->Common_model->get_status_by_user_id($user_id));
 
 
             $this->init_sarathi_details_model();
@@ -222,7 +227,8 @@ class Sarathi extends CI_Controller
     }
 
 
-    public function sarathi_details(){  //  sarathi/driver
+    public function sarathi_details()
+    {  //  sarathi/driver
 
         if ($this->is_sarathi_logged_in()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
@@ -242,7 +248,8 @@ class Sarathi extends CI_Controller
         }
     }
 
-    public function show_pending_drivers($user_id){   // open pending driver document page
+    public function show_pending_drivers($user_id)
+    {   // open pending driver document page
         $this->init_sarathi_details_model();
 
         $user['user_id'] = $user_id;
@@ -466,6 +473,7 @@ class Sarathi extends CI_Controller
             redirect(base_url(WEB_PORTAL_SARATHI . '/index'));
         }
     }
+
 
     public function view_incentives()
     {
@@ -738,6 +746,29 @@ class Sarathi extends CI_Controller
         }
     }
 
+    public function view_driver_details($user_id)
+    {
+        if ($this->is_sarathi_active()) {
+            $this->init_driver_model();
+            $this->init_admin_model();
+
+            $data['data'] = $this->Driver_model->display_driver_details($user_id);
+            $specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
+
+            $data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
+            $data['companion'] = 'Customer';
+
+            $data['recharge_history'] =  $this->Driver_model->get_recharge_history_of_driver($user_id);
+
+            $this->load_header();
+            $this->load_sidebar();
+            $this->load->view('driver_details', $data);
+            $this->load_footer();
+        } else {
+            redirect(base_url(WEB_PORTAL_SARATHI . '/index'));
+        }
+    }
+
     public function get_driver_data()
     {
         $sarathi_id = $this->input->post(param_id);
@@ -764,7 +795,8 @@ class Sarathi extends CI_Controller
         }
     }
 
-    public function get_customer_details(){
+    public function get_customer_details()
+    {
         $customer_id = $this->input->post(param_id);
         $this->init_customer_model();
         $data = $this->Customers_model->get_customer_details($customer_id);
@@ -787,22 +819,22 @@ class Sarathi extends CI_Controller
         }
     }
 
-    public function download_recharge_history(){
-        $user_id=$this->session->userdata(session_sarathi_user_id);
+    public function download_recharge_history()
+    {
+        $user_id = $this->session->userdata(session_sarathi_user_id);
         $this->init_sarathi_model();
-        $data['sarathi']=$this->Sarathi_model->get_user_name_by_id($user_id);
-        $data['sarathi_data'] = $this->Sarathi_model-> get_recharge_histiry_of_sarathi($user_id);
+        $data['sarathi'] = $this->Sarathi_model->get_user_name_by_id($user_id);
+        $data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
 
         // $this->load_header();
         // $this->load_sidebar();
         // $this->load->view('sarathi/download_recharge_history', $data);
         // $this->load_footer();
 
-        $name = 'recharge_history_'.time();
+        $name = 'recharge_history_' . time();
         $mpdf = new \Mpdf\Mpdf();
         $html = $this->load->view('sarathi/download_recharge_history', $data, true);
         $mpdf->WriteHTML($html);
-        $mpdf->Output($name.".pdf", "D");
-        
+        $mpdf->Output($name . ".pdf", "D");
     }
 }

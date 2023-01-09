@@ -169,11 +169,11 @@ class Admin extends CI_Controller
 			// 	$status = const_active;
 			// }
 			// if ($status == const_active) {
-				$this->load_header();
-				$this->load_sidebar();
-				$this->load->view('dormant_account');
-				$this->load_footer();
-				$this->load->view('inc/custom_js/incentives_js');
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('dormant_account');
+			$this->load_footer();
+			$this->load->view('inc/custom_js/incentives_js');
 			// } else {
 			// 	redirect(base_url('administrator/dashboard'));
 			// }
@@ -219,11 +219,11 @@ class Admin extends CI_Controller
 			// }
 			// if ($status == const_active) {
 
-				$this->load_header();
-				$this->load_sidebar();
-				$this->load->view('ride_details');
-				$this->load_footer();
-				$this->load->view('inc/custom_js/ride_details_js');
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('ride_details');
+			$this->load_footer();
+			$this->load->view('inc/custom_js/ride_details_js');
 
 			// } else {
 			// 	redirect(base_url('administrator/dashboard'));
@@ -297,12 +297,12 @@ class Admin extends CI_Controller
 			}
 			if ($status == const_active) {
 
-			$this->load_header();
-			$this->load_sidebar();
-			$this->load->view('coupons');
-			$this->load_footer();
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view('coupons');
+				$this->load_footer();
 
-			$this->load->view('inc/custom_js/coupons_js');
+				$this->load->view('inc/custom_js/coupons_js');
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -324,12 +324,12 @@ class Admin extends CI_Controller
 			}
 			if ($status == const_active) {
 
-			$this->load_header();
-			$this->load_sidebar();
-			$this->load->view('places');
-			$this->load_footer();
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view('places');
+				$this->load_footer();
 
-			$this->load->view('inc/custom_js/places_js');
+				$this->load->view('inc/custom_js/places_js');
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -387,17 +387,17 @@ class Admin extends CI_Controller
 			// $this->load->view(view_ride_history, $data);
 			// $this->load_footer();
 
-			$name = 'ride_history_'.time();
+			$name = 'ride_history_' . time();
 			$mpdf = new \Mpdf\Mpdf();
 			$html = $this->load->view(view_ride_history, $data, true);
 			$mpdf->WriteHTML($html);
-			$mpdf->Output($name.".pdf", "D");
+			$mpdf->Output($name . ".pdf", "D");
 		} else {
 			redirect(base_url());
 		}
 	}
 
-	public function ride_history($user_id)	
+	public function display_ride_history($user_id)
 	{
 		if ($this->is_user_logged_in()) {
 
@@ -424,7 +424,6 @@ class Admin extends CI_Controller
 			$this->load_sidebar();
 			$this->load->view(view_ride_history, $data);
 			$this->load_footer();
-
 		} else {
 			redirect(base_url());
 		}
@@ -564,7 +563,8 @@ class Admin extends CI_Controller
 		echo json_encode($user_count);
 	}
 
-	public function update_user_profile(){
+	public function update_user_profile()
+	{
 		// $user_id = $this->input->post(param_id);
 		$user_id = $this->session->userdata(field_user_id);
 		$name = $this->input->post(param_name);
@@ -1141,7 +1141,6 @@ class Admin extends CI_Controller
 				$this->load_sidebar();
 				$this->load->view('driver_location');
 				$this->load_footer();
-
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -1166,7 +1165,6 @@ class Admin extends CI_Controller
 				$this->load->view(view_packages);
 				$this->load_footer();
 				$this->load->view('inc/custom_js/packages_js');
-
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -1353,14 +1351,13 @@ class Admin extends CI_Controller
 
 		$panel_acess_list = json_encode(implode(',', $panel_ids));
 
-		$exist=$this->Sarathi_model->userid_exists($user_id, field_user_id, table_panel_access_permissions);
-		if($exist){
+		$exist = $this->Sarathi_model->userid_exists($user_id, field_user_id, table_panel_access_permissions);
+		if ($exist) {
 			$panel_access = [
 				field_permission => $panel_acess_list,
 				field_modified_at => date(field_date)
 			];
-		}
-		else{
+		} else {
 			$panel_access = [
 				field_uid => $this->Uid_server_model->generate_uid('PERMISSION'),
 				field_user_id => $user_id,
@@ -1369,7 +1366,7 @@ class Admin extends CI_Controller
 				field_modified_at => date(field_date)
 			];
 		}
-		
+
 
 		foreach ($permission_ids as $i => $permision) {
 			$access[$i]['uid'] = $this->Uid_server_model->generate_uid('PERMISSION');
@@ -2505,7 +2502,7 @@ class Admin extends CI_Controller
 		$sarathi_id = $this->Sarathi_details_model->get_sarathi_id_by_user_id($user_id);
 		$this->session->set_userdata(session_sarathi_id, $sarathi_id);
 		$data['driver_pending'] = $this->Sarathi_details_model->get_pending_driver_number($sarathi_id);
-		$data['user_id']=$user_id;
+		$data['user_id'] = $user_id;
 		if ($this->is_user_logged_in()) {
 			$this->load_header();
 			$this->load_sidebar();
@@ -2544,13 +2541,14 @@ class Admin extends CI_Controller
 			$this->response([key_success => false, key_message => "Driver Not Found"], 200);
 		}
 	}
-	public function show_pending_drivers($user_id){   // open pending driver doument page
+	public function show_pending_drivers($user_id)
+	{   // open pending driver doument page
 		$this->init_sarathi_details_model();
 		$user[field_user_id] = $user_id;
 		$gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);
 		$user['info'] = $this->Sarathi_details_model->get_name_by_user_id($user_id);
 		$user['documents'] = $this->Sarathi_details_model->get_pending_driver_details($gid);
-		
+
 		if ($this->is_user_logged_in()) {
 			$this->load_header();
 			$this->load_sidebar();
@@ -2623,13 +2621,26 @@ class Admin extends CI_Controller
 			'totalFranchise' => $this->Franchise_model->get_total_franchise(),
 			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(), // Franchise specific id
 			'totalCarRunning' =>  $this->Driver_model->get_total_car_running($specific_id),
-			'totalRevenue'=> $this->Admin_model->get_total_revenue($specific_id),
-			'revenueStatus'=> $this->Admin_model->get_revenue_status($specific_id),
+			'totalRevenue' => $this->Admin_model->get_total_revenue($specific_id),
+			'revenueStatus' => $this->Admin_model->get_revenue_status($specific_id),
 		];
 		echo json_encode($data);
 	}
 
-	public function download_progress_report($specific_id){
+	public function total_km_purchase_today()
+	{
+		$user_id = $this->input->post(param_id);
+		$this->init_admin_model();
+		$data = $this->Admin_model->total_km_purchase_today($user_id);
+		if (!empty($data)) {
+			$this->response(['success' => true, 'message' => 'found', 'data' => $data], 200);
+		} else {
+			$this->response(['success' => false, 'message' => 'not found'], 200);
+		}
+	}
+
+	public function download_progress_report($specific_id)
+	{
 		$this->init_admin_model();
 		$this->init_sarathi_model();
 		$this->init_driver_model();
@@ -2637,15 +2648,15 @@ class Admin extends CI_Controller
 		$this->init_franchise_model();
 		$this->init_sub_franchise_model();
 		$this->init_sarathi_details_model();
+		$this->init_common_model();
 
-		if($specific_id == table_administrator){
+		if ($specific_id == table_administrator) {
 			$view = 'progress_report';
-			$specific_id='';
-
-		}
-		else{
+			$specific_id = '';
+			$user_id = '';
+		} else {
 			$view = 'sarathi/sarathi_progress';
-			
+			$user_id = $this->Common_model->get_user_id_by_specific_id($specific_id, table_sarathi);
 		}
 
 		$data = [
@@ -2659,25 +2670,26 @@ class Admin extends CI_Controller
 			'totalFranchise' => $this->Franchise_model->get_total_franchise(),
 			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(),  // Franchise specific id
 			'totalCarRunning' =>  $this->Driver_model->get_total_car_running($specific_id),
-			'totalRevenue'=> $this->Admin_model->get_total_revenue($specific_id),
-			'revenueStatus'=> $this->Admin_model->get_revenue_status($specific_id),
-			'totalKmPurchase'=> $this->Sarathi_details_model->total_km_purchase($specific_id),
+			'totalRevenue' => $this->Admin_model->get_total_revenue($specific_id),
+			'revenueStatus' => $this->Admin_model->get_revenue_status($specific_id),
+			'totalKmPurchase' => $this->Sarathi_details_model->total_km_purchase($specific_id),
+			'totalKmPurchaseToday' => $this->Admin_model->total_km_purchase_today($user_id),
 			'driver_data' => $this->Driver_model->getdriverData($specific_id),
-			'user_details'=>$this->Sarathi_model->get_user_details($specific_id),
+			'user_details' => $this->Sarathi_model->get_user_details($specific_id),
 			'sarathi_data' => $this->Sarathi_model->getSarahiData()
 		];
-		
 
-		$name = 'progress_report_'.time();
-        $mpdf = new \Mpdf\Mpdf();
-        $html = $this->load->view($view, $data, true);
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($name.".pdf", "D");
+
+		$name = 'progress_report_' . time();
+		$mpdf = new \Mpdf\Mpdf();
+		$html = $this->load->view($view, $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output($name . ".pdf", "D");
 
 		// $this->load_header();
-        // $this->load_sidebar();
-        // $this->load->view('progress_report', $data);
-        // $this->load_footer();
+		// $this->load_sidebar();
+		// $this->load->view('progress_report', $data);
+		// $this->load_footer();
 	}
 
 	public function getsarathiData()
@@ -2855,7 +2867,7 @@ class Admin extends CI_Controller
 		$this->init_franchise_model();
 		$data['franchise_data'] = $this->Franchise_model->franchise_details($user_id);
 		$franchise_id = $this->Franchise_model->get_franchise_id_by_user_id($user_id);
-		$data['user_id']=$user_id;
+		$data['user_id'] = $user_id;
 		$this->session->set_userdata(session_franchise_id, $franchise_id);
 		if ($this->is_user_logged_in()) {
 			$this->load_header();
@@ -2872,7 +2884,7 @@ class Admin extends CI_Controller
 	{
 		$this->init_sub_franchise_model();
 		$data['subfranchise_data'] = $this->Subfranchise_model->subfranchise_details($user_id);
-		$data['user_id']=$user_id;
+		$data['user_id'] = $user_id;
 		$subfranchise_id = $this->Subfranchise_model->get_subfranchise_id_by_user_id($user_id);
 		$this->session->set_userdata(session_subfranchise_id, $subfranchise_id);
 		if ($this->is_user_logged_in()) {
@@ -2885,7 +2897,8 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function total_km_purchase(){	#----------sarathi panel
+	public function total_km_purchase()
+	{	#----------sarathi panel
 		$sarathi_id = $this->input->post(param_id);
 		$this->init_sarathi_details_model();
 		$km_purchase = $this->Sarathi_details_model->total_km_purchase($sarathi_id);
@@ -2917,10 +2930,11 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function change_user_password(){
+	public function change_user_password()
+	{
 
-		$specific_id=$this->input->post(param_specific_id);
-		$table=$this->input->post('table');
+		$specific_id = $this->input->post(param_specific_id);
+		$table = $this->input->post('table');
 
 		$old_password = md5($this->input->post('old_password'));
 		$new_password = md5($this->input->post('new_password'));
@@ -3501,7 +3515,20 @@ class Admin extends CI_Controller
 	{
 		if ($this->is_user_logged_in()) {
 			$this->init_driver_model();
+			$this->init_admin_model();
+
 			$data['data'] = $this->Driver_model->display_driver_details($user_id);
+			$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
+			
+			$data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
+			$data['companion'] = 'Customer';
+
+			$data['recharge_history'] =  $this->Driver_model->get_recharge_history_of_driver($user_id);
+
+			// echo "<pre>";
+			// print_r($data['ride_history']);
+			// die();
+
 			$this->load_header();
 			$this->load_sidebar();
 			$this->load->view('driver_details', $data);
@@ -4232,208 +4259,207 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function get_place_name_by_id(){
-		$id=$this->input->post(param_id);
+	public function get_place_name_by_id()
+	{
+		$id = $this->input->post(param_id);
 		$this->init_admin_model();
-		$data=$this->Admin_model->get_place_name_by_id($id);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Admin_model->get_place_name_by_id($id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
-
 	}
 
-	public function get_user_panel_access(){
-		$user_id=$this->input->post(param_id);
+	public function get_user_panel_access()
+	{
+		$user_id = $this->input->post(param_id);
 		$this->init_common_model();
-		$data=$this->Common_model->get_user_panel_access($user_id);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Common_model->get_user_panel_access($user_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function get_hotel_details(){
+	public function get_hotel_details()
+	{
 		$this->init_admin_model();
-		$data=$this->Admin_model->get_hotel_details();
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Admin_model->get_hotel_details();
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function active_hotel(){
-		$uid=$this->input->post(param_id);
+	public function active_hotel()
+	{
+		$uid = $this->input->post(param_id);
 		$this->init_admin_model();
-		$status=$this->Admin_model->active_hotel($uid);
-		if($status){
+		$status = $this->Admin_model->active_hotel($uid);
+		if ($status) {
 			$this->response(["success" => true, "message" => "Activated Successfully"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong"], 200);
 		}
 	}
 
-	public function deactive_hotel(){
-		$uid=$this->input->post(param_id);
+	public function deactive_hotel()
+	{
+		$uid = $this->input->post(param_id);
 		$this->init_admin_model();
-		$status=$this->Admin_model->deactive_hotel($uid);
-		if($status){
+		$status = $this->Admin_model->deactive_hotel($uid);
+		if ($status) {
 			$this->response(["success" => true, "message" => "Deactivated Successfully"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong"], 200);
 		}
 	}
 
-	public function delete_hotel(){
-		$uid=$this->input->post(param_id);
+	public function delete_hotel()
+	{
+		$uid = $this->input->post(param_id);
 		$this->init_admin_model();
-		$status=$this->Admin_model->delete_hotel($uid);
-		if($status){
+		$status = $this->Admin_model->delete_hotel($uid);
+		if ($status) {
 			$this->response(["success" => true, "message" => "Hotel Data Deleted Successfully"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong"], 200);
 		}
 	}
 
-	public function get_sarathi_ids(){
-		$subfranchise_id=$this->input->post(param_id);
+	public function get_sarathi_ids()
+	{
+		$subfranchise_id = $this->input->post(param_id);
 		$this->init_sarathi_model();
-		$data=$this->Sarathi_model->get_sarathi_ids($subfranchise_id);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Sarathi_model->get_sarathi_ids($subfranchise_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function get_sarathi_details_by_user_id(){
+	public function get_sarathi_details_by_user_id()
+	{
 		$user_id = $this->input->post(param_id);
 		$this->init_sarathi_model();
-		$data=$this->Sarathi_model->get_sarathi_details_by_user_id($user_id);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Sarathi_model->get_sarathi_details_by_user_id($user_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function get_driver_ids_by_sarathi_id(){
-		$sarathi_id=$this->input->post(param_id);
+	public function get_driver_ids_by_sarathi_id()
+	{
+		$sarathi_id = $this->input->post(param_id);
 		$this->init_driver_model();
-		$data=$this->Driver_model->get_driver_ids_by_sarathi_id($sarathi_id);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Driver_model->get_driver_ids_by_sarathi_id($sarathi_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function get_driver_details_by_user_id(){
-		$user_id=$this->input->post(param_id);
+	public function get_driver_details_by_user_id()
+	{
+		$user_id = $this->input->post(param_id);
 		$this->init_driver_model();
-		$data=$this->Driver_model->get_driver_details_by_user_id($user_id);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Driver_model->get_driver_details_by_user_id($user_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function get_ride_type_details(){
-		$ride_id=$this->input->post(param_id);
+	public function get_ride_type_details()
+	{
+		$ride_id = $this->input->post(param_id);
 		$this->init_admin_model();
-		$data=$this->Admin_model->get_ride_type_details($ride_id);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Admin_model->get_ride_type_details($ride_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function update_ride_details(){
-		$ride_id=$this->input->post(param_id);
-		$short_desc=$this->input->post('short');
-		$long_desc=$this->input->post('long');
+	public function update_ride_details()
+	{
+		$ride_id = $this->input->post(param_id);
+		$short_desc = $this->input->post('short');
+		$long_desc = $this->input->post('long');
 		$specific_id = $this->input->post(param_specific_id);
 		$this->init_admin_model();
-		$update=$this->Admin_model->update_ride_details($ride_id, $short_desc, $long_desc, $specific_id);
-		if($update){
+		$update = $this->Admin_model->update_ride_details($ride_id, $short_desc, $long_desc, $specific_id);
+		if ($update) {
 			$this->response(["success" => true, "message" => "Ride Description Updated Successfully"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong"], 200);
 		}
 	}
 
-	public function get_dormant_account_details(){
+	public function get_dormant_account_details()
+	{
 		$this->init_admin_model();
-		$data=$this->Admin_model->get_dormant_account_details();
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Admin_model->get_dormant_account_details();
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function driver_progress($user_id){
+	public function driver_progress($user_id)
+	{
 		$this->init_driver_model();
 		$data['data'] = $this->Driver_model->driver_progress($user_id);
 
-		$name = 'progress_report_'.time();
-        $mpdf = new \Mpdf\Mpdf();
+		$name = 'progress_report_' . time();
+		$mpdf = new \Mpdf\Mpdf();
 		$mpdf->showImageErrors = true;
-        $html = $this->load->view('driver_progress', $data, true);
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($name.".pdf", "D");
-
+		$html = $this->load->view('driver_progress', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output($name . ".pdf", "D");
 	}
 
 
-	public function download_sarathi_recharge_history($user_id){
-        $this->init_sarathi_model();
-        $data['sarathi']=$this->Sarathi_model->get_user_name_by_id($user_id);
-        $data['sarathi_data'] = $this->Sarathi_model-> get_recharge_histiry_of_sarathi($user_id);
+	public function download_sarathi_recharge_history($user_id)
+	{
+		$this->init_sarathi_model();
+		$data['sarathi'] = $this->Sarathi_model->get_user_name_by_id($user_id);
+		$data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
 
-        $name = 'recharge_history_'.time();
-        $mpdf = new \Mpdf\Mpdf();
-        $html = $this->load->view('sarathi/download_recharge_history', $data, true);
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($name.".pdf", "D");
-        
-    }
+		$name = 'recharge_history_' . time();
+		$mpdf = new \Mpdf\Mpdf();
+		$html = $this->load->view('sarathi/download_recharge_history', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output($name . ".pdf", "D");
+	}
 
-	public function get_user_details(){
+	public function get_user_details()
+	{
 		$user_id = $this->input->post(param_id);
 		$table = $this->input->post(param_table);
 		$this->init_common_model();
 		$data = $this->Common_model->get_user_details($user_id, $table);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-		}
-		else{
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
-
 	}
 
-	public function get_packages(){
+	public function get_packages()
+	{
 		$user = $this->input->post('user_type');
-		$user_type = ($user == value_franchise)? value_user_franchise : value_user_sub_franchise;
+		$user_type = ($user == value_franchise) ? value_user_franchise : value_user_sub_franchise;
 		$this->init_common_model();
 
 		$packages_final = [];
@@ -4442,45 +4468,44 @@ class Admin extends CI_Controller
 		$extra_percentage = $this->Common_model->get_extra_percentage_km_by_user_type($user_type);
 		$rate_per_km = $this->Common_model->getRatePerKm();
 
-		foreach($packages as $key => $value){
+		foreach ($packages as $key => $value) {
 			$price = $value[field_name] * $rate_per_km;
 
 			$packages_final[] = [
 				key_id => $value[field_id],
-				key_name => $value[field_name] ." ". unit_km . " ( + " . $extra_percentage . " % additional )" . " ".STATIC_RUPEE_SIGN.$price,
+				key_name => $value[field_name] . " " . unit_km . " ( + " . $extra_percentage . " % additional )" . " " . STATIC_RUPEE_SIGN . $price,
 			];
-			
 		}
-		
-		if(!empty($packages_final)){
-			$this->response(["success" => true, "message" => "found", "data"=>$packages_final], 200);
-		}
-		else{
+
+		if (!empty($packages_final)) {
+			$this->response(["success" => true, "message" => "found", "data" => $packages_final], 200);
+		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 
-	public function get_package_details(){
+	public function get_package_details()
+	{
 		$user_type = $this->input->post(field_user_type);
 		$this->init_admin_model();
-		$data=$this->Admin_model->get_package_details($user_type);
-		if(!empty($data)){
-			$this->response(["success" => true, "message" => "Data Found Successfully!", "data"=>$data], 200);
-		}
-		else{
+		$data = $this->Admin_model->get_package_details($user_type);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "Data Found Successfully!", "data" => $data], 200);
+		} else {
 			$this->response(["success" => false, "message" => "Data Not Found !"], 200);
 		}
 	}
 
-	public function add_packages(){
+	public function add_packages()
+	{
 		$name = $this->input->post(param_name);
-		$user_type_id=$this->input->post(field_user_type);
+		$user_type_id = $this->input->post(field_user_type);
 
-		if(empty($name)){
+		if (empty($name)) {
 			$this->response(["success" => false, "message" => "Enter Package KM"], 200);
 			return;
 		}
-		if(empty($user_type_id)){
+		if (empty($user_type_id)) {
 			$this->response(["success" => false, "message" => "Select User Type"], 200);
 			return;
 		}
@@ -4488,68 +4513,75 @@ class Admin extends CI_Controller
 		$uid = $this->Uid_server_model->generate_uid(KEY_PACKAGES);
 		$this->init_admin_model();
 		$status = $this->Admin_model->add_packages($uid, $user_type_id, $name);
-		if($status){
+		if ($status) {
 			$this->response(["success" => true, "message" => "Package Save Successfully !"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
 		}
 	}
 
-	public function update_packages(){
+	public function update_packages()
+	{
 		$name = $this->input->post(param_name);
 		$uid = $this->input->post(param_id);
-		if(empty($name)){
+		if (empty($name)) {
 			$this->response(["success" => false, "message" => "Enter Package KM"], 200);
 			return;
 		}
 
 		$this->init_admin_model();
 		$status = $this->Admin_model->update_packages($uid, $name);
-		if($status){
+		if ($status) {
 			$this->response(["success" => true, "message" => "Package Save Successfully !"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
 		}
 	}
 
-	public function active_packages(){
-		$uid=$this->input->post(param_id);
+	public function active_packages()
+	{
+		$uid = $this->input->post(param_id);
 		$this->init_admin_model();
 		$status = $this->Admin_model->active_packages($uid);
-		if($status){
+		if ($status) {
 			$this->response(["success" => true, "message" => "Package Activate Successfully !"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
 		}
 	}
 
-	public function deactive_packages(){
-		$uid=$this->input->post(param_id);
+	public function deactive_packages()
+	{
+		$uid = $this->input->post(param_id);
 		$this->init_admin_model();
 		$status = $this->Admin_model->deactive_packages($uid);
-		if($status){
+		if ($status) {
 			$this->response(["success" => true, "message" => "Package Deativate Successfully !"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
 		}
 	}
 
-	public function delete_packages(){
-		$uid=$this->input->post(param_id);
+	public function delete_packages()
+	{
+		$uid = $this->input->post(param_id);
 		$this->init_admin_model();
 		$status = $this->Admin_model->delete_packages($uid);
-		if($status){
+		if ($status) {
 			$this->response(["success" => true, "message" => "Package Deleted Successfully !"], 200);
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Something went wrong!"], 200);
 		}
 	}
 
-
-
+	public function get_user_recharge_data(){
+		$user_id = $this->input->post(param_id);
+		$this->init_common_model();
+		$data = $this->get_user_recharge_data($user_id);
+		if ($data) {
+			$this->response(["success" => true, "message" => "Found", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "not found!"], 200);
+		}
+	}
 }

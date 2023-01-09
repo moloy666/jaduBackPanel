@@ -650,6 +650,13 @@ class Common_model extends CI_Model
         return (!empty($query)) ? $query[0]['total_amount'] : 0;
     }
 
+
+    public function total_km_purchase($specific_id, $table){
+        $query = $this->db->select(field_total_km_purchased)->where(field_uid, $specific_id)->get($table);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0][field_total_km_purchased]:0;
+    }
+
     /////////////////////////////////////////////////////////////
 
     public function display_driver_location($franchise_id)
@@ -765,5 +772,18 @@ class Common_model extends CI_Model
         $query = $this->db->get(table_excess_percentage);
         $query = $query->result_array();
         return (!empty($query)) ? $query[0][field_percentage] : null ;
+    }
+
+    public function get_user_id_by_specific_id($specific_id, $table){
+        $query = $this->db->select('u.uid')->from('users as u')->join($table. ' as t', 'u.uid=t.user_id')
+        ->where('t.uid', $specific_id)->get();
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_uid]:null;
+    }
+
+    public function get_user_recharge_data($user_id){
+        $query = $this->db->select('original_km, date(created_at)')->get('recharge_history');
+        $query = $query->result_array();
+        return (!empty($query))?$query:null;
     }
 }

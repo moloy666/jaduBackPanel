@@ -49,6 +49,26 @@
         }
     });
 
+    $.ajax({
+        type: "POST",
+        url: "<?= base_url('administrator/total_km_purchase_today') ?>",
+        data: {
+            "id": $('#user_id').val()
+        },
+        error: function(response) {
+            console.log(response);
+        },
+        success: function(response) {
+            if (response.success) {
+                // console.log(response);
+                let data =response.data;
+                $('.totalKmPurchaseToday').text(data);
+            } else {
+                console.log(response);
+            }
+        }
+    });
+
 
     var driverName = [];
     var driverKmPurchased = [];
@@ -114,4 +134,19 @@
             }
         });
     }
+
+
+    $.ajax({
+        type:"post",
+        url:"<?=base_url('admin/get_user_recharge_data')?>",
+        data:{
+            'id':$('#user_id').val()
+        },
+        error:function(response){
+            console.log(response);
+        },
+        success:function(response){
+            console.log(response);
+        }
+    });
 </script>

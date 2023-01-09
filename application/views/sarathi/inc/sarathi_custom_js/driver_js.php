@@ -34,7 +34,7 @@
                             user_status = "";
                         str += `<tr>
                         <td>${i+1}</td>
-                        <td class="title">${driver[i].name}</td>
+                        <td class="title"><a href="<?=base_url(WEB_PORTAL_SARATHI.'/driver/details/')?>${driver[i].user_id}">${driver[i].name}</a></td>
                         <td>${driver[i].email}</td> 
                         <td>${driver[i].mobile}</td>
                         <td>${driver[i].total_km_purchased}</td>

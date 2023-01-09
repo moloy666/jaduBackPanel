@@ -15,7 +15,7 @@
 
         <div class="col-lg-6">
             <div class="form-group float-right">
-                <form action="<?= base_url(WEB_PORTAL_FRANCHISE . '/download_progress_report/') . $specific_level_user_id ?>" method="post" target="_blank">
+                <form action="<?= base_url(WEB_PORTAL_FRANCHISE . '/download_progress_report/') . $specific_level_user_id.'/'. $this->session->userdata(session_franchise_table)?>" method="post" target="_blank">
                     <button type="submit" class="btn bgred ml-3 btnround">
                         Download Progress Report
                     </button>
@@ -72,6 +72,16 @@
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-warning color-white widget-stat">
                     <div class="ibox-body dashboard-card">
+                        <div class="m-b-5">Total KM Purchased Today</div>
+                        <h2 class="m-b-5 font-strong totalKmPurchaseToday">0</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-success color-white widget-stat">
+                    <div class="ibox-body dashboard-card">
                         <div class="m-b-5">Total Sarathi</div>
                         <h2 class="m-b-5 font-strong totalSarathi">0</h2>
                     </div>
@@ -80,7 +90,7 @@
 
             <?php if ($this->session->userdata(session_franchise_type_id) != 'user_sub_franchise') { ?>
                 <div class="col-lg-3 col-md-6">
-                    <div class="ibox bg-success color-white widget-stat">
+                    <div class="ibox bg-warning color-white widget-stat">
                         <div class="ibox-body dashboard-card">
                             <div class="m-b-5">Total Sub Franchise</div>
                             <h2 class="m-b-5 font-strong totalSubFranchise">0</h2>

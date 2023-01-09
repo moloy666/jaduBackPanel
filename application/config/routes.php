@@ -152,6 +152,7 @@ $route['administrator/get_customer_by_booking_id'] = 'admin/get_customer_by_book
 ////////////////////// SARATHI PANEL ///////////////////////////////////////////
 // $route['sarathi_login'] = 'Sarathi/index';
 
+$route['sarathiData'] = 'Admin/getsarathiData';
 $route['sarathi/login'] = 'Sarathi/index';
 $route['sarathi/driver'] = 'Sarathi/sarathi_details';
 $route['sarathi_driver'] = 'Sarathi/driver';
@@ -159,7 +160,9 @@ $route['sarathi_customers'] = 'Sarathi/customers';
 $route['sarathi/profile'] = 'Sarathi/sarathi_profile';
 $route['sarathi/documents'] = 'Sarathi/view_sarathi_documents';
 $route['sarathi/pending_driver_document/(:any)'] = 'sarathi/show_pending_drivers/$1';
-$route['sarathiData'] = 'Admin/getsarathiData';
+$route['sarathi/driver/details/(:any)'] = 'Sarathi/view_driver_details/$1';
+
+
 
 // $route['sarathi/dashboard'] = 'sarathi/view_dashboard';
 
@@ -290,9 +293,6 @@ $route['administrator/admin/remarks/(:any)'] = 'Admin/view_display_remarks/$1';
 $route['administrator/admin/details/(:any)'] = 'Admin/view_admin_details/$1';
 $route['administrator/download_progress_report/(:any)'] = 'Admin/download_progress_report/$1';
 
-$route['administrator/driver/ride_history/(:any)'] = 'Admin/ride_history/$1';
-
-
 //////////////////////////////////////////////////////////////////////////////
 
 // sarathi details 
@@ -305,7 +305,12 @@ $route['administrator/total_km_purchase'] = 'Admin/total_km_purchase';
 $route['administrator/pending_driver_document/(:any)'] = 'Admin/show_pending_drivers/$1';
 $route['administrator/driver/details/(:any)'] = 'Admin/display_driver_details/$1';
 $route['administrator/driver/ride_history/(:any)'] = 'Admin/view_ride_history/$1';
+
+$route['administrator/driver/display_ride_history/(:any)'] = 'Admin/display_ride_history/$1';
+
+
 $route['administrator/driver/ride_history_csv/(:any)'] = 'Admin/ride_history_csv/$1';
+
 
 $route['administrator/display_driver_location'] = 'Admin/display_driver_location';
 
@@ -437,6 +442,9 @@ $route['administrator/update_packages'] = 'Admin/update_packages';
 $route['administrator/active_packages'] = 'Admin/active_packages';
 $route['administrator/deactive_packages'] = 'Admin/deactive_packages';
 $route['administrator/delete_packages'] = 'Admin/delete_packages';
+/////////////////////////
+
+$route['administrator/total_km_purchase_today'] = 'Admin/total_km_purchase_today';
 
 
 

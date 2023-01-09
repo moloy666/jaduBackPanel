@@ -11,6 +11,7 @@
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Drivers</h3>
+                    <input type="hidden" value="<?= $user_type=$this->uri->segment(1);?>" id="user_type">
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">
@@ -43,7 +44,7 @@
                                     <tr id="row_<?= $value[0]['user_id'] ?>">
                                         <td class="text-center"><?= $count?></td>
 
-                                        <td class="title"><?= $value[0]['name'] ?></td>
+                                        <td class="title"> <a href="<?=base_url($user_type.'/driver/details/').$value[0]['user_id']?>"><?= $value[0]['name'] ?></a></td>
 
                                         <td class="text-center"><?= $value[0]['mobile'] ?></td>
                                         <td class="text-center"><?= $value[0]['email'] ?></td>

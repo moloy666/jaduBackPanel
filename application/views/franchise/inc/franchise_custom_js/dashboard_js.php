@@ -18,7 +18,8 @@
             url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_dashboard_data') ?>",
             type: "POST",
             data: {
-                "id": $('#specific_id').val()
+                "id": $('#specific_id').val(),
+                "table": $('#specific_table').val()
             },
             success: function(response) {
                 // console.log(response);
@@ -32,9 +33,15 @@
                 $(".totalSarathi").text(data.totalSarathi);
                 $(".totalOngoingRide").text(data.drivers.active);
                 $(".totalRegisteredCustomers").text(data.totalCustomers);
+                $(".totalKmPurchased").text(data.totalKmPurchased);
                 $(".totalRevenue").text(data.totalRevenue);
                 $("#growth").text(data.totalRevenueStatus);
-
+                if(data.totalKmPurchaseToday){
+                    $(".totalKmPurchaseToday").text(data.totalKmPurchaseToday);
+                }
+                else{
+                    $(".totalKmPurchaseToday").text(0);
+                }
 
             },
             error: function(response) {
@@ -48,7 +55,8 @@
             url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_subfranchise_dashboard_data') ?>",
             type: "POST",
             data: {
-                "id": $('#specific_id').val()
+                "id": $('#specific_id').val(),
+                "table": $('#specific_table').val()
             },
             success: function(response) {
                 // console.log(response);
@@ -61,8 +69,16 @@
                 $(".totalSarathi").text(data.totalSarathi);
                 $(".totalOngoingRide").text(data.drivers.active);
                 $(".totalRegisteredCustomers").text(data.totalCustomers);
+                $(".totalKmPurchased").text(data.totalKmPurchased);
                 $(".totalRevenue").text(data.totalRevenue);
                 $("#growth").text(data.totalRevenueStatus);
+                if(data.totalKmPurchaseToday){
+                    $(".totalKmPurchaseToday").text(data.totalKmPurchaseToday);
+                }
+                else{
+                    $(".totalKmPurchaseToday").text(0);
+                }
+
 
             },
             error: function(response) {

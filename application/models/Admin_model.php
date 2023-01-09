@@ -752,28 +752,141 @@ class Admin_model extends CI_Model
         return (!empty($query)) ? $query[0][field_value] : [];
     }
 
+    
     public function get_driver_ride_history($specific_id)
     {
-        $this->db->select('customer_id as companion_id, payment_mode, amount, created_at');
-        $this->db->where('driver_id', $specific_id);
-        $query = $this->db->get('history_ride_transactions');
+        $sql = "SELECT rst.name, rst.image, 
+            rn.uid id, rn.service_id serviceId, rn.customer_id customerId, rn.driver_id driverId, rn.fare, 
+            rn.origin, rn.destination, rn.waypoints, rn.locationText, rn.rideStartDateTime tripStartTime, rn.rideEndDateTime tripEndTime,
+            s.name serviceName, s.image serviceImage, DATE(rn.created_at) AS ride_date, rn.service_id AS serviceId
+            FROM ride_normal rn 
+            LEFT JOIN services s ON rn.service_id = s.uid
+            LEFT JOIN ride_service_type rst ON rst.uid = rn.fareServiceTypeId
+            WHERE rn.driver_id = '$specific_id' AND ride_status = 'completed' 
+            ";
+            
+
+        $query = $this->db->query($sql);
         $query = $query->result_array();
-        foreach ($query as $i => $val) {
-            $companion_id = $val['companion_id'];
-            $query[$i]['companion_name'] = $this->get_customer_name_by_specific_id($companion_id);
+
+        foreach ($query as $key => $value) {
+            $query[$key]['image'] = base_url() . $value['image'];
+            $query[$key]['customer'] = $this->get_user_name_by_specific_id($value['customerId'], $value['serviceId'], 'customer');
+         
+            $locationData = $this->decodeLocations($value['origin'], $value['destination'], $value['waypoints'], $value['locationText']);
+
+            unset($query[$key]['origin']);
+            unset($query[$key]['destination']);
+            unset($query[$key]['waypoints']);
+            unset($query[$key]['locationText']);
+            unset($query[$key]['customerId']);
+            unset($query[$key]['driverId']);
+
+            $query[$key]['origin'] = $locationData['origin'];
+            $query[$key]['destinations'] = $locationData['destinations'];
+
+            $query[$key]['service'] = [
+                'id' => $value['serviceId'],
+                'name' => $value['serviceName'],
+                'image' => base_url() . $value['serviceImage']
+            ];
+
+            unset($query[$key]['serviceId']);
+            unset($query[$key]['serviceName']);
+            unset($query[$key]['serviceImage']);
+
+            $query[$key]['ride'] = [
+                'id' => $value['id'],
+                'type' => $value['name'],
+                'typeImage' => base_url() . $value['image'],
+                'fare' => $value['fare']
+            ];
+
+            unset($query[$key]['id']);
+            unset($query[$key]['name']);
+            unset($query[$key]['image']);
+            unset($query[$key]['fare']);
         }
-        return (!empty($query)) ? $query : [];
+
+        return (!empty($query))?$query:[];
     }
 
-    private function get_customer_name_by_specific_id($companion_id)
+
+    private function decodeLocations($origin, $destination, $waypoints, $locationText){
+        $originLatLng = (array)json_decode($origin);
+
+        $destinationLatLng = (array)json_decode($destination);
+        $waypoints = (array)json_decode($waypoints);
+
+        $destinationWithWaypoints = [];
+
+        if (!empty($waypoints)) {
+            foreach ($waypoints as $k => $v) $destinationWithWaypoints[] = (array)$v;
+        }
+
+        $locationText = (array)json_decode($locationText);
+
+        $destinationData = [];
+
+        if (!empty($locationText)) {
+            $originData = [
+                'address' => $locationText[0]->startAddress,
+                'place' => [
+                    'lat' => $originLatLng['lat'],
+                    'lng' => $originLatLng['lng'],
+                ]
+            ];
+        }
+
+        if (count($locationText) > 1) {
+            $j = 0;
+            $i = 0;
+            foreach ($locationText as $locationKey => $locationValue) {
+                if ($j == 0) {
+                    $j++;
+                    continue;
+                }
+
+                $destinationData[] = [
+                    'address' => $locationValue->startAddress,
+                    'place' => $destinationWithWaypoints[$i++]
+                ];
+            }
+            $destinationData[] = [
+                'address' => $locationText[array_key_last($locationText)]->endAddress,
+                'place' => $destinationLatLng
+            ];
+        } else {
+            if (!empty($locationText)) {
+                $destinationData[] = [
+                    'address' => $locationText[0]->endAddress,
+                    'place' => $destinationLatLng
+                ];
+            }
+        }
+        return [
+            'origin' => (isset($originData)) ? $originData : '',
+            'destinations' => $destinationData
+        ];
+    }
+
+
+    private function get_user_name_by_specific_id($specific_id, $service_id, $user_type)
     {
-        $this->db->select('u.name')
+        if($user_type == 'customer' && $service_id!='SERVICE_HOTEL'){
+            $this->db->select('u.name, u.mobile, u.uid as user_id')
             ->from('users as u')
-            ->join('customer_new as c', 'c.user_id = u.uid')
-            ->where('c.uid', $companion_id);
-        $query = $this->db->get();
-        $query = $query->result_array();
-        return (!empty($query)) ? $query[0]['name'] : "_____";
+            ->join(table_customer.' as c', 'c.user_id = u.uid')
+            ->where('c.uid', $specific_id);
+            $query = $this->db->get();
+            $query = $query->result_array();
+        }
+        else if(($user_type == 'customer') && $service_id=='SERVICE_HOTEL'){
+            $query = $this->db->select('name, mobile')
+            ->where('uid', $specific_id)->get('hotel');
+            $query = $query->result_array();
+        }       
+        return $query[0];
     }
 
     public function get_customer_ride_history($specific_id)
@@ -1737,5 +1850,19 @@ class Admin_model extends CI_Model
         ];
         $this->db->where(field_uid, $uid)->update(table_packages, $data);
         return ($this->db->affected_rows() === 1) ? true : false;
+    }
+
+    public function total_km_purchase_today($user_id)
+    {
+        $query = $this->db->select('SUM(original_km) as today_recharge')
+            ->where(['recharge_type' => 'received', 'payment_status' => 'captured', field_user_id => $user_id])
+            ->group_start()
+            ->where('rechargeIn', 'purchaseKm')
+            ->or_where('rechargeIn', NULL)
+            ->group_end()
+            ->like(field_created_at, date('Y-m-d'))
+            ->get(table_recharge_history);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query[0]['today_recharge'] : 0;
     }
 }

@@ -372,4 +372,47 @@ class Driver_model extends CI_Model
         $query = $query->result_array();
         return (!empty($query))?$query[0][field_name]:null;
     }
+
+
+    public function get_recharge_history_of_driver($user_id){
+        $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ','. field_paid_to_user_id . ','. field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status);
+        $this->db->where(field_user_id, $user_id);
+        // $this->db->where('DATE(created_at) = ', $date);
+        $query = $this->db->get(table_recharge_history);
+        $query = $query->result_array();
+        
+        $final_arr = [];
+        foreach ($query as $key => $value) {
+            $paid_to_user_name = "";
+            if(!empty($value[field_paid_to_user_id])){
+                $paid_to_user_name = $this->get_user_name_by_id($value[field_paid_to_user_id]);
+            }
+            if($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID){
+                $final_arr[] = [
+                    key_recharge_type => 'Paid',
+                    'title' => 'Paid for booking',
+                    key_price=> $value[field_recharge_amount],                    
+                    key_description => 'paid km' . ($value[field_original_km] + $value[field_extra_km]) . ' KM',
+                    'transactionDate' => date("d\nM", strtotime($value[field_created_at])),
+                    key_color_code => color_recharge_paid
+                ];
+            }else{
+                $final_arr[] = [
+                    key_recharge_type => 'Received',
+                    'title' => 'Recived',
+                    key_price => $value[field_recharge_amount],
+                    key_description => 'Purchased Km ' . ($value[field_original_km] + $value[field_extra_km]) . ' KM',
+                    'transactionDate' => date("d\nM", strtotime($value[field_created_at])),
+                    key_color_code => color_recharge_self
+                ];
+            }
+        }
+        return (!empty($query)) ? $final_arr : [];
+    }
+
+    public function get_user_name_by_id($user_id){
+        $query = $this->db->select(field_name)->where(field_uid, $user_id)->get(table_users);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_name]:null;
+    }
 }

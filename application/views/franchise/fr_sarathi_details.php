@@ -52,7 +52,8 @@
                 </div>
             </div>
 
-            <div class="card py-2">
+            <div class="card py-2 mb-2">
+                <h5 class="ml-2 mb-2">Driver Details</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
@@ -69,10 +70,33 @@
 
                         </tbody>
                     </table>
-
                 </div>
             </div>
 
+
+            <div class="card py-2 mt-2">
+                <h5 class="ml-2 mb-2">Recharge History</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="recharge_table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Recharge Type</th>
+                                <th>Price</th>
+                                <th>Purchased KM</th>
+                                <th>Description</th>
+                                <th>Recharge Note</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="recharge_history">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <!-- END PAGE CONTENT-->
 

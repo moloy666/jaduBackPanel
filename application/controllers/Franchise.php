@@ -17,7 +17,8 @@ class Franchise extends CI_Controller
 		$this->load->view(franchise_page_footer_link, $footer_link_data);
 	}
 
-	private function is_user_active(){
+	private function is_user_active()
+	{
 		$user_id = $this->session->userdata(session_franchise_user_id);
 		$this->init_login_model();
 		$status = $this->Login_model->get_user_status_by_user_id($user_id);
@@ -332,19 +333,24 @@ class Franchise extends CI_Controller
 		}
 	}
 
-	public function view_driver_details()
+	public function view_driver_details($user_id)
 	{
 		if ($this->is_user_logged_in()) {
-			$user_id = $this->session->userdata(session_franchise_user_id);
-			$table = $this->session->userdata(session_franchise_table);
+			$this->init_driver_model();
+			$this->init_admin_model();
+			
+			$data['data'] = $this->Driver_model->display_driver_details($user_id);
+			$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
 
-			$this->init_franchise_model();
-			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+			$data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
+			$data['companion'] = 'Customer';
+
+			$data['recharge_history'] =  $this->Driver_model->get_recharge_history_of_driver($user_id);
+
 			$this->load_header();
 			$this->load_sidebar();
-			$this->load->view(view_franchise_sarathi, $data);
+			$this->load->view('driver_details', $data);
 			$this->load_footer();
-			$this->load->view('franchise/inc/franchise_custom_js/sarathi_js');
 		} else {
 			$user_type = ($this->uri->segment(1));
 			redirect(base_url($user_type));
@@ -870,10 +876,12 @@ class Franchise extends CI_Controller
 	public function get_dashboard_data()
 	{
 		$this->init_common_model();
+		$this->init_admin_model();
 
 		$specific_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
+		$table = $this->input->post(param_table);
+		$user_id = $this->Common_model->get_user_id_by_specific_id($specific_id, $table);
 
-		$user_type = $this->uri->segment(1);
 
 		$data = [
 			'totalSubFranchise' => $this->Common_model->get_total_sub_franchise($specific_id),
@@ -886,6 +894,9 @@ class Franchise extends CI_Controller
 			'totalCustomers' => $this->Common_model->get_total_customers($specific_id),
 			'totalRevenue' =>  $this->Common_model->get_total_revenue($specific_id),
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status($specific_id),
+			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($specific_id, $table),
+			'totalKmPurchaseToday' => $this->Admin_model->total_km_purchase_today($user_id),
+
 		];
 		echo json_encode($data);
 	}
@@ -893,10 +904,12 @@ class Franchise extends CI_Controller
 	public function get_subfranchise_dashboard_data()
 	{
 		$this->init_common_model();
+		$this->init_admin_model();
+
 
 		$subfranchise_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
-
-		$user_type = $this->uri->segment(1);
+		$table = $this->input->post(param_table);
+		$user_id = $this->Common_model->get_user_id_by_specific_id($subfranchise_id, $table);
 
 		$data = [
 			'totalSarathi' => $this->Common_model->get_total_sarathi_of_sub_franchise($subfranchise_id),
@@ -908,14 +921,22 @@ class Franchise extends CI_Controller
 			'totalCustomers' => $this->Common_model->get_total_customers_of_subfranchise($subfranchise_id),
 			'totalRevenue' =>  $this->Common_model->get_total_revenue_of_subfranchise($subfranchise_id),
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($subfranchise_id),
+			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($subfranchise_id, $table),
+			'totalKmPurchaseToday' => $this->Admin_model->total_km_purchase_today($user_id),
+
 		];
 		echo json_encode($data);
 	}
 
-	public function download_progress_report($specific_id){
-		$table = $this->session->userdata(session_franchise_table);
+	public function download_progress_report($specific_id, $table)
+	{
+
 		$this->init_common_model();
-		if($table == table_franchise){
+		$this->init_admin_model();
+
+		$user_id = $this->Common_model->get_user_id_by_specific_id($specific_id, $table);
+
+		if ($table == table_franchise) {
 			$data = [
 				'totalSubFranchise' => $this->Common_model->get_total_sub_franchise($specific_id),
 				'totalSarathi' => $this->Common_model->get_total_sarathi($specific_id),
@@ -929,11 +950,12 @@ class Franchise extends CI_Controller
 				'revenueStatus' =>  $this->Common_model->get_revenue_status($specific_id),
 				'totalCarRunning' =>  $this->Common_model->get_total_active_drivers($specific_id),
 				'sarathi_data' => $this->Common_model->getSarahiData_for_franchise($specific_id),
-				'totalKmPurchase' =>  0,
-				'user_details'=>$this->Common_model->get_user_details($specific_id, $table)
+				'totalKmPurchased' =>  $this->Common_model->total_km_purchase($specific_id, $table),
+				'user_details' => $this->Common_model->get_user_details($specific_id, $table),
+				'totalKmPurchaseToday' => $this->Admin_model->total_km_purchase_today($user_id),
+
 			];
-		}
-		else{
+		} else {
 			$data = [
 				'totalSarathi' => $this->Common_model->get_total_sarathi_of_sub_franchise($specific_id),
 				'drivers' => [
@@ -946,15 +968,17 @@ class Franchise extends CI_Controller
 				'revenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($specific_id),
 				'totalCarRunning' =>  $this->Common_model->get_total_active_driver_of_sub_franchise($specific_id),
 				'sarathi_data' => $this->Common_model->getSarahiData_for_subfranchise($specific_id),
-				'totalKmPurchase' =>  0,
-				'user_details'=>$this->Common_model->get_user_details($specific_id, $table)
+				'totalKmPurchased' =>  $this->Common_model->total_km_purchase($specific_id, $table),
+				'user_details' => $this->Common_model->get_user_details($specific_id, $table),
+				'totalKmPurchaseToday' => $this->Admin_model->total_km_purchase_today($user_id),
+
 			];
 		}
-		$name = 'progress_report_'.time();
-        $mpdf = new \Mpdf\Mpdf();
-        $html = $this->load->view('franchise/fr_progress_report', $data, true);
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($name.".pdf", "D");
+		$name = 'progress_report_' . time();
+		$mpdf = new \Mpdf\Mpdf();
+		$html = $this->load->view('franchise/fr_progress_report', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output($name . ".pdf", "D");
 	}
 
 
@@ -1272,4 +1296,28 @@ class Franchise extends CI_Controller
 			$this->response(['success' => false, 'message' => 'Driver Locations Not Found', 'data' => $data], 200);
 		}
 	}
+
+	// public function display_driver_details($user_id)
+	// {
+	// 	if ($this->is_user_logged_in()) {
+	// 		$this->init_driver_model();
+	// 		$this->init_admin_model();
+
+	// 		$data['data'] = $this->Driver_model->display_driver_details($user_id);
+	// 		$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
+
+	// 		$data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
+	// 		$data['companion'] = 'Customer';
+
+	// 		$data['recharge_history'] =  $this->Driver_model->get_recharge_history_of_driver($user_id);
+
+
+	// 		$this->load_header();
+	// 		$this->load_sidebar();
+	// 		$this->load->view('driver_details', $data);
+	// 		$this->load_footer();
+	// 	} else {
+	// 		redirect(base_url());
+	// 	}
+	// }
 }

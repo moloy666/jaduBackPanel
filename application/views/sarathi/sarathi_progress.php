@@ -82,7 +82,7 @@
                         <td>
                             <div>
                                 <div class="m-b-5">Total KM Purchased Today</div>
-                                <h2 class="m-b-5 font-strong">0</h2>
+                                <h2 class="m-b-5 font-strong kmPurchaseToday"><?=$totalKmPurchaseToday?> KM</h2>
                             </div>
                         </td>
                         <td>

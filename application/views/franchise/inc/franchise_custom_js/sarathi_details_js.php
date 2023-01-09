@@ -1,5 +1,4 @@
 <script>
-
     $('#sarathi_page').addClass('active');
     get_sarathi_all_details();
 
@@ -78,7 +77,7 @@
     function get_panel_access_list() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(WEB_PORTAL_FRANCHISE.'/get_panel_access_list') ?>",
+            url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_panel_access_list') ?>",
             error: function(response) {
                 console.log(response);
             },
@@ -271,4 +270,40 @@
             }
         });
     }
+
+    $(document).ready(function() {
+        var sarathi_id = $('#sarathi_id').val();
+        $.ajax({
+            type: "get",
+            url: `<?= apiBaseUrl ?>sarathi/users/${sarathi_id}/recharge/history`,
+            headers: {
+                'x-api-key': '<?= const_x_api_key ?>',
+                'platform': 'web',
+                'deviceid': ''
+            },
+
+            success: function(response) {
+                console.log(response);
+                let recharge_details = response.data;
+                let recharge_history = '';
+                $.each(recharge_details, function(i) {
+
+                    recharge_history += `<tr>
+                        <td>${i+1}</td>
+                        <td>${recharge_details[i].rechargeType}</td>
+                        <td>${recharge_details[i].price}</td>                      
+                        <td>${recharge_details[i].purchesedKm}</td>                      
+                        <td>${recharge_details[i].description}</td>    
+                        <td>${recharge_details[i].rechargeNote}</td>                      
+                        <td>${recharge_details[i].date}</td>                                        
+                        </tr>`;
+                });
+                $('#recharge_history').html(recharge_history);
+                $("#recharge_table").dataTable();
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    });
 </script>

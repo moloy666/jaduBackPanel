@@ -79,6 +79,7 @@
     var count = 1;
 
     function get_driver_details_by_user_id(user_id) {
+        let user_type = $('#user_type').val();
         $.ajax({
             type: "POST",
             url: "<?= base_url('admin/get_driver_details_by_user_id') ?>",
@@ -100,7 +101,7 @@
                     }
                     details = `<tr>
                         <td>${count}</td>
-                        <td class="title">${data.name}</td>
+                        <td class="title"><a href="<?=base_url()?>${user_type}/driver/details/${data.user_id}">${data.name}</a></td>
                         <td>${data.email}</td>
                         <td>${data.mobile}</td>
                         <td class="title">${data.sarathi}</td>

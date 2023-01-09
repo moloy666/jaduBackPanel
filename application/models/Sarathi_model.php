@@ -441,5 +441,7 @@ class Sarathi_model extends CI_Model
         return(!empty($query))?$query[0]:[];
     }
 
+
+
    
 }

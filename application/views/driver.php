@@ -250,7 +250,7 @@
                                 driver_status = "";
                             str += `<tr>
                                 <td>${count}</td>
-                                <td class="title"><a href="<?=base_url('administrator/driver/ride_history/')?>${driver[i].user_id}">${driver[i].name}</a></td>
+                                <td class="title"><a href="<?=base_url('administrator/driver/details/')?>${driver[i].user_id}">${driver[i].name}</a></td>
                                 <td>${driver[i].email}</td>
                                 <td>${driver[i].mobile}</td>
                                 <td class="title">${driver[i].sarathi.name}</td> 
