@@ -157,11 +157,12 @@
     });
 
     function fetch_recharge_package(user_id) {
+        let user_type ='';
         if($('#specific_table').val()=='franchise'){
-            let user_type = '<?= value_user_franchise ?>';
+            user_type = 'franchise';
         }
         else{
-            let user_type = '<?= value_user_sub_franchise ?>';
+            user_type = 'sub_franchise';
         }
 
         console.log(user_type);
@@ -190,6 +191,16 @@
         let package_id = $('#select_package').val();
         let spcific_id = $('#specific_id').val();
 
+        let user_level_type='';
+
+        if($('#specific_table').val()=='franchise'){
+             user_level_type = 'franchise';
+        }
+        else{
+            user_level_type = 'sub-franchise';
+        }
+
+
         console.log(spcific_id);
 
         if (package_id == '') {
@@ -197,7 +208,7 @@
         } else {
             $.ajax({
                 type: "GET",   
-                url: `<?= apiBaseUrl ?>franchise/users/${spcific_id}/recharge/own?selectedPackageId=PACKAGES_77449`,
+                url: `<?= apiBaseUrl ?>${user_level_type}/users/${spcific_id}/recharge/own?selectedPackageId=PACKAGES_77449`,
                 headers: {
                     'x-api-key': '<?= const_x_api_key ?>',
                     'platform': 'web',

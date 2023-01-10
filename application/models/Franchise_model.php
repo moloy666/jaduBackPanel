@@ -105,7 +105,7 @@ class Franchise_model extends CI_Model
         }
     }
 
-    public function add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel)
+    public function add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel)
     {
         $data = [
             field_uid => $user_id,
@@ -123,7 +123,8 @@ class Franchise_model extends CI_Model
             field_user_id => $user_id,
             field_password => $password,
             field_created_at => date(field_date),
-            field_modified_at => date(field_date)
+            field_modified_at => date(field_date),
+            field_created_by => $admin_id
         ];
 
         $insert = $this->db->insert(table_users, $data);

@@ -1916,6 +1916,7 @@ class Admin extends CI_Controller
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
 		$password = md5(trim($this->input->post(param_mobile)));
+		$admin_id = $this->input->post(param_specific_id);
 
 		$permission_ids = $this->input->post('permission');
 
@@ -1958,7 +1959,7 @@ class Admin extends CI_Controller
 				}
 				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_franchise);
 				$this->init_franchise_model();
-				$data = $this->Franchise_model->add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel_access);
+				$data = $this->Franchise_model->add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel_access);
 				if ($data) {
 					$this->response([key_success => true, key_message => "Data insert successfull"], 200);
 				} else {

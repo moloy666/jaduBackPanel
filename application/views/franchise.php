@@ -11,6 +11,7 @@
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Franchise</h3>
+                    <input type="text" value="<?=$this->session->userdata(session_admin_specific_id)?>" id="specific_id">
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">
@@ -607,6 +608,8 @@
             let permission = $('#admin_access_list').val();
             let panel_list = $('#panel_access_list').val();
 
+            let admin_id = $('#specific_id').val();
+
 
             let flag = 0;
 
@@ -638,8 +641,8 @@
                         "email": email,
                         "mobile": mobile,
                         "permission": permission,
-                        "panel_list": panel_list
-
+                        "panel_list": panel_list,
+                        "specific_id":admin_id
 
                     },
                     async: false,
