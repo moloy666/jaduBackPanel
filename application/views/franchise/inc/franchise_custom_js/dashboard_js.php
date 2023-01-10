@@ -36,10 +36,9 @@
                 $(".totalKmPurchased").text(data.totalKmPurchased);
                 $(".totalRevenue").text(data.totalRevenue);
                 $("#growth").text(data.totalRevenueStatus);
-                if(data.totalKmPurchaseToday){
+                if (data.totalKmPurchaseToday) {
                     $(".totalKmPurchaseToday").text(data.totalKmPurchaseToday);
-                }
-                else{
+                } else {
                     $(".totalKmPurchaseToday").text(0);
                 }
 
@@ -72,10 +71,9 @@
                 $(".totalKmPurchased").text(data.totalKmPurchased);
                 $(".totalRevenue").text(data.totalRevenue);
                 $("#growth").text(data.totalRevenueStatus);
-                if(data.totalKmPurchaseToday){
+                if (data.totalKmPurchaseToday) {
                     $(".totalKmPurchaseToday").text(data.totalKmPurchaseToday);
-                }
-                else{
+                } else {
                     $(".totalKmPurchaseToday").text(0);
                 }
 
@@ -153,4 +151,80 @@
             }
         });
     }
+
+    $('#recharge_btn').click(function() {
+        fetch_recharge_package();
+    });
+
+    function fetch_recharge_package(user_id) {
+        if($('#specific_table').val()=='franchise'){
+            let user_type = '<?= value_user_franchise ?>';
+        }
+        else{
+            let user_type = '<?= value_user_sub_franchise ?>';
+        }
+
+        console.log(user_type);
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('administrator/get_packages') ?>",
+            data: {
+                "user_type": user_type
+            },
+            error: function(response) {},
+            success: function(response) {
+                console.log(response);
+                var data = response.data;
+                var details = ' <option value="">Select Recharge Package</option>';
+                $.each(data, function(i, data) {
+                    details += `<option class="title" value="${data.id}">${data.name}</option>`;
+                });
+                $('#select_package').html(details);
+
+            }
+        });
+    }
+
+    $('#btn_recharge').click(function() {
+        let package_id = $('#select_package').val();
+        let spcific_id = $('#specific_id').val();
+
+        console.log(spcific_id);
+
+        if (package_id == '') {
+            toast('Select a package', 'center');
+        } else {
+            $.ajax({
+                type: "GET",   
+                url: `<?= apiBaseUrl ?>franchise/users/${spcific_id}/recharge/own?selectedPackageId=PACKAGES_77449`,
+                headers: {
+                    'x-api-key': '<?= const_x_api_key ?>',
+                    'platform': 'web',
+                    'deviceid': ''
+                },
+                error: function(response) {
+                    console.log(response);
+                },
+                success: function(response) {
+
+                    if (response.isRechargePossible) {
+                        let data = response.data;
+
+                        var rzp1 = new Razorpay(data);
+                        rzp1.open();
+
+                        $('#rechView1').modal('hide');
+
+                    } else {
+                        
+                        console.log(response);
+                        toast('Insuficient Balance', 'center');
+                    }
+                }
+            });
+        }
+
+    });
 </script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>

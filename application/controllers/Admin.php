@@ -4462,6 +4462,9 @@ class Admin extends CI_Controller
 		$user_type = ($user == value_franchise) ? value_user_franchise : value_user_sub_franchise;
 		$this->init_common_model();
 
+		// print_r($user);
+		// die();
+
 		$packages_final = [];
 
 		$packages = $this->Common_model->get_packages($user_type);
@@ -4472,7 +4475,7 @@ class Admin extends CI_Controller
 			$price = $value[field_name] * $rate_per_km;
 
 			$packages_final[] = [
-				key_id => $value[field_id],
+				key_id => $value[field_uid],
 				key_name => $value[field_name] . " " . unit_km . " ( + " . $extra_percentage . " % additional )" . " " . STATIC_RUPEE_SIGN . $price,
 			];
 		}
@@ -4577,11 +4580,24 @@ class Admin extends CI_Controller
 	public function get_user_recharge_data(){
 		$user_id = $this->input->post(param_id);
 		$this->init_common_model();
-		$data = $this->get_user_recharge_data($user_id);
+		$data = $this->Common_model->get_user_recharge_data($user_id);
 		if ($data) {
 			$this->response(["success" => true, "message" => "Found", "data" => $data], 200);
 		} else {
 			$this->response(["success" => false, "message" => "not found!"], 200);
 		}
 	}
+
+
+	public function recharge_history_sf(){
+		$user_id = $this->input->post(param_id);
+		$this->init_admin_model();
+		$data = $this->Admin_model->recharge_history_sf($user_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "Found", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "not found!"], 200);
+		}
+	}
+
 }

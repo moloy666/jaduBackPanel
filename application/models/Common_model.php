@@ -751,8 +751,8 @@ class Common_model extends CI_Model
     }
 
     public function get_packages($user_type){
-        $query = $this->db->select(field_id .",". field_name)
-        ->where([field_user_type_id=>$user_type, field_status=>const_active])->get(table_packages);
+        $query = $this->db->select(field_uid .",". field_name)
+        ->where([field_user_type_id => $user_type, field_status => const_active])->get(table_packages);
         $query = $query->result_array();
         return (!empty($query))?$query:[];
     }
@@ -782,7 +782,9 @@ class Common_model extends CI_Model
     }
 
     public function get_user_recharge_data($user_id){
-        $query = $this->db->select('original_km, date(created_at)')->get('recharge_history');
+        $query = $this->db->select('original_km, date(created_at) as recharge_date')
+        ->where([field_user_id=> $user_id, field_recharge_type=>'received'])
+        ->get('recharge_history');
         $query = $query->result_array();
         return (!empty($query))?$query:null;
     }

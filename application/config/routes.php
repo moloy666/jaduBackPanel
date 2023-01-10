@@ -98,6 +98,7 @@ $route['franchise/customers'] = 'franchise/view_customers';
 $route['franchise/profile'] = 'franchise/view_profile';
 $route['franchise/places'] = 'franchise/view_places';
 $route['franchise/driver/location'] = 'franchise/view_driver_location';
+$route['franchise/recharge_history'] = 'franchise/view_recharge_history';
 
 
 $route['franchise/subfranchise/sarathi/(:any)'] = 'franchise/view_subfranchise_details/$1';
@@ -128,6 +129,8 @@ $route['subfranchise/customers'] = 'franchise/view_customers';
 $route['subfranchise/profile'] = 'franchise/view_profile';
 $route['subfranchise/places'] = 'franchise/view_places';
 $route['subfranchise/driver/location'] = 'franchise/view_driver_location';
+$route['subfranchise/recharge_history'] = 'franchise/view_recharge_history';
+
 
 
 $route['subfranchise/sarathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';

@@ -751,6 +751,31 @@ class Franchise extends CI_Controller
 		}
 	}
 
+	public function view_recharge_history()
+	{
+		if ($this->is_user_active()) {
+			$user_id = $this->session->userdata(session_franchise_user_id);
+			$table = $this->session->userdata(session_franchise_table);
+
+			$this->init_franchise_model();
+			// $status = $this->Franchise_model->get_access_permission($user_id, access_ride_rental);
+			// if ($status == const_active) {
+				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view('franchise/fr_recharge_history', $data);
+				$this->load_footer();
+				$this->load->view('franchise/inc/franchise_custom_js/rental_js');
+			// } else {
+			// 	$user_type = ($this->uri->segment(1));
+			// 	redirect(base_url($user_type . '/dashboard'));
+			// }
+		} else {
+			$user_type = ($this->uri->segment(1));
+			redirect(base_url($user_type));
+		}
+	}
+
 
 
 	public function view_settings()

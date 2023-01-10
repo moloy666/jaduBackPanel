@@ -15,11 +15,19 @@
 
         <div class="col-lg-6">
             <div class="form-group float-right">
-                <form action="<?= base_url(WEB_PORTAL_FRANCHISE . '/download_progress_report/') . $specific_level_user_id.'/'. $this->session->userdata(session_franchise_table)?>" method="post" target="_blank">
-                    <button type="submit" class="btn bgred ml-3 btnround">
-                        Download Progress Report
+                <div class="d-flex">
+                    <button type="submit" class="btn bgred ml-3 btnround" id="recharge_btn" data-toggle="modal" data-target='#rechView1'>
+                        Recharge
                     </button>
-                </form>
+
+                    <form action="<?= base_url(WEB_PORTAL_FRANCHISE . '/download_progress_report/') . $specific_level_user_id . '/' . $this->session->userdata(session_franchise_table) ?>" method="post" target="_blank">
+                        <button type="submit" class="btn bgred ml-3 btnround">
+                            Download Progress Report
+                        </button>
+                    </form>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -28,6 +36,7 @@
     <div class="page-content fade-in-up">
         <input type="hidden" value="<?= $specific_level_user_id ?>" id="specific_id">
         <input type="hidden" value="<?= $this->session->userdata(session_franchise_table) ?>" id="specific_table">
+        <input type="hidden" value="<?= $this->session->userdata(session_franchise_user_id) ?>" id="user_id">
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-warning color-white widget-stat">
@@ -175,6 +184,46 @@
 
     </div>
     <!-- END PAGE CONTENT-->
+
+    <!-- recharge details view modal -->
+    <div class="modal fade custmmodl" id="rechView1" tabindex="-1" role="dialog" aria-labelledby="rechView1Title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title bank-modal-title" id="exampleModalLongTitle">Rechage Package</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mx-4">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input class="form-control  mb-3" type="hidden" placeholder="Sub Franchise Id" id=''>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select class="form-control" id="select_package">
+                                    <option value="0" class="form-control">Select Recharge Package</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal" id="close_edit_modal">Close</button>
+                    <button type="button" class="btn  btn-success" id="btn_recharge">Recharge</button>
+                    <button type="button" class="btn  btn-success" id="btn_confirm" style="display:none;">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 </div>

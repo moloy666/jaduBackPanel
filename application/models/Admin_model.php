@@ -1865,4 +1865,66 @@ class Admin_model extends CI_Model
         $query = $query->result_array();
         return (!empty($query)) ? $query[0]['today_recharge'] : 0;
     }
+
+
+    public function recharge_history_sf($user_id){
+        $query = $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ','. field_paid_to_user_id . ','. field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status . ',' . field_note . ',' . field_payment_id)
+
+        ->where(field_user_id, $user_id)
+        ->get(table_recharge_history);
+
+        $query = $query->result_array();
+        $final_arr = [];
+        foreach ($query as $key => $value) {
+            $paid_to_user_name = "";
+            if(!empty($value[field_paid_to_user_id])){
+                $paid_to_user_name = $this->get_user_name_by_id($value[field_paid_to_user_id]);
+            }
+            if($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID){
+
+                $rechargeBy = '';
+                if( $value[field_note] != NULL || !empty($value[field_note]) ){
+                    $rechargeBy = $value[field_note];
+                }else if($value[field_payment_id] != NULL){
+                    $rechargeBy = 'Self Recharge';
+                }else{
+                    $rechargeBy = 'Recharge For Sarathi';
+                }
+
+                $final_arr[] = [
+                    key_recharge_type => 'Recharge Sarathi',
+                    key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_TO_DRIVER)),
+                    key_price=> $value[field_recharge_amount],
+                    key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
+                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN . ' ' .$value[field_recharge_amount],
+                    key_date => date("d\nF", strtotime($value[field_created_at])),
+                    key_color_code => color_recharge_paid,
+                    key_recharge_note => ucwords($rechargeBy)
+                ];
+            }else{
+                $final_arr[] = [
+                    key_recharge_type => STATIC_RECHARGE_FOR_SELF,
+                    key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_FOR_SELF)),
+                    key_price => $value[field_recharge_amount],
+                    key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
+                    key_description => 'Recharge for '.  STATIC_RUPEE_SIGN . ' ' .$value[field_recharge_amount],
+                    key_date => date("d\nF", strtotime($value[field_created_at])),
+                    key_color_code => color_recharge_self,
+                    key_recharge_note => STATIC_RECHARGE_FOR_SELF
+                ];
+            }
+        }
+        return (!empty($query)) ? $final_arr : [];
+
+    }
+
+    public function get_user_name_by_id($user_id){
+        $this->db->select(field_name);
+        $this->db->limit(1);
+        $this->db->where(field_uid, $user_id);
+        $query = $this->db->get(table_users);
+        $query = $query->result_array();
+        $query = (!empty($query)) ? $query[0] : "";
+        return (!empty($query)) ? $query[field_name] : "";       
+    }
 }

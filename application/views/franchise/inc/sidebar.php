@@ -34,6 +34,14 @@
                      <span class="nav-label">Dashboard</span>
                  </a>
              </li>
+
+             <li>
+                 <a href="<?= base_url($user_type . '/recharge_history') ?>" id="recharge_history_page">
+                     <i class="sidebar-item-icon fa fa-th"></i>
+                     <span class="nav-label">Recharge History</span>
+                 </a>
+             </li>
+
              <li class="heading">FEATURES</li>
              <!-- <li class="heading"><?=$this->session->userdata(fr_session_call_booking)?></li> -->
 
