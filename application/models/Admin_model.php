@@ -1855,7 +1855,7 @@ class Admin_model extends CI_Model
     public function total_km_purchase_today($user_id)
     {
         $query = $this->db->select('SUM(original_km) as today_recharge')
-            ->where(['recharge_type' => 'received', 'payment_status' => 'captured', field_user_id => $user_id])
+            ->where(['recharge_type' => 'received', 'payment_status' => 'authorized', field_user_id => $user_id])
             ->group_start()
             ->where('rechargeIn', 'purchaseKm')
             ->or_where('rechargeIn', NULL)
@@ -1888,11 +1888,11 @@ class Admin_model extends CI_Model
                 }else if($value[field_payment_id] != NULL){
                     $rechargeBy = 'Self Recharge';
                 }else{
-                    $rechargeBy = 'Recharge For Sarathi';
+                    $rechargeBy = 'Recharge For Other';
                 }
 
                 $final_arr[] = [
-                    key_recharge_type => 'Recharge Sarathi',
+                    key_recharge_type => 'Recharge Other',
                     key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_TO_DRIVER)),
                     key_price=> $value[field_recharge_amount],
                     key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),

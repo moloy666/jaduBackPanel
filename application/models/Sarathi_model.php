@@ -372,6 +372,14 @@ class Sarathi_model extends CI_Model
     //     return(!empty($query))?$query:[];
     // }
 
+    public function get_user_type_by_user_id($user_id){
+        $query = $this->db->select('ut.name as user_type')
+        ->from('user_type as ut')
+        ->join('users as u', 'ut.uid=u.type_id')
+        ->where('u.uid', $user_id)->get();
+        $query=$query->result_array();
+        return(!empty($query))?$query[0]['user_type']:null;
+    }
 
     public function get_user_name_by_id($user_id){
         $this->db->select(field_name);

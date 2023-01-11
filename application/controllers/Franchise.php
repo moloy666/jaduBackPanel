@@ -765,7 +765,6 @@ class Franchise extends CI_Controller
 				$this->load_sidebar();
 				$this->load->view('franchise/fr_recharge_history', $data);
 				$this->load_footer();
-				$this->load->view('franchise/inc/franchise_custom_js/rental_js');
 			// } else {
 			// 	$user_type = ($this->uri->segment(1));
 			// 	redirect(base_url($user_type . '/dashboard'));
@@ -1321,6 +1320,25 @@ class Franchise extends CI_Controller
 			$this->response(['success' => false, 'message' => 'Driver Locations Not Found', 'data' => $data], 200);
 		}
 	}
+
+	public function download_recharge_history($user_id)
+    {
+        $this->init_sarathi_model();
+        $data['sarathi'] = $this->Sarathi_model->get_user_name_by_id($user_id);
+        $data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
+		$data['user_type'] = $this->Sarathi_model->get_user_type_by_user_id($user_id);
+
+        // $this->load_header();
+        // $this->load_sidebar();
+        // $this->load->view('sarathi/download_recharge_history', $data);
+        // $this->load_footer();
+
+        $name = 'recharge_history_' . time();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('sarathi/download_recharge_history', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($name . ".pdf", "D");
+    }
 
 	// public function display_driver_details($user_id)
 	// {

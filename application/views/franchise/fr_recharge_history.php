@@ -2,14 +2,14 @@
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
     <div class="page-content fade-in-up">
-        <input type="text" value="<?=$this->session->userdata(session_franchise_user_id)?>" id="user_id">
+        <input type="hidden" value="<?=$this->session->userdata(session_franchise_user_id)?>" id="user_id">
         <div class="row">
             <div class="col">
                 <div class="ibox">
                     <div class="ibox-head">
                         <div class="ibox-title">Recharge History</div>
 
-                        <form action="<?=base_url('sarathi/download_recharge_history')?>" method="POST">
+                        <form action="<?=base_url('franchise/download_recharge_history/').$this->session->userdata(session_franchise_user_id)?>" method="POST">
                             <button type="submit" class="btn btnround btn-success my-1" id="btn_pdf">PDF</button>
                         </form>
 
@@ -66,8 +66,8 @@
 </style>
 
 <script>
-    $('#recharge_history_page').addClass('active');
-    $('#rental_page').removeClass('active');
+    // $('#recharge_history_page').addClass('active');
+    // $('#rental_page').removeClass('active');
 
     $.ajax({
             type: "post",

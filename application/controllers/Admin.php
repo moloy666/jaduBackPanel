@@ -1801,7 +1801,12 @@ class Admin extends CI_Controller
 		$uid = $this->input->post(field_id);
 		$this->init_franchise_model();
 		$delete = $this->Franchise_model->delete_franchise_details($uid);
-		echo json_encode($delete);
+		if($delete){
+			$this->response(["success"=>true, "message"=>'Franchise Deleted Successfully !'], 200);
+		}
+		else{
+			$this->response(["success"=>false, "message"=>'Something Went Wrong !'], 200);
+		}
 	}
 
 	public function update_franchise()
@@ -4435,6 +4440,7 @@ class Admin extends CI_Controller
 	{
 		$this->init_sarathi_model();
 		$data['sarathi'] = $this->Sarathi_model->get_user_name_by_id($user_id);
+		$data['user_type'] = $this->Sarathi_model->get_user_type_by_user_id($user_id);
 		$data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
 
 		$name = 'recharge_history_' . time();

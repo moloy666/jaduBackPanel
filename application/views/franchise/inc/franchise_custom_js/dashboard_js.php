@@ -201,14 +201,14 @@
         }
 
 
-        console.log(spcific_id);
+        // console.log(spcific_id);
 
         if (package_id == '') {
             toast('Select a package', 'center');
         } else {
             $.ajax({
                 type: "GET",   
-                url: `<?= apiBaseUrl ?>${user_level_type}/users/${spcific_id}/recharge/own?selectedPackageId=PACKAGES_77449`,
+                url: `<?= apiBaseUrl ?>${user_level_type}/users/${spcific_id}/recharge/own?selectedPackageId=${package_id}`,
                 headers: {
                     'x-api-key': '<?= const_x_api_key ?>',
                     'platform': 'web',
@@ -230,7 +230,7 @@
                     } else {
                         
                         console.log(response);
-                        toast('Insuficient Balance', 'center');
+                        toast(response.data, 'center');
                     }
                 }
             });

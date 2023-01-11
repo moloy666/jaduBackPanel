@@ -28,7 +28,7 @@
                     <div class="ibox-head">
                        
                         <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p>
-                        <p style="text-align:center;"><strong> JaduRide Sarathi</strong></p>
+                        <p style="text-align:center;"><strong> JaduRide <?=ucwords($user_type)?></strong></p>
                         <p style="text-align:center;"><strong> Recharge History Of <?=ucwords($sarathi)?></strong></p>
                     </div>
                     <div class="ibox-body">

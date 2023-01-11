@@ -60,7 +60,7 @@ class Franchise_model extends CI_Model
             $this->db->set([field_status => const_deleted, field_modified_at => date(field_date)]);
             $this->db->where(field_uid, $uid);
             $this->db->update(table_users);
-            $this->db->affected_rows() == 1 ? true : false;
+            return ($this->db->affected_rows() == 1) ? true : false;
         } else
             return false;
     }

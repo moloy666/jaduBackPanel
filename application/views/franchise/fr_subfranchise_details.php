@@ -20,6 +20,7 @@
                     <input type="hidden" value="<?= $data['sub_franchise_id'] ?>" id="subfranchise_id">
                     
                     <input type="hidden" value="<?= $specific_id ?>" id="specific_id">
+                    <input type="hidden" value=" <?=end($this->uri->segments)?>" id="user_id">
                     <input type="hidden" value="<?= $this->session->userdata(session_franchise_table) ?>" id="specific_table">
                 </div>
                 <div class="col-md-4">
@@ -43,6 +44,28 @@
                             </tr>
                         </thead>
                         <tbody class="text-center" id="table_details">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card my-2 p-3">
+                <div class="table-responsive">
+                    <h5 class="text-danger mb-4">Recharge History</h5>
+                    <table class="table table-bordered" id="table_recharge_history">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Recharge Type</th>
+                                <th>Price</th>
+                                <th>Purchased KM</th>
+                                <th>Description</th>
+                                <th>Recharge Note</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recharge_history">
+
                         </tbody>
                     </table>
                 </div>

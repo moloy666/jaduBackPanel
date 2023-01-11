@@ -104,6 +104,7 @@ $route['franchise/recharge_history'] = 'franchise/view_recharge_history';
 $route['franchise/subfranchise/sarathi/(:any)'] = 'franchise/view_subfranchise_details/$1';
 $route['franchise/sarathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
 $route['franchise/driver/details/(:any)'] = 'franchise/view_driver_details/$1';
+$route['franchise/download_recharge_history/(:any)'] = 'franchise/download_recharge_history/$1';
 
 // ============================================================
 

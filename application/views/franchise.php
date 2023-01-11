@@ -11,7 +11,7 @@
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Franchise</h3>
-                    <input type="text" value="<?=$this->session->userdata(session_admin_specific_id)?>" id="specific_id">
+                    <input type="hidden" value="<?= $this->session->userdata(session_admin_specific_id) ?>" id="specific_id">
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">
@@ -409,9 +409,10 @@
                                 <td>
                                 <div>
 
-                                <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${franchise[i].uid}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
-                                <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
+                                <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${franchise[i].uid}')">            
+                                <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
                                 </button>
+                               
 
                                 <button class="hdrbtn mx-2 access_update view_user" data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${franchise[i].uid}')" data-toggle="tooltip" data-placement="top" title="Bank details" >                        
                                 <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-3">                  
@@ -444,6 +445,11 @@
                     console.log(data);
                 }
             });
+        }
+
+        function download_recharge_history(user_id) {
+            var url = `<?= base_url('admin/download_sarathi_recharge_history/')?>${user_id}`;
+            window.open(url, '_blank');
         }
 
         function fetch_recharge_package(user_id) {
@@ -642,7 +648,7 @@
                         "mobile": mobile,
                         "permission": permission,
                         "panel_list": panel_list,
-                        "specific_id":admin_id
+                        "specific_id": admin_id
 
                     },
                     async: false,
@@ -676,7 +682,7 @@
                     },
                     async: false,
                     success: function(data) {
-                        toast("Data deleted successfully", "center");
+                        toast(data.message, "center");
                         get_franchise_details();
                         $('#close_delete_modal').click();
                     },
@@ -764,4 +770,8 @@
                 }
             });
         }
+
+        // <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${franchise[i].uid}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
+        // <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
+        // </button>
     </script>

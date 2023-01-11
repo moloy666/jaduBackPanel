@@ -61,6 +61,7 @@
                                 <th>Price</th>
                                 <th>Purchased KM</th>
                                 <th>Description</th>
+                                <th>Recharge Note</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -574,4 +575,36 @@
                 }
             });
         }
+
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('admin/recharge_history_sf') ?>",
+            data: {
+                "id": $('#user_id').val()
+            },
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                console.log(response);
+                let recharge_details = response.data;
+                let details = ''
+                $.each(recharge_details, function(i) {
+
+                    recharge_history += `<tr>
+                    <td>${i+1}</td>
+                    <td>${recharge_details[i].rechargeType}</td>
+                    <td>${recharge_details[i].price}</td>                      
+                    <td>${recharge_details[i].purchesedKm}</td>                      
+                    <td>${recharge_details[i].description}</td>    
+                    <td>${recharge_details[i].rechargeNote}</td>                      
+                    <td>${recharge_details[i].date}</td>                                        
+                    </tr>`;
+                });
+                $('#recharge_history').html(recharge_history);
+
+                $("#table_recharge_history").dataTable();
+            }
+        });
     </script>

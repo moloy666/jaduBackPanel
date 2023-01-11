@@ -445,9 +445,10 @@
                                 <td>
                                 <div>
 
-                                <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
-                                <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
+                                <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${subfranchise[i].user_id}')">            
+                                <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
                                 </button>
+                               
                                 
                                 <button class="hdrbtn mx-2 view_user  " data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Bank details">                        
                                 <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-3">                  
@@ -488,6 +489,12 @@
                 }
             });
         }
+
+        
+    function download_recharge_history(user_id) {
+        var url = `<?= base_url('admin/download_sarathi_recharge_history/')?>${user_id}`;
+        window.open(url, '_blank');
+    }
 
         function fetch_recharge_package(user_id) {
             let user_type = '<?= end($this->uri->segments) ?>';
@@ -779,4 +786,8 @@
                 }
             });
         }
+
+        // <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
+        // <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
+        // </button>
     </script>

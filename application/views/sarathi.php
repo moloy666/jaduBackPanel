@@ -493,7 +493,7 @@
 
 
     function download_recharge_history(user_id) {
-            var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
+            var url = `<?= base_url('admin/download_sarathi_recharge_history/')?>${user_id}`;
             window.open(url, '_blank');
     }
 

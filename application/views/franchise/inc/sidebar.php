@@ -36,7 +36,7 @@
              </li>
 
              <li>
-                 <a href="<?= base_url($user_type . '/recharge_history') ?>" id="recharge_history_page">
+                 <a href="<?= base_url($user_type . '/recharge_history') ?>" id="recharge_history_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'recharge_history') ? 'active' : '' ?>">
                      <i class="sidebar-item-icon fa fa-th"></i>
                      <span class="nav-label">Recharge History</span>
                  </a>
