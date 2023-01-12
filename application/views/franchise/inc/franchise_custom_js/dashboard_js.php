@@ -157,15 +157,12 @@
     });
 
     function fetch_recharge_package(user_id) {
-        let user_type ='';
-        if($('#specific_table').val()=='franchise'){
+        let user_type = '';
+        if ($('#specific_table').val() == 'franchise') {
             user_type = 'franchise';
-        }
-        else{
+        } else {
             user_type = 'sub_franchise';
         }
-
-        console.log(user_type);
 
         $.ajax({
             type: "post",
@@ -175,7 +172,7 @@
             },
             error: function(response) {},
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var details = ' <option value="">Select Recharge Package</option>';
                 $.each(data, function(i, data) {
@@ -191,12 +188,11 @@
         let package_id = $('#select_package').val();
         let spcific_id = $('#specific_id').val();
 
-        let user_level_type='';
+        let user_level_type = '';
 
-        if($('#specific_table').val()=='franchise'){
-             user_level_type = 'franchise';
-        }
-        else{
+        if ($('#specific_table').val() == 'franchise') {
+            user_level_type = 'franchise';
+        } else {
             user_level_type = 'sub-franchise';
         }
 
@@ -207,7 +203,7 @@
             toast('Select a package', 'center');
         } else {
             $.ajax({
-                type: "GET",   
+                type: "GET",
                 url: `<?= apiBaseUrl ?>${user_level_type}/users/${spcific_id}/recharge/own?selectedPackageId=${package_id}`,
                 headers: {
                     'x-api-key': '<?= const_x_api_key ?>',
@@ -221,14 +217,30 @@
 
                     if (response.isRechargePossible) {
                         let data = response.data;
+                        let handler_key = function(response) {
+
+                            if ($('#specific_table').val() == 'franchise') {
+                                dashboard_data_franchise();
+                            } else {
+                                dashboard_data_subfranchise();
+                            }
+                            $('.loaderbg').show();
+                            setTimeout(() => {
+                                $('.loaderbg').hide();
+                            }, 3000);
+                        }
+
+                        data.handler = handler_key;
 
                         var rzp1 = new Razorpay(data);
                         rzp1.open();
 
                         $('#rechView1').modal('hide');
 
+
+
                     } else {
-                        
+
                         console.log(response);
                         toast(response.data, 'center');
                     }

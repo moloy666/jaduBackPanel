@@ -1,13 +1,14 @@
   <script>
       get_coupon_details();
 
-      function edit(id, type, for_user, value, expired_at) {
+      function edit(id, type, for_user, value, usage, expired_at) {
           let user = for_user.replace(' ', '_');
 
           $('#edit_id').val(id);
           $('#edit_coupon_type').val(type);
           $('#edit_for_user').val(user);
           $('#edit_value').val(value);
+          $('#edit_usage').val(usage);
           $('#edit_expired_at').val(expired_at);
       }
 
@@ -31,8 +32,9 @@
                                 <span class="badge rounded-pill bg-warning ml-3">${data.count}</span>
                                 </td>
                                 <td class="title">${data.for_user}</td>
-                                <td>${data.type}</td>
+                                <td class="title">${data.type}</td>
                                 <td>${data.value}</td>
+                                <td>${data.usage_per_users}</td>
                                 <td><label class="switch">
                                 <input type="checkbox" ${status} onclick="status(this,'${data.uid}')" class="access_status_change" disabled>
                                 <span class="slider round"></span></label>
@@ -42,7 +44,7 @@
                                 <td>
                                 <div>
                    
-                                <button class="hdrbtn mx-2 edit_user access_update" data-toggle="modal" id=" editbtn"  data-target="#edtView1" data-toggle="tooltip" data-placement="top" title="Edit" onclick="edit('${data.uid}', '${data.type}', '${data.for_user}', '${data.value}', '${data.expired_at}' )" disabled>
+                                <button class="hdrbtn mx-2 edit_user access_update" data-toggle="modal" id=" editbtn"  data-target="#edtView1" data-toggle="tooltip" data-placement="top" title="Edit" onclick="edit('${data.uid}', '${data.type}', '${data.for_user}', '${data.value}', '${data.usage_per_users}', '${data.expired_at}' )" disabled>
 
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M16.4745 5.40801L18.5917 7.52524M17.8358 3.54289L12.1086 9.27005C11.8131 9.56562 11.6116 9.94206 11.5296 10.3519L11 13L13.6481 12.4704C14.0579 12.3884 14.4344 12.1869 14.7299 11.8914L20.4571 6.16423C21.181 5.44037 21.181 4.26676 20.4571 3.5429C19.7332 2.81904 18.5596 2.81903 17.8358 3.54289Z" stroke="#ef242f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -75,8 +77,7 @@
           let value = $('#value').val();
           let user_type = $('#for_user').val();
           let expired_at = $('#expired_at').val();
-
-          console.log(user_type);
+          let usage = $('#usage').val();
 
           $.ajax({
               url: "<?= base_url(WEB_PORTAL_ADMIN . '/add_coupon_data') ?>",
@@ -86,9 +87,10 @@
                   "value": value,
                   "user_type": user_type,
                   "expired_at": expired_at,
+                  "usage": usage,
               },
               success: function(data) {
-                  console.log(data);
+                //   console.log(data);
                   if (data.success) {
                       toast(data.message, "center");
                       $('#addNewUsr1').modal('hide');

@@ -36,6 +36,7 @@
                                 <th class="text-center">For</th>
                                 <th class="text-center">Amount Type</th>
                                 <th class="text-center">Value</th>
+                                <th class="text-center">Usage / User</th>
                                 <th class="text-center">Validity</th>
                                 <th class="text-center">Expiry Date</th>
                                 <th class="text-center">Actions</th>
@@ -100,6 +101,7 @@
                                         <option value="0">Select User Type </option>
                                         <option value="new_user">New User</option>
                                         <option value="regular_user">Regular User</option>
+                                        <option value="reffered_user">Reffered User</option>
                                         <option value="regular_user">All User</option>
                                     </select>
                                 </div>
@@ -107,12 +109,18 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Coupon Value" id='value' autocomplete="off">
+                                    <input class="form-control" type="number" placeholder="Coupon Value" id='value' autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input class="form-control" type="number" placeholder="Usage Per User" id='usage' autocomplete="off">
                                 </div>
                             </div>
 
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <input class="form-control" type="date" placeholder="Expiry Date" id='expired_at' min="<?= date('Y-m-d') ?>" autocomplete="off">
                                 </div>
@@ -159,6 +167,7 @@
                                         <option value="0">Select User Type </option>
                                         <option value="new_user">New User</option>
                                         <option value="regular_user">Regular User</option>
+                                        <option value="reffered_user">Reffered User</option>
                                         <option value="all_user">All User</option>
                                     </select>
                                 </div>
@@ -166,12 +175,18 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Coupon Value" id='edit_value' autocomplete="off">
+                                    <input class="form-control" type="number" placeholder="Coupon Value" id='edit_value' autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input class="form-control" type="number" placeholder="Usage Per User" id='edit_usage' autocomplete="off">
                                 </div>
                             </div>
 
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <input class="form-control" type="date" placeholder="Expiry Date" id='edit_expired_at' min="<?= date('Y-m-d') ?>" autocomplete="off">
                                 </div>

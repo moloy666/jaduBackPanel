@@ -1412,13 +1412,14 @@ class Admin_model extends CI_Model
         return (!empty($query)) ? $query : null;
     }
 
-    public function add_coupon_data($coupon_id, $coupon_code, $coupon_type, $value, $user_type, $expired_at, $specific_id)
+    public function add_coupon_data($coupon_id, $coupon_code, $coupon_type, $value, $usage, $user_type, $expired_at, $specific_id)
     {
         $data = [
             field_uid => $coupon_id,
             "code" => $coupon_code,
             "type" => $coupon_type,
             "value" => $value,
+            "usage_per_users" => $usage,
             "for_user" => $user_type,
             "expired_at" => $expired_at,
             "validity" => const_active,
@@ -1855,7 +1856,7 @@ class Admin_model extends CI_Model
     public function total_km_purchase_today($user_id)
     {
         $query = $this->db->select('SUM(original_km) as today_recharge')
-            ->where(['recharge_type' => 'received', 'payment_status' => 'authorized', field_user_id => $user_id])
+            ->where(['recharge_type' => 'received', 'payment_status' => 'captured', field_user_id => $user_id])
             ->group_start()
             ->where('rechargeIn', 'purchaseKm')
             ->or_where('rechargeIn', NULL)

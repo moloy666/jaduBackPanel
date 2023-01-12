@@ -17,7 +17,7 @@
             <div class="form-group float-right">
                 <div class="d-flex">
                     <button type="submit" class="btn bgred ml-3 btnround" id="recharge_btn" data-toggle="modal" data-target='#rechView1'>
-                        Recharge
+                        Self Recharge
                     </button>
 
                     <form action="<?= base_url(WEB_PORTAL_FRANCHISE . '/download_progress_report/') . $specific_level_user_id . '/' . $this->session->userdata(session_franchise_table) ?>" method="post" target="_blank">
@@ -224,6 +224,11 @@
         </div>
     </div>
 
+    <div class="loaderbg" style="display: none;">
+        <img src="<?= base_url() ?>assets/images/succesfull_payment.gif">
+    </div>
+
+
 
 </div>
 </div>
@@ -238,5 +243,18 @@
 
     .ibox .dashboard-card {
         height: 8rem;
+    }
+
+    .loaderbg {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 9999;
+        background-color: rgba(0, 0, 0, 0.4);
+        top: 0;
+        left: 0;
     }
 </style>

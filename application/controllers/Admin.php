@@ -4005,19 +4005,27 @@ class Admin extends CI_Controller
 		$user_type = $this->input->post('user_type');
 		$expired_at = $this->input->post('expired_at');
 		$value = $this->input->post('value');
+		$usage = $this->input->post('usage');
 		$this->init_uid_server_model();
 
 		$coupon_id = $this->Uid_server_model->generate_uid('COUPON');
 		$coupon_code = $this->Uid_server_model->generate_coupon_code(10);
 
-
-		$this->init_admin_model();
-		$insert = $this->Admin_model->add_coupon_data($coupon_id, $coupon_code, $coupon_type, $value, $user_type, $expired_at, $specific_id);
-		if ($insert) {
-			$this->response(["success" => true, "message" => "Coupon Created SuccessFully"], 200);
-		} else {
-			$this->response(["success" => false, "message" => "Failed"], 200);
+		if(!empty($coupon_type) && !empty($user_type) && !empty($expired_at) && !empty($value) && !empty($usage)){
+			$this->init_admin_model();
+			$insert = $this->Admin_model->add_coupon_data($coupon_id, $coupon_code, $coupon_type, $value, $usage, $user_type, $expired_at, $specific_id);
+			if ($insert) {
+				$this->response(["success" => true, "message" => "Coupon Created SuccessFully"], 200);
+			} else {
+				$this->response(["success" => false, "message" => "Failed"], 200);
+			}
 		}
+		else{
+			$this->response(["success" => false, "message" => "Fill all credentials"], 200);
+		}
+
+
+		
 	}
 
 	public function get_coupon_details()
