@@ -37,7 +37,7 @@
                                 <th class="text-center">Amount Type</th>
                                 <th class="text-center">Value</th>
                                 <th class="text-center">Usage / User</th>
-                                <th class="text-center">Validity</th>
+                                <th class="text-center">Status</th>
                                 <th class="text-center">Expiry Date</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -101,7 +101,7 @@
                                         <option value="0">Select User Type </option>
                                         <option value="new_user">New User</option>
                                         <option value="regular_user">Regular User</option>
-                                        <option value="reffered_user">Reffered User</option>
+                                        <option value="referred_user">Reffered User</option>
                                         <option value="regular_user">All User</option>
                                     </select>
                                 </div>
@@ -111,7 +111,7 @@
                                 <div class="form-group">
                                     <input class="form-control" type="number" placeholder="Coupon Value" id='value' autocomplete="off">
                                 </div>
-                            </div>
+                            </div> 
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -167,7 +167,7 @@
                                         <option value="0">Select User Type </option>
                                         <option value="new_user">New User</option>
                                         <option value="regular_user">Regular User</option>
-                                        <option value="reffered_user">Reffered User</option>
+                                        <option value="referred_user">Reffered User</option>
                                         <option value="all_user">All User</option>
                                     </select>
                                 </div>

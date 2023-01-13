@@ -148,8 +148,9 @@
           let coupon_type = $('#edit_coupon_type').val();
           let for_user = $('#edit_for_user').val();
           let value = $('#edit_value').val();
+          let usage = $('#edit_usage').val();
           let expired_at = $('#edit_expired_at').val();
-          let specific_id = $('specific_id').val();
+          let specific_id = $('#specific_id').val();
 
 
           $.ajax({
@@ -160,6 +161,7 @@
                   "type": coupon_type,
                   "for_user": for_user,
                   "value": value,
+                  "usage": usage,
                   "expired_at": expired_at,
                   "specific_id": specific_id,
               },

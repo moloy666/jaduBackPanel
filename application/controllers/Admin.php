@@ -4083,11 +4083,12 @@ class Admin extends CI_Controller
 		$type = $this->input->post('type');
 		$for_user = $this->input->post('for_user');
 		$value = $this->input->post('value');
+		$usage = $this->input->post('usage');
 		$expired_at = $this->input->post('expired_at');
 
-		if (!empty($type) && !empty($for_user) && !empty($value) && !empty($expired_at)) {
+		if (!empty($type) && !empty($for_user) && !empty($value) &&  !empty($value) && !empty($expired_at)) {
 			$this->init_admin_model();
-			$update = $this->Admin_model->update_coupon_details($id, $type, $for_user, $value, $expired_at, $specific_id);
+			$update = $this->Admin_model->update_coupon_details($id, $type, $for_user, $value, $usage, $expired_at, $specific_id);
 			if ($update) {
 				$this->response(["success" => true, "message" => "Coupon Details Updated Successfully"], 200);
 			} else {

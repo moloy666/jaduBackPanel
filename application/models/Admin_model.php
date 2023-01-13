@@ -1474,12 +1474,13 @@ class Admin_model extends CI_Model
         return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function update_coupon_details($id, $type, $for_user, $value, $expired_at, $specific_id)
+    public function update_coupon_details($id, $type, $for_user, $value, $usage, $expired_at, $specific_id)
     {
         $data = [
             "type" => $type,
             "for_user" => $for_user,
             "value" => $value,
+            "usage_per_users" => $usage,
             "created_at" => date(field_date),
             "expired_at" => $expired_at,
             "created_by" => $specific_id
