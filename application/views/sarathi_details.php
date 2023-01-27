@@ -12,7 +12,7 @@
                 <div class="col-md-8">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="background-color:transparent;">
-                            <li class="breadcrumb-item"><a href="<?= base_url('administrator/sarathi') ?>">Sarathi</a></li>
+                            <li class="breadcrumb-item"><a href="<?= base_url('administrator/saathi') ?>">Saathi</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Drivers</li>
                         </ol>
                     </nav>

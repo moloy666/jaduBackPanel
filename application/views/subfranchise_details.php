@@ -13,7 +13,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="background-color:transparent;">
                             <li class="breadcrumb-item"><a href="<?= base_url('administrator/sub_franchise') ?>">Sub Franchise</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Sarathi</li>
+                            <li class="breadcrumb-item active" aria-current="page">Saathi</li>
                         </ol>
                     </nav>
                     <h5 class="text-primary ml-3" id="sarathi_name">Name :
@@ -31,7 +31,7 @@
 
             <div class="card  my-2 p-3">
                 <div class="table-responsive">
-                    <h5 class="text-danger mb-4">Sarathi List</h5>
+                    <h5 class="text-danger mb-4">Saathi List</h5>
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>

@@ -1,6 +1,5 @@
  <!-- START SIDEBAR-->
-
- <nav class="page-sidebar" id="sidebar">
+ <nav class="page-sidebar">
      <div id="sidebar-collapse">
          <div class="admin-block d-flex">
              <div>
@@ -32,8 +31,7 @@
                      <span class="nav-label">Dashboard</span>
                  </a>
              </li>
-             <li class="heading">FEATURES</li>
-             <!-- <li class="heading"><?= $this->session->userdata(session_fare_list) ?></li> -->
+             <!-- <li class="heading">FEATURES</li> -->
 
              <li>
                  <a href="<?= base_url(WEB_PORTAL_ADMIN . '/ride_details') ?>" id="" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'ride_details') ? 'active' : '' ?>">
@@ -121,7 +119,7 @@
                 if ($this->session->userdata(field_type_id) == "user_admin") {
                     if ($this->session->userdata(session_sarathi_data) == "active" || $this->session->userdata(session_sarathi_data) == const_active) { ?>
                      <li>
-                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/sarathi') ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'sarathi') ? 'active' : '' ?>">
+                         <a href="<?= base_url(WEB_PORTAL_ADMIN . saathi) ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'saathi') ? 'active' : '' ?>">
                              <i class="sidebar-item-icon fa fa-smile-o"></i>
                              <span class="nav-label">Sarathi</span>
                          </a>
@@ -130,9 +128,9 @@
                     }
                 } else { ?>
                  <li>
-                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/sarathi') ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'sarathi') ? 'active' : '' ?>">
+                     <a href="<?= base_url(WEB_PORTAL_ADMIN . saathi) ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'saathi') ? 'active' : '' ?>">
                          <i class="sidebar-item-icon fa fa-smile-o"></i>
-                         <span class="nav-label">Sarathi</span>
+                         <span class="nav-label">Saathi</span>
                      </a>
                  </li>
              <?php
@@ -509,10 +507,10 @@
                          <span class="nav-label">Reports</span><i class="fa fa-angle-left arrow"></i></a>
                      <ul class="nav-2-level collapse">
                          <li>
-                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/resolve_reports') ?>">Resolved Reports</a>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/unresolve_reports') ?>">Unresolved Reports</a>
                          </li>
                          <li>
-                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/unresolve_reports') ?>">Unresolved Reports</a>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/resolve_reports') ?>">Resolved Reports</a>
                          </li>
                      </ul>
                  </li>
@@ -531,4 +529,6 @@
 
      }
  </script>
+
+
  <!-- END SIDEBAR-->

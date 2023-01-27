@@ -4,7 +4,7 @@
         <div class="page-content fade-in-up">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background:transparent">
-                    <li class="breadcrumb-item"><a href="<?= base_url('sarathi/driver') ?>">Driver</a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url('saathi/driver') ?>">Driver</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Documents</li>
                 </ol>
             </nav>

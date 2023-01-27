@@ -136,7 +136,7 @@
                         status = "";
                     str += `<tr>
                                 <td>${i+1}</td>
-                                <td class="title"><a href="<?= base_url('franchise/subfranchise/sarathi/') ?>${data[i].user_id}">${data[i].name}</a></td>
+                                <td class="title"><a href="<?= base_url('franchise/subfranchise/saathi/') ?>${data[i].user_id}">${data[i].name}</a></td>
                                 <td>${data[i].email}</td>
                                 <td>${data[i].mobile}</td>
                                 <td><label class="switch">

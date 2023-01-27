@@ -222,7 +222,8 @@
                         }
                         details = `<tr>
                         <td>${count}</td>
-                        <td class="title"><a href="<?= base_url($this->session->userdata(session_franchise_table) . "/sarathi/driver/") ?>${data.user_id}">${data.name}</a></td>
+                        <td class="title">
+                        <a href="<?= base_url($this->session->userdata(session_franchise_table) . "/saathi/driver/") ?>${data.user_id}">${data.name}</a></td>
                         <td>${data.email}</td>
                         <td>${data.mobile}</td>
                         <td class="title">${data.subfranchise.name}</td>

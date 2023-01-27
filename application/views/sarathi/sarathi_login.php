@@ -16,7 +16,7 @@
 <body class="bg-silver-300">
     <div class="content">
         <div class="brand">
-            <a class="link" href="">Jadu Ride Sarathi</a>
+            <a class="link" href="">Jadu Ride Saathi</a>
         </div>
         <form id="login_form">
             <h2 class="login-title">Log in</h2>

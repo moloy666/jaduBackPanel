@@ -1175,7 +1175,7 @@ class Admin extends CI_Controller
 
 
 	//////////////////////// sarathi ////////////////////////////////
-	public function sarathi()
+	public function sarathi() // view saathi in admin panel
 	{
 		if ($this->is_user_logged_in()) {
 

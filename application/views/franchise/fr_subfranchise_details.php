@@ -13,14 +13,14 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="background-color:transparent;">
                             <li class="breadcrumb-item"><a href="<?= base_url('franchise/subfranchise') ?>">Sub Franchise</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Sarathi</li>
+                            <li class="breadcrumb-item active" aria-current="page">Saathi</li>
                         </ol>
                     </nav>
                     <h5 class="text-primary ml-3">Name : <?= $data['name'] ?></h5>
                     <input type="hidden" value="<?= $data['sub_franchise_id'] ?>" id="subfranchise_id">
                     
                     <input type="hidden" value="<?= $specific_id ?>" id="specific_id">
-                    <input type="hidden" value=" <?=end($this->uri->segments)?>" id="user_id">
+                    <input type="hidden" value=" <?= end($this->uri->segments) ?>" id="user_id">
                     <input type="hidden" value="<?= $this->session->userdata(session_franchise_table) ?>" id="specific_table">
                 </div>
                 <div class="col-md-4">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="card p-3">
-                <h5 class="text-danger mb-2">Sarathi List</h5>
+                <h5 class="text-danger mb-2">Saathi List</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">

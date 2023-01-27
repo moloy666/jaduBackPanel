@@ -209,7 +209,7 @@ class Sarathi extends CI_Controller
         }
     }
 
-    public function recharge()
+    public function view_recharge()
     {
         if ($this->is_sarathi_logged_in()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
@@ -227,8 +227,7 @@ class Sarathi extends CI_Controller
     }
 
 
-    public function sarathi_details()
-    {  //  sarathi/driver
+    public function sarathi_details() {  //  sarathi/driver view driver page
 
         if ($this->is_sarathi_logged_in()) {
             $user_id = $this->session->userdata(session_sarathi_user_id);
@@ -248,8 +247,7 @@ class Sarathi extends CI_Controller
         }
     }
 
-    public function show_pending_drivers($user_id)
-    {   // open pending driver document page
+    public function show_pending_drivers($user_id){   // open pending driver document page
         $this->init_sarathi_details_model();
 
         $user['user_id'] = $user_id;

@@ -79,7 +79,7 @@
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 let recharge_details = response.data;
                 let details = ''
                 $.each(recharge_details, function(i) {

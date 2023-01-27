@@ -10,7 +10,7 @@
         <div class="page-content fade-in-up">
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
-                    <h3>Sarathi</h3>
+                    <h3>Saathi</h3>
                     <input type="hidden" value="<?= $specific_id ?>" id="specific_id">
                     <input type="hidden" value="<?= $this->session->userdata(session_franchise_table) ?>" id="specific_table">
                 </div>
@@ -48,7 +48,7 @@
                                     <tr id="row_<?=$value[0]['user_id']?>">
                                         <td class="text-center"><?= $i + 1 ?></td>
 
-                                        <td class="title"><a href="<?= base_url($this->session->userdata(session_franchise_table) . "/sarathi/driver/") ?><?= $value[0]['user_id'] ?>"><?= $value[0]['name'] ?></a></td>
+                                        <td class="title"><a href="<?= base_url($this->session->userdata(session_franchise_table) . "/saathi/driver/") ?><?= $value[0]['user_id'] ?>"><?= $value[0]['name'] ?></a></td>
 
                                         <td class="text-center"><?= $value[0]['mobile'] ?></td>
                                         <td class="text-center"><?= $value[0]['email'] ?></td>
@@ -131,7 +131,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add New Sarathi</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add New Saathi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -192,7 +192,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_add_modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="btn_add_data">Add New Sarathi</button>
+                    <button type="submit" class="btn btn-success" id="btn_add_data">Add New Saathi</button>
                 </div>
             </div>
         </div>
@@ -203,7 +203,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Sarathi</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Saathi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

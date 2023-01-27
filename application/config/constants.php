@@ -84,7 +84,7 @@ defined('EXIT_DATABASE')       or define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      or define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      or define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 /////////////////////////////////////////////////////////////////
-define('WEB_PORTAL_SARATHI', 'sarathi');
+define('WEB_PORTAL_SARATHI', 'saathi');
 /////////////////////////////////////////////////////////////////
 define('API_KEY', '4c174057-0a6b-4fe8-98df-5699fac7c51a');
 define('PLARTFORM', 'web');
@@ -104,6 +104,8 @@ define('session_hotel_name', 'hotel_name');
 define('session_hotel_image', 'hotel_image');
 define('session_hotel_id', 'hotel_id');
 define('session_hotel_mobile', 'hotel_mobile');
+
+define('saathi', '/saathi');
 
 
 

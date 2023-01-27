@@ -13,7 +13,7 @@ foreach ($sarathi_data as $data) {
             <div class="col">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Sarathi Recharge History</div>
+                        <div class="ibox-title">Saathi Recharge History</div>
 
                         <form action="<?=base_url('sarathi/download_recharge_history')?>" method="POST">
                             <button type="submit" class="btn btnround btn-success my-1" id="btn_pdf">PDF</button>

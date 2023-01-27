@@ -21,7 +21,7 @@
              </div>
              <div class="admin-info">
                  <div class="font-strong"><?= ucwords($this->session->userdata('sarathi_name')) ?></div>
-                 <small>Sarathi</small>
+                 <small>Saathi</small>
              </div>
          </div>
          <?php $uri_last_segment = end($this->uri->segments) ?>

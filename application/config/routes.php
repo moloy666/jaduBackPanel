@@ -64,12 +64,6 @@ $route['hotel/call_booking'] = 'hotel/view_customer_booking';
 $route['hotel/profile'] = 'hotel/view_profile';
 
 
-
-
-
-
-
-
 $route['hotel/register_details'] = 'hotel/register_details';
 $route['hotel/authenticate_hotel'] = 'hotel/authenticate_hotel';
 
@@ -79,7 +73,7 @@ $route['hotel/authenticate_hotel'] = 'hotel/authenticate_hotel';
 $route['franchise'] = 'franchise/index';
 $route['franchise/dashboard'] = 'franchise/view_dashboard';
 $route['franchise/subfranchise'] = 'franchise/view_subfranchise';
-$route['franchise/sarathi'] = 'franchise/view_sarathi';
+$route['franchise/saathi'] = 'franchise/view_sarathi';
 $route['franchise/driver'] = 'franchise/view_driver';
 $route['franchise/incentives'] = 'franchise/view_incentives';
 $route['franchise/call_booking'] = 'franchise/view_call_booking';
@@ -99,10 +93,11 @@ $route['franchise/profile'] = 'franchise/view_profile';
 $route['franchise/places'] = 'franchise/view_places';
 $route['franchise/driver/location'] = 'franchise/view_driver_location';
 $route['franchise/recharge_history'] = 'franchise/view_recharge_history';
+$route['franchise/get_panel_access_list'] = 'franchise/get_panel_access_list';
 
 
-$route['franchise/subfranchise/sarathi/(:any)'] = 'franchise/view_subfranchise_details/$1';
-$route['franchise/sarathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
+$route['franchise/subfranchise/saathi/(:any)'] = 'franchise/view_subfranchise_details/$1';
+$route['franchise/saathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
 $route['franchise/driver/details/(:any)'] = 'franchise/view_driver_details/$1';
 $route['franchise/download_recharge_history/(:any)'] = 'franchise/download_recharge_history/$1';
 
@@ -111,7 +106,8 @@ $route['franchise/download_recharge_history/(:any)'] = 'franchise/download_recha
 $route['subfranchise'] = 'franchise/index';
 $route['subfranchise/dashboard'] = 'franchise/view_dashboard';
 $route['subfranchise/subfranchise'] = 'franchise/view_subfranchise';
-$route['subfranchise/sarathi'] = 'franchise/view_sarathi';
+$route['subfranchise/saathi'] = 'franchise/view_sarathi';
+
 $route['subfranchise/driver'] = 'franchise/view_driver';
 $route['subfranchise/incentives'] = 'franchise/view_incentives';
 $route['subfranchise/call_booking'] = 'franchise/view_call_booking';
@@ -132,9 +128,9 @@ $route['subfranchise/places'] = 'franchise/view_places';
 $route['subfranchise/driver/location'] = 'franchise/view_driver_location';
 $route['subfranchise/recharge_history'] = 'franchise/view_recharge_history';
 
+$route['subfranchise/get_panel_access_list'] = 'franchise/get_panel_access_list';
+$route['subfranchise/saathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
 
-
-$route['subfranchise/sarathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
 
 
 // Functions
@@ -158,35 +154,42 @@ $route['administrator/get_customer_by_booking_id'] = 'admin/get_customer_by_book
 
 $route['sarathiData'] = 'Admin/getsarathiData';
 $route['sarathi/login'] = 'Sarathi/index';
-$route['sarathi/driver'] = 'Sarathi/sarathi_details';
+
 $route['sarathi_driver'] = 'Sarathi/driver';
 $route['sarathi_customers'] = 'Sarathi/customers';
-$route['sarathi/profile'] = 'Sarathi/sarathi_profile';
-$route['sarathi/documents'] = 'Sarathi/view_sarathi_documents';
-$route['sarathi/pending_driver_document/(:any)'] = 'sarathi/show_pending_drivers/$1';
-$route['sarathi/driver/details/(:any)'] = 'Sarathi/view_driver_details/$1';
+
+$route['saathi/profile'] = 'Sarathi/sarathi_profile';
+$route['saathi/documents'] = 'Sarathi/view_sarathi_documents';
+$route['saathi/pending_driver_document/(:any)'] = 'sarathi/show_pending_drivers/$1';
+$route['saathi/driver/details/(:any)'] = 'Sarathi/view_driver_details/$1';
+$route['saathi/get_panel_access_list'] = 'Sarathi/get_panel_access_list';
+
+$route['saathi'] = 'Sarathi/index';
+$route['saathi/index'] = 'Sarathi/index';
+$route['saathi/login'] = 'Sarathi/index';
 
 
+$route['saathi/dashboard'] = 'sarathi/dashboard';
+$route['saathi/driver'] = 'Sarathi/sarathi_details';
 
-// $route['sarathi/dashboard'] = 'sarathi/view_dashboard';
+$route['saathi/incentives'] = 'sarathi/view_incentives';
+$route['saathi/call_booking'] = 'sarathi/view_call_booking';
+$route['saathi/rental/slabs'] = 'sarathi/view_rental_slabs';
+$route['saathi/rental/features'] = 'sarathi/view_rental_features';
+$route['saathi/rental/details'] = 'sarathi/view_rental_details';
+$route['saathi/fare_management'] = 'sarathi/view_fare_list';
+$route['saathi/services'] = 'sarathi/view_services';
+$route['saathi/compliments'] = 'sarathi/view_compliments';
+$route['saathi/achivements'] = 'sarathi/view_achivements';
+$route['saathi/help'] = 'sarathi/view_help';
+$route['saathi/feedback'] = 'sarathi/view_feedback';
+$route['saathi/resolve_reports'] = 'sarathi/view_resolve_reports';
+$route['saathi/unresolve_reports'] = 'sarathi/view_unresolve_reports';
+$route['saathi/customers'] = 'sarathi/view_customers';
+$route['saathi/places'] = 'sarathi/view_places';
+$route['saathi/recharge'] = 'sarathi/view_recharge';
 
-$route['sarathi/incentives'] = 'sarathi/view_incentives';
-$route['sarathi/call_booking'] = 'sarathi/view_call_booking';
-$route['sarathi/rental/slabs'] = 'sarathi/view_rental_slabs';
-$route['sarathi/rental/features'] = 'sarathi/view_rental_features';
-$route['sarathi/rental/details'] = 'sarathi/view_rental_details';
-$route['sarathi/fare_management'] = 'sarathi/view_fare_list';
-$route['sarathi/services'] = 'sarathi/view_services';
-$route['sarathi/compliments'] = 'sarathi/view_compliments';
-$route['sarathi/achivements'] = 'sarathi/view_achivements';
-$route['sarathi/help'] = 'sarathi/view_help';
-$route['sarathi/feedback'] = 'sarathi/view_feedback';
-$route['sarathi/resolve_reports'] = 'sarathi/view_resolve_reports';
-$route['sarathi/unresolve_reports'] = 'sarathi/view_unresolve_reports';
-$route['sarathi/customers'] = 'sarathi/view_customers';
-$route['sarathi/places'] = 'sarathi/view_places';
-
-$route['sarathi/driver/location'] = 'sarathi/driver_location';
+$route['saathi/driver/location'] = 'sarathi/driver_location';
 
 //////////////////////////////////////////////////////////////////////////////
 $route['administrator/dashboardData'] = 'Admin/getDashboardData';
@@ -240,6 +243,7 @@ $route['administrator/deny_driver_documents'] = 'Admin/deny_driver_documents';
 
 //  manage user profile
 $route['administrator/update_user_profile'] = 'Admin/update_user_profile';
+$route['saathi/manage_sarathi_profile'] = 'Sarathi/manage_sarathi_profile';
 
 // driver functions
 $route['administrator/active_driver'] = 'Admin/active_driver';
@@ -257,7 +261,7 @@ $route['administrator/admin'] = 'Admin/admin';
 $route['administrator/sub_franchise'] = 'Admin/sub_franchise';
 $route['administrator/driver'] = 'Admin/driver';
 $route['administrator/driver/location'] = 'Admin/view_driver_location';
-$route['administrator/sarathi'] = 'Admin/sarathi';
+$route['administrator/saathi'] = 'Admin/sarathi';
 $route['administrator/feedback'] = 'Admin/feedback';
 $route['administrator/splash_data'] = 'Admin/splash_data';
 $route['administrator/profile'] = 'Admin/profile';
@@ -288,7 +292,7 @@ $route['administrator/packages'] = 'admin/view_packages';
 
 $route['administrator/franchise_details/(:any)'] = 'Admin/franchise_details/$1';
 $route['administrator/subfranchise_details/(:any)'] = 'Admin/subfranchise_details/$1';
-$route['administrator/sarathi_details/(:any)'] = 'Admin/sarathi_details/$1';
+$route['administrator/saathi_details/(:any)'] = 'Admin/sarathi_details/$1';
 $route['administrator/driver_document/(:any)'] = 'Admin/show_driver_document/$1';
 $route['administrator/customers/ride_history/(:any)'] = 'Admin/view_ride_history/$1';
 $route['administrator/customers/ride_history_csv/(:any)'] = 'Admin/ride_history_csv/$1';
@@ -309,15 +313,9 @@ $route['administrator/total_km_purchase'] = 'Admin/total_km_purchase';
 $route['administrator/pending_driver_document/(:any)'] = 'Admin/show_pending_drivers/$1';
 $route['administrator/driver/details/(:any)'] = 'Admin/display_driver_details/$1';
 $route['administrator/driver/ride_history/(:any)'] = 'Admin/view_ride_history/$1';
-
 $route['administrator/driver/display_ride_history/(:any)'] = 'Admin/display_ride_history/$1';
-
-
 $route['administrator/driver/ride_history_csv/(:any)'] = 'Admin/ride_history_csv/$1';
-
-
 $route['administrator/display_driver_location'] = 'Admin/display_driver_location';
-
 
 
 // admin settings 

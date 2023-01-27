@@ -71,9 +71,9 @@
              <?php
                 if ($this->session->userdata(fr_session_sarathi_data) == "active" || $this->session->userdata(fr_session_sarathi_data) == const_active) { ?>
                  <li>
-                     <a href="<?= base_url($user_type . '/sarathi') ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'sarathi') ? 'active' : '' ?>">
+                     <a href="<?= base_url($user_type . saathi) ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'saathi') ? 'active' : '' ?>">
                          <i class="sidebar-item-icon fa fa-smile-o"></i>
-                         <span class="nav-label">Sarathi</span>
+                         <span class="nav-label">Saathi</span>
                      </a>
                  </li>
              <?php
