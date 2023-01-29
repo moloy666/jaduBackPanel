@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'ut9bbcxgkh6oj',
-	'password' => 'x3af4xyca8pm',
-	'database' => 'db6t8mtztkupxg',
+	'hostname' => 'database-jaduride.cluster-cdraogoobtbe.ap-south-1.rds.amazonaws.com',
+	'username' => 'admin',
+	'password' => 'JaduAWS#Ride',
+	'database' => 'database_jaduride',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
