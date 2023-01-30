@@ -89,7 +89,10 @@ define('WEB_PORTAL_SARATHI', 'saathi');
 define('API_KEY', '4c174057-0a6b-4fe8-98df-5699fac7c51a');
 define('PLARTFORM', 'web');
 /////////////////////////////////////////////////////////////////
-define('apiBaseUrl','https://jaduridedev.v-xplore.com/');
+// define('apiBaseUrl','https://jaduridedev.v-xplore.com/');
+
+define('apiBaseUrl','https://api.jaduride.com/');
+define('nodeUrl','https://node.jaduride.com/');
 
 ////////////////////////// Hotel Section Start //////////////////////////
 define('WEB_PORTAL_HOTEL', 'hotel');

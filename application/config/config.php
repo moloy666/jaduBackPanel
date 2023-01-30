@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'https://v-xplore.com/dev/ci_jadu/';
-$config['base_url'] = 'https://v-xplore.com/dev/ci_jadu/';
+$config['base_url'] = 'https://panel.jaduride.com/';
 
 /*
 |--------------------------------------------------------------------------

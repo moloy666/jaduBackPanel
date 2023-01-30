@@ -1,6 +1,6 @@
-<script src="http://54.251.202.52:3000/socket.io/socket.io.js"></script>
+<script src="<?=nodeUrl?>/socket.io/socket.io.js"></script>
 <script>
-    var socket = io("http://54.251.202.52:3000", {
+    var socket = io("<?=nodeUrl?>", {
         transports: ["websocket"]
     });
 
@@ -14,7 +14,8 @@
     }
 </style>
 <script>
-    var apiBaseUrl = 'https://jaduridedev.v-xplore.com/';
+    var apiBaseUrl = '<?=apiBaseUrl?>';
+
 
     $.ajax({
         type: "GET",
