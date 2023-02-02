@@ -316,6 +316,7 @@ $route['administrator/driver/ride_history/(:any)'] = 'Admin/view_ride_history/$1
 $route['administrator/driver/display_ride_history/(:any)'] = 'Admin/display_ride_history/$1';
 $route['administrator/driver/ride_history_csv/(:any)'] = 'Admin/ride_history_csv/$1';
 $route['administrator/display_driver_location'] = 'Admin/display_driver_location';
+$route['administrator/activate_pending_driver'] = 'Admin/activate_pending_driver';
 
 
 // admin settings 

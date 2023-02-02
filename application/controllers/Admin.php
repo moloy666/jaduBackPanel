@@ -75,6 +75,10 @@ class Admin extends CI_Controller
 	{
 		$this->load->model(model_customers_model);
 	}
+	private function init_notification_model()
+	{
+		$this->load->model(model_notification_model);
+	}
 	private function response($data, $status)
 	{
 		return $this->output->set_content_type("application/json")
@@ -1801,11 +1805,10 @@ class Admin extends CI_Controller
 		$uid = $this->input->post(field_id);
 		$this->init_franchise_model();
 		$delete = $this->Franchise_model->delete_franchise_details($uid);
-		if($delete){
-			$this->response(["success"=>true, "message"=>'Franchise Deleted Successfully !'], 200);
-		}
-		else{
-			$this->response(["success"=>false, "message"=>'Something Went Wrong !'], 200);
+		if ($delete) {
+			$this->response(["success" => true, "message" => 'Franchise Deleted Successfully !'], 200);
+		} else {
+			$this->response(["success" => false, "message" => 'Something Went Wrong !'], 200);
 		}
 	}
 
@@ -2568,17 +2571,54 @@ class Admin extends CI_Controller
 	{
 		$this->show_pending_drivers($user_id);
 	}
+
 	public function activate_pending_driver()
 	{
 		$user_id = $this->input->post(field_id);
+
 		$this->init_sarathi_details_model();
+		$this->init_uid_server_model();
 		$active = $this->Sarathi_details_model->activate_pending_driver($user_id);
 		if ($active) {
+			$image = 'assets/images/logo.png';
+			$this->init_common_model();
+			$driver_id = $this->Common_model->get_specific_id_by_user_id($user_id, table_driver);
+
+			$sarathi_id = $this->Common_model->get_sarathi_id_by_driver_user_id($user_id);
+
+			$deduct_from_sarathi = $this->Common_model->deduct_km_from_sarathi($user_id);
+
+			if ($deduct_from_sarathi) {
+				$this->init_notification_model();
+				$sarathi_title = 'New driver added';
+				$sarathi_body = '100 Km deducted';
+				$sarathi_notify = $this->NotificationManager->sendNotification($sarathi_id, $sarathi_title, $sarathi_body, $image);
+
+				$add_km_to_driver = $this->Commom_model->add_joining_km_to_driver($user_id);
+
+				if($add_km_to_driver)	{
+				$driver_title = 'Your account is activate';
+				$driver_body = 'Congratulation ! 100 km added as joining bonus';
+					$driver_notify = $this->NotificationManager->sendNotification($driver_id, $driver_title, $driver_body, $image);
+				}
+			}
+		} 
+
+		if($active && $deduct_from_sarathi && $sarathi_notify && $add_km_to_driver && $driver_notify){
 			$this->response(['success' => true, 'message' => 'Driver is Activated'], 200);
-		} else {
+		}
+		else {
 			$this->response(['success' => false, 'message' => 'Failed to Activate driver'], 200);
 		}
+
+		// $this->response(['success' => true, 'message' => $sarathi_id], 200);
 	}
+
+
+
+
+
+
 	public function approved_driver_documents()
 	{
 		$user_id = $this->input->post(param_id);	// driver's user_id
@@ -3525,7 +3565,7 @@ class Admin extends CI_Controller
 
 			$data['data'] = $this->Driver_model->display_driver_details($user_id);
 			$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
-			
+
 			$data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
 			$data['companion'] = 'Customer';
 
@@ -4011,7 +4051,7 @@ class Admin extends CI_Controller
 		$coupon_id = $this->Uid_server_model->generate_uid('COUPON');
 		$coupon_code = $this->Uid_server_model->generate_coupon_code(10);
 
-		if(!empty($coupon_type) && !empty($user_type) && !empty($expired_at) && !empty($value) && !empty($usage)){
+		if (!empty($coupon_type) && !empty($user_type) && !empty($expired_at) && !empty($value) && !empty($usage)) {
 			$this->init_admin_model();
 			$insert = $this->Admin_model->add_coupon_data($coupon_id, $coupon_code, $coupon_type, $value, $usage, $user_type, $expired_at, $specific_id);
 			if ($insert) {
@@ -4019,13 +4059,9 @@ class Admin extends CI_Controller
 			} else {
 				$this->response(["success" => false, "message" => "Failed"], 200);
 			}
-		}
-		else{
+		} else {
 			$this->response(["success" => false, "message" => "Fill all credentials"], 200);
 		}
-
-
-		
 	}
 
 	public function get_coupon_details()
@@ -4593,7 +4629,8 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function get_user_recharge_data(){
+	public function get_user_recharge_data()
+	{
 		$user_id = $this->input->post(param_id);
 		$this->init_common_model();
 		$data = $this->Common_model->get_user_recharge_data($user_id);
@@ -4605,7 +4642,8 @@ class Admin extends CI_Controller
 	}
 
 
-	public function recharge_history_sf(){
+	public function recharge_history_sf()
+	{
 		$user_id = $this->input->post(param_id);
 		$this->init_admin_model();
 		$data = $this->Admin_model->recharge_history_sf($user_id);
@@ -4615,5 +4653,4 @@ class Admin extends CI_Controller
 			$this->response(["success" => false, "message" => "not found!"], 200);
 		}
 	}
-
 }

@@ -4,7 +4,7 @@
         <div class="page-content fade-in-up">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background:transparent">
-                    <li class="breadcrumb-item"><a href="<?= base_url('administrator/sarathi') ?>">Sarathi</a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url('administrator/saathi') ?>">Saathi</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Driver Documents</li>
                 </ol>
             </nav>
@@ -135,7 +135,7 @@
                     let user_id = $('#user_id').val();
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url('Admin/activate_pending_driver') ?>",
+                        url: "<?= base_url('administrator/activate_pending_driver') ?>",
                         data: {
                             "id": user_id
                         },
@@ -144,7 +144,8 @@
                         },
                         success: function(data) {
                             console.log(data);
-                            location.href = "<?= base_url('administrator/sarathi') ?>";
+                            
+                            // location.href = "<?= base_url('administrator/saathi') ?>";
                         }
                     });
                 });
@@ -193,6 +194,7 @@
                             console.log(data);
                         },
                         success: function(data) {
+                            
                             // toast(data.message,'center');
                             if (data.success) {
                                 let document = data.document;

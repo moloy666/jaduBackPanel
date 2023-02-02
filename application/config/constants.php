@@ -89,10 +89,11 @@ define('WEB_PORTAL_SARATHI', 'saathi');
 define('API_KEY', '4c174057-0a6b-4fe8-98df-5699fac7c51a');
 define('PLARTFORM', 'web');
 /////////////////////////////////////////////////////////////////
-// define('apiBaseUrl','https://jaduridedev.v-xplore.com/');
+define('apiBaseUrl','https://jaduridedev.v-xplore.com/');
+define('nodeUrl','http://54.251.202.52:3000/');
 
-define('apiBaseUrl','https://api.jaduride.com/');
-define('nodeUrl','https://node.jaduride.com/');
+// define('apiBaseUrl','https://api.jaduride.com/');
+// define('nodeUrl','https://node.jaduride.com/');
 
 ////////////////////////// Hotel Section Start //////////////////////////
 define('WEB_PORTAL_HOTEL', 'hotel');
@@ -223,6 +224,7 @@ define('model_customers_model', 'Customers_model');
 define('model_franchise_model', 'Franchise_model');
 define('model_sub_franchise_model', 'Subfranchise_model');
 define('model_hotel', 'Hotel_model');
+define('model_notification_model', 'NotificationManager');
 
 ///////////////////////////////////////////////////////////
 define('field_id', 'id');
@@ -284,6 +286,10 @@ define('field_ride_status', 'ride_status');
 define('field_note', 'note');
 define('field_payment_id', 'payment_id');
 define('field_user_type_id', 'user_type_id');
+define('field_title', 'title');
+define('field_image', 'image');
+define('field_large_icon', 'largeIcon');
+define('field_action', 'action');
 
 ////////////////////////////////////////////////////////////////
 define('value_administrator', 'administrator');
@@ -333,6 +339,7 @@ define('table_panel_access_permissions', 'panel_access_permissions');
 define('table_hotel', 'hotel');
 define('table_ride_normal', 'ride_normal');
 define('table_packages', 'packages');
+define('table_notification', 'notifications');
 
 /////////////////////////////////////////////////////
 define('const_deleted', 'DELETED');
@@ -350,6 +357,8 @@ define('const_delivery_guidelines', 'delivery_guidelines');
 
 define('const_success', 'success');
 define('const_completed', 'completed');
+
+define('CONST_JOINING_KM', '100');
 
 
 //////////////////////////////////////////////////////
@@ -370,6 +379,7 @@ define('KEY_GID', 'GROUP');
 define('KEY_BANK_DETAILS', 'BANK_DETAILS');
 define('KEY_HOTEL', 'HOTEL');
 define('KEY_PACKAGES', 'PACKAGES');
+define('KEY_NOTIFICATION', 'NOTIFICATION');
 
 
 /////////////////////////////////////////
@@ -382,6 +392,7 @@ define('UID_GID_PREFIX', 'GROUP_');
 define('UID_BANK_DETAILS_PREFIX', 'BANK_DETAILS_');
 define('UID_HOTEL_PREFIX', 'HOTEL_');
 define('UID_PACKAGES_PREFIX', 'PACKAGES_');
+define('UID_NOTIFICATION_PREFIX', 'NOTIFICATION_');
 
 
 /////////////////////////////////////////////

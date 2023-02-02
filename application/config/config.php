@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-// $config['base_url'] = 'https://v-xplore.com/dev/ci_jadu/';
-$config['base_url'] = 'https://panel.jaduride.com/';
+$config['base_url'] = 'https://v-xplore.com/dev/ci_jadu/';
+// $config['base_url'] = 'https://panel.jaduride.com/';
 
 /*
 |--------------------------------------------------------------------------

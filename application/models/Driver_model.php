@@ -414,5 +414,5 @@ class Driver_model extends CI_Model
         $query = $this->db->select(field_name)->where(field_uid, $user_id)->get(table_users);
         $query = $query->result_array();
         return(!empty($query))?$query[0][field_name]:null;
-    }
+    }  
 }

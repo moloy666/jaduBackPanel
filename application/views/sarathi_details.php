@@ -616,7 +616,7 @@
                     console.log(response);
                 },
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     if (response.success) {
                         let data = response.data[0];
 
@@ -674,7 +674,7 @@
                 },
 
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     let recharge_details = response.data;
                     let recharge_history = '';
                     $.each(recharge_details, function(i) {

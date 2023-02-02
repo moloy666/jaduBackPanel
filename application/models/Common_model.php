@@ -4,6 +4,8 @@ class Common_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        date_default_timezone_set(field_location);
+        
     }
 
     private function get_user_type_id($user_type)
@@ -787,5 +789,42 @@ class Common_model extends CI_Model
         ->get('recharge_history');
         $query = $query->result_array();
         return (!empty($query))?$query:null;
+    }
+
+    public function get_sarathi_id_by_driver_user_id($user_id){
+        $query = $this->db->select(field_sarathi_id)->where(field_user_id, $user_id)->get(table_driver);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_sarathi_id]:null;
+    }
+
+    public function deduct_km_from_sarathi($user_id){
+        $sarathi_total_km = $this->get_sarathi_total_km($user_id);
+        $new_sarathi_km = $sarathi_total_km - 100;
+        
+        $data=[
+          field_total_km_purchased=>$new_sarathi_km,
+          field_modified_at=>date(field_date)  
+        ];
+
+        $this->db->where(field_user_id, $user_id)->update(table_sarathi, $data);
+        return ($this->db->affected_rows()==1)?true:false;
+    }
+
+    private function get_sarathi_total_km($user_id){
+        $query = $this->db->select('s.total_km_purchased')
+        ->from(table_sarathi.' as s')
+        ->join(table_driver.' as d', 's.uid = d.sarathi_id')
+        ->where('d.user_id', $user_id)->get();
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_total_km_purchased]:null;
+    }
+
+    public function add_joining_km_to_driver($user_id){
+        $data = [
+            field_total_km_purchased => CONST_JOINING_KM,
+            field_modified_at=>date(field_date)
+        ];
+        $this->db->where(field_user_id, $user_id)->update(table_driver, $data);
+        return($this->db->affected_rows()==1)?true:false;
     }
 }

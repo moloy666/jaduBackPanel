@@ -117,17 +117,13 @@ class Sarathi_details_model extends CI_Model
     }
 
     public function activate_pending_driver($user_id){
-        $this->db->set(field_status, const_active);
+        $data=[
+            field_status=>const_active,
+            field_modified_at=>date(field_date)
+        ];
         $this->db->where(field_uid, $user_id);
-        return $this->db->update(table_users);
-
-        // if($update){
-        //     $this->db->set('working_status', const_active);
-        //     $this->db->where(field_user_id, $user_id);
-        //     $this->db->update(table_driver);
-        //     return ($this->db->affected_rows()==1)? true:false;
-
-        // }
+        $this->db->update(table_users, $data);
+        return($this->db->affected_rows()==1)?true:false;
     }
 
     public function get_gid_by_user_id($user_id){
