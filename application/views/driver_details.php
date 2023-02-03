@@ -60,7 +60,7 @@
                             <?php
                             if (!empty($ride_history)) {
                                 foreach ($ride_history as $i => $data) {
-                            ?>
+                                ?>
                                     <tr>
                                         <td class="text-center"><?= $i + 1 ?></td>
 

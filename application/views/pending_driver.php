@@ -143,9 +143,9 @@
                             console.log(data);
                         },
                         success: function(data) {
-                            console.log(data);
+                            // console.log(data);
                             
-                            // location.href = "<?= base_url('administrator/saathi') ?>";
+                            location.href = "<?= base_url('administrator/saathi') ?>";
                         }
                     });
                 });

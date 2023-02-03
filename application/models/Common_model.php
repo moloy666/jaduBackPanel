@@ -797,34 +797,75 @@ class Common_model extends CI_Model
         return(!empty($query))?$query[0][field_sarathi_id]:null;
     }
 
-    public function deduct_km_from_sarathi($user_id){
-        $sarathi_total_km = $this->get_sarathi_total_km($user_id);
-        $new_sarathi_km = $sarathi_total_km - 100;
-        
-        $data=[
-          field_total_km_purchased=>$new_sarathi_km,
-          field_modified_at=>date(field_date)  
+
+    /////////////////////////////////
+
+    public function giveDriverBonous100KmAsFirstTime($user_id_of_sarathi, $user_id_of_driver){
+        $km = 100;
+        $sarathi_data_in_recharge_history = [
+            field_uid               => $this->Uid_server_model->generate_uid(KEY_RECHARGE),
+            field_user_id           => $user_id_of_sarathi,
+            field_payment_mode      => STATIC_RECHARGE_MODE_ONLINE,
+            field_order_id          => $this->Uid_server_model->generate_uid(KEY_ORDER),
+            field_package_id        => '',
+            field_recharge_type     => STATIC_RECHARGE_TYPE_PAID,
+            field_recharge_amount   => $km,
+            field_original_km       => $km,
+            field_extra_km          => 0,
+            field_paid_to_user_id   => $user_id_of_driver,
+            field_payment_status    => constant_captured,
+            field_created_at        => date(field_date)
         ];
-
-        $this->db->where(field_user_id, $user_id)->update(table_sarathi, $data);
-        return ($this->db->affected_rows()==1)?true:false;
+        $recharge = $this->insertRechargeTable($sarathi_data_in_recharge_history);
+        $manage = $this->manageSarathiAndDriverBalence($user_id_of_sarathi, $user_id_of_driver, $km);
+        if($recharge && $manage){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
-
-    private function get_sarathi_total_km($user_id){
-        $query = $this->db->select('s.total_km_purchased')
-        ->from(table_sarathi.' as s')
-        ->join(table_driver.' as d', 's.uid = d.sarathi_id')
-        ->where('d.user_id', $user_id)->get();
-        $query = $query->result_array();
-        return(!empty($query))?$query[0][field_total_km_purchased]:null;
-    }
-
-    public function add_joining_km_to_driver($user_id){
-        $data = [
-            field_total_km_purchased => CONST_JOINING_KM,
-            field_modified_at=>date(field_date)
-        ];
-        $this->db->where(field_user_id, $user_id)->update(table_driver, $data);
+    
+    private function insertRechargeTable($data){
+        $this->db->insert(table_recharge_history, $data);
         return($this->db->affected_rows()==1)?true:false;
+    }
+    
+    private function manageSarathiAndDriverBalence($user_id_of_sarathi, $user_id_of_driver, $selected_package_value){
+        $previous_km_of_sarathi = $this->get_already_have_km($user_id_of_sarathi, table_sarathi);
+        $updated_km_of_sarathi = $previous_km_of_sarathi - $selected_package_value;
+        $update_km = $this->updated_km_of($user_id_of_sarathi, $updated_km_of_sarathi, table_sarathi);
+    
+        if($update_km){
+            $previous_km_of_driver = $this->get_already_have_km($user_id_of_driver, table_driver);
+            $updated_km_of_driver = $previous_km_of_driver + $selected_package_value;
+            $update_km = $this->updated_km_of($user_id_of_driver, $updated_km_of_driver, table_driver);
+            return true;
+        }else{
+            return false;
+        } 
+    }
+    
+    private function get_already_have_km($user_id, $table_name){
+        $this->db->select(field_total_km_purchased);
+        $this->db->where(field_user_id, $user_id);
+        $query = $this->db->get($table_name);
+        $query = $query->result_array();
+        if(!empty($query)){
+            $query = $query[0];
+            $total_km_purchased = $query[field_total_km_purchased];
+            return ($total_km_purchased != null) ? $total_km_purchased : 0;
+        }else{
+            return 0;
+        }
+    }
+    
+    private function updated_km_of($user_id, $updated_km_of_sarathi, $table_name){
+        $data = [
+            field_total_km_purchased => $updated_km_of_sarathi
+        ];
+        $this->db->where(field_user_id, $user_id);
+        $this->db->update($table_name, $data);
+        return ($this->db->affected_rows() == 1) ? true : false;
     }
 }

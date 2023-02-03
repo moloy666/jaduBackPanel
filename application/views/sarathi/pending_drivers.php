@@ -137,7 +137,7 @@
                     let user_id = $('#user_id').val();
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url('Admin/activate_pending_driver') ?>",
+                        url: "<?= base_url('administrator/activate_pending_driver') ?>",
                         data: {
                             "id": user_id
                         },
@@ -146,7 +146,7 @@
                         },
                         success: function(data) {
                             console.log(data);
-                            location.href = "<?= base_url('sarathi/driver') ?>";
+                            location.href = "<?= base_url('saathi/driver') ?>";
                         }
                     });
                 });

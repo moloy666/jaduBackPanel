@@ -249,6 +249,8 @@ define('field_modified_at', 'modified_at');
 define('field_created_at', 'created_at');
 define('field_date', 'Y-m-d H:i:s');
 define('field_dob', 'dob');
+define('field_order_id', 'order_id');
+define('field_package_id', 'package_id');
 
 define('field_verified', 'verified');
 define('field_group_id', 'gid');
@@ -290,6 +292,7 @@ define('field_title', 'title');
 define('field_image', 'image');
 define('field_large_icon', 'largeIcon');
 define('field_action', 'action');
+define('field_token', 'token');
 
 ////////////////////////////////////////////////////////////////
 define('value_administrator', 'administrator');
@@ -340,6 +343,7 @@ define('table_hotel', 'hotel');
 define('table_ride_normal', 'ride_normal');
 define('table_packages', 'packages');
 define('table_notification', 'notifications');
+define('table_device_notification_data_firebase', 'device_notification_data_firebase');
 
 /////////////////////////////////////////////////////
 define('const_deleted', 'DELETED');
@@ -358,7 +362,17 @@ define('const_delivery_guidelines', 'delivery_guidelines');
 define('const_success', 'success');
 define('const_completed', 'completed');
 
+define('constant_captured', 'captured');
+
 define('CONST_JOINING_KM', '100');
+
+define('sarathi_title', 'New driver added');
+define('sarathi_body', '100 Km deducted');
+
+define('driver_title', 'Your account is activated');
+define('driver_body', 'Congratulation ! 100 km added as joining bonus');
+
+
 
 
 //////////////////////////////////////////////////////
@@ -380,6 +394,8 @@ define('KEY_BANK_DETAILS', 'BANK_DETAILS');
 define('KEY_HOTEL', 'HOTEL');
 define('KEY_PACKAGES', 'PACKAGES');
 define('KEY_NOTIFICATION', 'NOTIFICATION');
+define('KEY_RECHARGE', 'RECHARGE');
+define('KEY_ORDER', 'ORDER');
 
 
 /////////////////////////////////////////
@@ -393,6 +409,8 @@ define('UID_BANK_DETAILS_PREFIX', 'BANK_DETAILS_');
 define('UID_HOTEL_PREFIX', 'HOTEL_');
 define('UID_PACKAGES_PREFIX', 'PACKAGES_');
 define('UID_NOTIFICATION_PREFIX', 'NOTIFICATION_');
+define('UID_ORDER_PREFIX', 'ORDER_');
+define('UID_RECHARGE_PREFIX', 'RECHARGE_');
 
 
 /////////////////////////////////////////////

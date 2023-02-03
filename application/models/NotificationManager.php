@@ -1,5 +1,5 @@
 <?php
-class Common_model extends CI_Model
+class NotificationManager extends CI_Model
 {
     public function __construct()
     {
@@ -8,12 +8,14 @@ class Common_model extends CI_Model
 
     }
 
-    public function sendNotification($spcific_id, $title, $message, $image){
+    public function sendNotification($specific_id, $title, $message, $image){
+
+        $token_id = $this->get_token_id_of_specific_user($specific_id);
 
         // return true;
 
-        $this->setNotificationToDb($spcific_id, $title, $message, $image);
-        
+        $status = $this->setNotificationToDb($specific_id, $title, $message, $image);
+        return $status;
     }
 
     private function  setNotificationToDb($specific_id, $title, $body, $image){
@@ -28,7 +30,13 @@ class Common_model extends CI_Model
             field_created_at=>date(field_date)
         ];
         $this->db->insert(table_notification, $data);
-        return ($this->db->affected_rows()==1)?true:false;
+        return ($this->db->affected_rows() == 1)?true:false;
+    }
+
+    private function get_token_id_of_specific_user($specific_id){
+        $query = $this->db->select(field_token)->where(field_specific_level_user_id, $specific_id)->get(table_device_notification_data_firebase);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0][field_token]:null;
     }
 
 }

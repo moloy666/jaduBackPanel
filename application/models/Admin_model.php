@@ -885,8 +885,14 @@ class Admin_model extends CI_Model
             $query = $this->db->select('name, mobile')
             ->where('uid', $specific_id)->get('hotel');
             $query = $query->result_array();
-        }       
-        return $query[0];
+        }     
+        
+        $default=[
+            "name"=>"____",
+            "mobile"=>""
+        ];
+
+        return (!empty($query))?$query[0] : $default;
     }
 
     public function get_customer_ride_history($specific_id)

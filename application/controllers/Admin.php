@@ -2572,46 +2572,45 @@ class Admin extends CI_Controller
 		$this->show_pending_drivers($user_id);
 	}
 
-	public function activate_pending_driver()
-	{
+	public function activate_pending_driver(){
+
 		$user_id = $this->input->post(field_id);
 
 		$this->init_sarathi_details_model();
 		$this->init_uid_server_model();
+		$this->init_common_model();
+		$this->init_notification_model();
+
 		$active = $this->Sarathi_details_model->activate_pending_driver($user_id);
 		if ($active) {
-			$image = 'assets/images/logo.png';
-			$this->init_common_model();
+			$image = 'assets/images/logos/logo-l.png';
+
 			$driver_id = $this->Common_model->get_specific_id_by_user_id($user_id, table_driver);
-
 			$sarathi_id = $this->Common_model->get_sarathi_id_by_driver_user_id($user_id);
+			$sarathi_user_id = $this->Common_model->get_user_id_by_specific_id($sarathi_id, table_sarathi);
+			
+			$recharge = $this->Common_model->giveDriverBonous100KmAsFirstTime($sarathi_user_id, $user_id);
 
-			$deduct_from_sarathi = $this->Common_model->deduct_km_from_sarathi($user_id);
+			
+			if ($recharge) {
+				$sarathi_title = sarathi_title;
+				$sarathi_body = sarathi_body;
 
-			if ($deduct_from_sarathi) {
-				$this->init_notification_model();
-				$sarathi_title = 'New driver added';
-				$sarathi_body = '100 Km deducted';
+				$driver_title = driver_title;
+				$driver_body = driver_body;
+
 				$sarathi_notify = $this->NotificationManager->sendNotification($sarathi_id, $sarathi_title, $sarathi_body, $image);
-
-				$add_km_to_driver = $this->Commom_model->add_joining_km_to_driver($user_id);
-
-				if($add_km_to_driver)	{
-				$driver_title = 'Your account is activate';
-				$driver_body = 'Congratulation ! 100 km added as joining bonus';
-					$driver_notify = $this->NotificationManager->sendNotification($driver_id, $driver_title, $driver_body, $image);
-				}
+				$driver_notify = $this->NotificationManager->sendNotification($driver_id, $driver_title, $driver_body, $image);					
 			}
 		} 
 
-		if($active && $deduct_from_sarathi && $sarathi_notify && $add_km_to_driver && $driver_notify){
-			$this->response(['success' => true, 'message' => 'Driver is Activated'], 200);
+		if($active && $recharge && $sarathi_notify && $driver_notify){
+			$this->response(['success' => true, 'message' =>  'Driver activated successfully'], 200);
 		}
 		else {
-			$this->response(['success' => false, 'message' => 'Failed to Activate driver'], 200);
+			$this->response(['success' => false, 'message' => 'Something went wrong'], 200);
 		}
 
-		// $this->response(['success' => true, 'message' => $sarathi_id], 200);
 	}
 
 
@@ -3571,10 +3570,7 @@ class Admin extends CI_Controller
 
 			$data['recharge_history'] =  $this->Driver_model->get_recharge_history_of_driver($user_id);
 
-			// echo "<pre>";
-			// print_r($data['ride_history']);
-			// die();
-
+			
 			$this->load_header();
 			$this->load_sidebar();
 			$this->load->view('driver_details', $data);

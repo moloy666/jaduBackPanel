@@ -31,8 +31,8 @@
                 <div class="input-group-icon right">
                     <div class="input-icon">
                         <!-- <i class="fa fa-lock font-16" id="btn_password"></i> -->
-                        <img src="<?=base_url('assets/images/show.png')?>" width="20px" id="show_password">
-                        <img src="<?=base_url('assets/images/hide.png')?>" width="20px" id="hide_password" style="display:none">
+                        <img src="<?=base_url('assets/images/show.png')?>" width="18px" id="show_password">
+                        <img src="<?=base_url('assets/images/hide.png')?>" width="18px" id="hide_password" style="display:none">
                     </div>
                     <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                 </div>
