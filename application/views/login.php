@@ -29,7 +29,11 @@
             </div>
             <div class="form-group">
                 <div class="input-group-icon right">
-                    <div class="input-icon"><i class="fa fa-lock font-16"></i></div>
+                    <div class="input-icon">
+                        <!-- <i class="fa fa-lock font-16" id="btn_password"></i> -->
+                        <img src="<?=base_url('assets/images/show.png')?>" width="20px" id="show_password">
+                        <img src="<?=base_url('assets/images/hide.png')?>" width="20px" id="hide_password" style="display:none">
+                    </div>
                     <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                 </div>
             </div>
@@ -46,7 +50,7 @@
                     <span class="input-span"></span>Remember me</label>
             </div>
             <div class="form-group">
-                <button class="btn btn-info btn-block" type="submit">Login</button>
+                <button class="btn btn-info btn-block" type="submit" id="btn_login">Login</button>
             </div>
             <span id="message" class="text-warning"></span>
         </form>
@@ -109,9 +113,15 @@
                 $.ajax({
                     url: "<?= base_url("Admin/authenticate_user") ?>",
                     type: "post",
+                    beforeSend:function(){
+                        $('#btn_login').html(`<img src="<?=base_url('assets/images/loader3.svg')?>" width="30px">`);
+                    },
                     data: formData,
                     contentType: false,
                     processData: false,
+                    complete:function(){
+                        $('#btn_login').html(`Login`);
+                    },
                     error: function(a, b, c) {
                         console.log(a);
                         console.log(b);
@@ -148,5 +158,25 @@
                 $("#login_form input[name='password']").val(localStorage.getItem("password"));
             }
         }
+
+        $('#show_password').click(function(){
+            let password = document.getElementById('password');
+            if(password.type === "password"){
+                password.type = "text";
+                $('#show_password').hide();
+                $('#hide_password').show();
+            }
+        });
+
+        $('#hide_password').click(function(){
+            let password = document.getElementById('password');
+            if(password.type === "text"){
+                password.type = "password";
+                $('#hide_password').hide();
+                $('#show_password').show();
+            }
+        });
+
+       
     </script>
     <!-- Login Section Script End -->
