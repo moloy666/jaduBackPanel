@@ -1785,6 +1785,7 @@ class Admin extends CI_Controller
 				$this->load_sidebar();
 				$this->load->view(view_franchise);
 				$this->load_footer();
+				$this->load->view('inc/custom_js/sf_address_js');
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -1926,8 +1927,39 @@ class Admin extends CI_Controller
 		$password = md5(trim($this->input->post(param_mobile)));
 		$admin_id = $this->input->post(param_specific_id);
 
-		$permission_ids = $this->input->post('permission');
+		$pincode = $this->input->post(param_pincode); 
+		$address = $this->input->post(param_address); 
+		$country = $this->input->post(param_country); 
+		$state = $this->input->post(param_state); 
+		$district = $this->input->post(param_district); 
+		$city = $this->input->post(param_city); 
 
+		if(empty($pincode) || empty($address) || empty($country) || empty($state) || empty($district) || empty($city)){
+			$this->response([key_success => false, key_message => "Give all address details"], 200);
+			return;
+		}
+
+		if(strlen($pincode) != 6){
+			$this->response([key_success => false, key_message => "Enter a valid Pincode"], 200);
+			return;
+		}
+
+		$address_data = [
+			field_uid =>$this->Uid_server_model->generate_uid(KEY_ADDRESS),
+			field_group_id=>$gid,
+			field_address_line_1=>$address,
+			field_city_id=>$city,
+			field_state_id=>$state,
+			field_district_id=>$district,
+			field_country_id=>$country,
+			field_pincode=>$pincode,
+			field_status=>const_active,
+			field_created_at=>date(field_date),
+			field_modified_at=>date(field_date)
+		];
+
+
+		$permission_ids = $this->input->post('permission');
 		$panel_lists_ids = $this->input->post('panel_list');
 
 		$panel_acess_list = json_encode(implode(',', $panel_lists_ids));
@@ -1967,7 +1999,7 @@ class Admin extends CI_Controller
 				}
 				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_franchise);
 				$this->init_franchise_model();
-				$data = $this->Franchise_model->add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel_access);
+				$data = $this->Franchise_model->add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel_access, $address_data);
 				if ($data) {
 					$this->response([key_success => true, key_message => "Data insert successfull"], 200);
 				} else {
@@ -1994,6 +2026,7 @@ class Admin extends CI_Controller
 				$this->load_sidebar();
 				$this->load->view(view_sub_franchise);
 				$this->load_footer();
+				$this->load->view('inc/custom_js/sf_address_js');
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -2230,7 +2263,6 @@ class Admin extends CI_Controller
 
 	public function add_sub_franchise()
 	{
-
 		$franchise_id = $this->input->post(field_franchise_id);
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
@@ -2239,21 +2271,40 @@ class Admin extends CI_Controller
 		$permission_ids = $this->input->post(param_permission);
 		$panel_lists_ids = $this->input->post(param_panel_list);
 
+		$pincode = $this->input->post(param_pincode); 
+		$address = $this->input->post(param_address); 
+		$country = $this->input->post(param_country); 
+		$state = $this->input->post(param_state); 
+		$district = $this->input->post(param_district); 
+		$city = $this->input->post(param_city); 
+
+		$specific_id = $this->input->post(param_specific_id); // created by 
+
+		if(empty($pincode) || empty($address) || empty($country) || empty($state) || empty($district) || empty($city)){
+			$this->response([key_success => false, key_message => "Give all address details"], 200);
+			return;
+		}
+
+		if(strlen($pincode) != 6){
+			$this->response([key_success => false, key_message => "Enter a valid Pincode"], 200);
+			return;
+		}
+
 		$table = $this->input->post('table');
 		if (!empty($table)) {
 			$this->init_login_model();
 			$status = $this->Login_model->get_user_status_by_specific_id($franchise_id, $table);
 			if ($status == const_active) {
-				$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids);
+				$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id);
 			} else {
 				$this->response([key_success => false, key_message => text_account_not_active], 200);
 			}
 		} else {
-			$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids);
+			$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id);
 		}
 	}
 
-	private function insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids)
+	private function insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id)
 	{
 		$this->init_uid_server_model();
 		$subfranchise_id = $this->Uid_server_model->generate_uid(KEY_SUBFRANCHISE);
@@ -2268,6 +2319,20 @@ class Admin extends CI_Controller
 			field_specific_level_user_id => $subfranchise_id,
 			"permission" => $panel_acess_list,
 			field_modified_at => date(field_date)
+		];
+
+		$address_data = [
+			field_uid =>$this->Uid_server_model->generate_uid(KEY_ADDRESS),
+			field_group_id=>$gid,
+			field_address_line_1=>$address,
+			field_city_id=>$city,
+			field_state_id=>$state,
+			field_district_id=>$district,
+			field_country_id=>$country,
+			field_pincode=>$pincode,
+			field_status=>const_active,
+			field_created_at=>date(field_date),
+			field_modified_at=>date(field_date)
 		];
 
 		foreach ($permission_ids as $i => $permision) {
@@ -2297,7 +2362,7 @@ class Admin extends CI_Controller
 				}
 				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_sub_franchise);
 				$this->init_sub_franchise_model();
-				$data = $this->Subfranchise_model->add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel_access);
+				$data = $this->Subfranchise_model->add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel_access, $address_data, $specific_id);
 				if ($data) {
 					$this->response([key_success => true, key_message => "Data insert successfully"], 200);
 				} else {
@@ -4268,7 +4333,7 @@ class Admin extends CI_Controller
 
 	public function add_place_name()
 	{
-		$name = $this->input->post(param_name);
+		$name = strtolower($this->input->post(param_name));
 		$parent_id = $this->input->post(param_id);
 		$this->init_uid_server_model();
 		$place = $this->input->post('place');

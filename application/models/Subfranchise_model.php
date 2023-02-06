@@ -147,7 +147,7 @@ class Subfranchise_model extends CI_Model
         }
     }
 
-    public function add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel)
+    public function add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel, $address_data, $specific_id)
     {
         $data = [
             field_uid => $user_id,
@@ -159,14 +159,15 @@ class Subfranchise_model extends CI_Model
             field_created_at => date(field_date),
             field_modified_at => date(field_date)
         ];
+
         $sub_franchise_data = [
             field_uid => $subfranchise_id,
             field_franchise_id => $franchise_id,
             field_user_id => $user_id,
             field_password => $password,
+            field_created_by=> $specific_id,
             field_created_at => date(field_date),
             field_modified_at => date(field_date)
-
         ];
 
         $insert = $this->db->insert(table_users, $data);
@@ -176,7 +177,10 @@ class Subfranchise_model extends CI_Model
                 $permission = $this->db->insert_batch(table_permission, $access);
                 if ($permission) {
                     $permission = $this->db->insert(table_panel_access_permissions, $panel);
-                    return ($this->db->affected_rows() == 1) ? true : false;
+                    if($permission){
+                        $this->db->insert(table_address, $address_data);
+                        return ($this->db->affected_rows() == 1) ? true : false;
+                    }
                 }
             }
         } else {

@@ -129,9 +129,15 @@
                                     <input class="form-control" type="number" placeholder="Mobile Number" id='add_mobile' autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <input class="form-control" type="email" placeholder="Enter Email" id='add_email' autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input class="form-control" id="pincode" placeholder="Enter Pincode"></textarea>
                                 </div>
                             </div>
                             <!-- <div class="col-md-6">
@@ -154,6 +160,46 @@
                                 <div class="form-group">
                                     <select class="form-control title" id="panel_access_list" multiple>
                                         <option value="0">Select Management </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                           
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="address" rows="3" placeholder="Enter Address"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="country" class="form-control title">
+                                        <option value="">Select Country</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="state" class="form-control title">
+                                        <option value="">State Not Found</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="district" class="form-control title">
+                                        <option value="">District Not Found</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="city" class="form-control title">
+                                        <option value="">City Not Found</option>
                                     </select>
                                 </div>
                             </div>

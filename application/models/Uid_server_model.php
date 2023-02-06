@@ -23,6 +23,7 @@ class Uid_server_model extends CI_Model {
 		KEY_NOTIFICATION=>UID_NOTIFICATION_PREFIX,		
 		KEY_ORDER=>UID_ORDER_PREFIX,		
 		KEY_RECHARGE=>UID_RECHARGE_PREFIX,		
+		KEY_ADDRESS=>UID_ADDRESS_PREFIX,
 
 		'SCHEME'=>'SCHEME_',
 		'RM'=>'RM_',
@@ -32,6 +33,7 @@ class Uid_server_model extends CI_Model {
 		'DISTRICT'=>'DISTRICT_',
 		'CITY'=>'CITY_',
 		'COUNTRY'=>'COUNTRY_',
+		
 
 
 		// 'BANK_DETAILS' => 'BANK_DETAILS_',

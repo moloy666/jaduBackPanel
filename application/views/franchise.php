@@ -79,7 +79,7 @@
                 <div class="modal-body">
                     <form id="add_data_form">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <input class="form-control" type="text" placeholder="Your Name" id='add_name' autocomplete="off">
                                 </div>
@@ -94,6 +94,13 @@
                                     <input class="form-control" type="email" placeholder="Your Email" id='add_email' autocomplete="off">
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" id="pincode" placeholder="Enter Pincode">
+                                </div>
+                            </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <select class="form-control" id="admin_access_list" multiple>
@@ -109,7 +116,46 @@
                                 <div class="form-group">
                                     <select class="form-control title" id="panel_access_list" multiple>
                                         <option value="0">Select Management </option>
+                                    </select>
+                                </div>
+                            </div>
 
+                          
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="address" rows="3" placeholder="Enter Address"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="country" class="form-control title">
+                                        <option value="">Select Country</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="state" class="form-control title">
+                                        <option value="">State Not Found</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="district" class="form-control title">
+                                        <option value="">District Not Found</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="city" class="form-control title">
+                                        <option value="">City Not Found</option>
                                     </select>
                                 </div>
                             </div>
@@ -448,7 +494,7 @@
         }
 
         function download_recharge_history(user_id) {
-            var url = `<?= base_url('admin/download_sarathi_recharge_history/')?>${user_id}`;
+            var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
             window.open(url, '_blank');
         }
 
@@ -616,6 +662,12 @@
 
             let admin_id = $('#specific_id').val();
 
+            let pincode = $('#pincode').val();
+            let address = $('#address').val();
+            let country = $('#country').val();
+            let state = $('#state').val();
+            let district = $('#district').val();
+            let city = $('#city').val();
 
             let flag = 0;
 
@@ -648,8 +700,13 @@
                         "mobile": mobile,
                         "permission": permission,
                         "panel_list": panel_list,
-                        "specific_id": admin_id
-
+                        "specific_id": admin_id,
+                        "address":address,
+                        "country":country,
+                        "state":state,
+                        "district":district,
+                        "city":city,
+                        "pincode":pincode
                     },
                     async: false,
                     success: function(data) {

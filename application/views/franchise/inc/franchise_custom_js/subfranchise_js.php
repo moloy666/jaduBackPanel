@@ -182,7 +182,7 @@
     }
 
     function fetch_recharge_package(user_id) {
-        let user_type = '<?=value_user_sub_franchise?>';
+        let user_type = '<?= value_user_sub_franchise ?>';
 
         $.ajax({
             type: "post",
@@ -343,6 +343,13 @@
         let permission = $('#access_list').val();
         let panel_list = $('#panel_access_list').val();
 
+        let pincode = $('#pincode').val();
+        let address = $('#address').val();
+        let country = $('#country').val();
+        let state = $('#state').val();
+        let district = $('#district').val();
+        let city = $('#city').val();
+
 
         let flag = 0;
 
@@ -378,7 +385,14 @@
                     "mobile": mobile,
                     "table": table,
                     "permission": permission,
-                    "panel_list": panel_list
+                    "panel_list": panel_list,
+                    "address": address,
+                    "country": country,
+                    "state": state,
+                    "district": district,
+                    "city": city,
+                    "pincode": pincode,
+                    "specific_id":franchise_id
                 },
                 success: function(data) {
                     // console.log(data);

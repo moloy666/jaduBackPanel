@@ -105,7 +105,7 @@ class Franchise_model extends CI_Model
         }
     }
 
-    public function add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel)
+    public function add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel, $address_data)
     {
         $data = [
             field_uid => $user_id,
@@ -134,8 +134,11 @@ class Franchise_model extends CI_Model
                 $permission=$this->db->insert_batch(table_permission, $access);
                 if($permission){
                     $permission=$this->db->insert(table_panel_access_permissions, $panel);
+                    if($permission){
+                        $this->db->insert(table_address, $address_data);
+                        return ($this->db->affected_rows() == 1) ? true : false;
+                    }
                 }
-                return ($this->db->affected_rows() ==1) ? true : false;
             }
         }
     }

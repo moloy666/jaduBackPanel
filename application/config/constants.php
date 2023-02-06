@@ -294,6 +294,13 @@ define('field_large_icon', 'largeIcon');
 define('field_action', 'action');
 define('field_token', 'token');
 
+define('field_address_line_1', 'address_line_1');
+define('field_city_id', 'city_id');
+define('field_state_id', 'state_id');
+define('field_district_id', 'district_id');
+define('field_country_id', 'country_id');
+define('field_pincode', 'pincode');
+
 ////////////////////////////////////////////////////////////////
 define('value_administrator', 'administrator');
 define('value_admin', 'admin');
@@ -313,6 +320,7 @@ define('table_vehicle_type', 'vehicle_type');
 define('table_app_splash_data', 'app_splash_data');
 define('table_feedback', 'feedback');
 define('table_administrator', 'administrator');
+define('table_address', 'user_address');
 
 define('table_fare_list', 'fare_list');
 define('table_terms_and_condition', 'terms_and_condition');
@@ -396,6 +404,7 @@ define('KEY_PACKAGES', 'PACKAGES');
 define('KEY_NOTIFICATION', 'NOTIFICATION');
 define('KEY_RECHARGE', 'RECHARGE');
 define('KEY_ORDER', 'ORDER');
+define('KEY_ADDRESS', 'ADDRESS');
 
 
 /////////////////////////////////////////
@@ -411,7 +420,7 @@ define('UID_PACKAGES_PREFIX', 'PACKAGES_');
 define('UID_NOTIFICATION_PREFIX', 'NOTIFICATION_');
 define('UID_ORDER_PREFIX', 'ORDER_');
 define('UID_RECHARGE_PREFIX', 'RECHARGE_');
-
+define('UID_ADDRESS_PREFIX', 'ADDRESS_');
 
 /////////////////////////////////////////////
 define('user_type_admin', 'admin');
@@ -420,6 +429,7 @@ define('user_type_sub_franchise', 'sub franchise');
 define('user_type_sarathi', 'sarathi');
 define('user_type_driver', 'driver');
 define('user_type_customer', 'customer');
+
 //////////////////////////////////////////////////////////////
 
 define('value_user_admin', 'user_admin');
@@ -455,6 +465,12 @@ define('param_user_id', 'user_id');
 define('param_key', 'key');
 define('param_panel_list', 'panel_list');
 define('param_table', 'table');
+define('param_address', 'address');
+define('param_pincode', 'pincode');
+define('param_country', 'country');
+define('param_state', 'state');
+define('param_district', 'district');
+define('param_city', 'city');
 
 /////////////////////////////////////////////////////
 define('session_franchise_id', 'franchise_id');

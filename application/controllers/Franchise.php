@@ -186,6 +186,7 @@ class Franchise extends CI_Controller
 				$this->load->view(view_franchise_subfranchises, $data);
 				$this->load_footer();
 				$this->load->view('franchise/inc/franchise_custom_js/subfranchise_js');
+				$this->load->view('inc/custom_js/sf_address_js');
 			} else {
 				$user_type = ($this->uri->segment(1));
 				redirect(base_url($user_type . '/dashboard'));

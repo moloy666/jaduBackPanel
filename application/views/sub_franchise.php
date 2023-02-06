@@ -11,6 +11,7 @@
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Sub Franchise</h3>
+                    <input type="hidden" value="<?= $this->session->userdata(session_admin_specific_id) ?>" id="specific_id">
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">
@@ -64,6 +65,7 @@
             </div>
         </div>
     </div>
+
     <!-- Add new sub franchise modal -->
     <div class="modal fade custmmodl" id="addNewUsr1" tabindex="-1" role="dialog" aria-labelledby="addNewUsr1Title" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -86,7 +88,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <input class="form-control" type="text" placeholder="Your Name" id='add_name'>
                                 </div>
@@ -96,9 +98,16 @@
                                     <input class="form-control" type="number" placeholder="Your Number" id='add_mobile'>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="email" placeholder="Your Email" id='add_email' required>
+                                    <input class="form-control" type="text" placeholder="Your Email" id='add_email' required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" id="pincode" placeholder="Enter Pincode">
                                 </div>
                             </div>
 
@@ -115,6 +124,46 @@
                                 <div class="form-group">
                                     <select class="form-control title" id="panel_access_list" multiple>
                                         <option value="0">Select Management</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="address" rows="3" placeholder="Enter Address"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="country" class="form-control title">
+                                        <option value="">Select Country</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="state" class="form-control title">
+                                        <option value="">State Not Found</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="district" class="form-control title">
+                                        <option value="">District Not Found</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 w-50">
+                                <div class="form-group">
+                                    <select name="" id="city" class="form-control title">
+                                        <option value="">City Not Found</option>
 
                                     </select>
                                 </div>
@@ -304,7 +353,6 @@
         });
 
         get_permission_list();
-
         display_panel_access_list();
 
         function display_panel_access_list() {
@@ -490,11 +538,11 @@
             });
         }
 
-        
-    function download_recharge_history(user_id) {
-        var url = `<?= base_url('admin/download_sarathi_recharge_history/')?>${user_id}`;
-        window.open(url, '_blank');
-    }
+
+        function download_recharge_history(user_id) {
+            var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
+            window.open(url, '_blank');
+        }
 
         function fetch_recharge_package(user_id) {
             let user_type = '<?= end($this->uri->segments) ?>';
@@ -622,9 +670,10 @@
             }
         });
 
-        // add new franchise
+        // add new sub franchise
         $('#btn_add_data').on('click', function() {
             let franchise = $('#select_franchise').val();
+            let admin_id = $('#specific_id').val();
 
             let name = $('#add_name').val();
             let email = $('#add_email').val();
@@ -632,9 +681,14 @@
             let permission = $('#admin_access_list').val();
             let panel_list = $('#panel_access_list').val();
 
+            let pincode = $('#pincode').val();
+            let address = $('#address').val();
+            let country = $('#country').val();
+            let state = $('#state').val();
+            let district = $('#district').val();
+            let city = $('#city').val();
 
             let flag = 0;
-
 
             if (email.indexOf('@') > -1) {
                 flag = 0;
@@ -663,9 +717,14 @@
                         "mobile": mobile,
                         "franchise_id": franchise,
                         "permission": permission,
-                        "panel_list": panel_list
-
-
+                        "panel_list": panel_list,
+                        "address":address,
+                        "country":country,
+                        "state":state,
+                        "district":district,
+                        "city":city,
+                        "pincode":pincode,
+                        "specific_id": admin_id,
                     },
                     async: false,
                     success: function(data) {
