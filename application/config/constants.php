@@ -300,6 +300,10 @@ define('field_state_id', 'state_id');
 define('field_district_id', 'district_id');
 define('field_country_id', 'country_id');
 define('field_pincode', 'pincode');
+define('field_version_for', 'version_for');
+define('field_play_store_link', 'play_store_link');
+define('field_code', 'code');
+define('field_skipable', 'is_skipable');
 
 ////////////////////////////////////////////////////////////////
 define('value_administrator', 'administrator');
@@ -352,6 +356,7 @@ define('table_ride_normal', 'ride_normal');
 define('table_packages', 'packages');
 define('table_notification', 'notifications');
 define('table_device_notification_data_firebase', 'device_notification_data_firebase');
+define('table_app_version', 'lists_app_verson');
 
 /////////////////////////////////////////////////////
 define('const_deleted', 'DELETED');
@@ -421,6 +426,7 @@ define('UID_NOTIFICATION_PREFIX', 'NOTIFICATION_');
 define('UID_ORDER_PREFIX', 'ORDER_');
 define('UID_RECHARGE_PREFIX', 'RECHARGE_');
 define('UID_ADDRESS_PREFIX', 'ADDRESS_');
+define('UID_VERSION_PREFIX', 'VERSION_');
 
 /////////////////////////////////////////////
 define('user_type_admin', 'admin');
@@ -471,6 +477,9 @@ define('param_country', 'country');
 define('param_state', 'state');
 define('param_district', 'district');
 define('param_city', 'city');
+define('param_play_store_link', 'play_store_link');
+define('param_code', 'code');
+define('param_skipable', 'skipable');
 
 /////////////////////////////////////////////////////
 define('session_franchise_id', 'franchise_id');

@@ -1935,4 +1935,48 @@ class Admin_model extends CI_Model
         $query = (!empty($query)) ? $query[0] : "";
         return (!empty($query)) ? $query[field_name] : "";       
     }
+
+    public function get_app_version_list($for_app){
+
+        if(!empty($for_app)){
+            $this->db->where(field_version_for, $for_app);
+            $this->db->order_by(field_id, 'desc');
+            $query = $this->db->get(table_app_version);
+            $query = $query->result_array();
+        }
+        else{
+            $sarathi = $this->get_latest_app_version('sarathi');
+            $driver = $this->get_latest_app_version('driver');
+            $customer = $this->get_latest_app_version('customer');
+
+            $query = [
+                '0'=> $sarathi,
+                '1'=>$driver,
+                '2'=>$customer
+            ];
+        }
+        return(!empty($query))?$query:[];
+    }
+
+    private function get_latest_app_version($for_app){
+        $query = $this->db->where(field_version_for, $for_app)
+        ->order_by(field_id, 'DESC')->get(table_app_version);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0]:[];
+    }
+
+
+    public function save_new_app_release($uid, $for_app, $name, $play_store_link, $code, $skipable){
+        $data=[
+            field_uid=>$uid,
+            field_version_for=>$for_app,
+            field_name =>$name,
+            field_play_store_link=>$play_store_link,
+            field_code=>$code,
+            field_skipable=>$skipable
+        ];
+
+        $this->db->insert(table_app_version, $data);
+        return($this->db->affected_rows()==1)?true:false;
+    }
 }

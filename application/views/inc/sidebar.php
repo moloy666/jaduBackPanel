@@ -31,12 +31,19 @@
                      <span class="nav-label">Dashboard</span>
                  </a>
              </li>
-             <!-- <li class="heading">FEATURES</li> -->
+             <li class="heading">FEATURES</li>
 
              <li>
                  <a href="<?= base_url(WEB_PORTAL_ADMIN . '/ride_details') ?>" id="" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'ride_details') ? 'active' : '' ?>">
                      <i class="sidebar-item-icon fa fa-life-bouy"></i>
                      <span class="nav-label">Ride Details</span>
+                 </a>
+             </li>
+
+             <li>
+                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/app_release') ?>" id="" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'app_release') ? 'active' : '' ?>">
+                     <i class="sidebar-item-icon fa fa-list"></i>
+                     <span class="nav-label">App Release</span>
                  </a>
              </li>
 

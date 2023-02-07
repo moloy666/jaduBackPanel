@@ -287,6 +287,7 @@ $route['administrator/hotel'] = 'admin/view_hotel';
 $route['administrator/ride_details'] = 'admin/view_ride_details';
 $route['administrator/dormant_account'] = 'admin/view_dormant_account';
 $route['administrator/packages'] = 'admin/view_packages';
+$route['administrator/app_release'] = 'admin/view_app_release';
 
 
 
@@ -445,9 +446,13 @@ $route['administrator/update_packages'] = 'Admin/update_packages';
 $route['administrator/active_packages'] = 'Admin/active_packages';
 $route['administrator/deactive_packages'] = 'Admin/deactive_packages';
 $route['administrator/delete_packages'] = 'Admin/delete_packages';
-/////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 $route['administrator/total_km_purchase_today'] = 'Admin/total_km_purchase_today';
+$route['administrator/get_app_version_list'] = 'Admin/get_app_version_list';
+$route['administrator/save_new_app_release'] = 'Admin/save_new_app_release';
+
+
 
 
 

@@ -107,6 +107,28 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function view_app_release()
+	{
+		if ($this->is_user_logged_in()) {
+
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('app_release');
+			$this->load_footer();
+			$this->load->view('inc/custom_js/app_release_js');
+		} else {
+
+			
+			$this->load->view(page_header_link);
+			$this->load->view('app_release');
+			$this->load->view(page_footer_link);
+			$this->load->view('inc/custom_js/app_release_js');
+			$this->load->view('inc/custom_js/app_release2_js'); // minimize side-bar
+
+			// redirect(base_url());
+		}
+	}
+
 	public function view_compliments()
 	{
 
@@ -1927,35 +1949,35 @@ class Admin extends CI_Controller
 		$password = md5(trim($this->input->post(param_mobile)));
 		$admin_id = $this->input->post(param_specific_id);
 
-		$pincode = $this->input->post(param_pincode); 
-		$address = $this->input->post(param_address); 
-		$country = $this->input->post(param_country); 
-		$state = $this->input->post(param_state); 
-		$district = $this->input->post(param_district); 
-		$city = $this->input->post(param_city); 
+		$pincode = $this->input->post(param_pincode);
+		$address = $this->input->post(param_address);
+		$country = $this->input->post(param_country);
+		$state = $this->input->post(param_state);
+		$district = $this->input->post(param_district);
+		$city = $this->input->post(param_city);
 
-		if(empty($pincode) || empty($address) || empty($country) || empty($state) || empty($district) || empty($city)){
+		if (empty($pincode) || empty($address) || empty($country) || empty($state) || empty($district) || empty($city)) {
 			$this->response([key_success => false, key_message => "Give all address details"], 200);
 			return;
 		}
 
-		if(strlen($pincode) != 6){
+		if (strlen($pincode) != 6) {
 			$this->response([key_success => false, key_message => "Enter a valid Pincode"], 200);
 			return;
 		}
 
 		$address_data = [
-			field_uid =>$this->Uid_server_model->generate_uid(KEY_ADDRESS),
-			field_group_id=>$gid,
-			field_address_line_1=>$address,
-			field_city_id=>$city,
-			field_state_id=>$state,
-			field_district_id=>$district,
-			field_country_id=>$country,
-			field_pincode=>$pincode,
-			field_status=>const_active,
-			field_created_at=>date(field_date),
-			field_modified_at=>date(field_date)
+			field_uid => $this->Uid_server_model->generate_uid(KEY_ADDRESS),
+			field_group_id => $gid,
+			field_address_line_1 => $address,
+			field_city_id => $city,
+			field_state_id => $state,
+			field_district_id => $district,
+			field_country_id => $country,
+			field_pincode => $pincode,
+			field_status => const_active,
+			field_created_at => date(field_date),
+			field_modified_at => date(field_date)
 		];
 
 
@@ -2271,21 +2293,21 @@ class Admin extends CI_Controller
 		$permission_ids = $this->input->post(param_permission);
 		$panel_lists_ids = $this->input->post(param_panel_list);
 
-		$pincode = $this->input->post(param_pincode); 
-		$address = $this->input->post(param_address); 
-		$country = $this->input->post(param_country); 
-		$state = $this->input->post(param_state); 
-		$district = $this->input->post(param_district); 
-		$city = $this->input->post(param_city); 
+		$pincode = $this->input->post(param_pincode);
+		$address = $this->input->post(param_address);
+		$country = $this->input->post(param_country);
+		$state = $this->input->post(param_state);
+		$district = $this->input->post(param_district);
+		$city = $this->input->post(param_city);
 
 		$specific_id = $this->input->post(param_specific_id); // created by 
 
-		if(empty($pincode) || empty($address) || empty($country) || empty($state) || empty($district) || empty($city)){
+		if (empty($pincode) || empty($address) || empty($country) || empty($state) || empty($district) || empty($city)) {
 			$this->response([key_success => false, key_message => "Give all address details"], 200);
 			return;
 		}
 
-		if(strlen($pincode) != 6){
+		if (strlen($pincode) != 6) {
 			$this->response([key_success => false, key_message => "Enter a valid Pincode"], 200);
 			return;
 		}
@@ -2322,17 +2344,17 @@ class Admin extends CI_Controller
 		];
 
 		$address_data = [
-			field_uid =>$this->Uid_server_model->generate_uid(KEY_ADDRESS),
-			field_group_id=>$gid,
-			field_address_line_1=>$address,
-			field_city_id=>$city,
-			field_state_id=>$state,
-			field_district_id=>$district,
-			field_country_id=>$country,
-			field_pincode=>$pincode,
-			field_status=>const_active,
-			field_created_at=>date(field_date),
-			field_modified_at=>date(field_date)
+			field_uid => $this->Uid_server_model->generate_uid(KEY_ADDRESS),
+			field_group_id => $gid,
+			field_address_line_1 => $address,
+			field_city_id => $city,
+			field_state_id => $state,
+			field_district_id => $district,
+			field_country_id => $country,
+			field_pincode => $pincode,
+			field_status => const_active,
+			field_created_at => date(field_date),
+			field_modified_at => date(field_date)
 		];
 
 		foreach ($permission_ids as $i => $permision) {
@@ -2637,7 +2659,8 @@ class Admin extends CI_Controller
 		$this->show_pending_drivers($user_id);
 	}
 
-	public function activate_pending_driver(){
+	public function activate_pending_driver()
+	{
 
 		$user_id = $this->input->post(field_id);
 
@@ -2653,10 +2676,10 @@ class Admin extends CI_Controller
 			$driver_id = $this->Common_model->get_specific_id_by_user_id($user_id, table_driver);
 			$sarathi_id = $this->Common_model->get_sarathi_id_by_driver_user_id($user_id);
 			$sarathi_user_id = $this->Common_model->get_user_id_by_specific_id($sarathi_id, table_sarathi);
-			
+
 			$recharge = $this->Common_model->giveDriverBonous100KmAsFirstTime($sarathi_user_id, $user_id);
 
-			
+
 			if ($recharge) {
 				$sarathi_title = sarathi_title;
 				$sarathi_body = sarathi_body;
@@ -2665,17 +2688,15 @@ class Admin extends CI_Controller
 				$driver_body = driver_body;
 
 				$sarathi_notify = $this->NotificationManager->sendNotification($sarathi_id, $sarathi_title, $sarathi_body, $image);
-				$driver_notify = $this->NotificationManager->sendNotification($driver_id, $driver_title, $driver_body, $image);					
+				$driver_notify = $this->NotificationManager->sendNotification($driver_id, $driver_title, $driver_body, $image);
 			}
-		} 
-
-		if($active && $recharge && $sarathi_notify && $driver_notify){
-			$this->response(['success' => true, 'message' =>  'Driver activated successfully'], 200);
 		}
-		else {
+
+		if ($active && $recharge && $sarathi_notify && $driver_notify) {
+			$this->response(['success' => true, 'message' =>  'Driver activated successfully'], 200);
+		} else {
 			$this->response(['success' => false, 'message' => 'Something went wrong'], 200);
 		}
-
 	}
 
 
@@ -3635,7 +3656,7 @@ class Admin extends CI_Controller
 
 			$data['recharge_history'] =  $this->Driver_model->get_recharge_history_of_driver($user_id);
 
-			
+
 			$this->load_header();
 			$this->load_sidebar();
 			$this->load->view('driver_details', $data);
@@ -4712,6 +4733,43 @@ class Admin extends CI_Controller
 			$this->response(["success" => true, "message" => "Found", "data" => $data], 200);
 		} else {
 			$this->response(["success" => false, "message" => "not found!"], 200);
+		}
+	}
+
+	public function get_app_version_list()
+	{
+		$this->init_admin_model();
+		$for_app = $this->input->post(param_for_app);
+		$data = $this->Admin_model->get_app_version_list($for_app);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "Found", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "not found!"], 200);
+		}
+	}
+
+	public function save_new_app_release(){
+
+		$for_app = $this->input->post(param_for_app);
+		$name = $this->input->post(param_name);
+		$play_store_link = $this->input->post(param_play_store_link);
+		$code = $this->input->post(param_code);
+		$skipable = $this->input->post(param_skipable);
+
+		$uid = UID_VERSION_PREFIX . time();
+
+		if (empty($for_app) || empty($name) || empty($play_store_link) || empty($code)) {
+			$this->response(["success" => false, "message" => "Fill all details"], 200);
+			return;
+
+		} else {
+			$this->init_admin_model();
+			$status = $this->Admin_model->save_new_app_release($uid, $for_app, $name, $play_store_link, $code, $skipable);
+			if ($status) {
+				$this->response(["success" => true, "message" => "New app version added successfully"], 200);
+			} else {
+				$this->response(["success" => false, "message" => "Something went wrong"], 200);
+			}
 		}
 	}
 }

@@ -17,8 +17,8 @@
                     <div class="d-flex align-items-center justify-content-end">
 
                         <!-- <button type="button" class="btn bgred ml-3 btnround" data-toggle="modal" data-target="#addNewUsr1" id="add_new">
-              Add New <i class="fa fa-plus ml-2"></i>
-            </button> -->
+                            Add New <i class="fa fa-plus ml-2"></i>
+                        </button> -->
 
                     </div>
                 </div>
