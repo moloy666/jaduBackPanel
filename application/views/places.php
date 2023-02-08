@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="col-lg-2">
-                            <button type="submit" class="btn btn-primary w-100 access_insert" id="btn_add_state" disabled>Add</button>
+                            <button type="submit" class="btn btn-primary w-100 access_insert" id="btn_add_state" disabled>Add State</button>
                         </div>
                         <div class="col-lg-2">
                             <button type="submit" class="btn btn-danger w-100 access_delete" id="btn_delete_state" disabled>Delete</button>
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="col-lg-2">
-                            <button type="submit" class="btn btn-primary w-100 access_insert" id="btn_add_district" disabled>Add</button>
+                            <button type="submit" class="btn btn-primary w-100 access_insert" id="btn_add_district" disabled>Add District</button>
                         </div>
                         <div class="col-lg-2">
                             <button type="submit" class="btn btn-danger w-100 access_delete" id="btn_delete_district" disabled>Delete</button>
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="col-lg-2">
-                            <button type="submit" class="btn btn-primary w-100 access_insert" id="btn_add_city" disabled>Add</button>
+                            <button type="submit" class="btn btn-primary w-100 access_insert" id="btn_add_city" disabled>Add City</button>
                         </div>
                         <div class="col-lg-2">
                             <button type="submit" class="btn btn-danger w-100 access_delete" id="btn_delete_city" disabled>Delete</button>

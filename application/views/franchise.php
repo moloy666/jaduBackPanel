@@ -100,6 +100,8 @@
                                     <input type="number" class="form-control" id="pincode" placeholder="Enter Pincode">
                                 </div>
                             </div>
+                             
+                            <!-- panel access list -->
                             
                             <div class="col-md-6">
                                 <div class="form-group">

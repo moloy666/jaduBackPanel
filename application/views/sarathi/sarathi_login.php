@@ -26,20 +26,36 @@
                     <input class="form-control" type="email" id="email" name="email" placeholder="Email" autocomplete="off">
                 </div>
             </div>
+
+            <div class="form-group" id="otp_box" style="display:none;">
+                <div class="input-group-icon right">
+                    <div class="input-icon"><i class="fa fa-envelope"></i></div>
+                    <input class="form-control" type="number" id="otp" name="otp" placeholder="Enter OTP" autocomplete="off">
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="input-group-icon right">
                     <div class="input-icon"><i class="fa fa-lock font-16"></i></div>
                     <input class="form-control" type="mobile" id="mobile" name="mobile" placeholder="Mobile">
                 </div>
             </div>
+
+
             <div class="form-group d-flex justify-content-between">
                 <label class="ui-checkbox ui-checkbox-info">
                     <input type="checkbox" id="remember_me" name="remember_me">
                     <span class="input-span"></span>Remember me</label>
             </div>
+
             <div class="form-group">
                 <button class="btn btn-info btn-block" type="submit">Login</button>
             </div>
+
+            <div class="form-group" id="box_verify" style="display:none;">
+                <button class="btn btn-info btn-block" type="submit">Send OTP</button>
+            </div>
+
             <span id="message" class="text-warning"></span>
         </form>
     </div>

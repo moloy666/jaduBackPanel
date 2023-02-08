@@ -357,6 +357,7 @@ define('table_packages', 'packages');
 define('table_notification', 'notifications');
 define('table_device_notification_data_firebase', 'device_notification_data_firebase');
 define('table_app_version', 'lists_app_verson');
+define('table_otp_list', 'otp_list');
 
 /////////////////////////////////////////////////////
 define('const_deleted', 'DELETED');
@@ -615,6 +616,7 @@ define('field_recharge_type', 'recharge_type');
 define('field_recharge_amount', 'recharge_amount');
 define('field_original_km', 'original_km');
 define('field_extra_km', 'extra_km');
+define('field_otp', 'otp');
 
 define('field_paid_to_user_id', 'paid_to_user_id');
 define('field_payment_status', 'payment_status');

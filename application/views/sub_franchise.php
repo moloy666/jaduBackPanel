@@ -111,6 +111,8 @@
                                 </div>
                             </div>
 
+                            <!-- panel access list -->
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <select class="form-control" id="admin_access_list" multiple>
@@ -526,9 +528,12 @@
                         get_user_request_permission();
 
                         $('#admin_access_list').multiselect();
+                        
                         $('#admin_access_list_input').attr('placeholder', 'Select Management');
                     } else {
-                        console.log(response);
+                        // console.log(response);
+                        get_panel_access_list();
+                        $('#table').dataTable();
                     }
 
                 },

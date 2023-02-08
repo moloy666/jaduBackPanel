@@ -408,11 +408,8 @@ class Admin extends CI_Controller
 				$data['ride_history'] = $this->Admin_model->get_customer_ride_history($specific_id);
 				$data['companion'] = 'Driver';
 			}
-			// $this->load_header();
-			// $this->load_sidebar();
-			// $this->load->view(view_ride_history, $data);
-			// $this->load_footer();
-
+			
+			
 			$name = 'ride_history_' . time();
 			$mpdf = new \Mpdf\Mpdf();
 			$html = $this->load->view(view_ride_history, $data, true);
@@ -1310,8 +1307,9 @@ class Admin extends CI_Controller
 				$this->response([key_success => false, key_message => "Name should contain minimum 3 characters"], 200);
 			} else {
 				$this->init_common_model();
-				$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users);
-				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
+				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_sarathi);
+				$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, $user_type_id);
+				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, $user_type_id);
 				if (!empty($mobile_exist)) {
 					$this->response([key_success => false, key_message => "This Number already exist for " . $mobile_exist->name], 200);
 					return;
@@ -1320,7 +1318,6 @@ class Admin extends CI_Controller
 					$this->response([key_success => false, key_message => "This Email already exist for " . $email_exist->name], 200);
 					return;
 				}
-				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_sarathi);
 				$this->init_sarathi_model();
 				$data = $this->Sarathi_model->add_sarathi_details($user_id, $sarathi_id, $gid, $user_type_id, $name, $email, $mobile, $subfranchise_id, $access, $panel_access);
 				if ($data) {
@@ -2009,8 +2006,11 @@ class Admin extends CI_Controller
 				$this->response([key_success => false, key_message => "Name should contain minimum 3 characters"], 200);
 			} else {
 				$this->init_common_model();
-				$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users);
-				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
+				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_franchise);
+
+				$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, $user_type_id);
+				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, $user_type_id);
+
 				if (!empty($mobile_exist)) {
 					$this->response([key_success => false, key_message => "This Number already exist for " . $mobile_exist->name], 200);
 					return;
@@ -2019,7 +2019,6 @@ class Admin extends CI_Controller
 					$this->response([key_success => false, key_message => "This Email already exist for " . $email_exist->name], 200);
 					return;
 				}
-				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_franchise);
 				$this->init_franchise_model();
 				$data = $this->Franchise_model->add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel_access, $address_data);
 				if ($data) {
@@ -2372,8 +2371,10 @@ class Admin extends CI_Controller
 				$this->response([key_success => false, key_message => "Name should contain minimum 3 characters"], 200);
 			} else {
 				$this->init_common_model();
-				$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users);
-				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
+				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_sub_franchise);
+
+				$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, $user_type_id);
+				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, $user_type_id);
 				if (!empty($mobile_exist)) {
 					$this->response([key_success => false, key_message => "This Number already exist for " . $mobile_exist->name], 200);
 					return;
@@ -2382,7 +2383,6 @@ class Admin extends CI_Controller
 					$this->response([key_success => false, key_message => "This Email already exist for " . $email_exist->name], 200);
 					return;
 				}
-				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_sub_franchise);
 				$this->init_sub_franchise_model();
 				$data = $this->Subfranchise_model->add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel_access, $address_data, $specific_id);
 				if ($data) {

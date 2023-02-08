@@ -44,7 +44,7 @@
                 var data = response.data;
                 $(".totalKmPurchased").text(data);
             } else {
-                console.log(response);
+                // console.log(response);
             }
         }
     });
@@ -64,7 +64,7 @@
                 let data =response.data;
                 $('.totalKmPurchaseToday').text(data);
             } else {
-                console.log(response);
+                // console.log(response);
             }
         }
     });
@@ -105,7 +105,7 @@
             load_driver_chart();
         },
         error: function(response) {
-            console.log(JSON.stringify(response));
+            console.log(response);
         }
     });
 

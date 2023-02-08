@@ -91,18 +91,14 @@ class Common_model extends CI_Model
 
 
 
-    public function is_this_value_exist($field_value, $field_name, $table)
+    public function is_this_value_exist($field_value, $field_name, $table, $user_type_id)
     {
-
-        // $this->db->select('user_type.name');
-        // $this->db->from($table);
-        // $this->db->join('user_type', $table.'.type_id = user_type.uid');
-        // $this->db->where('users.'.$field_name, $field_value);
 
         $this->db->select(table_user_type . '.' . field_name);
         $this->db->from($table);
         $this->db->join(table_user_type, $table . '.' . field_type_id . ' = ' . table_user_type . '.' . field_uid);
         $this->db->where(table_users . '.' . $field_name, $field_value);
+        $this->db->where('users.type_id', $user_type_id);
         $query = $this->db->get();
         $query = $query->result();
 

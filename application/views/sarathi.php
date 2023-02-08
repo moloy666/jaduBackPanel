@@ -477,16 +477,17 @@
 
             get_panel_access_list();
 
-
             $('#admin_access_list').multiselect();
             $('#admin_access_list_input').attr('placeholder', 'Select Management');
           } else {
             $('#table').dataTable();
-            console.log(response);
+            get_panel_access_list();
+
           }
         },
         error: function(response) {
-          console.log(response);
+          get_panel_access_list();
+          // console.log(response);
         }
       });
     }

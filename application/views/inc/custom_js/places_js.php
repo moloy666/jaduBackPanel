@@ -225,6 +225,7 @@
                     toast(response.message, "center");
                     display_country_name();
                     $('#common_modal').modal('hide');
+                    $('#name').val('');
                 } else {
                     toast(response.message, "center");
                 }

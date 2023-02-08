@@ -450,6 +450,21 @@ class Sarathi_model extends CI_Model
     }
 
 
+    public function get_user_details_on_condition($email){
+        $query = $this->db->where([field_email=>$email, field_type_id => 'user_sarathi'])
+        ->get(table_users);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0]:[];
+    }
 
+    public function add_otp_to_otp_list_table($user_id, $otp){
+        $data=[
+            field_otp=>$otp,
+            field_created_at=>$user_id
+        ];
+
+        $this->db->where(field_user_id, $user_id)->update(table_otp_list, $data);
+        return($this->db->affected_rows()==1)?true:false;
+    }
    
 }

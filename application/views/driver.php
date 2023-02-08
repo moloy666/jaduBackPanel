@@ -309,6 +309,7 @@
                         
                     } else {
                         console.log(response);
+                        $('#table').dataTable();
                     }
 
                 },

@@ -118,9 +118,73 @@ class Sarathi extends CI_Controller
         }
     }
 
+
+    public function send_otp_to_email(){
+
+    }
+
+
+    public function send_email($send_to, $subject, $body)
+    {
+        $result = $this->email->from("moloy@v-xplore.com", 'JaduRide')
+        ->to($send_to)->subject($subject)->message($body)->send();
+        return $result;
+    }
+
+    public function send_otp_to_sarathi()
+    {
+        $email = $this->input->post(param_email);
+        $this->init_sarathi_model();
+            
+        $user_details = $this->Sarathi_model->get_user_details_on_condition($email);
+        if (!empty($user_details['uid']) && !empty($user_details['email']))
+        {
+            $otp = mt_rand(1111, 9999);
+
+            $user_id = $user_details['uid'];
+
+            $is_added = $this->Sarathi_model->add_otp_to_otp_list_table($user_id, $otp);
+            if ($is_added){
+                $send_to = $user_details['email'];
+                $subject = "JaduRide Login OTP: ".$otp;
+                $message = "<p>
+                                Hi, User <br/>
+                                Your JaduRide Login OTP is $otp. <br/>
+                                <i>Note: Do not share this email with anyone.</i> <br/><br/>
+                                Thanks <br/>
+                                Regards <br/>
+                                <a href='".base_url()."'>JaduRide</a>
+                            </p>";
+                $is_send = $this->send_email($send_to, $subject, $message);
+                if($is_send){
+                    $this->response(['success'=>true, 'message'=>'OTP Send Successfully'], 200);
+                }
+                else{
+                    $this->response(['success'=>false, 'message'=>'Something went wrong'], 200);
+                }              
+            }
+            else{
+                $this->response(['success'=>true, 'message'=>'Something went wrong'], 200);
+            }
+        }else{
+            $this->response(['success'=>true, 'message'=>'You are not registered'], 200);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function authenticate_sarathi()
     {
-
         $email = $this->input->post(param_email);
         $mobile = $this->input->post(param_mobile);
 

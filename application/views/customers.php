@@ -237,6 +237,8 @@
                         get_panel_access_list();
                     } else {
                         $('#table').dataTable();
+                        get_panel_access_list();
+
                     }
                 },
                 error: function(data) {
