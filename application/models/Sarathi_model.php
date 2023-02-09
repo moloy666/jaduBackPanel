@@ -460,11 +460,17 @@ class Sarathi_model extends CI_Model
     public function add_otp_to_otp_list_table($user_id, $otp){
         $data=[
             field_otp=>$otp,
-            field_created_at=>$user_id
+            field_created_at=>date(field_date)
         ];
 
         $this->db->where(field_user_id, $user_id)->update(table_otp_list, $data);
         return($this->db->affected_rows()==1)?true:false;
+    }
+
+    public function check_otp_matched($user_id, $otp){
+        $query = $this->db->where([field_user_id=>$user_id, field_otp=>$otp])->get(table_otp_list);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0]:[];
     }
    
 }

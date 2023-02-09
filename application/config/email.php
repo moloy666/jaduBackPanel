@@ -6,8 +6,8 @@
  'smtp_port' => '465',
  'smtp_auth' => true,
  'smtp_user' => 'moloy@v-xplore.com',
-'smtp_pass' => 'my office password 666',
+ 'smtp_pass' => 'moloyPRADHAN20998',
  'mailtype' => 'html',
  'charset' => 'utf-8',
  'newline' => "\r\n"
- ];
+];

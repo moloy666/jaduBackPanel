@@ -105,6 +105,7 @@ class Sarathi extends CI_Controller
     {
         parent::__construct();
         date_default_timezone_set(field_location);
+
     }
 
     public function index()
@@ -119,11 +120,6 @@ class Sarathi extends CI_Controller
     }
 
 
-    public function send_otp_to_email(){
-
-    }
-
-
     public function send_email($send_to, $subject, $body)
     {
         $result = $this->email->from("moloy@v-xplore.com", 'JaduRide')
@@ -135,7 +131,6 @@ class Sarathi extends CI_Controller
     {
         $email = $this->input->post(param_email);
         $this->init_sarathi_model();
-            
         $user_details = $this->Sarathi_model->get_user_details_on_condition($email);
         if (!empty($user_details['uid']) && !empty($user_details['email']))
         {
@@ -155,12 +150,16 @@ class Sarathi extends CI_Controller
                                 Regards <br/>
                                 <a href='".base_url()."'>JaduRide</a>
                             </p>";
+
+                $this->load->config('email');
+                $this->load->library('email');
+
                 $is_send = $this->send_email($send_to, $subject, $message);
                 if($is_send){
                     $this->response(['success'=>true, 'message'=>'OTP Send Successfully'], 200);
                 }
                 else{
-                    $this->response(['success'=>false, 'message'=>'Something went wrong'], 200);
+                    $this->response(['success'=>false, 'message'=>'Failed to send otp to '.$user_details['email']], 200);
                 }              
             }
             else{
@@ -171,15 +170,34 @@ class Sarathi extends CI_Controller
         }
     }
 
+    public function verify_otp_for_sarathi(){
+        $email = $this->input->post('email');
+        $otp = $this->input->post('otp');
 
+        if(empty($email) || empty($otp)){
+            $this->response([key_success => false, key_message => 'Enter Your OTP'], 200);
+            return;
+        }
 
+        $this->init_sarathi_model();
+        $user_details = $this->Sarathi_model->get_user_details_on_condition($email);
+        $user_id = $user_details['uid'];     
 
+        $data =  $this->Sarathi_model->check_otp_matched($user_id, $otp);
+        if(!empty($data)){
+            $this->session->set_userdata(session_sarathi_name, $user_details['name']);
+            $this->session->set_userdata(session_sarathi_type_id, $user_details['type_id']);
+            $this->session->set_userdata(session_sarathi_user_id, $user_details['uid']);
+            $this->session->set_userdata(session_sarathi_profile_image, $user_details['profile_image']);
+            $this->session->set_userdata(session_sarathi_status, $user_details['status']);
 
+            $this->response([key_success => true, key_message => 'Login Successfull', key_redirect_to => base_url(WEB_PORTAL_SARATHI . '/dashboard')], 200);
+        }
+        else{
+            $this->response([key_success => false, key_message => 'Otp not matched'], 200);
+        }
 
-
-
-
-
+    }
 
 
 
