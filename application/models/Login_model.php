@@ -122,7 +122,7 @@ class Login_model extends CI_Model
 
     public function get_sarathi_details_on_condition($email, $mobile){
 
-        $this->db->where(['email'=> $email, 'mobile'=> $mobile])->where_not_in(field_status, const_deleted);
+        $this->db->where(['email'=> $email, 'mobile'=> $mobile, 'type_id'=>'user_sarathi'])->where_not_in(field_status, const_deleted);
         $query = $this->db->get('users');
         $query = $query->result();
         return (!empty($query)) ? $query[0] : null;
@@ -163,5 +163,4 @@ class Login_model extends CI_Model
         $query=$query->result_array();
         return(!empty($query))?$query[0][field_status]: const_deactive;
     }
-
 }

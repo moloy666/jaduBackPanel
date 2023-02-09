@@ -42,7 +42,7 @@ class Sarathi_model extends CI_Model
     public function condition_to_get_sarathi()
     { // display sarathi list
 
-        $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status . ',' . table_sarathi . '.' . field_subfranchise_id);
+        $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status . ',' . table_sarathi . '.' . field_subfranchise_id.', sarathi.refferal_code');
         $this->db->from(table_users);
         $this->db->join(table_sarathi, table_users . '.' . field_uid . '=' . table_sarathi . '.' . field_user_id);
         $this->db->where_not_in(table_users . '.' . field_status, const_deleted);
@@ -167,7 +167,7 @@ class Sarathi_model extends CI_Model
         }
     }
 
-    public function add_sarathi_details($user_id, $sarathi_id, $gid, $user_type_id, $name, $email, $mobile, $subfranchise_id, $access, $panel)
+    public function add_sarathi_details($user_id, $sarathi_id, $gid, $user_type_id, $name, $email, $mobile, $subfranchise_id, $access, $panel, $refferal_code)
     {
         $data = [
             field_uid => $user_id,
@@ -183,6 +183,7 @@ class Sarathi_model extends CI_Model
             field_uid => $sarathi_id,
             field_user_id => $user_id,
             field_subfranchise_id => $subfranchise_id,
+            'refferal_code'=>$refferal_code,
             field_created_at => date(field_date),
             field_modified_at => date(field_date)
         ];
@@ -346,7 +347,7 @@ class Sarathi_model extends CI_Model
 
     public function get_sarathi_details_by_user_id($user_id)
     {
-        $query = $this->db->select('u.uid as user_id, u.name, u.email, u.mobile, u.status, s.sub_franchise_id')
+        $query = $this->db->select('u.uid as user_id, u.name, u.email, u.mobile, u.status, s.sub_franchise_id, s.refferal_code')
             ->from('users as u')->join('sarathi as s', 'u.uid=s.user_id')
             ->where('u.uid', $user_id)
             ->where_not_in('u.status', const_deleted)->get();
@@ -472,5 +473,12 @@ class Sarathi_model extends CI_Model
         $query = $query->result_array();
         return(!empty($query))?$query[0]:[];
     }
-   
+
+    public function get_sarathi_refferral_code($sarathi_id){
+        $query = $this->db->select('refferal_code')
+        ->where(field_uid, $sarathi_id)->get(table_sarathi);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0]['refferal_code']: '---';
+    }
+ 
 }

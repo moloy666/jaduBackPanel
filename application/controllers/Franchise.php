@@ -339,7 +339,7 @@ class Franchise extends CI_Controller
 		if ($this->is_user_logged_in()) {
 			$this->init_driver_model();
 			$this->init_admin_model();
-			
+
 			$data['data'] = $this->Driver_model->display_driver_details($user_id);
 			$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
 
@@ -761,11 +761,11 @@ class Franchise extends CI_Controller
 			$this->init_franchise_model();
 			// $status = $this->Franchise_model->get_access_permission($user_id, access_ride_rental);
 			// if ($status == const_active) {
-				$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
-				$this->load_header();
-				$this->load_sidebar();
-				$this->load->view('franchise/fr_recharge_history', $data);
-				$this->load_footer();
+			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('franchise/fr_recharge_history', $data);
+			$this->load_footer();
 			// } else {
 			// 	$user_type = ($this->uri->segment(1));
 			// 	redirect(base_url($user_type . '/dashboard'));
@@ -833,27 +833,35 @@ class Franchise extends CI_Controller
 			$type = $this->Login_model->get_user_type_id_by_user_type_name($user_type_name);
 			$type_id = $type->uid;
 			$this->session->set_userdata(session_franchise_user_type, $user_type_name);		// name => franchise || subfranchise
+
+
 			if (!empty($email) && !empty($password)) {
-				$user_details = $this->Login_model->get_franchise_details_on_condition($email, $password, $type_id, $table);
-				if (!empty($user_details)) {
-
-					$this->session->set_userdata(session_franchise_type_id, $user_details->type_id);
-					$this->session->set_userdata(session_franchise_table, $table);
-					$this->session->set_userdata(session_franchise_name, $user_details->name);
-					$this->session->set_userdata(session_franchise_user_id, $user_details->uid);
-					$this->session->set_userdata(session_franchise_profile_image, $user_details->profile_image);
-					$this->session->set_userdata(session_franchise_status, $user_details->status);
-
-
-					if ($this->session->userdata(session_franchise_type_id) == "user_franchise") {
-
-						$this->response([key_success => true, key_message => "User authentication successfull", key_redirect_to => base_url('franchise/dashboard')], 200);
-					}
-					if ($this->session->userdata(session_franchise_type_id) == 'user_sub_franchise') {
-						$this->response([key_success => true, key_message => "User authentication successfull", key_redirect_to => base_url('subfranchise/dashboard')], 200);
-					}
+				$this->init_common_model();
+				$currentStatus = $this->Common_model->checkUserCurrentStatus(["email" => $email], $type_id);
+				if ($currentStatus == const_deleted) {
+					$this->response([key_success => false, key_message => "Dear User Your Account Is Deleted By Administrator, Please Contact With Them"], 200);
 				} else {
-					$this->response([key_success => false, key_message => "Invaild Email or Password!"], 200);
+					$user_details = $this->Login_model->get_franchise_details_on_condition($email, $password, $type_id, $table);
+					if (!empty($user_details)) {
+
+						$this->session->set_userdata(session_franchise_type_id, $user_details->type_id);
+						$this->session->set_userdata(session_franchise_table, $table);
+						$this->session->set_userdata(session_franchise_name, $user_details->name);
+						$this->session->set_userdata(session_franchise_user_id, $user_details->uid);
+						$this->session->set_userdata(session_franchise_profile_image, $user_details->profile_image);
+						$this->session->set_userdata(session_franchise_status, $user_details->status);
+
+
+						if ($this->session->userdata(session_franchise_type_id) == "user_franchise") {
+
+							$this->response([key_success => true, key_message => "User authentication successfull", key_redirect_to => base_url('franchise/dashboard')], 200);
+						}
+						if ($this->session->userdata(session_franchise_type_id) == 'user_sub_franchise') {
+							$this->response([key_success => true, key_message => "User authentication successfull", key_redirect_to => base_url('subfranchise/dashboard')], 200);
+						}
+					} else {
+						$this->response([key_success => false, key_message => "Invaild Email or Password! ".$currentStatus], 200);
+					}
 				}
 			} else {
 				$this->response([key_success => false, key_message => "Email or Password is not given!"], 400);
@@ -1323,23 +1331,23 @@ class Franchise extends CI_Controller
 	}
 
 	public function download_recharge_history($user_id)
-    {
-        $this->init_sarathi_model();
-        $data['sarathi'] = $this->Sarathi_model->get_user_name_by_id($user_id);
-        $data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
+	{
+		$this->init_sarathi_model();
+		$data['sarathi'] = $this->Sarathi_model->get_user_name_by_id($user_id);
+		$data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
 		$data['user_type'] = $this->Sarathi_model->get_user_type_by_user_id($user_id);
 
-        // $this->load_header();
-        // $this->load_sidebar();
-        // $this->load->view('sarathi/download_recharge_history', $data);
-        // $this->load_footer();
+		// $this->load_header();
+		// $this->load_sidebar();
+		// $this->load->view('sarathi/download_recharge_history', $data);
+		// $this->load_footer();
 
-        $name = 'recharge_history_' . time();
-        $mpdf = new \Mpdf\Mpdf();
-        $html = $this->load->view('sarathi/download_recharge_history', $data, true);
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($name . ".pdf", "D");
-    }
+		$name = 'recharge_history_' . time();
+		$mpdf = new \Mpdf\Mpdf();
+		$html = $this->load->view('sarathi/download_recharge_history', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output($name . ".pdf", "D");
+	}
 
 	// public function display_driver_details($user_id)
 	// {

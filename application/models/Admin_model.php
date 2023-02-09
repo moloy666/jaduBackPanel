@@ -752,7 +752,7 @@ class Admin_model extends CI_Model
         return (!empty($query)) ? $query[0][field_value] : [];
     }
 
-    
+
     public function get_driver_ride_history($specific_id)
     {
         $sql = "SELECT rst.name, rst.image, 
@@ -764,7 +764,7 @@ class Admin_model extends CI_Model
             LEFT JOIN ride_service_type rst ON rst.uid = rn.fareServiceTypeId
             WHERE rn.driver_id = '$specific_id' AND ride_status = 'completed' 
             ";
-            
+
 
         $query = $this->db->query($sql);
         $query = $query->result_array();
@@ -772,7 +772,7 @@ class Admin_model extends CI_Model
         foreach ($query as $key => $value) {
             $query[$key]['image'] = base_url() . $value['image'];
             $query[$key]['customer'] = $this->get_user_name_by_specific_id($value['customerId'], $value['serviceId'], 'customer');
-         
+
             $locationData = $this->decodeLocations($value['origin'], $value['destination'], $value['waypoints'], $value['locationText']);
 
             unset($query[$key]['origin']);
@@ -808,11 +808,12 @@ class Admin_model extends CI_Model
             unset($query[$key]['fare']);
         }
 
-        return (!empty($query))?$query:[];
+        return (!empty($query)) ? $query : [];
     }
 
 
-    private function decodeLocations($origin, $destination, $waypoints, $locationText){
+    private function decodeLocations($origin, $destination, $waypoints, $locationText)
+    {
         $originLatLng = (array)json_decode($origin);
 
         $destinationLatLng = (array)json_decode($destination);
@@ -873,50 +874,108 @@ class Admin_model extends CI_Model
 
     private function get_user_name_by_specific_id($specific_id, $service_id, $user_type)
     {
-        if($user_type == 'customer' && $service_id!='SERVICE_HOTEL'){
+        if ($user_type == 'customer' && $service_id != 'SERVICE_HOTEL') {
             $this->db->select('u.name, u.mobile, u.uid as user_id')
-            ->from('users as u')
-            ->join(table_customer.' as c', 'c.user_id = u.uid')
-            ->where('c.uid', $specific_id);
+                ->from('users as u')
+                ->join(table_customer . ' as c', 'c.user_id = u.uid')
+                ->where('c.uid', $specific_id);
             $query = $this->db->get();
             $query = $query->result_array();
-        }
-        else if(($user_type == 'customer') && $service_id=='SERVICE_HOTEL'){
+        } else if (($user_type == 'customer') && $service_id == 'SERVICE_HOTEL') {
             $query = $this->db->select('name, mobile')
-            ->where('uid', $specific_id)->get('hotel');
+                ->where('uid', $specific_id)->get('hotel');
             $query = $query->result_array();
-        }     
-        
-        $default=[
-            "name"=>"____",
-            "mobile"=>""
+        }
+
+        $default = [
+            "name" => "____",
+            "mobile" => ""
         ];
 
-        return (!empty($query))?$query[0] : $default;
+        return (!empty($query)) ? $query[0] : $default;
+    }
+
+    public function display_customer_ride_history($specific_id)
+    {
+        $sql = "SELECT rst.name, rst.image, 
+        rn.uid id, rn.service_id serviceId, rn.customer_id customerId, rn.driver_id driverId, rn.fare, 
+        rn.origin, rn.destination, rn.waypoints, rn.locationText, rn.rideStartDateTime tripStartTime, rn.rideEndDateTime tripEndTime,
+        s.name serviceName, s.image serviceImage, DATE(rn.created_at) AS ride_date, rn.service_id AS serviceId
+        FROM ride_normal rn 
+        LEFT JOIN services s ON rn.service_id = s.uid
+        LEFT JOIN ride_service_type rst ON rst.uid = rn.fareServiceTypeId
+        WHERE rn.customer_id = '$specific_id' AND ride_status = 'completed' 
+        ";
+
+        $query = $this->db->query($sql);
+        $query = $query->result_array();
+
+        foreach ($query as $key => $value) {
+            $query[$key]['image'] = base_url() . $value['image'];
+            $query[$key]['driver'] = $this->get_user_name_by_specific_id($value['driverId'], $value['serviceId'], 'driver');
+
+            $locationData = $this->decodeLocations($value['origin'], $value['destination'], $value['waypoints'], $value['locationText']);
+
+            unset($query[$key]['origin']);
+            unset($query[$key]['destination']);
+            unset($query[$key]['waypoints']);
+            unset($query[$key]['locationText']);
+            unset($query[$key]['customerId']);
+            unset($query[$key]['driverId']);
+
+            $query[$key]['origin'] = $locationData['origin'];
+            $query[$key]['destinations'] = $locationData['destinations'];
+
+            $query[$key]['service'] = [
+                'id' => $value['serviceId'],
+                'name' => $value['serviceName'],
+                'image' => base_url() . $value['serviceImage']
+            ];
+
+            unset($query[$key]['serviceId']);
+            unset($query[$key]['serviceName']);
+            unset($query[$key]['serviceImage']);
+
+            $query[$key]['ride'] = [
+                'id' => $value['id'],
+                'type' => $value['name'],
+                'typeImage' => base_url() . $value['image'],
+                'fare' => $value['fare']
+            ];
+
+            unset($query[$key]['id']);
+            unset($query[$key]['name']);
+            unset($query[$key]['image']);
+            unset($query[$key]['fare']);
+        }
+
+        return (!empty($query)) ? $query : [];
     }
 
     public function get_customer_ride_history($specific_id)
     {
         $this->db->select('driver_id as companion_id, payment_mode, amount, created_at');
         $this->db->where('customer_id', $specific_id);
-        $query = $this->db->get('history_ride_transactions');
+        $query = $this->db->get(table_history_ride_transactions);
         $query = $query->result_array();
         foreach ($query as $i => $val) {
             $companion_id = $val['companion_id'];
             $query[$i]['companion_name'] = $this->get_driver_name_by_specific_id($companion_id);
+
         }
         return (!empty($query)) ? $query : [];
     }
 
+
     private function get_driver_name_by_specific_id($companion_id)
     {
-        $this->db->select('u.name')
+        $this->db->select('u.name, u.mobile')
             ->from('users as u')
             ->join('driver as d', 'd.user_id = u.uid')
             ->where('d.uid', $companion_id);
         $query = $this->db->get();
         $query = $query->result_array();
-        return (!empty($query)) ? $query[0]['name'] : "_____";
+        return (!empty($query)) ? $query[0] : "_____";
     }
 
     public function get_name_by_user_id($user_id)
@@ -1875,47 +1934,48 @@ class Admin_model extends CI_Model
     }
 
 
-    public function recharge_history_sf($user_id){
-        $query = $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ','. field_paid_to_user_id . ','. field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status . ',' . field_note . ',' . field_payment_id)
+    public function recharge_history_sf($user_id)
+    {
+        $query = $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ',' . field_paid_to_user_id . ',' . field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status . ',' . field_note . ',' . field_payment_id)
 
-        ->where(field_user_id, $user_id)
-        ->get(table_recharge_history);
+            ->where(field_user_id, $user_id)
+            ->get(table_recharge_history);
 
         $query = $query->result_array();
         $final_arr = [];
         foreach ($query as $key => $value) {
             $paid_to_user_name = "";
-            if(!empty($value[field_paid_to_user_id])){
+            if (!empty($value[field_paid_to_user_id])) {
                 $paid_to_user_name = $this->get_user_name_by_id($value[field_paid_to_user_id]);
             }
-            if($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID){
+            if ($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID) {
 
                 $rechargeBy = '';
-                if( $value[field_note] != NULL || !empty($value[field_note]) ){
+                if ($value[field_note] != NULL || !empty($value[field_note])) {
                     $rechargeBy = $value[field_note];
-                }else if($value[field_payment_id] != NULL){
+                } else if ($value[field_payment_id] != NULL) {
                     $rechargeBy = 'Self Recharge';
-                }else{
+                } else {
                     $rechargeBy = 'Recharge For Other';
                 }
 
                 $final_arr[] = [
                     key_recharge_type => 'Recharge Other',
                     key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_TO_DRIVER)),
-                    key_price=> $value[field_recharge_amount],
+                    key_price => $value[field_recharge_amount],
                     key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
-                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN . ' ' .$value[field_recharge_amount],
+                    key_description => 'To ' . $paid_to_user_name . ' for ' . STATIC_RUPEE_SIGN . ' ' . $value[field_recharge_amount],
                     key_date => date("d\nF", strtotime($value[field_created_at])),
                     key_color_code => color_recharge_paid,
                     key_recharge_note => ucwords($rechargeBy)
                 ];
-            }else{
+            } else {
                 $final_arr[] = [
                     key_recharge_type => STATIC_RECHARGE_FOR_SELF,
                     key_transaction_for => strtoupper(str_replace(' ', '_', STATIC_RECHARGE_FOR_SELF)),
                     key_price => $value[field_recharge_amount],
                     key_purchesed_km => (string)($value[field_original_km] + $value[field_extra_km]),
-                    key_description => 'Recharge for '.  STATIC_RUPEE_SIGN . ' ' .$value[field_recharge_amount],
+                    key_description => 'Recharge for ' .  STATIC_RUPEE_SIGN . ' ' . $value[field_recharge_amount],
                     key_date => date("d\nF", strtotime($value[field_created_at])),
                     key_color_code => color_recharge_self,
                     key_recharge_note => STATIC_RECHARGE_FOR_SELF
@@ -1923,60 +1983,62 @@ class Admin_model extends CI_Model
             }
         }
         return (!empty($query)) ? $final_arr : [];
-
     }
 
-    public function get_user_name_by_id($user_id){
+    public function get_user_name_by_id($user_id)
+    {
         $this->db->select(field_name);
         $this->db->limit(1);
         $this->db->where(field_uid, $user_id);
         $query = $this->db->get(table_users);
         $query = $query->result_array();
         $query = (!empty($query)) ? $query[0] : "";
-        return (!empty($query)) ? $query[field_name] : "";       
+        return (!empty($query)) ? $query[field_name] : "";
     }
 
-    public function get_app_version_list($for_app){
+    public function get_app_version_list($for_app)
+    {
 
-        if(!empty($for_app)){
+        if (!empty($for_app)) {
             $this->db->where(field_version_for, $for_app);
             $this->db->order_by(field_id, 'desc');
             $query = $this->db->get(table_app_version);
             $query = $query->result_array();
-        }
-        else{
+        } else {
             $sarathi = $this->get_latest_app_version('sarathi');
             $driver = $this->get_latest_app_version('driver');
             $customer = $this->get_latest_app_version('customer');
 
             $query = [
-                '0'=> $sarathi,
-                '1'=>$driver,
-                '2'=>$customer
+                '0' => $sarathi,
+                '1' => $driver,
+                '2' => $customer
             ];
         }
-        return(!empty($query))?$query:[];
+        return (!empty($query)) ? $query : [];
     }
 
-    private function get_latest_app_version($for_app){
+    private function get_latest_app_version($for_app)
+    {
         $query = $this->db->where(field_version_for, $for_app)
-        ->order_by(field_id, 'DESC')->get(table_app_version);
+            ->order_by(field_id, 'DESC')->get(table_app_version);
         $query = $query->result_array();
-        return (!empty($query))?$query[0]:[];
+        return (!empty($query)) ? $query[0] : [];
     }
 
 
-    public function save_new_app_release($uid, $for_app, $name, $play_store_link, $code, $skipable){
-        $data=[
-            field_uid=>$uid,
-            field_version_for=>$for_app,
-            field_name =>$name,
-            field_play_store_link=>$play_store_link,
-            field_code=>$code,
-            field_skipable=>$skipable
+    public function save_new_app_release($uid, $for_app, $name, $play_store_link, $code, $skipable)
+    {
+        $data = [
+            field_uid => $uid,
+            field_version_for => $for_app,
+            field_name => $name,
+            field_play_store_link => $play_store_link,
+            field_code => $code,
+            field_skipable => $skipable
         ];
 
         $this->db->insert(table_app_version, $data);
-        return($this->db->affected_rows()==1)?true:false;
+        return ($this->db->affected_rows() == 1) ? true : false;
     }
 }

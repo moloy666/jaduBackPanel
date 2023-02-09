@@ -145,12 +145,11 @@
                         console.log(data)
                     },
                     success: function(data) {
-                        // console.log(data);
                         if (data.success) {
                             location.href = data.redirect_to;
                         } else {
-                            // console.log(data.message);
-                            $('#message').html(data.message);
+                            // $('#message').html(data.message);
+                            toast(data.message);
                         }
                     }
                 });

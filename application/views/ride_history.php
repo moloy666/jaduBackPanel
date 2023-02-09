@@ -55,39 +55,45 @@
                         </thead>
                         <tbody class="text-center">
                             <?php
-                            foreach ($ride_history as $i => $data) { 
-                                if(empty($data['customer']['name'])) $data['customer']['name']='-';
-                                if(empty($data['customer']['mobile'])) $data['customer']['mobile']='-';
+                            if (!empty($ride_history)) {
+
+                                foreach ($ride_history as $i => $data) {
+                                    if (empty($data['customer']['name'])) $data['customer']['name'] = '-';
+                                    if (empty($data['customer']['mobile'])) $data['customer']['mobile'] = '-';
                                 ?>
-                                <tr>
-                                    <td class="text-center"><?= $i + 1 ?></td>
+                                    <tr>
+                                        <td class="text-center"><?= $i + 1 ?></td>
 
-                                    <td class="text-center title">
-                                        <div>
-                                            <?= ucwords($data['customer']['name']) ?>
-                                            <?= $data['customer']['mobile'] ?>
-                                        </div>
+                                        <td class="text-center title">
+                                            <div>
+                                                <?= ucwords($data['customer']['name']) ?>
+                                                <?= $data['customer']['mobile'] ?>
+                                            </div>
 
-                                    </td>
-                                    <td class="text-center"><?= ucwords($data['service']['name']) ?></td>
-                                    <td class="text-center"><?= ucwords($data['ride']['type']) ?></td>
-                                    <td class="text-center"><?= '₹ ' . $data['ride']['fare'] ?></td>
-                                    <td class="text-center">
-                                        <div>
-                                            <?= $data['origin']['address'] ?>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div>
-                                            <?= $data['destinations'][0]['address'] ?>
-                                        </div>
-                                    </td>
+                                        </td>
+                                        <td class="text-center"><?= ucwords($data['service']['name']) ?></td>
+                                        <td class="text-center"><?= ucwords($data['ride']['type']) ?></td>
+                                        <td class="text-center"><?= '₹ ' . $data['ride']['fare'] ?></td>
+                                        <td class="text-center">
+                                            <div>
+                                                <?= $data['origin']['address'] ?>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div>
+                                                <?= $data['destinations'][0]['address'] ?>
+                                            </div>
+                                        </td>
 
-                                    <td class="text-center nowrap"><?= $data['ride_date'] ?></td>
-                                </tr>
-
+                                        <td class="text-center nowrap"><?= $data['ride_date'] ?></td>
+                                    </tr>
                             <?php
+                                }
                             }
+                            else{
+                                echo"<tr><td colspan='8'>No Record Avaiable</tr>";
+                            }
+
                             ?>
                         </tbody>
                     </table>

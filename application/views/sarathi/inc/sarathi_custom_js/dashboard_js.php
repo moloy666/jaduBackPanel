@@ -149,4 +149,24 @@
             // console.log(response);
         }
     });
+
+    $.ajax({
+        type: "POST",
+        url: "<?= base_url('administrator/get_sarathi_refferral_code') ?>",
+        data: {
+            "id": $('#sarathi_id').val()
+        },
+        error: function(response) {
+            console.log(response);
+        },
+        success: function(response) {
+            if (response.success) {
+                var data = response.data;
+                $(".refferal_code").text(data);
+            } else {
+                // console.log(response);
+            }
+        }
+    });
+
 </script>

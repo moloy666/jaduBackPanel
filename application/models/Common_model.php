@@ -864,4 +864,42 @@ class Common_model extends CI_Model
         $this->db->update($table_name, $data);
         return ($this->db->affected_rows() == 1) ? true : false;
     }
+
+    public function checkUserCurrentStatus($authConst, $userType){
+        // $authConst = [
+        //     "mobile" => "",
+        //     "email" => ""
+        // ];
+
+        // UNKNOWN
+        // pending
+        // ACTIVE
+        // DEACTIVE
+
+        $sql = "SELECT status FROM users WHERE ";
+        if( array_key_exists("email", $authConst) ){
+            $sql .= "email = '" .$authConst['email'] ."' ";
+        }else if(array_key_exists("mobile", $authConst)){
+            $sql .= "mobile = '" .$authConst['mobile'] ."' ";
+        }     
+        $sql .= "AND type_id = '{$userType}'" ;
+
+        $query = $this->db->query($sql);
+        $query = $query->result_array();
+
+        if(empty($query)) return "UNKNOWN";
+
+        return $query[0]['status'];       
+    }
+
+    function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
 }

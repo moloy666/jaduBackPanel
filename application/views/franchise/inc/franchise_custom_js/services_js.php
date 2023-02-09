@@ -6,6 +6,7 @@
 <script>
     display_service_type();
     get_panel_access_list();
+
     // display service names
     function display_service_type() {
         $.ajax({
@@ -15,6 +16,7 @@
                 // console.log(response);
             },
             success: function(response) {
+                get_panel_access_list();
                 // console.log(response);
                 if (response.success) {
                     var data = response.data;
@@ -283,23 +285,23 @@
         });
     });
 
-    $.ajax({
-        type: "GET",
-        url: "<?= base_url('admin/get_specific_id') ?>",
-        error: function(response) {
-            console.log(response);
-        },
-        success: function(response) {
-            // console.log(response);
-            var data = response.data;
-            $('#specific_id').val(data);
-        }
-    });
+    // $.ajax({
+    //     type: "GET",
+    //     url: "<?= base_url('admin/get_specific_id') ?>",
+    //     error: function(response) {
+    //         console.log(response);
+    //     },
+    //     success: function(response) {
+    //         // console.log(response);
+    //         var data = response.data;
+    //         $('#specific_id').val(data);
+    //     }
+    // });
 
     function get_panel_access_list() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('administrator/get_panel_access_list') ?>",
+            url: "<?= base_url(WEB_PORTAL_FRANCHISE.'/get_panel_access_list') ?>",
             error: function(response) {
                 console.log(response);
             },

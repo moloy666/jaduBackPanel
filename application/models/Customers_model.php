@@ -26,6 +26,7 @@ class Customers_model extends CI_Model
             $this->db->from('customer_new as c');
             $this->db->join('users as u', 'u.uid = c.user_id');
             $this->db->where('u.status', const_active);
+            // $this->db->order_by('c.id', 'desc');
             $this->db->get();
             return $this->db->affected_rows();
         }

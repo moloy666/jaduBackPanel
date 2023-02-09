@@ -97,6 +97,15 @@ foreach ($sarathi_data as $data) {
                 </div>
             </div>
 
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-warning color-white widget-stat">
+                    <div class="ibox-body dashboard-card">
+                        <div class="m-b-5">Refferal Code</div>
+                        <h2 class="m-b-5 font-strong refferal_code">0</h2>
+                    </div>
+                </div>
+            </div>
+
 
 
         </div>

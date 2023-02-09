@@ -531,7 +531,7 @@
             "panel_list": panel_list
           },
           success: function(data) {
-            console.log(data);
+            // console.log(data);
             if (data.success) {
               toast(data.message, "center");
               $('#close_add_modal').click();

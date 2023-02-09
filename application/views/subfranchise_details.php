@@ -39,6 +39,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
+                                <th class="text-center">Refferal Code</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -402,6 +403,7 @@
                         <td class='title'>${sarathi[i].name}</td>
                         <td>${sarathi[i].email}</td>
                         <td>${sarathi[i].mobile}</td>
+                        <td>${sarathi[i].refferal_code}</td>
                         <td><label class="switch">
                         <input type="checkbox"  ${user_status} onclick="status(this, '${sarathi[i].user_id}')" class="access_status_change" disabled>
                         <span class="slider round"></span></label>

@@ -429,7 +429,9 @@
                         get_panel_access_list();
 
                     } else {
-                        console.log(subfranchise);
+                        // console.log(subfranchise);
+                        $('#table').dataTable();
+
                     }
 
                 },

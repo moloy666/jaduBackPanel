@@ -32,8 +32,9 @@
                             <tr>
                                 <th class="text-center">#</th>
                                 <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Refferal Code</th>
                                 <th class="text-center">Sub Franchise</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Actions</th>
@@ -45,14 +46,15 @@
                             foreach ($sarathi_data as $i => $value) {
 
                                 if (!empty($value)) { ?>
-                                    <tr id="row_<?=$value[0]['user_id']?>">
+                                    <tr id="row_<?= $value[0]['user_id'] ?>">
                                         <td class="text-center"><?= $i + 1 ?></td>
 
                                         <td class="title"><a href="<?= base_url($this->session->userdata(session_franchise_table) . "/saathi/driver/") ?><?= $value[0]['user_id'] ?>"><?= $value[0]['name'] ?></a></td>
 
                                         <td class="text-center"><?= $value[0]['mobile'] ?></td>
                                         <td class="text-center"><?= $value[0]['email'] ?></td>
-                                        <td class="text-center title" ><?= $value[0]['subfranchise']['name'] ?></td>
+                                        <td class="text-center"><?= $value[0]['refferal_code'] ?></td>
+                                        <td class="text-center title"><?= $value[0]['subfranchise']['name'] ?></td>
                                         <td class="text-center">
                                             <label class="switch">
                                                 <input type="checkbox" <?= ($value[0]['status'] == const_active) ? "checked" : "" ?> class="access_status_change" data="$<?= $value[0]['user_id'] ?>" onclick="status(this, '<?= $value[0]['user_id'] ?>')" disabled>
@@ -85,7 +87,6 @@
 
                             <?php
                                 } else {
-                                    
                                 }
                             } ?>
 
@@ -139,22 +140,35 @@
                 <div class="modal-body">
                     <form id="add_data_form">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select class="form-control title" id="select_subfranchise">
-                                        <option value="0">Select Management </option>
-                                        <option value="0">Role Management </option>
-                                        <option value="0">Sub Admin Management</option>
-                                        <option value="0">Franchise Management</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <?php
+                            if ($this->session->userdata(session_franchise_table) == table_franchise) { ?>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select class="form-control title" id="select_subfranchise">
+                                            <option value="0">Select Management </option>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Enter Name" id='add_name' name="name" required="required">
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" placeholder="Enter Name" id='add_name' name="name" required="required">
+                                    </div>
+                                </div>
+                            <?php
+                            } else { ?>
+
+                                <input type="hidden" value="<?= $specific_id ?>" id="select_subfranchise">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" placeholder="Enter Name" id='add_name' name="name" required="required">
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -172,7 +186,7 @@
                                 <div class="form-group">
                                     <select class="form-control title" id="access_list" multiple>
                                         <option value="0">Select Management </option>
-                                       
+
                                     </select>
                                 </div>
                             </div>
@@ -181,12 +195,12 @@
                                 <div class="form-group">
                                     <select class="form-control title" id="panel_access_list" multiple>
                                         <option value="0">Select Management </option>
-                                        
+
                                     </select>
                                 </div>
                             </div>
 
-                            
+
                         </div>
                     </form>
                 </div>
@@ -233,7 +247,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <select class="form-control title" id="edit_access_list" placeholder="Select Management" multiple>
-                                        <option value="0">Select Management </option>                                     
+                                        <option value="0">Select Management </option>
                                     </select>
                                 </div>
                             </div>

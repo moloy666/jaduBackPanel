@@ -307,6 +307,7 @@ $route['administrator/download_progress_report/(:any)'] = 'Admin/download_progre
 // sarathi details 
 $route['administrator/get_pending_drivers'] = 'Admin/get_pending_drivers';
 $route['administrator/total_km_purchase'] = 'Admin/total_km_purchase';
+$route['administrator/get_sarathi_refferral_code'] = 'Admin/get_sarathi_refferral_code';
 
 //////////////////////////////////////////////////////////////////////////////
 

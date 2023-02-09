@@ -151,9 +151,7 @@ class Sarathi extends CI_Controller
                                 <a href='".base_url()."'>JaduRide</a>
                             </p>";
 
-                $this->load->config('email');
-                $this->load->library('email');
-
+                
                 $is_send = $this->send_email($send_to, $subject, $message);
                 if($is_send){
                     $this->response(['success'=>true, 'message'=>'OTP Send Successfully'], 200);
@@ -199,31 +197,33 @@ class Sarathi extends CI_Controller
 
     }
 
-
-
     public function authenticate_sarathi()
     {
         $email = $this->input->post(param_email);
         $mobile = $this->input->post(param_mobile);
 
         $this->init_login_model();
+        $this->init_common_model();
 
         if (!empty($email) && !empty($mobile)) {
 
-            $user_details = $this->Login_model->get_sarathi_details_on_condition($email, $mobile);
+            $currentStatus = $this->Common_model->checkUserCurrentStatus(["mobile" => $mobile], USER_SARATHI);
 
-            if (!empty($user_details)) {
+            if($currentStatus == const_deleted){               
+                $this->response([key_success => false, key_message => "Dear User Your Account Is Deleted By Administrator, Please Contact With Them"], 200);                
+            }else{
+                $user_details = $this->Login_model->get_sarathi_details_on_condition($email, $mobile);
+                if (!empty($user_details)) {
+                    $this->session->set_userdata(session_sarathi_name, $user_details->name);
+                    $this->session->set_userdata(session_sarathi_type_id, $user_details->type_id);
+                    $this->session->set_userdata(session_sarathi_user_id, $user_details->uid);
+                    $this->session->set_userdata(session_sarathi_profile_image, $user_details->profile_image);
+                    $this->session->set_userdata(session_sarathi_status, $user_details->status);
 
-
-                $this->session->set_userdata(session_sarathi_name, $user_details->name);
-                $this->session->set_userdata(session_sarathi_type_id, $user_details->type_id);
-                $this->session->set_userdata(session_sarathi_user_id, $user_details->uid);
-                $this->session->set_userdata(session_sarathi_profile_image, $user_details->profile_image);
-                $this->session->set_userdata(session_sarathi_status, $user_details->status);
-
-                $this->response([key_success => true, key_message => "User authentication successfull", key_redirect_to => base_url(WEB_PORTAL_SARATHI . '/dashboard')], 200);
-            } else {
-                $this->response([key_success => false, key_message => 'Invalid Login Details'], 200);
+                    $this->response([key_success => true, key_message => "User authentication successfull", key_redirect_to => base_url(WEB_PORTAL_SARATHI . '/dashboard')], 200);
+                } else {
+                    $this->response([key_success => false, key_message => 'Invalid Login Details'], 200);
+                }
             }
         } else {
             $this->response([key_success => false, key_message => "Email or Password is not given!"], 400);
@@ -917,4 +917,6 @@ class Sarathi extends CI_Controller
         $mpdf->WriteHTML($html);
         $mpdf->Output($name . ".pdf", "D");
     }
+
+    
 }

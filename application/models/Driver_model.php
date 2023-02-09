@@ -236,7 +236,7 @@ class Driver_model extends CI_Model
         foreach ($query as $key => $value) {
             $query[$key]['joined'] = date("d/m/Y", strtotime($value['joined']));
         }
-        return $query;
+        return (!empty($query))?$query:[];
     }
 
 
@@ -327,7 +327,7 @@ class Driver_model extends CI_Model
                 }
             }
         }
-        return $data;
+        return (!empty($data))?$data:[];
     }
 
 
@@ -337,14 +337,14 @@ class Driver_model extends CI_Model
     {
         $query = $this->db->select('u.uid as user_id, u.name')->from('users as u')->join('driver as d', 'u.uid=d.user_id')->where('d.sarathi_id', $sarathi_id)->get();
         $query = $query->result_array();
-        return $query;
+        return (!empty($query))?$query:[];
     }
 
     public function get_sarathi_ids($subfranchise_id)
     {
         $query = $this->db->select(field_uid)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
         $query = $query->result_array();
-        return $query;
+        return (!empty($query))?$query:[];
     }
 
 

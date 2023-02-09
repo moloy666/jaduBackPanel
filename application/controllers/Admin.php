@@ -75,6 +75,10 @@ class Admin extends CI_Controller
 	{
 		$this->load->model(model_customers_model);
 	}
+	private function init_mail_model()
+	{
+		$this->load->model('Mail_model');
+	}
 	private function init_notification_model()
 	{
 		$this->load->model(model_notification_model);
@@ -117,7 +121,6 @@ class Admin extends CI_Controller
 			$this->load_footer();
 			$this->load->view('inc/custom_js/app_release_js');
 		} else {
-
 			
 			$this->load->view(page_header_link);
 			$this->load->view('app_release');
@@ -402,19 +405,24 @@ class Admin extends CI_Controller
 				$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
 				$data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
 				$data['companion'] = 'Customer';
+				$view = 'ride_history';
 			}
 			if ($user_type == "customers") {
 				$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_customer);
 				$data['ride_history'] = $this->Admin_model->get_customer_ride_history($specific_id);
 				$data['companion'] = 'Driver';
+				$view = 'ride_history_customer';
 			}
 			
+			// echo"<pre>";
+			// print_r($data);
+			// die();
 			
 			$name = 'ride_history_' . time();
 			$mpdf = new \Mpdf\Mpdf();
-			$html = $this->load->view(view_ride_history, $data, true);
+			$html = $this->load->view($view, $data, true);
 			$mpdf->WriteHTML($html);
-			$mpdf->Output($name . ".pdf", "D");
+			$mpdf->Output($name . ".pdf", "I");
 		} else {
 			redirect(base_url());
 		}
@@ -745,6 +753,8 @@ class Admin extends CI_Controller
 
 	public function add_admin()
 	{
+		// require_once APPPATH.'libraries/vendor/swiftmailer/lib/swift_required.php';
+
 		$missing_key = [];
 		$input_data = [];
 		$admin_data = [];
@@ -757,7 +767,9 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
-		$password = md5(trim($this->input->post(param_mobile)));
+
+		$this->init_common_model();
+		$password = $this->Common_model->randomPassword();
 
 		$permission_ids = $this->input->post('permission');
 		$panel_lists_ids = $this->input->post('panel_list');
@@ -798,7 +810,7 @@ class Admin extends CI_Controller
 			$missing_key[] = field_email;
 		}
 		if (!empty($password)) {
-			$admin_data[field_password] = $password;
+			$admin_data[field_password] = md5($password);
 		} else {
 			$missing_key[] = field_password;
 		}
@@ -810,8 +822,8 @@ class Admin extends CI_Controller
 		} else {
 
 			$this->init_common_model();
-			$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users);
-			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
+			$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users,'user_admin');
+			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users,'user_admin');
 			if (!empty($mobile_exist)) {
 				$this->response([key_success => false, key_message => "This Number already exist for " . $mobile_exist->name], 200);
 				return;
@@ -823,10 +835,27 @@ class Admin extends CI_Controller
 			$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_admin);
 			$this->init_admin_model();
 			$is_added = $this->Admin_model->add_admin_details($user_id, $user_type_id, $input_data, $admin_data, $access, $panel_access);
+
+			// $this->init_mail_model();
+			// $this->Mail_model->send_mail($email, $password);
+
+			$usermail = $email;
+			$emailsubject = "JaduRide Login Password : ".$password;
+			$dataMessage = "<p>
+							Hi, User <br/>
+							Your JaduRide Login Password is $password. <br/>
+							<i>Note: Do not share this email with anyone.</i> <br/><br/>
+							Thanks <br/>
+							Regards <br/>
+							<a href='".base_url()."'>JaduRide</a>
+						</p>";
+
+			// $send_email = $this->custom_email->sendMail($emailsubject, $dataMessage, $usermail);
+
 			if ($is_added) {
-				$this->response([key_success => true, key_message => "Add new admin successfully."], 200);
+				$this->response([key_success => true, key_message => "New Admin added Successfully ". $send_email], 200);
 			} else {
-				$this->response([key_success => false, key_message => "Failed to add  new admin"], 200);
+				$this->response([key_success => false, key_message => "Failed to add New Admin ".$send_email], 200);
 			}
 		}
 	}
@@ -1274,6 +1303,9 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function generateReferralCode(){
+		return strtoupper(substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 6));
+	}
 
 	public function insert_sarathi($mobile, $name, $email, $subfranchise_id, $permission_ids, $panel_lists_ids)
 	{
@@ -1282,6 +1314,8 @@ class Admin extends CI_Controller
 		$sarathi_id = $this->Uid_server_model->generate_uid(KEY_SARATHI);
 		$gid = $this->Uid_server_model->generate_uid(KEY_GID);
 
+		$refferal_code = $this->generateReferralCode();
+		
 		$panel_acess_list = json_encode(implode(',', $panel_lists_ids));
 
 		$panel_access = [
@@ -1319,7 +1353,7 @@ class Admin extends CI_Controller
 					return;
 				}
 				$this->init_sarathi_model();
-				$data = $this->Sarathi_model->add_sarathi_details($user_id, $sarathi_id, $gid, $user_type_id, $name, $email, $mobile, $subfranchise_id, $access, $panel_access);
+				$data = $this->Sarathi_model->add_sarathi_details($user_id, $sarathi_id, $gid, $user_type_id, $name, $email, $mobile, $subfranchise_id, $access, $panel_access, $refferal_code);
 				if ($data) {
 					$this->response([key_success => true, key_message => "New Sarathi insert successfully.."], 200);
 				} else {
@@ -4771,5 +4805,17 @@ class Admin extends CI_Controller
 				$this->response(["success" => false, "message" => "Something went wrong"], 200);
 			}
 		}
+	}
+
+	public function get_sarathi_refferral_code(){
+		$sarathi_id = $this->input->post(param_id);
+		$this->init_sarathi_model();
+		$data = $this->Sarathi_model->get_sarathi_refferral_code($sarathi_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something went wrong"], 200);
+		}
+		
 	}
 }

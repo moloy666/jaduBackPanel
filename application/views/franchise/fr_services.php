@@ -11,7 +11,7 @@
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Services</h3>
-                    <input type="hidden" id="specific_id" class="form-control">
+                    <input type="hidden" id="specific_id" value="<?=$specific_id?>" class="form-control">
                 </div>
             </div>
 

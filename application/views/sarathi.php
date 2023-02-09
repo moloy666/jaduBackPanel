@@ -33,6 +33,7 @@
                 <th class="text-center">Name</th>
                 <th class="text-center">Email</th>
                 <th class="text-center">Mobile</th>
+                <th class="text-center">Refferal Code</th>
                 <th class="text-center">Sub Franchise</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Actions</th>
@@ -434,6 +435,7 @@
                         </td>
                         <td>${sarathi[i].email}</td>
                         <td>${sarathi[i].mobile}</td>
+                        <td>${sarathi[i].refferal_code}</td>
                         <td class="title">${sarathi[i].subfranchise.name}</td>
                      
                         <td><label class="switch">
