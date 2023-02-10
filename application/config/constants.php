@@ -316,6 +316,7 @@ define('user_type_sarathi', 'sarathi');
 define('user_type_driver', 'driver');
 define('user_type_customer', 'customer');
 //////////////////////////////////////////////////////////////
+define('VALUE_ADMINSTRATOR', 'administrator');
 define('value_user_admin', 'user_admin');
 define('value_user_franchise', 'user_franchise');
 define('value_user_sub_franchise', 'user_sub_franchise');

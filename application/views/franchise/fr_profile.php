@@ -1,10 +1,16 @@
+<style>
+    .profile{
+        height:250px;
+    }
+</style>
+
 <div class="content-wrapper">
     <div class="container py-5">
         <h3 class="mb-3 text-primary">Your Profile</h3>
 
         <div class="row">
             <div class="col-lg-4">
-                <div class="card mb-4">
+                <div class="card mb-4 profile">
                     <form id="form_image">
                         <div class="card-body text-center">
                             <label for="image">
@@ -29,7 +35,7 @@
                             <p class="m-0" id="txt_mobile">mobile</p>
                             <p class="" id="txt_email">email</p>
 
-                            <div class="d-flex align-items-center justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center mt-3">
                                 <button type="submit" class="btn btn-sm btn-primary " id="btn_update_image" style="display:none;">Update Image</button>
                             </div>
                             <input type="hidden" value="<?= $this->session->userdata(session_franchise_user_id) ?>" id="user_id">
@@ -42,7 +48,7 @@
             </div>
 
             <div class="col-lg-8">
-                <div class="card mb-4">
+                <div class="card mb-4 profile">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
@@ -54,26 +60,7 @@
                             </div>
                         </div>
                         <hr>
-                        <!-- <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Email</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0" id="txt_email">(097) 234-5678</p>
-                                <input type="text" id="email" class="form-control">
-                            </div>
-                        </div> -->
-                        <!-- <hr> -->
-                        <!-- <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Mobile</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0" id="txt_mobile">(097) 234-5678</p>
-                                <input type="text" id="mobile" class="form-control">
-                            </div>
-                        </div> -->
-                        <!-- <hr> -->
+           
                         <div class="row">
                             <div class="col-sm-3">
                                 <p class="mb-0">Date of Birth</p>

@@ -162,12 +162,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" value="" placeholder="Your Number" id="edit_number">
+                                    <input class="form-control" type="text" value="" placeholder="Your Number" id="edit_number" disabled>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" value="" placeholder="Your Email" id="edit_email">
+                                    <input class="form-control" type="text" value="" placeholder="Your Email" id="edit_email" disabled>
                                 </div>
                             </div>
 

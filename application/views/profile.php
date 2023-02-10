@@ -7,14 +7,17 @@
   .title {
     text-transform: capitalize;
   }
+  .profile{
+    height: 250px;
+  }
 </style>
 <div class="content-wrapper">
   <div class="container py-5">
     <h3 class="mb-3 ml-3 text-primary">Your Profile</h3>
 
     <div class="row">
-      <div class="col-lg-3">
-        <div class="card mb-2 p-2">
+      <div class="col-lg-4">
+        <div class="card mb-2 p-2 profile">
           <form id="form_image">
             <div class="card-body text-center">
               <label for="image">
@@ -36,12 +39,17 @@
 
               </label>
 
+              <p class="text mb-0" id="txt_mobile"></p>
+              <p class="text mb-0" id="txt_email"></p>
+
+
               <input type="hidden" value="<?= $this->session->userdata(session_admin_specific_id) ?>" id="specific_id">
               <input type="hidden" value="<?= $this->session->userdata(session_table) ?>" id="specific_table">
               <input type="hidden" value="<?= $this->session->userdata(field_user_id) ?>" id="user_id">
 
+
               <!-- <h5 class="my-3" id="view_name"></h5> -->
-              <div class="d-flex align-items-center justify-content-center">
+              <div class="d-flex align-items-center justify-content-center mt-4">
                 <button type="submit" class="btn btn-sm btn-primary mt-1" id="btn_update_image" style="display:none;">Update Image</button>
               </div>
             </div>
@@ -49,8 +57,8 @@
         </div>
       </div>
 
-      <div class="col-lg-5">
-        <div class="card mb-6">
+      <div class="col-lg-8">
+        <div class="card mb-6 profile">
           <div class="card-body">
             <div class="row">
               <div class="col-sm-3">
@@ -62,7 +70,7 @@
               </div>
             </div>
             <hr>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">Email</p>
               </div>
@@ -80,15 +88,7 @@
                 <p class="text-muted mb-0" id="txt_mobile"></p>
                 <input type="text" id="mobile" class="form-control txtbox">
               </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="card mb-6">
-          <div class="card-body">
+            </div> -->
 
             <div class="row">
               <div class="col-sm-3">
@@ -124,10 +124,11 @@
           </div>
         </div>
       </div>
+
     </div>
 
 
-    <div class="mb-3">
+    <div class="mb-3 mt-3">
       <div class="card">
         <div class="card-header">
           <strong class="text-primary">Bank Details <span id="message"></span></strong>
@@ -187,7 +188,7 @@
 
               </table>
             </div>
-            
+
           </div>
         </div>
       </div>

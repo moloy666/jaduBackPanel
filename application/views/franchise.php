@@ -4,7 +4,7 @@
     }
 </style>
 
-<body onload="get_franchise_details()">
+<body>
     <div class="content-wrapper">
         <!-- START PAGE CONTENT-->
         <div class="page-content fade-in-up">
@@ -12,6 +12,17 @@
                 <div class="col-md-8">
                     <h3>Franchise</h3>
                     <input type="hidden" value="<?= $this->session->userdata(session_admin_specific_id) ?>" id="specific_id">
+
+                    <?php
+                    if ($this->session->userdata(field_user_type) != 'administrator') { ?>
+                        <script>
+                            $('#edit_number').attr('disabled', 'disabled');
+                            $('#edit_email').attr('disabled', 'disabled');
+                        </script>
+                    <?php
+                    }
+                    ?>
+
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">
@@ -100,9 +111,9 @@
                                     <input type="number" class="form-control" id="pincode" placeholder="Enter Pincode">
                                 </div>
                             </div>
-                             
+
                             <!-- panel access list -->
-                            
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <select class="form-control" id="admin_access_list" multiple>
@@ -122,7 +133,7 @@
                                 </div>
                             </div>
 
-                          
+
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -193,7 +204,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" value="" placeholder="Your Number" id="edit_number" autocomplete="off">
+                                    <input class="form-control" type="text" value="" placeholder="Your Number" id="edit_number"  autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -319,6 +330,12 @@
     </div>
 
     <script>
+        $(document).ready(function() {
+            get_franchise_details();
+
+        });
+
+
         get_permission_list();
         display_panel_access_list();
 
@@ -620,6 +637,8 @@
                 toast("Select Panel Access", "center");
             }
 
+            let user_type = '<?=$this->session->userdata(field_user_type)?>';
+
             if (flag == 0) {
                 $.ajax({
                     url: "<?= base_url('administrator/update_franchise') ?>",
@@ -630,7 +649,8 @@
                         "email": email,
                         "mobile": mobile,
                         "permission": permission,
-                        "panel_list": panel_list
+                        "panel_list": panel_list,
+                        "user_type":user_type
 
                     },
                     async: false,
@@ -703,12 +723,12 @@
                         "permission": permission,
                         "panel_list": panel_list,
                         "specific_id": admin_id,
-                        "address":address,
-                        "country":country,
-                        "state":state,
-                        "district":district,
-                        "city":city,
-                        "pincode":pincode
+                        "address": address,
+                        "country": country,
+                        "state": state,
+                        "district": district,
+                        "city": city,
+                        "pincode": pincode
                     },
                     async: false,
                     success: function(data) {
@@ -829,8 +849,4 @@
                 }
             });
         }
-
-        // <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${franchise[i].uid}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
-        // <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
-        // </button>
     </script>

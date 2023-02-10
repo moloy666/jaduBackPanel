@@ -909,7 +909,6 @@ class Franchise extends CI_Controller
 	public function get_dashboard_data()
 	{
 		$this->init_common_model();
-		$this->init_admin_model();
 
 		$specific_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
 		$table = $this->input->post(param_table);
@@ -928,7 +927,7 @@ class Franchise extends CI_Controller
 			'totalRevenue' =>  $this->Common_model->get_total_revenue($specific_id),
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status($specific_id),
 			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($specific_id, $table),
-			'totalKmPurchaseToday' => $this->Admin_model->total_km_purchase_today($user_id),
+			'totalKmPurchaseToday' => $this->Common_model->total_km_purchase_today($user_id),
 
 		];
 		echo json_encode($data);
@@ -937,8 +936,6 @@ class Franchise extends CI_Controller
 	public function get_subfranchise_dashboard_data()
 	{
 		$this->init_common_model();
-		$this->init_admin_model();
-
 
 		$subfranchise_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
 		$table = $this->input->post(param_table);
@@ -955,9 +952,10 @@ class Franchise extends CI_Controller
 			'totalRevenue' =>  $this->Common_model->get_total_revenue_of_subfranchise($subfranchise_id),
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($subfranchise_id),
 			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($subfranchise_id, $table),
-			'totalKmPurchaseToday' => $this->Admin_model->total_km_purchase_today($user_id),
+			'totalKmPurchaseToday' => $this->Common_model->total_km_purchase_today($user_id),
 
 		];
+		
 		echo json_encode($data);
 	}
 

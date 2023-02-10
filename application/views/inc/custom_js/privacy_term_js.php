@@ -385,12 +385,12 @@
                     $('.ibox-title').text('Razorpay Key');
 
                 }
-                if (key == '<?= value_google_api_key ?>'){
+                if (key == '<?= value_google_api_key ?>') {
                     $('#googleApiKey').html(details);
                     $('.ibox-title').text('Google Api Key');
 
-                } 
-                if (key == '<?= value_sos_number ?>'){
+                }
+                if (key == '<?= value_sos_number ?>') {
                     $('#sosNumberUser').html(details);
                     $('.ibox-title').text('SOS Number');
 
@@ -438,4 +438,137 @@
         });
     }
 
+
+    ///////////////////////////////////////////////////
+
+
+    $('#ratePerKm').click(function() {
+        $('.ibox-title').text('Rate Per KM');
+        display_rate_per_km();
+    });
+
+    function display_rate_per_km() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('administrator/display_rate_per_km') ?>",
+
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                // console.log(response);
+                let details;
+
+                if (response.success) {
+                    let data = response.data;
+
+                    $.each(data, function(i, data) {
+                        let length = (data.user_type_id).length;
+                        let user_type = (data.user_type_id).slice(5, length).replace("_", " ");
+                        details += `
+                        <tr>
+                            <td class="title">${user_type}</td>
+                            <td>${data.rate_per_km}</td>
+                            <td><button class="btn btn-success" onclick="edit_rate_per_km('${data.uid}', '${data.user_type_id}', '${data.rate_per_km}')">Edit</button></td>
+                        </tr>
+                        `;
+                    });
+                    $('#rate_km_details').html(details);
+                } else {
+                    $('#rate_km_details').html('<tr><td colspan="3">Data Not Found</td></tr>');
+                }
+            }
+        });
+    }
+
+    function edit_rate_per_km(uid, user_type_id, percentage) {
+        $('#kilometer_title').text('Edit Rate Per Kilometer');
+        $('#kmmdl').modal('show');
+        $('#kilometer_id').val(uid);
+        $('#kilometer').val(percentage);
+        $('#kilometer_table').val('<?= table_rate_per_km ?>');
+    }
+
+
+    /////////////////////////////////////////////////
+
+    $('#excessPercentage').click(function() {
+        $('.ibox-title').text('Exccess Percentage');
+        display_excess_percentage();
+    });
+
+    function display_excess_percentage() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('administrator/display_excess_percentage') ?>",
+
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                // console.log(response);
+                let details;
+                if (response.success) {
+                    let data = response.data;
+
+                    $.each(data, function(i, data) {
+                        let length = (data.user_type_id).length;
+                        let user_type = (data.user_type_id).slice(5, length).replace("_", " ");
+                        details += `
+                        <tr>
+                            <td class="title">${user_type}</td>
+                            <td>${data.percentage}</td>
+                            <td><button class="btn btn-success" onclick="edit_excess_percentage('${data.uid}', '${data.user_type_id}', '${data.percentage}')">Edit</button></td>
+                        </tr>
+                        `;
+                    });
+                    $('#excess_percentage_details').html(details);
+                } else {
+                    $('#excess_percentage_details').html('<tr><td colspan="3">Data Not Found</td></tr>');
+                }
+            }
+        });
+    }
+
+    function edit_excess_percentage(uid, user_type_id, percentage) {
+        $('#kilometer_title').text('Edit Excess Kilometer');
+        $('#kmmdl').modal('show');
+        $('#kilometer_id').val(uid);
+        $('#kilometer').val(percentage);
+        $('#kilometer_table').val('<?= table_excess_percentage ?>');
+    }
+ 
+    $('#btn_perc').click(function() {
+        let table = $('#kilometer_table').val();
+        let uid = $('#kilometer_id').val();
+        let value = $('#kilometer').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('administrator/save_kilometer_details') ?>",
+            data: {
+                "uid": uid,
+                "table": table,
+                "value": value
+            },
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    toast(response.message, 'center');
+                    $('#kmmdl').modal('hide');
+                    $('#kilometer_id').val('');
+                    $('#kilometer').val('');
+                    $('#kilometer_table').val('');
+                    display_excess_percentage();
+                    display_rate_per_km();
+                }
+                else{
+                    toast(response.message, 'center');
+                }
+            }
+        });
+    })
 </script>

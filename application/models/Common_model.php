@@ -794,6 +794,20 @@ class Common_model extends CI_Model
     }
 
 
+    public function total_km_purchase_today($user_id)
+    {
+        $query = $this->db->select('SUM(original_km) as today_recharge')
+            ->where(['recharge_type' => 'received', 'payment_status' => 'captured', field_user_id => $user_id])
+            ->group_start()
+            ->where('rechargeIn', 'purchaseKm')
+            ->or_where('rechargeIn', NULL)
+            ->group_end()
+            ->like(field_created_at, date('Y-m-d'))
+            ->get(table_recharge_history);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query[0]['today_recharge'] : 0;
+    }
+
     /////////////////////////////////
 
     public function giveDriverBonous100KmAsFirstTime($user_id_of_sarathi, $user_id_of_driver){

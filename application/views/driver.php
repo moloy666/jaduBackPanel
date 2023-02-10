@@ -394,6 +394,8 @@
                 toast("Enter a valid email id", "center");
             }
 
+            let user_type = '<?=$this->session->userdata(field_user_type)?>';
+
             if (flag == 0) {
                 $.ajax({
                     url: "<?= base_url('administrator/update_driver') ?>",
@@ -403,6 +405,7 @@
                         "name": name,
                         "email": email,
                         "mobile": mobile,
+                        'user_type':user_type
                     },
                     async: false,
                     success: function(data) {

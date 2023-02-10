@@ -424,13 +424,10 @@ class Admin_model extends CI_Model
         return ($this->db->affected_rows() == 1 ? true : false);
     }
 
-    public function update_user_profile_details($user_id, $name, $email, $mobile, $dob, $gender)
+    public function update_user_profile_details($user_id, $name, $dob, $gender)
     {
-
         $input_data = [
             field_name => $name,
-            field_email => $email,
-            field_mobile => $mobile,
             field_dob => $dob,
             field_gender => $gender
         ];
@@ -1612,14 +1609,7 @@ class Admin_model extends CI_Model
     }
 
 
-    // public function get_panel_access_list($user_id){
-    //     $query = $this->db->select('permission')->where(field_user_id, $user_id)->get(table_panel_access_permissions);
-    //     $query = $query->result_array();
-    //     foreach($query as $i=>$val){
-    //         $query[$i]['permission']=json_decode($val['permission']);
-    //     }
-    //     return(!empty($query))?$query[0]:null;
-    // }
+
 
     public function display_panel_access_list()
     {
@@ -2040,5 +2030,26 @@ class Admin_model extends CI_Model
 
         $this->db->insert(table_app_version, $data);
         return ($this->db->affected_rows() == 1) ? true : false;
+    }
+
+    public function display_excess_percentage(){
+        $query = $this->db->get(table_excess_percentage);
+        $query = $query->result_array();
+        return(!empty(($query)))?$query:[];
+    }
+    public function display_rate_per_km(){
+        $query = $this->db->get(table_rate_per_km);
+        $query = $query->result_array();
+        return(!empty(($query)))?$query:[];
+    }
+
+    public function save_kilometer_details($uid, $value, $table, $field_name, $admin_id){
+        $data=[
+            $field_name=>$value,
+            field_modified_at=>date(field_date),
+            field_modified_by=>$admin_id
+        ];
+        $this->db->where(field_uid, $uid)->update($table, $data);
+        return($this->db->affected_rows()==1)?true:false;
     }
 }

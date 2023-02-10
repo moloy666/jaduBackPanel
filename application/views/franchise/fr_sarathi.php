@@ -234,13 +234,13 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="number" value="" placeholder="Your Number" id="edit_number">
+                                    <input class="form-control" type="number" value="" placeholder="Your Number" id="edit_number" disabled>
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input class="form-control" type="email" value="rameshj123@gmail.com" placeholder="Your Email" id="edit_email">
+                                    <input class="form-control" type="email" value="rameshj123@gmail.com" placeholder="Your Email" id="edit_email" disabled>
                                 </div>
                             </div>
 

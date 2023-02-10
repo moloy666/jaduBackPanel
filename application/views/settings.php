@@ -37,8 +37,18 @@
             <div class="col-md-3" >
                 <div class="row scroll-container">
 
-                    <!-- delivery guidelines -->
-                    <div class="col-md-12 setting-box" data-toggle="collapse" data-target="#delivery_guideline" aria-expanded="false" aria-controls="delivery_guide" id="delivery_guidelines">
+                    <!-- excess_percentage -->
+                    <div class="col-md-12 setting-box" data-toggle="collapse" data-target="#excess_percentage" aria-expanded="false" aria-controls="excess_percentage" id="excessPercentage">
+                        <div class="shadow-lg bg-white rounded settings-left-box">Excess Percentage</div>
+                    </div>
+
+                    <!-- rate per km -->
+                    <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#rate_per_km" aria-expanded="false" aria-controls="rate_per_km" id="ratePerKm">
+                        <div class="shadow-lg bg-white rounded settings-left-box">Rate Per KM</div>
+                    </div>
+
+                    <!-- delivery guidelines --> 
+                    <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#delivery_guideline" aria-expanded="false" aria-controls="delivery_guide" id="delivery_guidelines">
                         <div class="shadow-lg bg-white rounded settings-left-box">Delivery Guidelines</div>
                     </div>
 
@@ -123,6 +133,94 @@
 
             <div class="col-md-9">
                 <input type="hidden" id="url_name">
+                <!-- excess percentage -->
+                <div id="excess_percentage" class="collapse" data-parent="#accordion">
+                    <div class="ibox color-black widget-stat">
+                        <div class="ibox-head">
+                            <div class="ibox-title">Excess Percentage </div>
+                        </div>
+                        <div class="ibox-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Percentage (%)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="excess_percentage_details" class=''>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rate_per_km" class="collapse" data-parent="#accordion">
+                    <div class="ibox color-black widget-stat">
+                        <div class="ibox-head">
+                            <div class="ibox-title">Rate Per KM</div>
+                        </div>
+                        <div class="ibox-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Rate / KM (₹)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rate_km_details" class=''>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                 <!-- ===== Manage Helpline Number ======= -->
+
+                 <div id="manage_helpline_number" class="collapse" data-parent="#accordion">
+                    <div class="ibox color-black widget-stat">
+                        <div class="ibox-head">
+                            <div class="ibox-title">Manage Helpline Number</div>
+                        </div>
+                        <div class="ibox-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>User Type</th>
+                                            <th>Number</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="helpLineNumber">
+                                        <tr>
+                                            <th>Sarathi</th>
+                                            <th>Number</th>
+                                            <th><button>edit</button></th>
+                                        </tr>
+                                        <tr>
+                                            <th>Driver</th>
+                                            <th>Number</th>
+                                            <th><button>edit</button></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <h2 class="m-b-5 font-strong totalDriver"></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================= -->
 
                 <div id="sosNumber" class="collapse" data-parent="#accordion">
                     <div class="ibox color-black widget-stat">
@@ -309,44 +407,7 @@
                 </div>
 
 
-                <!-- ===== Manage Helpline Number ======= -->
-
-                <div id="manage_helpline_number" class="collapse" data-parent="#accordion">
-                    <div class="ibox color-black widget-stat">
-                        <div class="ibox-head">
-                            <div class="ibox-title">Manage Helpline Number</div>
-                        </div>
-                        <div class="ibox-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped text-center">
-                                    <thead>
-                                        <tr>
-                                            <th>User Type</th>
-                                            <th>Number</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="helpLineNumber">
-                                        <tr>
-                                            <th>Sarathi</th>
-                                            <th>Number</th>
-                                            <th><button>edit</button></th>
-                                        </tr>
-                                        <tr>
-                                            <th>Driver</th>
-                                            <th>Number</th>
-                                            <th><button>edit</button></th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <h2 class="m-b-5 font-strong totalDriver"></h2>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ======================= -->
+               
 
                 <!-- privacy policy starts -->
 
@@ -625,6 +686,38 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="">Close</button>
                 <button class="btn btn-success" id="btn_edit_help">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- kilometer modal -->
+
+<div class="modal fade" id="kmmdl" tabindex="-1" role="dialog" aria-labelledby="edtView1Title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="kilometer_title">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" id="kilometer_id"  class="form-control">
+                        <input type="hidden" id="kilometer_table"  class="form-control">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="kilometer" placeholder="Enter Value">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="btn_perc">Save</button>
             </div>
         </div>
     </div>

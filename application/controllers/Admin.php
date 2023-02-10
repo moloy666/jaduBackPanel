@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+// require_once APPPATH.'libraries/vendor/swiftmailer/lib/swift_required.php';
+// require_once APPPATH.'libraries/vendor/autoload.php';
 
 class Admin extends CI_Controller
 {
@@ -121,7 +123,7 @@ class Admin extends CI_Controller
 			$this->load_footer();
 			$this->load->view('inc/custom_js/app_release_js');
 		} else {
-			
+
 			$this->load->view(page_header_link);
 			$this->load->view('app_release');
 			$this->load->view(page_footer_link);
@@ -413,11 +415,11 @@ class Admin extends CI_Controller
 				$data['companion'] = 'Driver';
 				$view = 'ride_history_customer';
 			}
-			
+
 			// echo"<pre>";
 			// print_r($data);
 			// die();
-			
+
 			$name = 'ride_history_' . time();
 			$mpdf = new \Mpdf\Mpdf();
 			$html = $this->load->view($view, $data, true);
@@ -596,58 +598,15 @@ class Admin extends CI_Controller
 
 	public function update_user_profile()
 	{
-		// $user_id = $this->input->post(param_id);
 		$user_id = $this->session->userdata(field_user_id);
 		$name = $this->input->post(param_name);
-		$mobile = $this->input->post(param_mobile);
-		$email = $this->input->post(param_email);
 		$dob = $this->input->post(param_dob);
 		$gender = $this->input->post(param_gender);
-		if (!empty($name) && !empty($mobile) && !empty($email) && !empty($dob) && !empty($gender)) {
 
-			$this->init_common_model();
-
-			$array = [
-				"modified_at" => date(field_date)
-			];
-
-			$data = $this->Common_model->get_user_details_by_user_id($user_id);
-			$present_name = $data->name;
-			$present_mobile = $data->mobile;
-			$present_email = $data->email;
-
-			if ($present_name != $name) {
-				$array["name"] = $name;
-			} else {
-				$array["name"] = $present_name;
-			}
-
-			if ($present_mobile != $mobile) {
-				$array["mobile"] = $mobile;
-				$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users);
-
-				if ($mobile_exist) {
-					$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
-					return;
-				}
-			} else {
-				$array["mobile"] = $present_mobile;
-			}
-
-			if ($present_email != $email) {
-				$array["email"] = $email;
-				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
-
-				if ($email_exist) {
-					$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
-					return;
-				}
-			} else {
-				$array["email"] = $present_email;
-			}
+		if (!empty($name) && !empty($dob) && !empty($gender)) {
 
 			$this->init_admin_model();
-			$update = $this->Admin_model->update_user_profile_details($user_id, $name, $email, $mobile, $dob, $gender);
+			$update = $this->Admin_model->update_user_profile_details($user_id, $name, $dob, $gender);
 			if ($update) {
 				$this->response(["success" => true, "message" => "Update Successful"], 200);
 				$this->session->set_userdata(field_name, $name);
@@ -753,7 +712,7 @@ class Admin extends CI_Controller
 
 	public function add_admin()
 	{
-		// require_once APPPATH.'libraries/vendor/swiftmailer/lib/swift_required.php';
+
 
 		$missing_key = [];
 		$input_data = [];
@@ -767,9 +726,10 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
+		$password = md5(trim($this->input->post(param_mobile)));
 
 		$this->init_common_model();
-		$password = $this->Common_model->randomPassword();
+		// $password = $this->Common_model->randomPassword();
 
 		$permission_ids = $this->input->post('permission');
 		$panel_lists_ids = $this->input->post('panel_list');
@@ -822,8 +782,8 @@ class Admin extends CI_Controller
 		} else {
 
 			$this->init_common_model();
-			$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users,'user_admin');
-			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users,'user_admin');
+			$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, 'user_admin');
+			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, 'user_admin');
 			if (!empty($mobile_exist)) {
 				$this->response([key_success => false, key_message => "This Number already exist for " . $mobile_exist->name], 200);
 				return;
@@ -840,22 +800,22 @@ class Admin extends CI_Controller
 			// $this->Mail_model->send_mail($email, $password);
 
 			$usermail = $email;
-			$emailsubject = "JaduRide Login Password : ".$password;
+			$emailsubject = "JaduRide Login Password : " . $password;
 			$dataMessage = "<p>
 							Hi, User <br/>
 							Your JaduRide Login Password is $password. <br/>
 							<i>Note: Do not share this email with anyone.</i> <br/><br/>
 							Thanks <br/>
 							Regards <br/>
-							<a href='".base_url()."'>JaduRide</a>
+							<a href='" . base_url() . "'>JaduRide</a>
 						</p>";
 
 			// $send_email = $this->custom_email->sendMail($emailsubject, $dataMessage, $usermail);
 
 			if ($is_added) {
-				$this->response([key_success => true, key_message => "New Admin added Successfully ". $send_email], 200);
+				$this->response([key_success => true, key_message => "New Admin added Successfully " . $send_email], 200);
 			} else {
-				$this->response([key_success => false, key_message => "Failed to add New Admin ".$send_email], 200);
+				$this->response([key_success => false, key_message => "Failed to add New Admin " . $send_email], 200);
 			}
 		}
 	}
@@ -1303,7 +1263,8 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function generateReferralCode(){
+	public function generateReferralCode()
+	{
 		return strtoupper(substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 6));
 	}
 
@@ -1315,7 +1276,7 @@ class Admin extends CI_Controller
 		$gid = $this->Uid_server_model->generate_uid(KEY_GID);
 
 		$refferal_code = $this->generateReferralCode();
-		
+
 		$panel_acess_list = json_encode(implode(',', $panel_lists_ids));
 
 		$panel_access = [
@@ -1375,23 +1336,25 @@ class Admin extends CI_Controller
 		$mobile = trim($this->input->post(param_mobile));
 		$permission_ids = $this->input->post(param_permission);
 
+		$user_type = $this->input->post(field_user_type);
+
 		$panel_ids = $this->input->post('panel_list');
 
 		if (!empty($specific_id)) {
 			$this->init_login_model();
 			$status = $this->Login_model->get_user_status_by_specific_id($specific_id, $table);
 			if ($status == const_active) {
-				$this->mofify_sarathi($user_id, $name, $mobile, $email, $permission_ids, $panel_ids);
+				$this->mofify_sarathi($user_id, $name, $mobile, $email, $permission_ids, $panel_ids, $user_type);
 			} else {
 				$this->response([key_success => false, key_message => text_account_not_active], 200);
 			}
 		} else {
-			$this->mofify_sarathi($user_id, $name, $mobile, $email, $permission_ids, $panel_ids);
+			$this->mofify_sarathi($user_id, $name, $mobile, $email, $permission_ids, $panel_ids, $user_type);
 		}
 	}
 
 
-	public function mofify_sarathi($user_id, $name, $mobile, $email, $permission_ids, $panel_ids)
+	public function mofify_sarathi($user_id, $name, $mobile, $email, $permission_ids, $panel_ids, $user_type)
 	{
 
 		$this->init_common_model();
@@ -1445,24 +1408,34 @@ class Admin extends CI_Controller
 		}
 
 		if ($present_mobile != $mobile) {
-			$array["mobile"] = $mobile;
-			$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users);
-
-			if ($mobile_exist) {
-				$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+			if ($user_type != VALUE_ADMINSTRATOR) {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to Update Mobile"], 200);
 				return;
+			} else {
+				$array["mobile"] = $mobile;
+				$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users, value_user_sarathi);
+
+				if ($mobile_exist) {
+					$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["mobile"] = $present_mobile;
 		}
 
 		if ($present_email != $email) {
-			$array["email"] = $email;
-			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
-
-			if ($email_exist) {
-				$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+			if ($user_type != VALUE_ADMINSTRATOR) {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to Update Email"], 200);
 				return;
+			} else {
+				$array["email"] = $email;
+				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, value_user_sarathi);
+
+				if ($email_exist) {
+					$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["email"] = $present_email;
@@ -1668,6 +1641,7 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
+		$user_type = $this->input->post(field_user_type);
 
 		$this->init_common_model();
 
@@ -1687,24 +1661,34 @@ class Admin extends CI_Controller
 		}
 
 		if ($present_mobile != $mobile) {
-			$array["mobile"] = $mobile;
-			$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users);
-
-			if ($mobile_exist) {
-				$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+			if ($user_type != VALUE_ADMINSTRATOR) {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to Update Mobile"], 200);
 				return;
+			} else {
+				$array["mobile"] = $mobile;
+				$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users, value_user_driver);
+
+				if ($mobile_exist) {
+					$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["mobile"] = $present_mobile;
 		}
 
 		if ($present_email != $email) {
-			$array["email"] = $email;
-			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
-
-			if ($email_exist) {
-				$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+			if ($user_type != VALUE_ADMINSTRATOR) {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to Update Email"], 200);
 				return;
+			} else {
+				$array["email"] = $email;
+				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, value_user_driver);
+
+				if ($email_exist) {
+					$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["email"] = $present_email;
@@ -1802,8 +1786,8 @@ class Admin extends CI_Controller
 		$email = $this->input->post(param_email);
 		$mobile = $this->input->post(param_mobile);
 		$this->init_common_model();
-		$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users);
-		$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
+		$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, value_user_driver);
+		$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, value_user_driver);
 		if (!empty($mobile_exist)) {
 			$this->response([key_success => false, key_message => "This Number already exist for " . $mobile_exist->name], 200);
 			return;
@@ -1874,6 +1858,7 @@ class Admin extends CI_Controller
 		$mobile = trim($this->input->post(param_mobile));
 		$permission_ids = $this->input->post(param_permission);
 		$panel_ids = $this->input->post(param_panel_list);
+		$user_type = $this->input->post(field_user_type);
 
 		$panel_acess_list = json_encode(implode(',', $panel_ids));
 
@@ -1912,24 +1897,34 @@ class Admin extends CI_Controller
 		}
 
 		if ($present_mobile != $mobile) {
-			$array["mobile"] = $mobile;
-			$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users);
-
-			if ($mobile_exist) {
-				$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+			if ($user_type != VALUE_ADMINSTRATOR) {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to change Mobile"], 200);
 				return;
+			} else {
+				$array["mobile"] = $mobile;
+				$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users, value_user_franchise);
+
+				if ($mobile_exist) {
+					$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["mobile"] = $present_mobile;
 		}
 
 		if ($present_email != $email) {
-			$array["email"] = $email;
-			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
-
-			if ($email_exist) {
-				$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+			if (($this->session->userdata(field_user_type)) != 'administrator') {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to change Email"], 200);
 				return;
+			} else {
+				$array["email"] = $email;
+				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, value_user_franchise);
+
+				if ($email_exist) {
+					$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["email"] = $present_email;
@@ -2153,6 +2148,7 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
+		$user_type = $this->input->post(field_user_type);
 
 		$permission_ids = $this->input->post(param_permission);
 		$panel_ids = $this->input->post(param_panel_list);
@@ -2161,16 +2157,16 @@ class Admin extends CI_Controller
 			$this->init_login_model();
 			$status = $this->Login_model->get_user_status_by_specific_id($franchise_id, $table);
 			if ($status == const_active) {
-				$this->modify_subfranchise($user_id, $name, $mobile, $email, $permission_ids, $panel_ids);
+				$this->modify_subfranchise($user_id, $name, $mobile, $email, $permission_ids, $panel_ids, $user_type);
 			} else {
 				$this->response([key_success => false, key_message => text_account_not_active], 200);
 			}
 		} else {
-			$this->modify_subfranchise($user_id, $name, $mobile, $email, $permission_ids, $panel_ids);
+			$this->modify_subfranchise($user_id, $name, $mobile, $email, $permission_ids, $panel_ids, $user_type);
 		}
 	}
 
-	private function modify_subfranchise($user_id, $name, $mobile, $email, $permission_ids, $panel_ids)
+	private function modify_subfranchise($user_id, $name, $mobile, $email, $permission_ids, $panel_ids, $user_type)
 	{
 		$array = [
 			"modified_at" => date(field_date)
@@ -2209,24 +2205,34 @@ class Admin extends CI_Controller
 		}
 
 		if ($present_mobile != $mobile) {
-			$array["mobile"] = $mobile;
-			$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users);
-
-			if ($mobile_exist) {
-				$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+			if ($user_type != VALUE_ADMINSTRATOR) {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to Update Mobile"], 200);
 				return;
+			} else {
+				$array["mobile"] = $mobile;
+				$mobile_exist = $this->Common_model->is_this_value_exist($mobile,  field_mobile, table_users, value_user_sub_franchise);
+
+				if ($mobile_exist) {
+					$this->response([key_success => false, key_message => "This Mobile is already registered for " . $mobile_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["mobile"] = $present_mobile;
 		}
 
 		if ($present_email != $email) {
-			$array["email"] = $email;
-			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
-
-			if ($email_exist) {
-				$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+			if ($user_type != VALUE_ADMINSTRATOR) {
+				$this->response([key_success => false, key_message => ucwords($user_type) . " don't have permission to Update Email"], 200);
 				return;
+			} else {
+				$array["email"] = $email;
+				$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, value_user_sub_franchise);
+
+				if ($email_exist) {
+					$this->response([key_success => false, key_message => "This Email is already registered for " . $email_exist->name], 200);
+					return;
+				}
 			}
 		} else {
 			$array["email"] = $present_email;
@@ -2570,8 +2576,8 @@ class Admin extends CI_Controller
 		$email = $this->input->post(param_email);
 		$mobile = $this->input->post(param_mobile);
 		$this->init_common_model();
-		$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users);
-		$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users);
+		$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, value_user_customer);
+		$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, value_user_customer);
 		if (!empty($mobile_exist)) {
 			$this->response([key_success => false, key_message => "This Number already exist for " . $mobile_exist->name], 200);
 			return;
@@ -2707,26 +2713,31 @@ class Admin extends CI_Controller
 		if ($active) {
 			$image = 'assets/images/logos/logo-l.png';
 
-			$driver_id = $this->Common_model->get_specific_id_by_user_id($user_id, table_driver);
-			$sarathi_id = $this->Common_model->get_sarathi_id_by_driver_user_id($user_id);
-			$sarathi_user_id = $this->Common_model->get_user_id_by_specific_id($sarathi_id, table_sarathi);
+			// Give driver 100 km when driver is Activate start
+			// Important Section Don't Delete
 
-			$recharge = $this->Common_model->giveDriverBonous100KmAsFirstTime($sarathi_user_id, $user_id);
+			// $driver_id = $this->Common_model->get_specific_id_by_user_id($user_id, table_driver);
+			// $sarathi_id = $this->Common_model->get_sarathi_id_by_driver_user_id($user_id);
+			// $sarathi_user_id = $this->Common_model->get_user_id_by_specific_id($sarathi_id, table_sarathi);
+			// $recharge = $this->Common_model->giveDriverBonous100KmAsFirstTime($sarathi_user_id, $user_id);
 
+			// if ($recharge) {
+			// 	$sarathi_title = sarathi_title;
+			// 	$sarathi_body = sarathi_body;
 
-			if ($recharge) {
-				$sarathi_title = sarathi_title;
-				$sarathi_body = sarathi_body;
+			// 	$driver_title = driver_title;
+			// 	$driver_body = driver_body;
 
-				$driver_title = driver_title;
-				$driver_body = driver_body;
+			// 	$sarathi_notify = $this->NotificationManager->sendNotification($sarathi_id, $sarathi_title, $sarathi_body, $image);
+			// 	$driver_notify = $this->NotificationManager->sendNotification($driver_id, $driver_title, $driver_body, $image);
+			// }
 
-				$sarathi_notify = $this->NotificationManager->sendNotification($sarathi_id, $sarathi_title, $sarathi_body, $image);
-				$driver_notify = $this->NotificationManager->sendNotification($driver_id, $driver_title, $driver_body, $image);
-			}
+			//  Give driver 100 km when driver is Activate END
 		}
 
-		if ($active && $recharge && $sarathi_notify && $driver_notify) {
+		// if ($active && $recharge && $sarathi_notify && $driver_notify) {
+
+		if ($active) {
 			$this->response(['success' => true, 'message' =>  'Driver activated successfully'], 200);
 		} else {
 			$this->response(['success' => false, 'message' => 'Something went wrong'], 200);
@@ -4782,7 +4793,8 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function save_new_app_release(){
+	public function save_new_app_release()
+	{
 
 		$for_app = $this->input->post(param_for_app);
 		$name = $this->input->post(param_name);
@@ -4795,7 +4807,6 @@ class Admin extends CI_Controller
 		if (empty($for_app) || empty($name) || empty($play_store_link) || empty($code)) {
 			$this->response(["success" => false, "message" => "Fill all details"], 200);
 			return;
-
 		} else {
 			$this->init_admin_model();
 			$status = $this->Admin_model->save_new_app_release($uid, $for_app, $name, $play_store_link, $code, $skipable);
@@ -4807,15 +4818,63 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function get_sarathi_refferral_code(){
+	public function get_sarathi_refferral_code()
+	{
 		$sarathi_id = $this->input->post(param_id);
 		$this->init_sarathi_model();
 		$data = $this->Sarathi_model->get_sarathi_refferral_code($sarathi_id);
 		if (!empty($data)) {
-			$this->response(["success" => true, "message" => "found", "data"=>$data], 200);
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
 		} else {
 			$this->response(["success" => false, "message" => "Something went wrong"], 200);
 		}
-		
+	}
+
+	public function display_excess_percentage()
+	{
+		$this->init_admin_model();
+		$data = $this->Admin_model->display_excess_percentage();
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something went wrong"], 200);
+		}
+	}
+
+	public function display_rate_per_km()
+	{
+		$table = $this->input->post(param_table);
+		$this->init_admin_model();
+		$data = $this->Admin_model->display_rate_per_km();
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something went wrong"], 200);
+		}
+	}
+
+	public function save_kilometer_details()
+	{
+		$uid = $this->input->post(field_uid);
+		$value = $this->input->post(field_value);
+		$table = $this->input->post(param_table);
+		$admin_id = $this->session->userdata(session_admin_specific_id);
+		if ($table == table_excess_percentage) {
+			$field_name = 'percentage';
+		}
+		if ($table == table_rate_per_km) {
+			$field_name = 'rate_per_km';
+		}
+		if (empty($value)) {
+			$this->response(["success" => false, "message" => "Enter valid value"], 200);
+			return;
+		}
+		$this->init_admin_model();
+		$status = $this->Admin_model->save_kilometer_details($uid, $value, $table, $field_name, $admin_id);
+		if ($status) {
+			$this->response(["success" => true, "message" => "Changes Save Sucessfully"], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something went wrong"], 200);
+		}
 	}
 }

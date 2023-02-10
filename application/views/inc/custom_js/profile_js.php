@@ -62,8 +62,6 @@
     $('#update_btn').on('click', function(e) {
 
         let name = $('#name').val();
-        let email = $('#email').val();
-        let mobile = $('#mobile').val();
         let dob = $('#dob').val();
         let gender = $('#gender').val();
 
@@ -71,34 +69,28 @@
             flag = 1;
             toast("Name should contain atleast three letters", "center");
         }
-        if (mobile.length != 10) {
-            flag = 1;
-            toast("Mobile number must contain 10 digit", "center");
-        }
-        if (email == '') {
-            flag = 1;
-            toast("Email id is required", "center");
-        }
+       
         $.ajax({
             url: "<?= base_url('administrator/update_user_profile') ?>",
             type: "post",
             data: {
                 "name": name,
-                "email": email,
-                "mobile": mobile,
+           
                 "dob": dob,
                 "gender": gender
             },
             async: false,
             success: function(data) {
                 if (data.success) {
-                    toast(data.message, "center");
                     display_user_profile();
+                    toast(data.message, "center");
                     $('#update_btn').hide();
                     $('#edit_btn').show();
                     $('.txtbox').hide();
                     $('.text-muted').show();
-                    location.reload(true);
+                    setTimeout(()=>{
+                        location.reload(true);
+                    }, 2000);
                 } else {
                     toast(data.message, "center");
                     $('#update_btn').hide();

@@ -289,8 +289,6 @@ $route['administrator/dormant_account'] = 'admin/view_dormant_account';
 $route['administrator/packages'] = 'admin/view_packages';
 $route['administrator/app_release'] = 'admin/view_app_release';
 
-
-
 $route['administrator/franchise_details/(:any)'] = 'Admin/franchise_details/$1';
 $route['administrator/subfranchise_details/(:any)'] = 'Admin/subfranchise_details/$1';
 $route['administrator/saathi_details/(:any)'] = 'Admin/sarathi_details/$1';
@@ -301,6 +299,9 @@ $route['administrator/customers/ride_history_csv/(:any)'] = 'Admin/ride_history_
 $route['administrator/admin/remarks/(:any)'] = 'Admin/view_display_remarks/$1';
 $route['administrator/admin/details/(:any)'] = 'Admin/view_admin_details/$1';
 $route['administrator/download_progress_report/(:any)'] = 'Admin/download_progress_report/$1';
+$route['administrator/display_excess_percentage'] = 'Admin/display_excess_percentage';
+$route['administrator/display_rate_per_km'] = 'Admin/display_rate_per_km';
+$route['administrator/save_kilometer_details'] = 'Admin/save_kilometer_details';
 
 //////////////////////////////////////////////////////////////////////////////
 

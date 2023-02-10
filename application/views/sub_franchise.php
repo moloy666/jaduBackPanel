@@ -643,6 +643,7 @@
                 toast("Select Panel Access", "center");
             }
 
+            let user_type = '<?=$this->session->userdata(field_user_type)?>';
             if (flag == 0) {
                 $.ajax({
                     url: "<?= base_url('administrator/update_sub_franchise') ?>",
@@ -653,7 +654,8 @@
                         "email": email,
                         "mobile": mobile,
                         "permission": permission,
-                        "panel_list": panel_list
+                        "panel_list": panel_list,
+                        'user_type':user_type
                     },
                     success: function(data) {
                         if (data.success) {

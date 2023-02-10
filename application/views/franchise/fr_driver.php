@@ -193,26 +193,24 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input class="form-control" type="hidden" value="" placeholder="Your Id" id="edit_id">
-                                    <input class="form-control" type="text" value="Ramesh janha" placeholder="Your Name" id="edit_name">
+                                    <input class="form-control" type="text" value="" placeholder="Your Name" id="edit_name">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" value="987-654-3210" placeholder="Your Number" id="edit_number">
+                                    <input class="form-control" type="text" value="" placeholder="Your Number" id="edit_number" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" value="rameshj123@gmail.com" placeholder="Your Email" id="edit_email">
+                                    <input class="form-control" type="text" value="" placeholder="Your Email" id="edit_email" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <select class="form-control" id="exampleFormControlSelect1">
                                         <option value="0">Select Management </option>
-                                        <option value="Role Management ">Role Management </option>
-                                        <option value="0">Sub Admin Management</option>
-                                        <option value="0">Franchise Management</option>
+                                      
                                     </select>
                                 </div>
                             </div>

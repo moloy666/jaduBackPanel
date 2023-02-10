@@ -14,12 +14,16 @@
     }
 
     function dashboard_data_franchise() {
+        let sepcific_id =  $('#specific_id').val();
+        let table =  $('#specific_table').val();
+        // console.log(specific_id);
+
         $.ajax({
             url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_dashboard_data') ?>",
             type: "POST",
             data: {
-                "id": $('#specific_id').val(),
-                "table": $('#specific_table').val()
+                "id": sepcific_id,
+                "table": table
             },
             success: function(response) {
                 // console.log(response);
@@ -50,15 +54,19 @@
     }
 
     function dashboard_data_subfranchise() {
+        // let sepcific_id =  $('#specific_id').val();
+        let sepcific_id =  document.getElementById('specific_id');
+        let table =  $('#specific_table').val();
+
         $.ajax({
             url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_subfranchise_dashboard_data') ?>",
             type: "POST",
             data: {
-                "id": $('#specific_id').val(),
-                "table": $('#specific_table').val()
+                "id": sepcific_id.value,
+                "table": table
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
 
                 let data = JSON.parse(response);
 
@@ -241,7 +249,7 @@
 
                     } else {
 
-                        console.log(response);
+                        // console.log(response);
                         toast(response.data, 'center');
                     }
                 }
