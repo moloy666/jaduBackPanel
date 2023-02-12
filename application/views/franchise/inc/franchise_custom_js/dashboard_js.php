@@ -7,26 +7,27 @@
     $('#dashboard_page').addClass('active');
 
     var table = $('#specific_table').val();
-    if (table == 'franchise') {
+
+    if (table == '<?= table_franchise ?>') {
+        fetch_recharge_package('<?= value_user_franchise ?>');
         dashboard_data_franchise();
     } else {
+        fetch_recharge_package('<?= value_user_sub_franchise ?>');
         dashboard_data_subfranchise();
     }
 
     function dashboard_data_franchise() {
-        let sepcific_id =  $('#specific_id').val();
-        let table =  $('#specific_table').val();
-        // console.log(specific_id);
+        let sepcific_id = $('#specific_id').val();
+        let table = $('#specific_table').val();
 
         $.ajax({
-            url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_dashboard_data') ?>",
             type: "POST",
+            url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_dashboard_data') ?>",
             data: {
                 "id": sepcific_id,
                 "table": table
             },
             success: function(response) {
-                // console.log(response);
 
                 let data = JSON.parse(response);
 
@@ -55,18 +56,17 @@
 
     function dashboard_data_subfranchise() {
         // let sepcific_id =  $('#specific_id').val();
-        let sepcific_id =  document.getElementById('specific_id');
-        let table =  $('#specific_table').val();
+        let sepcific_id = document.getElementById('specific_id');
+        let table = $('#specific_table').val();
 
         $.ajax({
-            url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_subfranchise_dashboard_data') ?>",
             type: "POST",
+            url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_subfranchise_dashboard_data') ?>",
             data: {
                 "id": sepcific_id.value,
                 "table": table
             },
             success: function(response) {
-                console.log(response);
 
                 let data = JSON.parse(response);
 
@@ -84,7 +84,6 @@
                 } else {
                     $(".totalKmPurchaseToday").text(0);
                 }
-
 
             },
             error: function(response) {
@@ -160,27 +159,16 @@
         });
     }
 
-    $('#recharge_btn').click(function() {
-        fetch_recharge_package();
-    });
-
-    function fetch_recharge_package(user_id) {
-        let user_type = '';
-        if ($('#specific_table').val() == 'franchise') {
-            user_type = 'franchise';
-        } else {
-            user_type = 'sub_franchise';
-        }
-
+    function fetch_recharge_package(user_type) {
         $.ajax({
-            type: "post",
+            type: "POST",
             url: "<?= base_url('administrator/get_packages') ?>",
             data: {
                 "user_type": user_type
             },
             error: function(response) {},
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 var data = response.data;
                 var details = ' <option value="">Select Recharge Package</option>';
                 $.each(data, function(i, data) {

@@ -956,6 +956,7 @@ class Franchise extends CI_Controller
 
 		];
 		
+		// print_r($data);die();
 		echo json_encode($data);
 	}
 

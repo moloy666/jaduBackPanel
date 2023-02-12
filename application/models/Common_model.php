@@ -629,8 +629,13 @@ class Common_model extends CI_Model
     {
         $current_rev = $this->get_total_revenue_of_subfranchise($subfranchise_id);
         $last_rev = $this->get_total_revenue_of_last_month_of_sf($subfranchise_id);
-        $growth = (($current_rev - $last_rev) / $last_rev) * 100;
-        return (!empty($growth)) ? round($growth) : null;
+        if($current_rev > $last_rev){
+            $growth = (($current_rev - $last_rev) / $last_rev) * 100;
+            return (!empty($growth)) ? round($growth) : 0;
+        }
+        else{
+            return 0;
+        }
     }
 
     private function get_last_month_revenue($specific_id)
@@ -761,7 +766,7 @@ class Common_model extends CI_Model
         $this->db->order_by(field_created_at, value_sort_dir_desc);
         $query = $this->db->get(table_rate_per_km);
         $query = $query->result_array();
-        return $query[0][field_rate_per_km];
+        return (!empty($query))?$query[0][field_rate_per_km]:[];
     }
 
     public function get_extra_percentage_km_by_user_type($user_type){

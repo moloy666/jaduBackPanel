@@ -4637,18 +4637,16 @@ class Admin extends CI_Controller
 
 	public function get_packages()
 	{
-		$user = $this->input->post('user_type');
-		$user_type = ($user == value_franchise) ? value_user_franchise : value_user_sub_franchise;
+		$user_type = $this->input->post('user_type');
 		$this->init_common_model();
-
-		// print_r($user);
-		// die();
-
 		$packages_final = [];
 
 		$packages = $this->Common_model->get_packages($user_type);
 		$extra_percentage = $this->Common_model->get_extra_percentage_km_by_user_type($user_type);
 		$rate_per_km = $this->Common_model->getRatePerKm();
+
+		// print_r($rate_per_km);
+		// die();
 
 		foreach ($packages as $key => $value) {
 			$price = $value[field_name] * $rate_per_km;
@@ -4658,6 +4656,8 @@ class Admin extends CI_Controller
 				key_name => $value[field_name] . " " . unit_km . " ( + " . $extra_percentage . " % additional )" . " " . STATIC_RUPEE_SIGN . $price,
 			];
 		}
+
+
 
 		if (!empty($packages_final)) {
 			$this->response(["success" => true, "message" => "found", "data" => $packages_final], 200);
