@@ -46,7 +46,7 @@
         <div class="report">
             <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p>
 
-            <p style="text-align:center"><strong>JaduRide</strong></p>
+            <p style="text-align:center"><strong>JaduRide <?=ucwords($user_type)?></strong></p>
             <p style="text-align:center"><strong>Progress Report Of <?= ucwords($user_details['name']); ?></strong></p>
             <div class="table-responsive ">
                 <table class="table table-striped table-bordered table-hover report_details" id="table" cellspacing="0" width="100%">
@@ -107,7 +107,7 @@
             <div class="col-md-12">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Sarathi Wise Data</div>
+                        <div class="ibox-title">Saathi Wise Data</div>
                     </div>
                     <div class="ibox-body">
                         <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">

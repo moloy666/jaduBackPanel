@@ -965,8 +965,11 @@ class Franchise extends CI_Controller
 
 		$this->init_common_model();
 		$this->init_admin_model();
+		$this->init_sarathi_model();
 
 		$user_id = $this->Common_model->get_user_id_by_specific_id($specific_id, $table);
+		$data['user_type'] = $this->Sarathi_model->get_user_type_by_user_id($user_id);
+		
 
 		if ($table == table_franchise) {
 			$data = [

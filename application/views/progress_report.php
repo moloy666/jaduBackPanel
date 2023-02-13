@@ -71,7 +71,7 @@
                     <tr>
                         <td>
                             <div>
-                                <div class="m-b-5">Registered Subfranchise</div>
+                                <div class="m-b-5">Registered Franchise</div>
                                 <h2 class="m-b-5 font-strong totalsf"><?= $totalFranchise ?></h2>
                             </div>
                         </td>
@@ -83,8 +83,8 @@
                         </td>
                         <td>
                             <div>
-                                <div class="m-b-5">Registered Subfranchise</div>
-                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSubFranchise ?></h2>
+                                <div class="m-b-5">Registered Saathi</div>
+                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSarathi ?></h2>
                             </div>
                         </td>
                     </tr>
@@ -124,7 +124,7 @@
             <div class="col-md-12">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Sarathi Wise Data</div>
+                        <div class="ibox-title">Saathi Wise Data</div>
                     </div>
                     <div class="ibox-body">
                         <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">

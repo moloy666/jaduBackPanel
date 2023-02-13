@@ -1298,7 +1298,7 @@ class Admin extends CI_Controller
 				$this->init_sarathi_model();
 				$data = $this->Sarathi_model->add_sarathi_details($user_id, $sarathi_id, $gid, $user_type_id, $name, $email, $mobile, $subfranchise_id, $access, $panel_access, $refferal_code);
 				if ($data) {
-					$this->response([key_success => true, key_message => "New Sarathi insert successfully.."], 200);
+					$this->response([key_success => true, key_message => "New Saathi insert successfully.."], 200);
 				} else {
 					$this->response([key_success => false, key_message => "Failed to insert details"], 200);
 				}

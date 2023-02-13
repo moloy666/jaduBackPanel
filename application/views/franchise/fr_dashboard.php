@@ -90,7 +90,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Sarathi</div>
+                        <div class="m-b-5">Total Saathi</div>
                         <h2 class="m-b-5 font-strong totalSarathi">0</h2>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
             <div class="col-md-6">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Sarathi Wise Data</div>
+                        <div class="ibox-title">Saathi Wise Data</div>
                     </div>
                     <div class="ibox-body">
                         <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
@@ -171,7 +171,7 @@
             <div class="col-md-6">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Sarathi Wise Data</div>
+                        <div class="ibox-title">Saathi Wise Data</div>
                     </div>
                     <div class="ibox-body">
                         <canvas id="myChart" style="width:100%;height: 24rem;"></canvas>
