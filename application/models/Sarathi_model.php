@@ -39,14 +39,14 @@ class Sarathi_model extends CI_Model
         }
     }
 
-    public function condition_to_get_sarathi()
-    { // display sarathi list
+    public function condition_to_get_sarathi(){ // display sarathi list
 
         $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status . ',' . table_sarathi . '.' . field_subfranchise_id.', sarathi.refferal_code');
         $this->db->from(table_users);
         $this->db->join(table_sarathi, table_users . '.' . field_uid . '=' . table_sarathi . '.' . field_user_id);
-        $this->db->where_not_in(table_users . '.' . field_status, const_deleted);
         $this->db->where(table_users . '.' . field_type_id, value_user_sarathi);
+        $this->db->where_not_in(table_users . '.' . field_status, const_deleted);
+        $this->db->where_not_in(table_users.'.'.field_name, "");
     }
 
     public function get_sarathi_details($subfranchise_id)
@@ -209,6 +209,7 @@ class Sarathi_model extends CI_Model
         $this->db->join(table_users . ' as u', 's.user_id = u.uid');
         $this->db->where('u.status', const_active);
         $this->db->where('u.type_id', 'user_sarathi');
+        $this->db->where_not_in('u.name', "");
         $query = $this->db->get();
         $query = $query->result_array();
         foreach ($query as $key => $value) {
@@ -359,19 +360,6 @@ class Sarathi_model extends CI_Model
         return (!empty($query)) ? $query : [];
     }
 
-    // public function get_sarathi_details_by_user_id($user_id){
-    //     $query=$this->db->select('u.uid as user_id, u.name, u.email, u.mobile, u.status, s.sub_franchise_id')
-    //          ->from('users as u')->join('sarathi as s', 'u.uid=s.user_id')
-    //          ->where('u.uid', $user_id)
-    //          ->where_not_in('u.status', const_deleted)->get();
-    //     $query=$query->row();
-    //     // foreach($query as $i=>$val){
-    //         // $sf_id=$val['sub_franchise_id'];
-    //         $sf_id=$query->sub_franchise_id;
-    //         $query->subfranchise=$this->get_subfranchise_name_by_id($sf_id);
-    //     // }
-    //     return(!empty($query))?$query:[];
-    // }
 
     public function get_user_type_by_user_id($user_id){
         $query = $this->db->select('ut.name as user_type')
@@ -379,6 +367,7 @@ class Sarathi_model extends CI_Model
         ->join('users as u', 'ut.uid=u.type_id')
         ->where('u.uid', $user_id)->get();
         $query=$query->result_array();
+        if($query[0]['user_type']=='sarathi') return 'saathi';
         return(!empty($query))?$query[0]['user_type']:null;
     }
 

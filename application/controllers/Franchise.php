@@ -860,7 +860,7 @@ class Franchise extends CI_Controller
 							$this->response([key_success => true, key_message => "User authentication successfull", key_redirect_to => base_url('subfranchise/dashboard')], 200);
 						}
 					} else {
-						$this->response([key_success => false, key_message => "Invaild Email or Password! ".$currentStatus], 200);
+						$this->response([key_success => false, key_message => "Invaild Email or Password! "], 200);
 					}
 				}
 			} else {
@@ -1336,11 +1336,6 @@ class Franchise extends CI_Controller
 		$data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
 		$data['user_type'] = $this->Sarathi_model->get_user_type_by_user_id($user_id);
 
-		// $this->load_header();
-		// $this->load_sidebar();
-		// $this->load->view('sarathi/download_recharge_history', $data);
-		// $this->load_footer();
-
 		$name = 'recharge_history_' . time();
 		$mpdf = new \Mpdf\Mpdf();
 		$html = $this->load->view('sarathi/download_recharge_history', $data, true);
@@ -1348,27 +1343,4 @@ class Franchise extends CI_Controller
 		$mpdf->Output($name . ".pdf", "D");
 	}
 
-	// public function display_driver_details($user_id)
-	// {
-	// 	if ($this->is_user_logged_in()) {
-	// 		$this->init_driver_model();
-	// 		$this->init_admin_model();
-
-	// 		$data['data'] = $this->Driver_model->display_driver_details($user_id);
-	// 		$specific_id = $this->Admin_model->get_specific_id_by_uid($user_id, table_driver);
-
-	// 		$data['ride_history'] = $this->Admin_model->get_driver_ride_history($specific_id);
-	// 		$data['companion'] = 'Customer';
-
-	// 		$data['recharge_history'] =  $this->Driver_model->get_recharge_history_of_driver($user_id);
-
-
-	// 		$this->load_header();
-	// 		$this->load_sidebar();
-	// 		$this->load->view('driver_details', $data);
-	// 		$this->load_footer();
-	// 	} else {
-	// 		redirect(base_url());
-	// 	}
-	// }
 }

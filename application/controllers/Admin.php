@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 // require_once APPPATH.'libraries/vendor/swiftmailer/lib/swift_required.php';
-// require_once APPPATH.'libraries/vendor/autoload.php';
+require_once APPPATH.'libraries/vendor/autoload.php';
 
 class Admin extends CI_Controller
 {
@@ -712,8 +712,6 @@ class Admin extends CI_Controller
 
 	public function add_admin()
 	{
-
-
 		$missing_key = [];
 		$input_data = [];
 		$admin_data = [];
@@ -726,10 +724,9 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
-		$password = md5(trim($this->input->post(param_mobile)));
 
 		$this->init_common_model();
-		// $password = $this->Common_model->randomPassword();
+		$password = $this->Common_model->randomPassword();
 
 		$permission_ids = $this->input->post('permission');
 		$panel_lists_ids = $this->input->post('panel_list');
@@ -781,7 +778,6 @@ class Admin extends CI_Controller
 			$this->response([key_success => false, key_message => $missing_string . " not given!"], 200);
 		} else {
 
-			$this->init_common_model();
 			$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, 'user_admin');
 			$email_exist = $this->Common_model->is_this_value_exist($email, field_email, table_users, 'user_admin');
 			if (!empty($mobile_exist)) {
@@ -796,33 +792,19 @@ class Admin extends CI_Controller
 			$this->init_admin_model();
 			$is_added = $this->Admin_model->add_admin_details($user_id, $user_type_id, $input_data, $admin_data, $access, $panel_access);
 
-			// $this->init_mail_model();
-			// $this->Mail_model->send_mail($email, $password);
-
-			$usermail = $email;
-			$emailsubject = "JaduRide Login Password : " . $password;
-			$dataMessage = "<p>
-							Hi, User <br/>
-							Your JaduRide Login Password is $password. <br/>
-							<i>Note: Do not share this email with anyone.</i> <br/><br/>
-							Thanks <br/>
-							Regards <br/>
-							<a href='" . base_url() . "'>JaduRide</a>
-						</p>";
-
-			// $send_email = $this->custom_email->sendMail($emailsubject, $dataMessage, $usermail);
+			$this->init_mail_model();
+			$this->Mail_model->send_mail($email, $password);
 
 			if ($is_added) {
-				$this->response([key_success => true, key_message => "New Admin added Successfully " . $send_email], 200);
+				$this->response([key_success => true, key_message => "New Admin added Successfully "], 200);
 			} else {
-				$this->response([key_success => false, key_message => "Failed to add New Admin " . $send_email], 200);
+				$this->response([key_success => false, key_message => "Failed to add New Admin "], 200);
 			}
 		}
 	}
 
 	public function update_admin()
 	{
-
 		$user_id = $this->input->post(param_id);
 		$name = trim($this->input->post(param_name));
 		$mobile = trim($this->input->post(param_mobile));
@@ -1964,7 +1946,6 @@ class Admin extends CI_Controller
 
 	public function add_franchise()
 	{
-
 		$this->init_uid_server_model();
 		$user_id = $this->Uid_server_model->generate_uid(KEY_USER);
 		$franchise_id = $this->Uid_server_model->generate_uid(KEY_FRANCHISE);
@@ -1972,8 +1953,10 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
-		$password = md5(trim($this->input->post(param_mobile)));
 		$admin_id = $this->input->post(param_specific_id);
+
+		$this->init_common_model();
+		$password = $this->Common_model->randomPassword();
 
 		$pincode = $this->input->post(param_pincode);
 		$address = $this->input->post(param_address);
@@ -2034,7 +2017,6 @@ class Admin extends CI_Controller
 			if (strlen($name) < 3) {
 				$this->response([key_success => false, key_message => "Name should contain minimum 3 characters"], 200);
 			} else {
-				$this->init_common_model();
 				$user_type_id = $this->Common_model->get_user_type_id_by_user_type_name(user_type_franchise);
 
 				$mobile_exist = $this->Common_model->is_this_value_exist($mobile, field_mobile, table_users, $user_type_id);
@@ -2050,6 +2032,10 @@ class Admin extends CI_Controller
 				}
 				$this->init_franchise_model();
 				$data = $this->Franchise_model->add_franchise_details($user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $admin_id, $access, $panel_access, $address_data);
+
+				$this->init_mail_model();
+				$this->Mail_model->send_mail($email, $password);
+
 				if ($data) {
 					$this->response([key_success => true, key_message => "Data insert successfull"], 200);
 				} else {
@@ -2328,9 +2314,11 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
-		$password = md5(trim($this->input->post(param_mobile)));
 		$permission_ids = $this->input->post(param_permission);
 		$panel_lists_ids = $this->input->post(param_panel_list);
+
+		$this->init_common_model();
+		$password = $this->Common_model->randomPassword();
 
 		$pincode = $this->input->post(param_pincode);
 		$address = $this->input->post(param_address);
@@ -2425,6 +2413,10 @@ class Admin extends CI_Controller
 				}
 				$this->init_sub_franchise_model();
 				$data = $this->Subfranchise_model->add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel_access, $address_data, $specific_id);
+
+				$this->init_mail_model();
+				$this->Mail_model->send_mail($email, $password);
+
 				if ($data) {
 					$this->response([key_success => true, key_message => "Data insert successfully"], 200);
 				} else {

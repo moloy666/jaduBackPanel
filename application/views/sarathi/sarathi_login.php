@@ -133,9 +133,9 @@
                     if (data.success) {
                         location.href = data.redirect_to;
 
-                        toast(data.message);
-                        $('#box_verify').show();
-                        $('#otp_box').show();
+                        // toast(data.message);
+                        // $('#box_verify').show();
+                        // $('#otp_box').show();
                     } else {
 
                         toast(data.message);

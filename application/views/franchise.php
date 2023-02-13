@@ -716,6 +716,9 @@
                 $.ajax({
                     url: "<?= base_url('administrator/add_franchise') ?>",
                     type: "post",
+                    beforeSend:function(){
+                        $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
+                    },
                     data: {
                         "name": name,
                         "email": email,
@@ -731,6 +734,9 @@
                         "pincode": pincode
                     },
                     async: false,
+                    complete:function(){
+                        $('#btn_add_data').html(`Add New Franchise`);
+                    },
                     success: function(data) {
                         // console.log(data);
                         if (data.success) {

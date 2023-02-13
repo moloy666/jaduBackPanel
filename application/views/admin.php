@@ -521,14 +521,20 @@
 
       if (flag == 0) {
         $.ajax({
-          url: "<?= base_url('Admin/add_admin') ?>",
+          url: "<?= base_url('administrator/add_admin') ?>",
           type: "post",
+          beforeSend:function(){
+            $('#btn_add_data').html(`<img src="<?=base_url('assets/images/loader3.svg')?>" width="30px">`);
+          },
           data: {
             "name": name,
             "mobile": mobile,
             "email": email,
             "permission": permission,
             "panel_list": panel_list
+          },
+          complete:function(){
+            $('#btn_add_data').html('Add New Admin');
           },
           success: function(data) {
             // console.log(data);

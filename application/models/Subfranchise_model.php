@@ -164,7 +164,7 @@ class Subfranchise_model extends CI_Model
             field_uid => $subfranchise_id,
             field_franchise_id => $franchise_id,
             field_user_id => $user_id,
-            field_password => $password,
+            field_password => md5($password),
             field_created_by=> $specific_id,
             field_created_at => date(field_date),
             field_modified_at => date(field_date)

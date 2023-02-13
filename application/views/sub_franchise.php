@@ -176,7 +176,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_add_modal">Close</button>
-                    <button class="btn btn-success" id="btn_add_data">Add New Sub-Franchise</button>
+                    <button class="btn btn-success" id="btn_add_data">Add New Sub Franchise</button>
                 </div>
             </div>
         </div>
@@ -718,6 +718,9 @@
                 $.ajax({
                     url: "<?= base_url('administrator/add_sub_franchise') ?>",
                     type: "post",
+                    beforeSend:function(){
+                        $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
+                    },
                     data: {
                         "name": name,
                         "email": email,
@@ -734,6 +737,9 @@
                         "specific_id": admin_id,
                     },
                     async: false,
+                    complete:function(){
+                        $('#btn_add_data').html(`Add New Sub Franchise`);
+                    },
                     success: function(data) {
                         if (data.success) {
                             toast(data.message, "center");

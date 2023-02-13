@@ -201,7 +201,7 @@
                 <div class="form-group">
                   <select class="form-control title" id="edit_panel_access_list" multiple>
                     <option value="0">Select Management </option>
-                   
+
                   </select>
                 </div>
               </div>
@@ -358,7 +358,7 @@
       get_user_panel_access(id);
     }
 
-    function get_user_panel_access(id){
+    function get_user_panel_access(id) {
       $.ajax({
         type: "POST",
         url: "<?= base_url('administrator/get_user_panel_access') ?>",
@@ -369,7 +369,7 @@
           console.log(response);
         },
         success: function(response) {
-          let permission=response.data.permission;
+          let permission = response.data.permission;
           let data = permission.split(",");
           // console.log(data);
           $('#edit_panel_access_list').val('');
@@ -496,8 +496,8 @@
 
 
     function download_recharge_history(user_id) {
-            var url = `<?= base_url('admin/download_sarathi_recharge_history/')?>${user_id}`;
-            window.open(url, '_blank');
+      var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
+      window.open(url, '_blank');
     }
 
     // status change
@@ -566,7 +566,7 @@
       //   toast("Select Panel Access", "center");
       // }
 
-      let user_type = '<?=$this->session->userdata(field_user_type)?>';
+      let user_type = '<?= $this->session->userdata(field_user_type) ?>';
 
       if (flag == 0) {
         $.ajax({
@@ -578,8 +578,8 @@
             "email": email,
             "mobile": mobile,
             "permission": permission,
-            'panel_list':panel_list,
-            'user_type':user_type
+            'panel_list': panel_list,
+            'user_type': user_type
           },
           success: function(data) {
             // console.log(data);
@@ -640,6 +640,9 @@
         $.ajax({
           url: "<?= base_url('Admin/add_sarathi') ?>",
           type: "post",
+          beforeSend: function() {
+            $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
+          },
           data: {
             "name": name,
             "email": email,
@@ -649,6 +652,9 @@
             "panel_list": panel_list
           },
           async: false,
+          complete: function() {
+            $('#btn_add_data').html(`Add New Franchise`);
+          },
           success: function(data) {
             console.log(data)
             if (data.success) {

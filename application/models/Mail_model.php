@@ -10,7 +10,7 @@ class Mail_model extends CI_Model
     public function send_mail($email, $password)
     {
         $usermail = $email;
-        $emailsubject = "JaduRide Login Password : " . $password;
+        $emailsubject = "JaduRide Login Password : ";
         $dataMessage = "<p>
                             Hi, User <br/>
                             Your JaduRide Login Password is $password. <br/>

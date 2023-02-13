@@ -121,7 +121,7 @@ class Franchise_model extends CI_Model
         $franchise_data = [
             field_uid => $franchise_id,
             field_user_id => $user_id,
-            field_password => $password,
+            field_password => md5($password),
             field_created_at => date(field_date),
             field_modified_at => date(field_date),
             field_created_by => $admin_id

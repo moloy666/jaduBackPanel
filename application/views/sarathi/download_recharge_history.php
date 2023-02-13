@@ -28,8 +28,9 @@
                     <div class="ibox-head">
                        
                         <p style="text-align:center;"><img src="./assets/images/logos/logo-l.png" alt=""></p>
-                        <p style="text-align:center;"><strong> JaduRide <?=ucwords(@$user_type)?></strong></p>
+                        <p style="text-align:center;"><strong> JaduRide <?=ucwords($user_type)?></strong></p>
                         <p style="text-align:center;"><strong> Recharge History Of <?=ucwords($sarathi)?></strong></p>
+                        <!-- also for franchise and subfranchise -->
                     </div>
                     <div class="ibox-body">
                         <table class="table table-striped table-bordered table-hover" id="" cellspacing="0" width="100%">
@@ -74,7 +75,7 @@
                                     }
                                 } else {
                                     echo "<tr>
-                                    <td colspan='6'>Recharge History Not Available</td>
+                                    <td colspan='7'>Recharge History Not Available</td>
                                     </tr>";
                                 }
                                 ?>

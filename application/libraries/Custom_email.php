@@ -1,5 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 error_reporting(0);
+
 /**
  * CodeIgniter
  *
@@ -42,22 +43,32 @@ class Custom_email
     public function sendMail($emailsubject, $dataMessage, $mailid)
     {
 
-        //   Create the transport
-        $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 587, 'tls')
-            ->setUsername('moloy@v-xplore.com')
-            ->setPassword('moloyPRADHAN20998');
+        // $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 587, 'tls')
+        //     ->setUsername('moloy@v-xplore.com')
+        //     ->setPassword('moloyPRADHAN20998');
 
-        // Create the mailer
-        $mailer = Swift_Mailer::newInstance($transport);
-        $messages = Swift_Message::newInstance('Subject')
-            ->setFrom(array('moloy@v-xplore.com' => 'Subject'))
-            ->setTo(array($mailid => 'Add Recipients'))
+        // $mailer = Swift_Mailer::newInstance($transport);
+        // $messages = Swift_Message::newInstance('Subject')
+        //     ->setFrom(array('moloy@v-xplore.com' => 'Subject'))
+        //     ->setTo(array($mailid => 'Add Recipients'))
+        //     ->setSubject($emailsubject)
+        //     ->setBody($dataMessage, 'text/html');
+        // $result = $mailer->send($messages);
+        
+
+
+        $transport = new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls');
+        $transport->setUsername('moloy@v-xplore.com')->setPassword('moloyPRADHAN20998');
+        $mailer = new Swift_Mailer($transport);
+        $message = new Swift_Message('Subject');
+        $message
+            ->setFrom(['moloy@v-xplore.com' => 'JaduRide'])
+            ->setTo([$mailid => 'Recipient'])
             ->setSubject($emailsubject)
             ->setBody($dataMessage, 'text/html');
 
-        //    Send the message
-        $result = $mailer->send($messages);
-        // $message = '';
+        $result = $mailer->send($message);
+
         if ($result) {
             return "success";
         }

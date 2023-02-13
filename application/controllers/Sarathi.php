@@ -905,11 +905,7 @@ class Sarathi extends CI_Controller
         $this->init_sarathi_model();
         $data['sarathi'] = $this->Sarathi_model->get_user_name_by_id($user_id);
         $data['sarathi_data'] = $this->Sarathi_model->get_recharge_histiry_of_sarathi($user_id);
-
-        // $this->load_header();
-        // $this->load_sidebar();
-        // $this->load->view('sarathi/download_recharge_history', $data);
-        // $this->load_footer();
+        $data['user_type'] = $this->Sarathi_model->get_user_type_by_user_id($user_id);
 
         $name = 'recharge_history_' . time();
         $mpdf = new \Mpdf\Mpdf();

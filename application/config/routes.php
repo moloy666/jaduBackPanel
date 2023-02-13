@@ -302,6 +302,7 @@ $route['administrator/download_progress_report/(:any)'] = 'Admin/download_progre
 $route['administrator/display_excess_percentage'] = 'Admin/display_excess_percentage';
 $route['administrator/display_rate_per_km'] = 'Admin/display_rate_per_km';
 $route['administrator/save_kilometer_details'] = 'Admin/save_kilometer_details';
+$route['administrator/add_admin'] = 'Admin/add_admin';
 
 //////////////////////////////////////////////////////////////////////////////
 
