@@ -29,7 +29,9 @@
                     $('#table_details').html(str);
                     $('#table').dataTable();
                 } else {
-                    console.log(response);
+                    // console.log(response);
+                    $('#table').dataTable();
+
                 }
             },
         });

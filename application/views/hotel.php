@@ -1,6 +1,6 @@
 <style>
   .title {
-    text-transform: capitalize;
+    text-transform: uppercase;
   }
 </style>
 
@@ -369,77 +369,7 @@
       }
     });
 
-    // add new user
-
-    // $('#add_data_form').on('submit', function(e) {
-
-    //   e.preventDefault();
-
-    //   let name = $('#add_name').val();
-    //   let email = $('#add_email').val();
-    //   let mobile = $('#add_mobile').val();
-
-    //   let permission = $('#admin_access_list').val();
-
-    //   let panel_list = $('#panel_access_list').val();
-
-    //   let flag = 0;
-
-    //   if (name.length < 3) {
-    //     flag = 1;
-    //     toast("Name should contain atleast three letters", "center");
-    //   }
-
-    //   if (mobile.length != 10) {
-    //     flag = 1;
-    //     toast("Mobile number must contain 10 digit", "center");
-    //   }
-
-    //   if (email == '') {
-    //     flag = 1;
-    //     toast("Email id is required", "center");
-    //   }
-
-    //   if (permission == '') {
-    //     flag = 1;
-    //     toast("Select Management", "center");
-    //   }
-
-    //   if (panel_list == '') {
-    //     flag = 1;
-    //     toast("Select Access Of Panel", "center");
-    //   }
-
-    //   if (flag == 0) {
-    //     $.ajax({
-    //       url: "<?= base_url('Admin/add_admin') ?>",
-    //       type: "post",
-    //       data: {
-    //         "name": name,
-    //         "mobile": mobile,
-    //         "email": email,
-    //         "permission": permission,
-    //         "panel_list": panel_list
-    //       },
-    //       success: function(data) {
-    //         console.log(data);
-    //         if (data.success) {
-    //           toast(data.message, "center");
-    //           $('#close_add_modal').click();
-    //           $('#add_data_form')[0].reset();
-    //           get_admin_details();
-    //         } else {
-    //           toast(data.message, "center");
-    //         }
-    //       },
-    //       error: function(data) {
-    //         console.log(data);
-
-    //       },
-    //     });
-    //   }
-    // });
-
+    
     //delete 
 
     $('#table_details').on('click', '.delete', function() {

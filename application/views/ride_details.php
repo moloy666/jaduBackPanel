@@ -22,6 +22,7 @@
                                     <option value="">Select Ride Stage</option>
                                     <option value="completed">Completed</option>
                                     <option value="started">Started</option>
+                                    <option value="cancelled">Cancelled</option>
                                 </select>
                             </div>
 

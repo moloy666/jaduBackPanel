@@ -465,6 +465,7 @@ class Common_model extends CI_Model
         $query = $this->db->get();
         $query = $query->result_array();
         foreach ($query as $key => $value) {
+            $query[$key]['name'] = strtoupper($value['name']);
             $query[$key]['joined'] = date("d/m/Y", strtotime($value['joined']));
             $query[$key]['totalDrivers'] = $this->getDriversCount($value['id']);
 

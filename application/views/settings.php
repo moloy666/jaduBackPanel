@@ -2,7 +2,7 @@
     .setting-box {
         height: 70px;
         text-align: center;
-        
+
     }
 
     .settings-left-box {
@@ -23,18 +23,17 @@
         height: 480px;
     }
 
-    .scroll-container{
+    .scroll-container {
         height: calc(100vh - 76px);
         overflow-y: auto;
     }
-   
 </style>
 
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
     <div class="page-content fade-in-up" style="padding:10px;">
         <div class="row" id="accordion">
-            <div class="col-md-3" >
+            <div class="col-md-3">
                 <div class="row scroll-container">
 
                     <!-- excess_percentage -->
@@ -47,7 +46,7 @@
                         <div class="shadow-lg bg-white rounded settings-left-box">Rate Per KM</div>
                     </div>
 
-                    <!-- delivery guidelines --> 
+                    <!-- delivery guidelines -->
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#delivery_guideline" aria-expanded="false" aria-controls="delivery_guide" id="delivery_guidelines">
                         <div class="shadow-lg bg-white rounded settings-left-box">Delivery Guidelines</div>
                     </div>
@@ -79,7 +78,7 @@
                     <!-- splash data starts -->
 
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#sarathi_splash_screen" aria-expanded="false" aria-controls="sarathi_splash_screen" id="sarathi">
-                        <div class="shadow-lg bg-white rounded settings-left-box sarathi_splash_screen">Sarathi Splash Screen</div>
+                        <div class="shadow-lg bg-white rounded settings-left-box sarathi_splash_screen">Saathi Splash Screen</div>
                     </div>
 
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#driver_splash_screen" aria-expanded="false" aria-controls="driver_splash_screen" id="driver">
@@ -93,7 +92,7 @@
                     <!-- privacy policy starts -->
 
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#sarathi_privacy_policy" aria-expanded="false" aria-controls="sarathi_privacy_policy" id="sarathi_privacy">
-                        <div class="shadow-lg bg-white rounded settings-left-box sarathi_privacy_policy">Sarathi Privacy Policy</div>
+                        <div class="shadow-lg bg-white rounded settings-left-box sarathi_privacy_policy">Saathi Privacy Policy</div>
                     </div>
 
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#driver_privacy_policy" aria-expanded="false" aria-controls="driver_privacy_policy" id="driver_privacy">
@@ -107,7 +106,7 @@
                     <!-- terms & condition starts -->
 
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#sarathi_terms_condition" aria-expanded="false" aria-controls="sarathi_terms_condition" id="sarathi_terms">
-                        <div class="shadow-lg bg-white rounded settings-left-box sarathi_terms_condition">Sarathi Terms & Condition</div>
+                        <div class="shadow-lg bg-white rounded settings-left-box sarathi_terms_condition">Saathi Terms & Condition</div>
                     </div>
 
                     <div class="col-md-12 setting-box mt-3" data-toggle="collapse" data-target="#driver_terms_condition" aria-expanded="false" aria-controls="driver_terms_condition" id="driver_terms">
@@ -150,7 +149,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="excess_percentage_details" class=''>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -174,7 +173,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="rate_km_details" class=''>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -183,9 +182,9 @@
                 </div>
 
 
-                 <!-- ===== Manage Helpline Number ======= -->
+                <!-- ===== Manage Helpline Number ======= -->
 
-                 <div id="manage_helpline_number" class="collapse" data-parent="#accordion">
+                <div id="manage_helpline_number" class="collapse" data-parent="#accordion">
                     <div class="ibox color-black widget-stat">
                         <div class="ibox-head">
                             <div class="ibox-title">Manage Helpline Number</div>
@@ -237,7 +236,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="sosNumberUser" class=''>
-                                        
+
                                     </tbody>
                                 </table>
 
@@ -264,7 +263,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="razorPayKey" class='key'>
-                                        
+
                                     </tbody>
                                 </table>
 
@@ -289,7 +288,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="googleApiKey" class='key'>
-                                        
+
                                     </tbody>
                                 </table>
 
@@ -304,7 +303,7 @@
                 <div id="sarathi_splash_screen" class="collapse" data-parent="#accordion">
                     <div class="ibox color-black widget-stat">
                         <div class="ibox-head">
-                            <div class="ibox-title">Sarathi Splash Screen</div>
+                            <div class="ibox-title">Saathi Splash Screen</div>
 
                             <div class="float-right">
                                 <button class="btn btn-sm btn-primary" id="btn_add_splash" data-toggle="modal" data-target="#addSplh" data-toggle="tooltip" data-placement="bottom" title="Add New Splash">
@@ -407,7 +406,7 @@
                 </div>
 
 
-               
+
 
                 <!-- privacy policy starts -->
 
@@ -705,8 +704,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="hidden" id="kilometer_id"  class="form-control">
-                        <input type="hidden" id="kilometer_table"  class="form-control">
+                        <input type="hidden" id="kilometer_id" class="form-control">
+                        <input type="hidden" id="kilometer_table" class="form-control">
                     </div>
 
                     <div class="col-md-12">

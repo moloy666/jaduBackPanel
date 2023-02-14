@@ -138,22 +138,33 @@
         var yValues = driverCount;
 
         new Chart("myChart", {
-            type: "line",
+            type: "bar",
             data: {
                 labels: xValues,
                 datasets: [{
-                    backgroundColor: "rgba(255, 255, 255,1.0)",
-                    borderColor: "rgba(244, 3, 252,1)",
+                    label: "Driver ",
+                    backgroundColor: "#00A78F",
+                    // backgroundColor: "rgba(255, 255, 255, 1.0)",
+                    // borderColor: "rgba(244, 3, 252,1)",
+                    borderColor: "#00A78F",
                     data: yValues
+
                 }]
             },
             options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false 
+                        }
+                    }]
+                },
                 legend: {
                     display: false
                 },
                 title: {
                     display: true,
-                    text: "Driver Number Of Sarathi"
+                    text: "Driver Count Of Saathi"
                 }
             }
         });

@@ -1,6 +1,6 @@
 <style>
     .title {
-        text-transform: capitalize;
+        text-transform: uppercase;
     }
 </style>
 
@@ -19,7 +19,7 @@
                     <h5 class="text-primary ml-3" id="sarathi_name">
                         <?php
                         foreach ($sarathi_data as $data) {
-                            echo ucwords($data->name);
+                            echo strtoupper($data->name);
                             $sarathi_id = $data->sarathi_id;
                         }
                         ?>
@@ -484,7 +484,7 @@
                     $.each(user, function(i) {
                         str += `<tr>
                         <td>${i+1}</td>
-                        <td><a href="<?= base_url("administrator/pending_driver_document/") ?>${user[i].uid}">${user[i].name}</a></td>
+                        <td class="title"><a href="<?= base_url("administrator/pending_driver_document/") ?>${user[i].uid}">${user[i].name}</a></td>
                         <td>${user[i].email}</td>
                         <td>${user[i].mobile}</td>
                         </tr>`;

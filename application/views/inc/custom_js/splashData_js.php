@@ -88,7 +88,7 @@
 					
 					if(splash_for=='sarathi'){
 						$('#sarathiSplash').html(data);
-                        $('.ibox-title').text('Sarathi Splash Data');
+                        $('.ibox-title').text('Saathi Splash Data');
 					}
 					if(splash_for=='driver'){
 						$('#driverSplash').html(data);

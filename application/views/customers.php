@@ -1,6 +1,6 @@
 <style>
     .title{
-        text-transform: capitalize;
+        text-transform: uppercase;
     }
 </style>
 <body onload="get_customers_details()">

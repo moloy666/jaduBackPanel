@@ -1,7 +1,7 @@
 <style>
-    .title {
-        text-transform: capitalize;
-    }
+  .title {
+    text-transform: uppercase;
+  }
 </style>
 
 <body>

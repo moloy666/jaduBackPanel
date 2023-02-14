@@ -15,8 +15,8 @@
                     ?>
              </div>
              <div class="admin-info">
-                 <div class="font-strong"><?= ucwords($this->session->userdata(field_name)) ?></div>
-                 <small><?= ucwords($this->session->userdata(field_user_type)) ?></small>
+                 <div class="font-strong"><?= strtoupper($this->session->userdata(field_name)) ?></div>
+                 <small><?= strtoupper($this->session->userdata(field_user_type)) ?></small>
              </div>
          </div>
 
@@ -446,6 +446,40 @@
              <?php
                 }
                 ?>
+                
+             <?php
+                if ($this->session->userdata(field_type_id) == "user_admin") {
+                    if ($this->session->userdata(session_reports) == "active" || $this->session->userdata(session_reports) == const_active) { ?>
+                     <li>
+                         <a href="javascript:;"><i class="sidebar-item-icon fa fa-users"></i>
+                             <span class="nav-label">Reports</span><i class="fa fa-angle-left arrow"></i></a>
+                         <ul class="nav-2-level collapse">
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/resolve_reports') ?>">Resolved Reports</a>
+                             </li>
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/unresolve_reports') ?>">Unresolved Reports</a>
+                             </li>
+                         </ul>
+                     </li>
+                 <?php
+                    }
+                } else { ?>
+                 <li>
+                     <a href="javascript:;"><i class="sidebar-item-icon fa fa-users"></i>
+                         <span class="nav-label">Reports</span><i class="fa fa-angle-left arrow"></i></a>
+                     <ul class="nav-2-level collapse">
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/unresolve_reports') ?>">Unresolved Reports</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/resolve_reports') ?>">Resolved Reports</a>
+                         </li>
+                     </ul>
+                 </li>
+             <?php
+                }
+                ?>
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
@@ -491,39 +525,7 @@
                 }
                 ?>
 
-             <?php
-                if ($this->session->userdata(field_type_id) == "user_admin") {
-                    if ($this->session->userdata(session_reports) == "active" || $this->session->userdata(session_reports) == const_active) { ?>
-                     <li>
-                         <a href="javascript:;"><i class="sidebar-item-icon fa fa-users"></i>
-                             <span class="nav-label">Reports</span><i class="fa fa-angle-left arrow"></i></a>
-                         <ul class="nav-2-level collapse">
-                             <li>
-                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/resolve_reports') ?>">Resolved Reports</a>
-                             </li>
-                             <li>
-                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/unresolve_reports') ?>">Unresolved Reports</a>
-                             </li>
-                         </ul>
-                     </li>
-                 <?php
-                    }
-                } else { ?>
-                 <li>
-                     <a href="javascript:;"><i class="sidebar-item-icon fa fa-users"></i>
-                         <span class="nav-label">Reports</span><i class="fa fa-angle-left arrow"></i></a>
-                     <ul class="nav-2-level collapse">
-                         <li>
-                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/unresolve_reports') ?>">Unresolved Reports</a>
-                         </li>
-                         <li>
-                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/resolve_reports') ?>">Resolved Reports</a>
-                         </li>
-                     </ul>
-                 </li>
-             <?php
-                }
-                ?>
+
 
          </ul>
      </div>

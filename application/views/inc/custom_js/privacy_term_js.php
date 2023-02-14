@@ -79,7 +79,7 @@
                     let str = '';
 
                     if (for_app == 'sarathi_privacy_policy') {
-                        $('.ibox-title').text('Sarathi Privacy Policy');
+                        $('.ibox-title').text('Saathi Privacy Policy');
                         $('#sarathi_text_name_privacy').val(name);
                         CKEDITOR.instances['sarathi_text_value_privacy'].setData(value);
                     }
@@ -97,7 +97,7 @@
                     }
 
                     if (for_app == 'sarathi_terms_and_condition') {
-                        $('.ibox-title').text('Sarathi Terms & Condition');
+                        $('.ibox-title').text('Saathi Terms & Condition');
                         $('#sarathi_text_name_term').val(name);
                         CKEDITOR.instances['sarathi_text_value_term'].setData(value);
 

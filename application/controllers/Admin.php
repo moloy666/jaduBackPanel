@@ -2776,7 +2776,7 @@ class Admin extends CI_Controller
 		$this->init_customer_model();
 		$this->init_franchise_model();
 		$this->init_sub_franchise_model();
-		$specific_id = $this->input->post(param_id);	// sarathi specific id
+		$specific_id = $this->input->post(param_id);	// sarathi specific level user id
 
 		$data = [
 			'totalSarathi' => $this->Sarathi_model->get_total_sarathi(),
@@ -2787,7 +2787,7 @@ class Admin extends CI_Controller
 			],
 			'totalCustomers' => $this->Customers_model->get_total_customers($specific_id),
 			'totalFranchise' => $this->Franchise_model->get_total_franchise(),
-			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(), // Franchise specific id
+			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(), 
 			'totalCarRunning' =>  $this->Driver_model->get_total_car_running($specific_id),
 			'totalRevenue' => $this->Admin_model->get_total_revenue($specific_id),
 			'revenueStatus' => $this->Admin_model->get_revenue_status($specific_id),
@@ -2872,6 +2872,7 @@ class Admin extends CI_Controller
 		$sarathi_id = $this->input->post(param_id);
 		$this->init_driver_model();
 		$driverData = $this->Driver_model->getdriverData($sarathi_id);
+		
 		echo json_encode($driverData);
 	}
 

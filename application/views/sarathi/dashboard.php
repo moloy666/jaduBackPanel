@@ -3,11 +3,12 @@ foreach ($sarathi_data as $data) {
     $sarathi_id = $data->sarathi_id;
 }
 ?>
-<input type="hidden" value="<?= $sarathi_id ?>" id="sarathi_id">
-<input type="text" value="<?=$this->session->userdata(session_sarathi_user_id)?>" id="user_id">
+
 
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
+    <input type="hidden" value="<?= $sarathi_id ?>" id="sarathi_id">
+    <input type="hidden" value="<?= $this->session->userdata(session_sarathi_user_id) ?>" id="user_id">
 
     <div class="mt-2 row">
         <div class="col-lg-6">

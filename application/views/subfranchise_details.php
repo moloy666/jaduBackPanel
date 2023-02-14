@@ -1,6 +1,6 @@
 <style>
     .title {
-        text-transform: capitalize;
+        text-transform: uppercase;
     }
 </style>
 
@@ -16,10 +16,10 @@
                             <li class="breadcrumb-item active" aria-current="page">Saathi</li>
                         </ol>
                     </nav>
-                    <h5 class="text-primary ml-3" id="sarathi_name">Name :
+                    <h5 class="text-primary ml-3" id="sarathi_name">
                         <?php
                         foreach ($subfranchise_data as $data) {
-                            echo ucwords($data->name);
+                            echo strtoupper($data->name);
                             $subfranchise_id = $data->subfranchise_id;
                         }
                         ?>

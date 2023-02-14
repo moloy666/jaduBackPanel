@@ -43,7 +43,7 @@
                     details += `
                 <tr>
                 <td>${i+1}</td>
-                <td class="title">${data.version_for} </td>
+                <td class="uppercase">${data.version_for} </td>
                 <td>${data.name}</td>
                 <td>${data.code}</td>
                 <td class="uppercase">${data.is_skipable}</td>
@@ -81,7 +81,7 @@
                     details += `
                 <tr>
                 <td>${i+1}</td>
-                <td class="title">${data.version_for} </td>
+                <td class="uppercase">${data.version_for} </td>
                 <td>${data.name}</td>
                 <td>${data.code}</td>
                 <td class="uppercase">${data.is_skipable}</td>

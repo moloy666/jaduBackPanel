@@ -61,7 +61,7 @@
         success: function(response) {
             if (response.success) {
                 // console.log(response);
-                let data =response.data;
+                let data = response.data;
                 $('.totalKmPurchaseToday').text(data);
             } else {
                 // console.log(response);
@@ -73,63 +73,82 @@
     var driverName = [];
     var driverKmPurchased = [];
 
-    $.ajax({
-        url: "<?= base_url('administrator/driverData') ?>",
-        type: "POST",
-        data: {
-            "id": $('#sarathi_id').val()
-        },
-        success: function(response) {
-            let data = JSON.parse(response);
-            let html = '';
-            $.each(data, function(i) {
+    get_driver_data();
 
-                driverName.push(data[i].name);
-                driverKmPurchased.push(data[i].total_km_purchased);
+    function get_driver_data() {
+        let sarathi_id = $('#sarathi_id').val();
+        console.log(sarathi_id);
+        $.ajax({
+            url: "<?= base_url('administrator/driverData') ?>",
+            type: "POST",
+            data: {
+                "id": sarathi_id
+            },
+            success: function(response) {
+                // console.log(response);
+                let data = JSON.parse(response);
+                let html = '';
+                $.each(data, function(i) {
 
-                if(data[i].vehicle_name==null){
-                    data[i].vehicle_name='-';
-                }
+                    driverName.push(data[i].name);
+                    driverKmPurchased.push(data[i].total_km_purchased);
 
-                html += `<tr>
+                    if (data[i].vehicle_name == null) {
+                        data[i].vehicle_name = '-';
+                    }
+
+                    html += `<tr>
                     <td class="title"> ${data[i].name}</td>
                     <td> ${data[i].total_km_purchased} KM</td>
                     <td class="title text-center"> ${data[i].vehicle_name}</td>
                     <td> ${data[i].vehicle_number}</td>
                     <td> ${data[i].joined}</td>
                     </tr>`;
-            });
-            $('.driverRelatedDataTable').html(html);
-            $('#example-table').dataTable();
+                });
+                $('.driverRelatedDataTable').html(html);
+                $('#example-table').dataTable();
 
-            load_driver_chart();
-        },
-        error: function(response) {
-            console.log(response);
-        }
-    });
+                load_driver_chart();
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+    }
+
 
     function load_driver_chart() {
         var xValues = driverName;
         var yValues = driverKmPurchased;
 
         new Chart("myChart", {
-            type: "line",
-            title: {
-                text: "Driver Total kM Purchased"
-            },
+            type: "bar",
             data: {
                 type: 'column',
                 labels: xValues,
                 datasets: [{
-                    backgroundColor: "rgba(255, 255, 255,1.0)",
-                    borderColor: "rgba(244, 3, 252,1)",
-                    data: yValues
+                    label:'KM Purchased ',
+                    backgroundColor: "#00A78F",
+                    // backgroundColor: "rgba(255, 255, 255, 1.0)",
+                    // borderColor: "rgba(244, 3, 252,1)",
+                    borderColor: "#00A78F",
+                    data: yValues,
                 }]
             },
             options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false
+                        }
+                    }]
+                },
                 legend: {
                     display: false
+                },
+                title: {
+                    display: true,
+                    text: "Total KM Purchased"
                 },
             }
         });
@@ -137,15 +156,15 @@
 
 
     $.ajax({
-        type:"post",
-        url:"<?=base_url('admin/get_user_recharge_data')?>",
-        data:{
-            'id':$('#user_id').val()
+        type: "post",
+        url: "<?= base_url('admin/get_user_recharge_data') ?>",
+        data: {
+            'id': $('#user_id').val()
         },
-        error:function(response){
+        error: function(response) {
             console.log(response);
         },
-        success:function(response){
+        success: function(response) {
             // console.log(response);
         }
     });

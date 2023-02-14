@@ -22,7 +22,8 @@ class Driver_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function get_total_active_drivers($sarathi_id){
+    public function get_total_active_drivers($sarathi_id)
+    {
 
         if (!empty($sarathi_id)) {
             $this->db->where('d.sarathi_id', $sarathi_id);
@@ -55,7 +56,7 @@ class Driver_model extends CI_Model
 
     public function get_total_car_running($sarathi_id)
     {
-         if (!empty($sarathi_id)) {
+        if (!empty($sarathi_id)) {
             $this->db->where('d.sarathi_id', $sarathi_id);
         }
         $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
@@ -219,7 +220,7 @@ class Driver_model extends CI_Model
             return false;
     }
 
-    public function getDriverData($sarathi_id)
+    public function getdriverData($sarathi_id)
     {
 
         $this->db->select('u.name, u.created_at as joined, d.uid as id, d.user_id as userId, v.name as vehicle_name, 
@@ -228,7 +229,6 @@ class Driver_model extends CI_Model
         $this->db->from(table_driver . ' as d');
         $this->db->join(table_users . ' as u', 'd.user_id = u.uid', 'left');
         $this->db->join(table_vehicle_type . ' as v', 'v.uid = d.vehicle_type_id', 'left');
-        $this->db->where('d.working_status', const_active);
         $this->db->where('d.sarathi_id', $sarathi_id);
         $this->db->where_not_in('u.status', const_deleted);
         $query = $this->db->get();
@@ -236,7 +236,7 @@ class Driver_model extends CI_Model
         foreach ($query as $key => $value) {
             $query[$key]['joined'] = date("d/m/Y", strtotime($value['joined']));
         }
-        return (!empty($query))?$query:[];
+        return (!empty($query)) ? $query : [];
     }
 
 
@@ -302,7 +302,7 @@ class Driver_model extends CI_Model
                 }
             }
         }
-        return (!empty($data))?$data:[];
+        return (!empty($data)) ? $data : [];
     }
 
     public function get_driver_data_of_subfranchise($subfranchise_id)
@@ -327,7 +327,7 @@ class Driver_model extends CI_Model
                 }
             }
         }
-        return (!empty($data))?$data:[];
+        return (!empty($data)) ? $data : [];
     }
 
 
@@ -337,66 +337,69 @@ class Driver_model extends CI_Model
     {
         $query = $this->db->select('u.uid as user_id, u.name')->from('users as u')->join('driver as d', 'u.uid=d.user_id')->where('d.sarathi_id', $sarathi_id)->get();
         $query = $query->result_array();
-        return (!empty($query))?$query:[];
+        return (!empty($query)) ? $query : [];
     }
 
     public function get_sarathi_ids($subfranchise_id)
     {
         $query = $this->db->select(field_uid)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
         $query = $query->result_array();
-        return (!empty($query))?$query:[];
+        return (!empty($query)) ? $query : [];
     }
 
 
-    public function driver_progress($user_id){
-        $query=$this->db->select('u.name, u.email, u.mobile, d.vehicle_number, d.total_km_purchased, d.wallet_value, d.totalTravelled, d.totalRideTime, d.service_type_id, d.cabs_under_service_type')->from(table_users.' as u')->join(table_driver.' as d','u.uid=d.user_id')
-        ->where('u.uid', $user_id)->get();
+    public function driver_progress($user_id)
+    {
+        $query = $this->db->select('u.name, u.email, u.mobile, d.vehicle_number, d.total_km_purchased, d.wallet_value, d.totalTravelled, d.totalRideTime, d.service_type_id, d.cabs_under_service_type')->from(table_users . ' as u')->join(table_driver . ' as d', 'u.uid=d.user_id')
+            ->where('u.uid', $user_id)->get();
 
         $query = $query->result_array();
-        foreach($query as $i=>$val){
+        foreach ($query as $i => $val) {
             $query[$i]['ride'] = $this->get_ride_name_by_id($val['service_type_id']);
             $query[$i]['cab'] = $this->get_cab_name_by_id($val['cabs_under_service_type']);
         }
-        return(!empty($query))?$query[0]:[];
-
+        return (!empty($query)) ? $query[0] : [];
     }
 
-    private function get_ride_name_by_id($ride_id){
+    private function get_ride_name_by_id($ride_id)
+    {
         $query = $this->db->select(field_name)->where(field_uid, $ride_id)->get(table_ride_service_type);
         $query = $query->result_array();
-        return (!empty($query))?$query[0][field_name]:null;
+        return (!empty($query)) ? $query[0][field_name] : null;
     }
 
-    private function get_cab_name_by_id($cab_id){
+    private function get_cab_name_by_id($cab_id)
+    {
         $query = $this->db->select(field_name)->where(field_uid, $cab_id)->get(table_cabs_under_service_type);
         $query = $query->result_array();
-        return (!empty($query))?$query[0][field_name]:null;
+        return (!empty($query)) ? $query[0][field_name] : null;
     }
 
 
-    public function get_recharge_history_of_driver($user_id){
-        $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ','. field_paid_to_user_id . ','. field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status);
+    public function get_recharge_history_of_driver($user_id)
+    {
+        $this->db->select(field_recharge_amount . ',' . field_original_km . ',' . field_extra_km . ',' . field_created_at . ',' . field_paid_to_user_id . ',' . field_payment_mode . ',' . field_recharge_type . ',' . field_payment_status);
         $this->db->where(field_user_id, $user_id);
         // $this->db->where('DATE(created_at) = ', $date);
         $query = $this->db->get(table_recharge_history);
         $query = $query->result_array();
-        
+
         $final_arr = [];
         foreach ($query as $key => $value) {
             $paid_to_user_name = "";
-            if(!empty($value[field_paid_to_user_id])){
+            if (!empty($value[field_paid_to_user_id])) {
                 $paid_to_user_name = $this->get_user_name_by_id($value[field_paid_to_user_id]);
             }
-            if($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID){
+            if ($value[field_recharge_type] == STATIC_RECHARGE_TYPE_PAID) {
                 $final_arr[] = [
                     key_recharge_type => 'Paid',
                     'title' => 'Paid for booking',
-                    key_price=> $value[field_recharge_amount],                    
+                    key_price => $value[field_recharge_amount],
                     key_description => 'paid km' . ($value[field_original_km] + $value[field_extra_km]) . ' KM',
                     'transactionDate' => date("d\nM", strtotime($value[field_created_at])),
                     key_color_code => color_recharge_paid
                 ];
-            }else{
+            } else {
                 $final_arr[] = [
                     key_recharge_type => 'Received',
                     'title' => 'Recived',
@@ -410,9 +413,10 @@ class Driver_model extends CI_Model
         return (!empty($query)) ? $final_arr : [];
     }
 
-    public function get_user_name_by_id($user_id){
+    public function get_user_name_by_id($user_id)
+    {
         $query = $this->db->select(field_name)->where(field_uid, $user_id)->get(table_users);
         $query = $query->result_array();
-        return(!empty($query))?$query[0][field_name]:null;
-    }  
+        return (!empty($query)) ? $query[0][field_name] : null;
+    }
 }

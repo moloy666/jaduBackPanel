@@ -2,6 +2,8 @@
     .name {
         font-weight: bold;
         font-size: small;
+        text-transform: uppercase;
+
     }
 
     .background {
@@ -60,7 +62,7 @@
                 console.log(response);
             },
             success: function(response) {
-
+                console.log(response);
                 let data = response.data;
                 let details = '';
                 let customer_gender = '';

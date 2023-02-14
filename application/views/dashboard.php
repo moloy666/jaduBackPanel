@@ -1,11 +1,11 @@
 <div class="content-wrapper">
     <!-- START PAGE CONTENT-->
     <div class="d-flex justify-content-end">
-        <?php 
-        $table=$this->session->userdata(session_table);
+        <?php
+        $table = $this->session->userdata(session_table);
         if ($this->session->userdata(session_table) == value_administrator) { ?>
             <div class="form-group  mt-3">
-                <form action="<?= base_url('administrator/download_progress_report/'). $table ?>" method="post" target="_blank">
+                <form action="<?= base_url('administrator/download_progress_report/') . $table ?>" method="post" target="_blank">
                     <button type="submit" class="btn bgred ml-3 btnround">
                         Download Progress Report
                     </button>
@@ -183,6 +183,7 @@
         url: "<?= base_url('administrator/dashboardData') ?>",
         type: "GET",
         success: function(response) {
+            // console.log(response);
             let data = JSON.parse(response);
             $(".totalSarathi").text(data.totalSarathi);
 
@@ -244,24 +245,35 @@
         var yValues = driverCount;
 
         new Chart("myChart", {
-            type: "line",
+            type: "bar",
             data: {
                 labels: xValues,
                 culture: 'es',
                 datasets: [{
-                    backgroundColor: "rgba(255, 255, 255, 1.0)",
-                    borderColor: "rgba(244, 3, 252,1)",
+                    label: "Driver ",
+                    backgroundColor: "#00A78F",
+                    // backgroundColor: "rgba(255, 255, 255, 1.0)",
+                    // borderColor: "rgba(244, 3, 252,1)",
+                    borderColor: "#00A78F",
                     data: yValues
                 }]
             },
             options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false 
+                        }
+                    }]
+                },
                 legend: {
                     display: false
                 },
                 title: {
                     display: true,
-                    text: "Driver Number Of Saathi"
-                }
+                    text: "Driver Count Of Saathi"
+                },
+                
             }
         });
     }

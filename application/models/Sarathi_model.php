@@ -11,7 +11,9 @@ class Sarathi_model extends CI_Model
 
     public function get_total_sarathi()
     {
-        $this->db->select('s.uid')->from('sarathi as s')->join('users as u', 's.user_id=u.uid')->where_not_in('u.status', const_deleted)->get();
+        $this->db->select('s.uid')->from('sarathi as s')->join('users as u', 's.user_id=u.uid')
+        ->where_not_in('u.name', "")
+        ->where_not_in('u.status', const_deleted)->get();
         return $this->db->affected_rows();
     }
 
@@ -213,6 +215,7 @@ class Sarathi_model extends CI_Model
         $query = $this->db->get();
         $query = $query->result_array();
         foreach ($query as $key => $value) {
+            $query[$key]['name'] = strtoupper($value['name']);
             $query[$key]['joined'] = date("d/m/Y", strtotime($value['joined']));
             $query[$key]['totalDrivers'] = $this->getDriversCount($value['id']);
 
