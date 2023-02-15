@@ -1,6 +1,6 @@
 <style>
     .title {
-        text-transform: capitalize;
+        text-transform: uppercase;
     }
 </style>
 <script>
@@ -116,7 +116,7 @@
                 $.each(user, function(i) {
                     str += `<tr>
                         <td>${i+1}</td>
-                        <td><a href="<?= base_url("saathi/pending_driver_document/") ?>${user[i].uid}">${user[i].name}</a></td>
+                        <td class="title"><a href="<?= base_url("saathi/pending_driver_document/") ?>${user[i].uid}">${user[i].name}</a></td>
                         <td>${user[i].email}</td>
                         <td>${user[i].mobile}</td>
                         </tr>`;

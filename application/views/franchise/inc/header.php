@@ -160,7 +160,7 @@
                             <?php
                             }
                             ?>
-                            <span></span><?= ucwords($this->session->userdata(session_franchise_user_type)) ?><i class="fa fa-angle-down m-l-5"></i></a>
+                            <span></span><?= strtoupper($this->session->userdata(session_franchise_user_type)) ?><i class="fa fa-angle-down m-l-5"></i></a>
                             <?php  $user_type=$this->uri->segment(1);  ?>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="<?= base_url($user_type.'/profile') ?>"><i class="fa fa-user"></i>Profile</a>

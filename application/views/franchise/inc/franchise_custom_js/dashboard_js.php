@@ -197,7 +197,7 @@
 
         let user_level_type = '';
 
-        if ($('#specific_table').val() == 'franchise') {
+        if ($('#specific_table').val() == '<?=table_franchise?>') {
             user_level_type = 'franchise';
         } else {
             user_level_type = 'sub-franchise';

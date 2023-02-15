@@ -20,8 +20,8 @@
                     ?>
              </div>
              <div class="admin-info">
-                 <div class="font-strong"><?= ucwords($this->session->userdata('sarathi_name')) ?></div>
-                 <small>Saathi</small>
+                 <div class="font-strong"><?= strtoupper($this->session->userdata('sarathi_name')) ?></div>
+                 <small>SAATHI</small>
              </div>
          </div>
          <?php $uri_last_segment = end($this->uri->segments) ?>

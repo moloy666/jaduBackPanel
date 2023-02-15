@@ -37,7 +37,10 @@ define('apiBaseUrl','https://jaduridedev.v-xplore.com/');
 define('nodeUrl','http://54.251.202.52:3000/');
 // define('apiBaseUrl','https://api.jaduride.com/');
 // define('nodeUrl','https://node.jaduride.com/');
+//////////////////////////////////////////////////////////////////////
+define('STATIC_GST_RECHARGE_PERCENTAGE', 18);
 ////////////////////////// Hotel Section Start //////////////////////////
+
 define('WEB_PORTAL_HOTEL', 'hotel');
 define('hotel_page_header_link', 'hotel/inc/header_link');
 define('hotel_page_header', 'hotel/inc/header');

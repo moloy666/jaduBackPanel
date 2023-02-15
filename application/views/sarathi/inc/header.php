@@ -160,7 +160,7 @@
                             <?php
                             }
                             ?>
-                            <span></span>Saathi<i class="fa fa-angle-down m-l-5"></i></a>
+                            <span></span>SAATHI<i class="fa fa-angle-down m-l-5"></i></a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="<?= base_url('saathi/profile') ?>"><i class="fa fa-user"></i>Profile</a>
                             <a class="dropdown-item" href="<?= base_url(WEB_PORTAL_SARATHI . '/documents') ?>"><i class="fa fa-user"></i>Documents</a>

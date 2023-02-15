@@ -4633,6 +4633,7 @@ class Admin extends CI_Controller
 		$user_type = $this->input->post('user_type');
 		$this->init_common_model();
 		$packages_final = [];
+		$gstPercentage = STATIC_GST_RECHARGE_PERCENTAGE;
 
 		$packages = $this->Common_model->get_packages($user_type);
 		$extra_percentage = $this->Common_model->get_extra_percentage_km_by_user_type($user_type);
@@ -4646,7 +4647,7 @@ class Admin extends CI_Controller
 
 			$packages_final[] = [
 				key_id => $value[field_uid],
-				key_name => $value[field_name] . " " . unit_km . " ( + " . $extra_percentage . " % additional )" . " " . STATIC_RUPEE_SIGN . $price,
+				key_name => $value[field_name] . " " . unit_km . " ( + " . $extra_percentage . " % additional )" . " " . STATIC_RUPEE_SIGN . $price. "(+{$gstPercentage}% GST)",
 			];
 		}
 

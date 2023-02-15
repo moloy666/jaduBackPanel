@@ -29,7 +29,7 @@
                         <?php
                         foreach ($data as $i => $driver) { ?>
 
-                            <h5><?= ucwords($driver['name']) ?></h5>
+                            <h5><?= strtoupper($driver['name']) ?></h5>
                             <h6><?= $driver['email'] ?></h6>
                             <h6><?= $driver['mobile'] ?></h6>
 

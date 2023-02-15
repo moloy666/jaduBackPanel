@@ -161,7 +161,7 @@
                             ?>
 
 
-                            <span></span><?= ucwords($this->session->userdata(field_user_type)) ?><i class="fa fa-angle-down m-l-5"></i>
+                            <span></span><?= strtoupper($this->session->userdata(field_user_type)) ?><i class="fa fa-angle-down m-l-5"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="<?= base_url('administrator/profile') ?>"><i class="fa fa-user"></i>Profile</a>

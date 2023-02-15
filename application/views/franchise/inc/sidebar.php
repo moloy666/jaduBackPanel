@@ -19,8 +19,8 @@
                     ?>
              </div>
              <div class="admin-info">
-                 <div class="font-strong"><?= ucwords($this->session->userdata(session_franchise_name)) ?></div>
-                 <small><?= ucwords($this->session->userdata(session_franchise_user_type)) ?></small>
+                 <div class="font-strong"><?= strtoupper($this->session->userdata(session_franchise_name)) ?></div>
+                 <small><?= strtoupper($this->session->userdata(session_franchise_user_type)) ?></small>
              </div>
          </div>
 

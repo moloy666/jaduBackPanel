@@ -35,7 +35,7 @@
 
 
     function get_sarathi_id(uid) {
-        console.log(uid);
+        // console.log(uid);
         $.ajax({
             type: "POST",
             url: "<?= base_url('franchise/get_sarathi_id') ?>",
