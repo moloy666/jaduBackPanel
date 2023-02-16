@@ -441,7 +441,7 @@ class Admin_model extends CI_Model
 
     public function display_fare_list()
     {
-        $this->db->select('f.uid, f.base_fare, f.slab_1, f.slab_2, f.slab_3, f.slab_3, f.slab_4, f.per_minute, f.extra_time_fare, f.arriving_free_km, f.arriving_fare, f.airport_fare, f.night, f.cancle_fee, f.jadu_fee, rst.name as vehicle_type');
+        $this->db->select('f.uid, f.base_fare, f.slab_1, f.slab_2, f.slab_3, f.slab_3, f.slab_4, f.slab_5, f.per_minute, f.extra_time_fare, f.arriving_free_km, f.arriving_fare, f.airport_fare, f.night, f.cancle_fee, f.jadu_fee, rst.name as vehicle_type');
         $this->db->from('fare_list as f');
         $this->db->join('ride_service_type as rst', 'rst.uid = f.ride_service_type_id');
         $this->db->where('f.status', const_active);

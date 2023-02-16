@@ -1,5 +1,5 @@
 <style>
-    .title{
+    .title {
         text-transform: capitalize;
     }
 </style>
@@ -52,6 +52,11 @@
                     <td>
                     <input type="text" value="${details.slab_4}" class="form-control fare ${details.uid}" id="updated_slab_4_${details.uid}" disabled>
                     <input type="hidden" value="${details.slab_4}" class="form-control fare ${details.uid}" id="slab_4_${details.uid}" disabled>
+                    </td>
+
+                    <td>
+                    <input type="text" value="${details.slab_5}" class="form-control fare ${details.uid}" id="updated_slab_5_${details.uid}" disabled>
+                    <input type="hidden" value="${details.slab_5}" class="form-control fare ${details.uid}" id="slab_5_${details.uid}" disabled>
                     </td>
 
                     <td>
@@ -109,7 +114,6 @@
                 $('#table').dataTable();
 
                 $('.fare').attr("disabled", 'disabled');
-                $('.save').hide();
 
                 get_panel_access_list();
 
@@ -121,16 +125,16 @@
     function get_panel_access_list() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(WEB_PORTAL_FRANCHISE.'/get_panel_access_list') ?>",
+            url: "<?= base_url('administrator/get_panel_access_list') ?>",
             error: function(response) {
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
                 let permission = response.data.permission;
                 let data = permission.split(",");
                 $.each(data, function(i) {
-                    $('.' + data[i]).removeAttr('disabled');
+
+                    $('.' + data[i]).removeAttr('disabled', 'disabled');
                     // console.log(data[i]);
                 });
             }
@@ -138,8 +142,7 @@
     }
 
 
-
-    $('#table_details').on('click', '.edit', function() {  // enable textbox
+    $('#table_details').on('click', '.edit', function() { // enable textbox
         let vehicle_id = $(this).attr('data');
 
         if ($('.' + vehicle_id).attr("disabled", true)) {
@@ -172,6 +175,9 @@
 
         let slab_4 = $('#slab_4_' + vehicle_id).val();
         let updated_slab_4 = $('#updated_slab_4_' + vehicle_id).val();
+
+        let slab_5 = $('#slab_5_' + vehicle_id).val();
+        let updated_slab_5 = $('#updated_slab_5_' + vehicle_id).val();
 
         let per_minute = $('#per_minute_' + vehicle_id).val();
         let updated_per_minute = $('#updated_per_minute_' + vehicle_id).val();
@@ -218,6 +224,10 @@
             updateData.slab_4 = updated_slab_4
         }
 
+        if (slab_5 != updated_slab_5) {
+            updateData.slab_5 = updated_slab_5
+        }
+
         if (per_minute != updated_per_minute) {
             updateData.per_minute = updated_per_minute
         }
@@ -257,7 +267,7 @@
             $('.' + vehicle_id).attr("disabled", true);
 
         } else {
-            console.log(updateData);
+            // console.log(updateData);
             $.ajax({
                 type: "POST",
                 url: "<?= base_url('Admin/update_fare_price') ?>",
@@ -270,7 +280,7 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        toast(response.message);
+                        toast(response.message, 'center');
                         display_fare_list();
                         $('.save_btn_' + vehicle_id).hide();
                         $('.edit_btn_' + vehicle_id).show();

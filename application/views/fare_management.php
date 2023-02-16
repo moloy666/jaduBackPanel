@@ -30,6 +30,7 @@
                                 <th class="text-center">Slab 2</th>
                                 <th class="text-center">Slab 3</th>
                                 <th class="text-center">Slab 4</th>
+                                <th class="text-center">Slab 5</th>
                                 <th class="text-center">Per Minute</th>
                                 <th class="text-center">Extra Time Fare</th>
                                 <th class="text-center">Arriving Free KM</th>
