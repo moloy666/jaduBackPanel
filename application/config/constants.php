@@ -510,3 +510,8 @@ define('table_excess_percentage', 'excess_percentage');
 define('key_id', 'id');
 define('key_name','name');
 define('unit_km', 'KM');
+///////////////////////////////////////////
+define('marker_path', 'assets/images/');
+define('marker_waiting_car', 'green_car.png');
+define('marker_inactive_car', 'red_car.png');
+define('marker_running_car', 'yellow_car.png');

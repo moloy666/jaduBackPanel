@@ -196,10 +196,10 @@
             $(".totalRegisteredCustomers").text(data.totalCustomers);
             $(".totalFranchise").text(data.totalFranchise);
             $(".totalSubFranchise").text(data.totalSubFranchise);
-            $(".totalRevenue").text(data.totalRevenue);
             $(".revenueStatus").text(data.revenueStatus);
+            
+            $(".totalRevenue").text(data.totalRevenue);
 
-            // console.log(data.revenueStatus);
 
         },
         error: function(response) {

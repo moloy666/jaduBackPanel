@@ -933,14 +933,13 @@ class Franchise extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function get_subfranchise_dashboard_data()
-	{
+	public function get_subfranchise_dashboard_data(){
 		$this->init_common_model();
-
+		
 		$subfranchise_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
 		$table = $this->input->post(param_table);
 		$user_id = $this->Common_model->get_user_id_by_specific_id($subfranchise_id, $table);
-
+		// print_r("{$subfranchise_id} {$table} {$user_id}");
 		$data = [
 			'totalSarathi' => $this->Common_model->get_total_sarathi_of_sub_franchise($subfranchise_id),
 			'drivers' => [
@@ -953,10 +952,8 @@ class Franchise extends CI_Controller
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($subfranchise_id),
 			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($subfranchise_id, $table),
 			'totalKmPurchaseToday' => $this->Common_model->total_km_purchase_today($user_id),
-
 		];
 		
-		// print_r($data);die();
 		echo json_encode($data);
 	}
 

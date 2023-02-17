@@ -958,7 +958,6 @@ class Admin_model extends CI_Model
         foreach ($query as $i => $val) {
             $companion_id = $val['companion_id'];
             $query[$i]['companion_name'] = $this->get_driver_name_by_specific_id($companion_id);
-
         }
         return (!empty($query)) ? $query : [];
     }
@@ -1458,7 +1457,8 @@ class Admin_model extends CI_Model
 
     public function display_driver_location()
     {
-        $this->db->select('d.uid as driver_id, d.current_lat as lat, d.current_lng as lng, u.name as driver_name, d.working_status_current_value as driver_status');
+
+        $this->db->select('u.uid as user_id, d.uid as driver_id, d.current_lat as lat, d.current_lng as lng, u.name as driver_name, d.working_status_current_value as driver_status, d.totalTravelled, d.vehicle_number');
         $this->db->from('driver as d');
         $this->db->join('users as u', 'u.uid = d.user_id');
         $this->db->where('u.status', const_active);
@@ -1470,6 +1470,8 @@ class Admin_model extends CI_Model
 
         foreach ($query as $i => $val) {
             $query[$i]['driver_name'] = ucwords($val['driver_name']);
+            $query[$i]['recharge_amount'] = $this->get_total_recharge_amount($val['user_id']);
+
         }
         return (!empty($query)) ? $query : null;
     }
@@ -1684,7 +1686,7 @@ class Admin_model extends CI_Model
         return (!empty($query)) ? $query[0][field_name] : null;
     }
 
-    public function get_total_revenue($sarathi_id)
+    public function get_total_revenue_old($sarathi_id)
     {
         if (empty($sarathi_id)) {
 
@@ -1707,6 +1709,7 @@ class Admin_model extends CI_Model
             return (!empty($query)) ? $query[0]['total_amount'] : 0;
         }
     }
+
 
     public function get_revenue_status($specific_id)
     {
@@ -2032,24 +2035,65 @@ class Admin_model extends CI_Model
         return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function display_excess_percentage(){
+    public function display_excess_percentage()
+    {
         $query = $this->db->get(table_excess_percentage);
         $query = $query->result_array();
-        return(!empty(($query)))?$query:[];
+        return (!empty(($query))) ? $query : [];
     }
-    public function display_rate_per_km(){
+    public function display_rate_per_km()
+    {
         $query = $this->db->get(table_rate_per_km);
         $query = $query->result_array();
-        return(!empty(($query)))?$query:[];
+        return (!empty(($query))) ? $query : [];
     }
 
-    public function save_kilometer_details($uid, $value, $table, $field_name, $admin_id){
-        $data=[
-            $field_name=>$value,
-            field_modified_at=>date(field_date),
-            field_modified_by=>$admin_id
+    public function save_kilometer_details($uid, $value, $table, $field_name, $admin_id)
+    {
+        $data = [
+            $field_name => $value,
+            field_modified_at => date(field_date),
+            field_modified_by => $admin_id
         ];
         $this->db->where(field_uid, $uid)->update($table, $data);
-        return($this->db->affected_rows()==1)?true:false;
+        return ($this->db->affected_rows() == 1) ? true : false;
+    }
+
+    //////////////////// Calculate Revenue By Recharge History /////////////////////////
+
+    public function get_total_revenue($sarathi_id)
+    {
+        $total = 0;
+        if (empty($sarathi_id)) {
+            $query = $this->db->select(field_uid)->where(field_type_id, value_user_franchise)->get(table_users);
+            $query = $query->result_array();
+            foreach ($query as $i => $val) {
+                $total = $total + $this->get_total_recharge_amount($val[field_uid]);
+            }
+            return (!empty($total)) ? $total : 0;
+        } else {
+
+            $total = 0;
+            $query = $this->db->select('u.uid')
+                ->from(table_users . ' as u')
+                ->join(table_driver . ' as d', 'u.uid=d.user_id')
+                ->where(['u.' . field_type_id => value_user_sarathi, 'd.sarathi_id' => $sarathi_id])
+                ->get();
+            $query = $query->result_array();
+            foreach ($query as $i => $val) {
+                $total = $total + $this->get_total_recharge_amount($val[field_uid]);
+            }
+            return (!empty($total)) ? $total : 0;
+        }
+    }
+
+
+    private function get_total_recharge_amount($user_id)
+    {
+        $query = $this->db->select('SUM(recharge_amount) as amount')
+            ->where(field_user_id, $user_id)
+            ->get(table_recharge_history);
+        $query = $query->result_array();
+        return (!empty($query)) ? $query[0]['amount'] : 0;
     }
 }

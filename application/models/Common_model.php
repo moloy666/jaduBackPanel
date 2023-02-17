@@ -543,7 +543,7 @@ class Common_model extends CI_Model
     ///////////////// //////////////////////
 
 
-    public function get_total_revenue($franchise_id)
+    public function get_total_revenue_old($franchise_id)
     {
         $revenue = 0;
         $query = $this->db->select(field_uid)->where(field_franchise_id, $franchise_id)->get(table_subfranchise);
@@ -559,6 +559,9 @@ class Common_model extends CI_Model
         }
         return (!empty($revenue)) ? $revenue : 0;
     }
+
+
+
 
     public function get_total_revenue_of_last_month($franchise_id)
     {
@@ -590,7 +593,7 @@ class Common_model extends CI_Model
         return (!empty($revenue)) ? $revenue : 0;
     }
 
-    public function get_total_revenue_of_subfranchise($sf_id)
+    public function get_total_revenue_of_subfranchise_old($sf_id)
     {
         $revenue = 0;
         $result_array = $this->get_sarathi_of_sub_franchise($sf_id);
@@ -631,6 +634,9 @@ class Common_model extends CI_Model
         $current_rev = $this->get_total_revenue_of_subfranchise($subfranchise_id);
         $last_rev = $this->get_total_revenue_of_last_month_of_sf($subfranchise_id);
         if($current_rev > $last_rev){
+            if($last_rev==0){
+                return 0;
+            }
             $growth = (($current_rev - $last_rev) / $last_rev) * 100;
             return (!empty($growth)) ? round($growth) : 0;
         }
@@ -782,6 +788,7 @@ class Common_model extends CI_Model
         $query = $this->db->select('u.uid')->from('users as u')->join($table. ' as t', 'u.uid=t.user_id')
         ->where('t.uid', $specific_id)->get();
         $query = $query->result_array();
+
         return(!empty($query))?$query[0][field_uid]:null;
     }
 
@@ -922,4 +929,44 @@ class Common_model extends CI_Model
         }
         return implode($pass); //turn the array into a string
     }
+
+    public function get_total_revenue($franchise_id)
+    {
+        $total = 0;
+        $query = $this->db->select('u.uid')
+        ->from(table_users.' as u')
+        ->join(table_subfranchise.' as sf', 'u.uid=sf.user_id')
+        ->where(['u.'.field_type_id => value_user_sub_franchise, 'sf.franchise_id'=>$franchise_id])
+        ->get();
+        $query = $query->result_array();
+        foreach($query as $i=>$val){
+            $total = $total + $this->get_total_recharge_amount($val[field_uid]);
+        }
+        return (!empty($total))?$total:0;
+    }
+
+    public function get_total_revenue_of_subfranchise($sf_id)
+    {
+        $total = 0;
+        $query = $this->db->select('u.uid')
+        ->from(table_users.' as u')
+        ->join(table_sarathi.' as s', 'u.uid=s.user_id')
+        ->where(['u.'.field_type_id => value_user_sarathi, 's.sub_franchise_id'=>$sf_id])
+        ->get();
+        $query = $query->result_array();
+        foreach($query as $i=>$val){
+            $total = $total + $this->get_total_recharge_amount($val[field_uid]);
+        }
+        return (!empty($total))?$total:0;
+    }
+
+    private function get_total_recharge_amount($user_id){
+        $query = $this->db->select('SUM(recharge_amount) as amount')
+        ->where(field_user_id, $user_id)
+        ->get(table_recharge_history);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0]['amount']:0;
+    }
+
+
 }

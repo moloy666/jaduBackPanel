@@ -1,3 +1,4 @@
+<button onclick=" dashboard_data_subfranchise()">Click</button>
 <style>
     .title {
         text-transform: capitalize;
@@ -19,7 +20,7 @@
     function dashboard_data_franchise() {
         let sepcific_id = $('#specific_id').val();
         let table = $('#specific_table').val();
-
+        
         $.ajax({
             type: "POST",
             url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_dashboard_data') ?>",
@@ -55,10 +56,9 @@
     }
 
     function dashboard_data_subfranchise() {
-        // let sepcific_id =  $('#specific_id').val();
         let sepcific_id = document.getElementById('specific_id');
         let table = $('#specific_table').val();
-
+       
         $.ajax({
             type: "POST",
             url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_subfranchise_dashboard_data') ?>",
@@ -67,7 +67,6 @@
                 "table": table
             },
             success: function(response) {
-
                 let data = JSON.parse(response);
 
                 $(".totalDrivers").text(data.drivers.total);
@@ -87,6 +86,7 @@
 
             },
             error: function(response) {
+                console.log(2);
                 console.log(response);
             }
         });
@@ -179,7 +179,7 @@
             },
             error: function(response) {},
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var details = ' <option value="">Select Recharge Package</option>';
                 $.each(data, function(i, data) {
