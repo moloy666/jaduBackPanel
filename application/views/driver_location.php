@@ -1,7 +1,7 @@
 <style>
     #map {
         margin-top: 5px;
-        height: 90vh;
+        height: 80vh;
         width: 100%;
     }
 
@@ -29,7 +29,7 @@
 </style>
 <div class="content-wrapper">
     <div class='d-flex flex-column justify-content-center'>
-        <div id="map" class="d-flex justify-content-center align-items-center"></div>        
+        <div id="map" class="d-flex justify-content-center align-items-center"></div>
     </div>
     <div id="legend_1"></div>
 </div>
@@ -64,7 +64,7 @@
 
         var map;
         var infowindow = new google.maps.InfoWindow();
-
+       
         var myLatLng = {
             lat: parseFloat(locations[0].lat),
             lng: parseFloat(locations[0].lng)
@@ -84,18 +84,18 @@
 
         $.each(locations, function(i, location_details) {
             var color = '';
-            if (location_details.driver_status == "DRIVER_WAITING") {
-                image = "<?= base_url(marker_path.marker_waiting_car) ?>";
+            if (location_details.driver_status == '<?= STATUS_DRIVER_WAITING ?>') {
+                image = "<?= base_url(marker_path . marker_waiting_car) ?>";
                 working_status = "Waiting";
                 waiting++;
             }
-            if (location_details.driver_status == "DRIVER_INACTIVE") {
-                image = "<?= base_url(marker_path.marker_inactive_car) ?>";
+            if (location_details.driver_status == '<?= STATUS_DRIVER_INACTIVE ?>') {
+                image = "<?= base_url(marker_path . marker_inactive_car) ?>";
                 working_status = "Inactive";
                 inactive++;
             }
-            if (location_details.driver_status == "DRIVER_GO_TO") {
-                image = "<?= base_url(marker_path.marker_running_car) ?>";
+            if (location_details.driver_status == '<?= STATUS_DRIVER_GO_TO ?>') {
+                image = "<?= base_url(marker_path . marker_running_car) ?>";
                 working_status = "Running";
                 running++;
             }
@@ -113,8 +113,7 @@
                     infowindow.setContent(
                         "<b>" + locations[i].driver_name +
                         "<br>Total Travelled : " + locations[i].totalTravelled / 1000 + " KM" +
-                        "<br>Vehicle Number : " + locations[i].vehicle_number + ""
-                        +
+                        "<br>Vehicle Number : " + locations[i].vehicle_number + "" +
                         "</b>"
                     );
 
@@ -130,10 +129,10 @@
     function add_legend(map, waiting, inactive, running) {
         let legend = document.getElementById("legend_1");
         legend.innerHTML = `
-            <h6>Working Status</h6>
-            <img src="<?= base_url('assets/images/green_car.png') ?>" alt=""> <strong class="ml-3">Waiting (${waiting})</strong>
-            <img src="<?= base_url('assets/images/red_car.png') ?>" alt="">   <strong class="ml-3">Inactive (${inactive})</strong>
-            <img src="<?= base_url('assets/images/yellow_car.png') ?>" alt=""><strong class="ml-3">Running (${running})</strong>
+            <h6 class="mt-1">Working Status</h6>
+            <img src="<?= base_url(marker_path . marker_waiting_car) ?>" alt=""><strong class="ml-3">Waiting (${waiting})</strong>
+            <img src="<?= base_url(marker_path . marker_inactive_car) ?>" alt=""><strong class="ml-3">Inactive (${inactive})</strong>
+            <img src="<?= base_url(marker_path . marker_running_car) ?>" alt=""><strong class="ml-3">Running (${running})</strong>
             `;
     }
 
@@ -167,4 +166,4 @@
         return controlButton;
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<?= const_google_api_key ?>&callback=initMap" async defer></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=<?= const_google_api_key ?>&callback=initMap"></script>

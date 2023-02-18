@@ -1,16 +1,11 @@
 <style>
     #map {
         margin-top: 5px;
-        height: 90vh;
+        height: 80vh;
         width: 100%;
     }
     #legend {
-        width: 160px;
-        font-family: Arial, sans-serif;
-        background: #fff;
-        padding: 10px;
-        margin: 10px;
-        border: 2px solid #000;
+        height: 10vh;
     }
 
     #legend h6 {
@@ -28,10 +23,7 @@
 <div class="content-wrapper">
     <div class='d-flex flex-column justify-content-center'>
         <div id="map" class="d-flex justify-content-center align-items-center"></div>
-        <div id="legend">
-            <h6>Working Status</h6>
-        </div>
-        <div id="refresh"></div>
+        <div id="legend_1"></div>
     </div>
 </div>
 
@@ -83,24 +75,21 @@
 
             var color = '';
             if (location_details.driver_status == "DRIVER_WAITING") {
-                var image = "<?= base_url('assets/images/green_car.png') ?>";
+                var image = "<?= base_url(marker_path.marker_waiting_car) ?>";
                 var working_status = "Waiting";
-                color = "#138f21";
                 waiting++;
 
             }
             if (location_details.driver_status == "DRIVER_INACTIVE") {
-                var image = "<?= base_url('assets/images/red_car.png') ?>";
+                var image = "<?= base_url(marker_path.marker_inactive_car) ?>";
                 var working_status = "Inactive";
-                color = "#a80303";
                 inactive++;
 
 
             }
             if (location_details.driver_status == "DRIVER_GO_TO") {
-                var image = "<?= base_url('assets/images/yellow_car.png') ?>";
+                var image = "<?= base_url(marker_path.marker_running_car) ?>";
                 var working_status = "Running";
-                color = "#cfb404";
                 running++;
             }
 
@@ -109,7 +98,7 @@
                 map: map,
                 draggable: false,
                 icon: image,
-                title: working_status
+                title: 'Working Status : ' + working_status
             });
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -133,16 +122,15 @@
     }
 
     function add_legend(map, waiting, inactive, running) {
-        let legend = document.getElementById("legend");
-        let div = document.createElement("div");
+        let legend = document.getElementById("legend_1");
 
-        div.innerHTML = `
-        <img src="<?= base_url('assets/images/green_car.png') ?>" alt=""> <strong class="ml-3">Waiting (${waiting})</strong><br>
-        <img src="<?= base_url('assets/images/red_car.png') ?>" alt="">   <strong class="ml-3">Inactive (${inactive})</strong><br>
-        <img src="<?= base_url('assets/images/yellow_car.png') ?>" alt=""><strong class="ml-3">Running (${running})</strong>
+        legend.innerHTML = `
+        <h6>Working Status</h6>
+            <img src="<?= base_url(marker_path.marker_waiting_car) ?>" alt=""> <strong class="ml-3">Waiting (${waiting})</strong>
+            <img src="<?= base_url(marker_path.marker_inactive_car) ?>" alt="">   <strong class="ml-3">Inactive (${inactive})</strong>
+            <img src="<?= base_url(marker_path.marker_running_car) ?>" alt=""><strong class="ml-3">Running (${running})</strong>
         `;
-        legend.appendChild(div);
-        map.controls[google.maps.ControlPosition.CENTER_BOTTOM].push(legend);
+        
     }
 
     function add_refresh_button(map) {
@@ -175,24 +163,6 @@
         return controlButton;
     }
 
-    function get_address_by_lat_lng(lat, lng) {
-        var lat = lat;
-        var lng = lng;
-        var latlng = new google.maps.LatLng(lat, lng);
-        var geocoder = geocoder = new google.maps.Geocoder();
-        geocoder.geocode({
-            'latLng': latlng
-        }, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (results[1]) {
-                    // console.log(results[1]);
-                    let address = results[1].formatted_address;
-                    console.log(address);
-                } else {
-                    // console.log('address not found');
-                }
-            }
-        });
-    }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?= const_google_api_key ?>&callback=initMap" async defer></script>

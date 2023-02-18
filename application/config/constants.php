@@ -515,3 +515,7 @@ define('marker_path', 'assets/images/');
 define('marker_waiting_car', 'green_car.png');
 define('marker_inactive_car', 'red_car.png');
 define('marker_running_car', 'yellow_car.png');
+
+define('STATUS_DRIVER_WAITING', 'DRIVER_WAITING');
+define('STATUS_DRIVER_INACTIVE', 'DRIVER_INACTIVE');
+define('STATUS_DRIVER_GO_TO', 'DRIVER_GO_TO');

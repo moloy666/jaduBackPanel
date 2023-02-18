@@ -393,7 +393,7 @@ class Common_model extends CI_Model
             $sarathi_id = $val[field_uid];
             $driver = $driver + $this->get_inactive_driver_of_sarathi($sarathi_id);
         }
-        return $driver;
+        return (!empty($driver))?$driver:0;
     }
 
     public function get_total_customers_of_subfranchise($sf_id)
