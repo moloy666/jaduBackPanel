@@ -130,7 +130,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -528,7 +528,7 @@
                         get_user_request_permission();
 
                         $('#admin_access_list').multiselect();
-                        
+
                         $('#admin_access_list_input').attr('placeholder', 'Select Management');
                     } else {
                         // console.log(response);
@@ -643,7 +643,7 @@
                 toast("Select Panel Access", "center");
             }
 
-            let user_type = '<?=$this->session->userdata(field_user_type)?>';
+            let user_type = '<?= $this->session->userdata(field_user_type) ?>';
             if (flag == 0) {
                 $.ajax({
                     url: "<?= base_url('administrator/update_sub_franchise') ?>",
@@ -655,7 +655,7 @@
                         "mobile": mobile,
                         "permission": permission,
                         "panel_list": panel_list,
-                        'user_type':user_type
+                        'user_type': user_type
                     },
                     success: function(data) {
                         if (data.success) {
@@ -718,7 +718,7 @@
                 $.ajax({
                     url: "<?= base_url('administrator/add_sub_franchise') ?>",
                     type: "post",
-                    beforeSend:function(){
+                    beforeSend: function() {
                         $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
                     },
                     data: {
@@ -728,16 +728,16 @@
                         "franchise_id": franchise,
                         "permission": permission,
                         "panel_list": panel_list,
-                        "address":address,
-                        "country":country,
-                        "state":state,
-                        "district":district,
-                        "city":city,
-                        "pincode":pincode,
+                        "address": address,
+                        "country": country,
+                        "state": state,
+                        "district": district,
+                        "city": city,
+                        "pincode": pincode,
                         "specific_id": admin_id,
                     },
                     async: false,
-                    complete:function(){
+                    complete: function() {
                         $('#btn_add_data').html(`Add New Sub Franchise`);
                     },
                     success: function(data) {
@@ -858,6 +858,20 @@
                 }
             });
         }
+
+        $('#table').on('page.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('order.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('search.dt', function() {
+            get_panel_access_list();
+        });
+
+
 
         // <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge ">                        
         // <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  

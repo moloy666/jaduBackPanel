@@ -29,7 +29,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
-                                <th class="text-center">Sarathi</th>
+                                <th class="text-center">Saathi</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Ride History</th>
                                 <th class="text-center">Actions</th>

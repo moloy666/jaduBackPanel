@@ -392,7 +392,7 @@
                     "district": district,
                     "city": city,
                     "pincode": pincode,
-                    "specific_id":franchise_id
+                    "specific_id": franchise_id
                 },
                 success: function(data) {
                     // console.log(data);
@@ -441,5 +441,17 @@
                 }
             });
         });
+    });
+
+    $('#table').on('page.dt', function() {
+        get_panel_access_list();
+    });
+
+    $('#table').on('order.dt', function() {
+        get_panel_access_list();
+    });
+
+    $('#table').on('search.dt', function() {
+        get_panel_access_list();
     });
 </script>

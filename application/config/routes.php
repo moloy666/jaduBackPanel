@@ -237,6 +237,7 @@ $route['administrator/deactive_sarathi'] = 'Admin/deactive_sarathi';
 $route['administrator/update_sarathi'] = 'Admin/update_sarathi';
 $route['administrator/delete_sarathi'] = 'Admin/delete_sarathi';
 $route['administrator/get_sarathi'] = 'Admin/get_sarathi';
+$route['administrator/display_bank_details'] = 'Admin/display_bank_details';
 
 $route['administrator/approved_driver_documents'] = 'Admin/approved_driver_documents';
 $route['administrator/deny_driver_documents'] = 'Admin/deny_driver_documents';

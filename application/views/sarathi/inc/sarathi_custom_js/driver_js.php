@@ -34,7 +34,7 @@
                             user_status = "";
                         str += `<tr>
                         <td>${i+1}</td>
-                        <td class="title"><a href="<?=base_url(WEB_PORTAL_SARATHI.'/driver/details/')?>${driver[i].user_id}">${driver[i].name}</a></td>
+                        <td class="title"><a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver/details/') ?>${driver[i].user_id}">${driver[i].name}</a></td>
                         <td>${driver[i].email}</td> 
                         <td>${driver[i].mobile}</td>
                         <td>${driver[i].total_km_purchased}</td>
@@ -262,9 +262,9 @@
     function fetch_recharge_package(user_id) {
         $.ajax({
             type: "get",
-            url: "<?=apiBaseUrl?>sarathi/driverPackages",
+            url: "<?= apiBaseUrl ?>sarathi/driverPackages",
             headers: {
-                'x-api-key': '<?=const_x_api_key?>',
+                'x-api-key': '<?= const_x_api_key ?>',
                 'platform': 'web',
                 'deviceid': ''
             },
@@ -311,13 +311,13 @@
         let package_id = $('#select_package').val();
         $.ajax({
             type: "POST",
-            url: `<?=apiBaseUrl?>sarathi/users/${sarathi_id}/recharge/driver/${driver_id}`,
+            url: `<?= apiBaseUrl ?>sarathi/users/${sarathi_id}/recharge/driver/${driver_id}`,
             data: {
                 "selectedPackageId": package_id,
                 "paymentMode": "cash",
             },
             headers: {
-                'x-api-key': '<?=const_x_api_key?>',
+                'x-api-key': '<?= const_x_api_key ?>',
                 'platform': 'web',
                 'deviceid': ''
             },
@@ -378,4 +378,16 @@
             }
         });
     }
+
+    $('#table').on('page.dt', function() {
+        get_panel_access_list();
+    });
+
+    $('#table').on('order.dt', function() {
+        get_panel_access_list();
+    });
+
+    $('#table').on('search.dt', function() {
+        get_panel_access_list();
+    });
 </script>

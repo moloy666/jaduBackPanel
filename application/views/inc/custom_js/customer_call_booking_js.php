@@ -128,9 +128,9 @@
         searchInput = 'destination_from';
         var autocomplete;
         autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
-            types: ['geocode'],
+            types: ['establishment'],
             componentRestrictions: {
-                country: "IND"
+                country: "in"
             }
         });
 
@@ -145,9 +145,9 @@
         searchInput = 'destination_to';
         var autocomplete;
         autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
-            types: ['geocode'],
+            types: ['establishment'],
             componentRestrictions: {
-                country: "IND"
+                country: "in"
             }
         });
 

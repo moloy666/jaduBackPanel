@@ -97,7 +97,7 @@
             </div>
 
             <div class="card my-2 p-3">
-                <div class="table-responsive" >
+                <div class="table-responsive">
                     <h5 class="text-danger mb-4">Recharge History</h5>
                     <table class="table table-bordered" id="table_recharge_history">
                         <thead class="thead-light">
@@ -696,5 +696,17 @@
                     console.log(data);
                 }
             });
+        });
+
+        $('#table').on('page.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('order.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('search.dt', function() {
+            get_panel_access_list();
         });
     </script>

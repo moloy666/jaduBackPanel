@@ -200,7 +200,7 @@
     </div>
   </div>
 
- 
+
   <script>
     get_permission_list();
     display_panel_access_list();
@@ -457,7 +457,7 @@
             'email': email,
             'mobile': mobile,
             'permission': permission,
-            'panel_list':panel_list
+            'panel_list': panel_list
           },
           success: function(data) {
             // console.log(data);
@@ -523,8 +523,8 @@
         $.ajax({
           url: "<?= base_url('administrator/add_admin') ?>",
           type: "post",
-          beforeSend:function(){
-            $('#btn_add_data').html(`<img src="<?=base_url('assets/images/loader3.svg')?>" width="30px">`);
+          beforeSend: function() {
+            $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
           },
           data: {
             "name": name,
@@ -533,7 +533,7 @@
             "permission": permission,
             "panel_list": panel_list
           },
-          complete:function(){
+          complete: function() {
             $('#btn_add_data').html('Add New Admin');
           },
           success: function(data) {
@@ -601,5 +601,15 @@
       });
     }
 
-    
+    $('#table').on('page.dt', function() {
+      get_panel_access_list();
+    });
+
+    $('#table').on('order.dt', function() {
+      get_panel_access_list();
+    });
+
+    $('#table').on('search.dt', function() {
+      get_panel_access_list();
+    });
   </script>

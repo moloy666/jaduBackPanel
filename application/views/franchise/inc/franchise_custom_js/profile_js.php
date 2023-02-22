@@ -421,4 +421,15 @@
             }
         });
     }
+
+    $.ajax({
+        type:"POST",
+        url:"<?=base_url(WEB_PORTAL_ADMIN.'/get_address_details')?>",
+        error:function(resp){
+            console.log(resp);
+        },
+        success:function(resp){
+            console.log(resp);
+        }
+    });
 </script>

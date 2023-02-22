@@ -26,7 +26,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
-                                <th class="text-center">Sarathi</th>
+                                <th class="text-center">Saathi</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Ride History</th>
                                 <th class="text-center">Actions</th>
@@ -250,7 +250,7 @@
                                 driver_status = "";
                             str += `<tr>
                                 <td>${count}</td>
-                                <td class="title"><a href="<?=base_url('administrator/driver/details/')?>${driver[i].user_id}">${driver[i].name}</a></td>
+                                <td class="title"><a href="<?= base_url('administrator/driver/details/') ?>${driver[i].user_id}">${driver[i].name}</a></td>
                                 <td>${driver[i].email}</td>
                                 <td>${driver[i].mobile}</td>
                                 <td class="title">${driver[i].sarathi.name}</td> 
@@ -306,7 +306,7 @@
                         $('#table_details').html(str);
                         $('#table').dataTable();
                         get_panel_access_list();
-                        
+
                     } else {
                         console.log(response);
                         $('#table').dataTable();
@@ -394,7 +394,7 @@
                 toast("Enter a valid email id", "center");
             }
 
-            let user_type = '<?=$this->session->userdata(field_user_type)?>';
+            let user_type = '<?= $this->session->userdata(field_user_type) ?>';
 
             if (flag == 0) {
                 $.ajax({
@@ -405,7 +405,7 @@
                         "name": name,
                         "email": email,
                         "mobile": mobile,
-                        'user_type':user_type
+                        'user_type': user_type
                     },
                     async: false,
                     success: function(data) {
@@ -547,4 +547,16 @@
                 }
             });
         }
+
+        $('#table').on('page.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('order.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('search.dt', function() {
+            get_panel_access_list();
+        });
     </script>

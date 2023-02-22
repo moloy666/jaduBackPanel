@@ -141,8 +141,6 @@
                 </div>
               </div>
 
-
-
             </div>
           </form>
         </div>
@@ -190,9 +188,6 @@
                 <div class="form-group">
                   <select class="form-control" id="edit_access_list" multiple>
                     <option value="0">Select Management </option>
-                    <option value="Role Management ">Role Management </option>
-                    <option value="0">Sub Admin Management</option>
-                    <option value="0">Franchise Management</option>
                   </select>
                 </div>
               </div>
@@ -272,12 +267,11 @@
 
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function(){
       get_sarathi_details();
     });
-
+    
     get_permission_list();
-
     display_panel_access_list();
 
     function display_panel_access_list() {
@@ -313,7 +307,7 @@
           console.log(response);
         },
         success: function(response) {
-          // console.log(response);
+          console.log(response);
 
           let data = response.data;
           let details = '';
@@ -346,17 +340,6 @@
         },
       });
     });
-
-    // edit
-    function edit_sarathi(id, name, email, mobile) {
-      $('#edit_id').val(id);
-      $('#edit_name').val(name);
-      $('#edit_email').val(email);
-      $('#edit_number').val(mobile);
-
-      get_user_permission_access_list(id);
-      get_user_panel_access(id);
-    }
 
     function get_user_panel_access(id) {
       $.ajax({
@@ -418,7 +401,7 @@
             let count = 1;
             let user_status = "";
 
-            for (let i = 0; i < sarathi.length; i++) {
+            $.each(sarathi, function(i, data) {
               if (sarathi[i].name == null || sarathi[i].name == '') sarathi[i].name = "";
               if (sarathi[i].email == null || sarathi[i].email == '') sarathi[i].email = "";
               if (sarathi[i].subfranchise.name == '' || sarathi[i].subfranchise.name == null) sarathi[i].subfranchise.name = "_____";
@@ -428,7 +411,7 @@
               else
                 user_status = "";
 
-              str = `<tr>
+              str += `<tr>
                         <td>${count}</td>
                         <td class="title"><a href="<?= base_url("administrator/saathi_details/") ?>${sarathi[i].user_id}">${sarathi[i].name}</a>
                         <span id="${sarathi[i].user_id}"></span>
@@ -445,16 +428,16 @@
                         <td>
                         <div>
 
-                        <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${sarathi[i].user_id}')">            
+                        <button class="hdrbtn mx-2 view_user" data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${sarathi[i].user_id}')">            
                         <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
                         </button>
                       
-                        <button class="hdrbtn mx-2 view_user" data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${sarathi[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Bank Details">                        
+                        <button class="hdrbtn mx-2 view_user" data-toggle="modal"  data-target="#bnkView1"  onclick="view_bank_details('${sarathi[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Bank Details">                        
                           <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-2">                  
                         </button>
 
 
-                        <button class="hdrbtn mx-2 edit_user access_update" data-toggle="modal" id=" editbtn"  data-target="#edtView1"  onclick="edit_sarathi('${sarathi[i].user_id}' , '${sarathi[i].name}' , '${sarathi[i].email}' , '${sarathi[i].mobile}')" data-toggle="tooltip" data-placement="top" title="Edit" disabled>
+                        <button class="hdrbtn mx-2 edit_user access_update" onclick="edit_sarathi('${sarathi[i].user_id}' , '${sarathi[i].name}' , '${sarathi[i].email}' , '${sarathi[i].mobile}')" data-toggle="tooltip" data-placement="top" title="Edit" disabled>
 
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M16.4745 5.40801L18.5917 7.52524M17.8358 3.54289L12.1086 9.27005C11.8131 9.56562 11.6116 9.94206 11.5296 10.3519L11 13L13.6481 12.4704C14.0579 12.3884 14.4344 12.1869 14.7299 11.8914L20.4571 6.16423C21.181 5.44037 21.181 4.26676 20.4571 3.5429C19.7332 2.81904 18.5596 2.81903 17.8358 3.54289Z" stroke="#ef242f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -471,14 +454,13 @@
                         </div>
                         </td></tr>`;
               count++;
-              $('#table_details').append(str);
-            }
+            });
+
+            $('#table_details').html(str);
             $('#table').dataTable();
 
             get_user_request_permission();
-
             get_panel_access_list();
-
             $('#admin_access_list').multiselect();
             $('#admin_access_list_input').attr('placeholder', 'Select Management');
           } else {
@@ -490,6 +472,80 @@
         error: function(response) {
           get_panel_access_list();
           // console.log(response);
+        }
+      });
+    }
+
+    //delete
+
+    $('#table_details').on('click', '.delete_user', function() {
+
+      let id = $(this).attr('data');
+      $('#btn_delete_data').click(function() {
+        $.ajax({
+          type: "post",
+          url: "<?= base_url('administrator/delete_sarathi') ?>",
+          data: {
+            'id': id
+          },
+          async: false,
+          success: function(data) {
+            toast("Data deleted successfully", "center");
+            get_sarathi_details();
+            $('#close_delete_modal').click();
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+
+      });
+    });
+
+    function edit_sarathi(id, name, email, mobile) {
+      $('#edtView1').modal('show');
+      $('#edit_id').val(id);
+      $('#edit_name').val(name);
+      $('#edit_email').val(email);
+      $('#edit_number').val(mobile);
+
+      get_user_permission_access_list(id);
+      get_user_panel_access(id);
+
+      console.log('edit');
+    }
+
+    function view_bank_details(user_id) {
+      $.ajax({
+        type: "POST",
+        url: "<?= base_url('administrator/display_bank_details') ?>",
+        data: {
+          "id": user_id
+        },
+        error: function(response) {
+          console.log(response);
+        },
+        success: function(response) {
+          // console.log(response);
+          if (response.success) {
+            let data = response.data[0];
+
+            $('.bank-modal-title').html("Banking Details");
+
+            $('#acc_name').val(data.account_holder_name);
+            $('#acc_number').val(data.account_number);
+            $('#ifsc').val(data.ifsc);
+            $('#bank_name').val(data.bank_name);
+            $('#branch_name').val(data.branch_name);
+
+          } else {
+            $('.bank-modal-title').html("Banking Details Not Found");
+            $('#acc_name').val('');
+            $('#acc_number').val('');
+            $('#ifsc').val('');
+            $('#bank_name').val('');
+            $('#branch_name').val('');
+          }
         }
       });
     }
@@ -679,68 +735,7 @@
     });
 
 
-    //delete
 
-    $('#table_details').on('click', '.delete_user', function() {
-      let id = $(this).attr('data');
-      $('#btn_delete_data').click(function() {
-        $.ajax({
-          type: "post",
-          url: "<?= base_url('Admin/delete_sarathi') ?>",
-          data: {
-            'id': id
-          },
-          async: false,
-          success: function(data) {
-            toast("Data deleted successfully", "center");
-            $('#table_details').html('');
-            get_sarathi_details();
-            $('#close_delete_modal').click();
-          },
-          error: function() {
-            alert(JSON.stringify(data));
-          }
-        });
-
-      });
-    });
-
-    function view_bank_details(user_id) {
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url('admin/display_bank_details') ?>",
-        data: {
-          "id": user_id
-        },
-        error: function(response) {
-          console.log(response);
-        },
-        success: function(response) {
-          console.log(response);
-          if (response.success) {
-            let data = response.data[0];
-
-            $('.bank-modal-title').html("Banking Details");
-
-            $('#acc_name').val(data.account_holder_name);
-            $('#acc_number').val(data.account_number);
-            $('#ifsc').val(data.ifsc);
-            $('#bank_name').val(data.bank_name);
-            $('#branch_name').val(data.branch_name);
-
-          } else {
-            $('.bank-modal-title').html("Banking Details Not Found");
-            $('#acc_name').val('');
-            $('#acc_number').val('');
-            $('#ifsc').val('');
-            $('#bank_name').val('');
-            $('#branch_name').val('');
-
-
-          }
-        }
-      });
-    }
 
     function get_user_request_permission() {
       $.ajax({
@@ -781,4 +776,16 @@
         }
       });
     }
+
+    $('#table').on('page.dt', function() {
+      get_panel_access_list();
+    });
+
+    $('#table').on('order.dt', function() {
+      get_panel_access_list();
+    });
+
+    $('#table').on('search.dt', function() {
+      get_panel_access_list();
+    });
   </script>

@@ -707,7 +707,7 @@ class Common_model extends CI_Model
 
     private function driver_location($sarathi_id)
     {
-        $this->db->select('d.uid as driver_id, d.current_lat as lat, d.current_lng as lng, u.name as driver_name, d.working_status_current_value as driver_status');
+        $this->db->select('d.uid as driver_id, d.current_lat as lat, d.current_lng as lng, u.name as driver_name, d.working_status_current_value as driver_status, d.totalTravelled, d.vehicle_number');
         $this->db->from('driver as d');
         $this->db->join('users as u', 'u.uid = d.user_id');
         $this->db->where('d.sarathi_id', $sarathi_id);

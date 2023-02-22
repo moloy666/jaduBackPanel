@@ -610,4 +610,16 @@
                 $("#table_recharge_history").dataTable();
             }
         });
+
+        $('#table').on('page.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('order.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('search.dt', function() {
+            get_panel_access_list();
+        });
     </script>

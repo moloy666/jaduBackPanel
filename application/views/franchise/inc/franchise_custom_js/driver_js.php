@@ -156,24 +156,7 @@
     }
 
 
-    function get_panel_access_list() {
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_panel_access_list') ?>",
-            error: function(response) {
-                console.log(response);
-            },
-            success: function(response) {
-                // console.log(response);
-                let permission = response.data.permission;
-                let data = permission.split(",");
-                $.each(data, function(i) {
-                    $('.' + data[i]).removeAttr('disabled');
-                    // console.log(data[i]);
-                });
-            }
-        });
-    }
+
 
 
     function download_qrCode(driver_id) {
@@ -380,4 +363,42 @@
             }
         });
     }
+
+    var access=[
+        "access_insert",
+        "access_update",
+        "access_status_change",
+        "access_delete",
+    ];
+
+    function get_panel_access_list() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/get_panel_access_list') ?>",
+            error: function(response) {
+                console.log(response);
+            },
+            success: function(response) {
+                let permission = response.data.permission;
+               
+                let data = permission.split(",");
+                $.each(data, function(i) {
+                    $('.' + data[i]).removeAttr('disabled');
+                    // console.log(data[i]);
+                });
+            }
+        });
+    }
+
+    $('#table').on('page.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('order.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('search.dt', function() {
+            get_panel_access_list();
+        });
 </script>

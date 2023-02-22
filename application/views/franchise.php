@@ -1,7 +1,7 @@
 <style>
-  .title {
-    text-transform: uppercase;
-  }
+    .title {
+        text-transform: uppercase;
+    }
 </style>
 
 <body>
@@ -204,7 +204,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" value="" placeholder="Your Number" id="edit_number"  autocomplete="off">
+                                    <input class="form-control" type="text" value="" placeholder="Your Number" id="edit_number" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -637,7 +637,7 @@
                 toast("Select Panel Access", "center");
             }
 
-            let user_type = '<?=$this->session->userdata(field_user_type)?>';
+            let user_type = '<?= $this->session->userdata(field_user_type) ?>';
 
             if (flag == 0) {
                 $.ajax({
@@ -650,7 +650,7 @@
                         "mobile": mobile,
                         "permission": permission,
                         "panel_list": panel_list,
-                        "user_type":user_type
+                        "user_type": user_type
 
                     },
                     async: false,
@@ -716,7 +716,7 @@
                 $.ajax({
                     url: "<?= base_url('administrator/add_franchise') ?>",
                     type: "post",
-                    beforeSend:function(){
+                    beforeSend: function() {
                         $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
                     },
                     data: {
@@ -734,7 +734,7 @@
                         "pincode": pincode
                     },
                     async: false,
-                    complete:function(){
+                    complete: function() {
                         $('#btn_add_data').html(`Add New Franchise`);
                     },
                     success: function(data) {
@@ -855,4 +855,16 @@
                 }
             });
         }
+
+        $('#table').on('page.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('order.dt', function() {
+            get_panel_access_list();
+        });
+
+        $('#table').on('search.dt', function() {
+            get_panel_access_list();
+        });
     </script>
