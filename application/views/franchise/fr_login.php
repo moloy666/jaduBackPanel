@@ -51,6 +51,9 @@
                     <input type="checkbox" id="remember_me" name="remember_me">
                     <span class="input-span"></span>Remember me</label>
             </div>
+            <div>
+                <p>Forget Password ? <a href="#" id = "requestNewPassword">Request a new password</a></p>
+            </div>
             <div class="form-group">
                 <button class="btn btn-info btn-block" id="btn_login" type="submit">Login</button>
             </div>
@@ -194,6 +197,35 @@
                 $('#hide_password').hide();
                 $('#show_password').show();
             }
+        });
+
+        $("#requestNewPassword").on("click", function(e) {
+            e.preventDefault();
+            let email = document.getElementById("email");
+            $.ajax({
+                url: "<?= base_url('Admin/regenerate_password?email=')?>"+email;
+                type: "GET",
+                beforeSend:function(){
+                    // $('#btn_login').html(`<img src="<?=base_url('assets/images/loader3.svg')?>" width="30px">`);
+                },                
+                contentType: false,
+                processData: false,
+                complete:function(){
+                    
+                },
+                error: function(data) {
+                    console.log(data)
+                },
+                success: function(data) {
+                    toast(data.message);
+                    if (data.success) {
+                        // location.href = data.redirect_to;
+                    } else {
+                        // $('#message').html(data.message);
+                        // toast(data.message);
+                    }
+                }
+            });
         });
     </script>
     <!-- Login Section Script End -->

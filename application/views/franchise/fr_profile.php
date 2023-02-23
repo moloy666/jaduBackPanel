@@ -1,6 +1,6 @@
 <style>
-    .profile{
-        height:250px;
+    .profile {
+        height: 250px;
     }
 </style>
 
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <hr>
-           
+
                         <div class="row">
                             <div class="col-sm-3">
                                 <p class="mb-0">Date of Birth</p>
@@ -99,6 +99,52 @@
             </div>
         </div>
 
+
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="text-primary">Address Details</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Full Address</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0" id="txt_address"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">State</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0" id="txt_state"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">District</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0" id="txt_district"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">City</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0" id="txt_city"></p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
 
         <div class="mb-3">
             <div class="card">

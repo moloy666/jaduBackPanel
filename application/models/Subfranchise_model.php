@@ -37,51 +37,67 @@ class Subfranchise_model extends CI_Model
         $this->db->get();
         return $this->db->affected_rows();
     }
-
+    
     public function condition_to_get_subfranchise()
     {
-        $this->db->select('u.uid, u.name, u.email, u.mobile, u.status, sf.franchise_id');
+        $this->db->select('u.uid, u.name, u.email, u.mobile, u.status, sf.franchise_id, ua.address_line_1, ua.city_id, ua.state_id, ua.district_id, ua.pincode');
         $this->db->from('users as u');
         $this->db->join('subfranchise as sf', 'sf.user_id = u.uid');
+        $this->db->join('user_address as ua', 'u.gid=ua.gid');
         $this->db->where_not_in('u.status', 'deleted');
         $this->db->where('u.type_id', 'user_sub_franchise');
     }
 
     public function get_sub_franchise_details($franchise_id)
     {
-
         if (!empty($franchise_id)) {
             $this->condition_to_get_subfranchise();
             $this->db->where('sf.franchise_id', $franchise_id);
         } else {
             $this->condition_to_get_subfranchise();
         }
-
         $query = $this->db->get();
         $query = $query->result_array();
-
         foreach ($query as $key => $value) {
             $query[$key]['user_id'] = $value['uid'];
             unset($query[$key]['uid']);
-
-            // get franchise
             $franchise_id = "";
             $franchise_name = "";
             if (array_key_exists('franchise_id', $value)) {
                 $franchise_id = $value['franchise_id'];
                 $franchise_name = $this->get_franchise_name_by_franchise_id($franchise_id);
+                $state= $this->get_place_name_by_id($value['state_id'], 'state');
+                $district = $this->get_place_name_by_id($value['district_id'], 'district');
+                $city = $this->get_place_name_by_id($value['city_id'], 'city');
+                
             }
             $arr = [
                 'id' => $franchise_id,
-                'name' => ucfirst($franchise_name)
+                'name' => ucfirst($franchise_name),
+               
+            ];
+            $address=[
+                'city'=>$city,
+                'state'=>$state,
+                'district'=>$district
             ];
             $query[$key]['franchise'] = $arr;
-            unset($query[$key]['franchise_id']);
-        }
+            $query[$key]['address'] = $address;
 
+            unset($query[$key]['franchise_id']);
+            unset($query[$key]['state_id']);
+            unset($query[$key]['district_id']);
+            unset($query[$key]['city_id']);
+        }
         return (!empty($query)) ? $query : null;
     }
 
+    private function get_place_name_by_id($uid, $type){
+        $query = $this->db->select(field_name)->where([field_uid=> $uid, 'type'=>$type])->get(table_place);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_name]:"";
+    }
+   
     public function get_franchise_name_by_franchise_id($franchise_id)
     {
         $this->db->select('u.name');
@@ -190,7 +206,6 @@ class Subfranchise_model extends CI_Model
 
     public function display_all_franchise()
     {
-
         $this->db->select('f.uid, u.name');
         $this->db->from('users as u');
         $this->db->join('franchise as f', 'f.user_id = u.uid');
@@ -209,12 +224,6 @@ class Subfranchise_model extends CI_Model
         $this->db->from('users');
         $this->db->join('subfranchise', 'users.uid = subfranchise.user_id');
         $this->db->where('subfranchise.user_id', $user_id);
-
-        // $this->db->select(table_users.'.'.field_uid.','. table_users.'.'.field_name.','. table_subfranchise.'.'.field_uid.' as subfranchise_id');
-        // $this->db->from(table_users);
-        // $this->db->join(table_subfranchise, table_users.'.'.field_uid.'='. table_subfranchise.'.'.field_user_id);
-        // $this->db->where(table_subfranchise.'.'.field_user_id, $user_id);
-
         $query = $this->db->get();
         $query = $query->result();
         return (!empty($query)) ? $query : [];
@@ -239,20 +248,40 @@ class Subfranchise_model extends CI_Model
         $this->db->where('sarathi.sub_franchise_id', $subfranchise_id);
         $this->db->where_not_in('users.status', 'deleted');
         $this->db->where_not_in('users.status', 'pending');
-
-        // $this->db->select(table_users.'.'.field_uid.','. table_users.'.'.field_name.','. table_users.'.'.field_email.','. table_users.'.'.field_mobile.','. table_users.'.'.field_status);
-        // $this->db->from(table_users);
-        // $this->db->join(table_sarathi, table_users.'.'.field_uid.'='. table_sarathi.'.'.field_user_id);
-        // $this->db->where(table_sarathi.'.'.field_subfranchise_id, $subfranchise_id);
-        // $this->db->where_not_in(table_users.'.'.field_status, const_deleted);
-        // $this->db->where_not_in(table_users.'.'.field_status,const_pending);
-
         $query = $this->db->get();
         return $query->result_array();
     }
 
-
     /////////////////////////////////////////////////////
 
+    public function show_subfranchise_by_district_id($district_id, $specific_id){
+        $this->db->select('u.uid, u.name, sf.uid as sf_id, ua.district_id');
+        $this->db->from(table_users.' as u');
+        $this->db->join(table_subfranchise.' as sf', 'u.uid=sf.user_id');
+        $this->db->join(table_user_address.' as ua', 'u.gid=ua.gid', 'left');
+        $this->db->where([
+            'u.'.field_type_id => 'user_sub_franchise', 
+            'u.'.field_status  => const_active
+        ]);
+
+        if(!empty($district_id)){
+            $this->db->where('ua.district_id', $district_id);
+        }
+        if(!empty($specific_id)){
+            $this->db->where('sf.franchise_id', $specific_id);
+        }
+        $query = $this->db->get();
+        $query = $query->result_array();
+        return (!empty($query))?$query:[];
+    }
+
+    public function allocate_subfranchise_to_sarathi($sarathi_user_id, $sf_id){
+        $data = [
+            field_subfranchise_id => $sf_id,
+            field_modified_at     => date(field_date)
+        ];
+        $this->db->where(field_user_id, $sarathi_user_id)->update(table_sarathi, $data);
+        return($this->db->affected_rows()==1)?true:false;
+    }
 
 }

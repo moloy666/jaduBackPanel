@@ -409,7 +409,7 @@
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 let permission = response.data.permission;
                 let data = permission.split(",");
                 let access='';
@@ -424,12 +424,17 @@
 
     $.ajax({
         type:"POST",
-        url:"<?=base_url(WEB_PORTAL_ADMIN.'/get_address_details')?>",
+        url:"<?=base_url(WEB_PORTAL_FRANCHISE.'/get_address_details')?>",
         error:function(resp){
             console.log(resp);
         },
         success:function(resp){
             console.log(resp);
+            let data = resp.data;
+            $('#txt_address').text(data.address_line_1+" - "+data.pincode).addClass('title');
+            $('#txt_state').text(data.address.state).addClass('title');
+            $('#txt_district').text(data.address.district).addClass('title');
+            $('#txt_city').text(data.address.city).addClass('title');
         }
     });
 </script>

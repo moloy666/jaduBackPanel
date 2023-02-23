@@ -24,5 +24,12 @@
 
     <link href="<?=base_url()?>assets/css/multiselect.css" rel="stylesheet" />
 
-
+    <style>
+        .uppercase{
+            text-transform: uppercase;
+        }
+        .titlecase{
+            text-transform: capitalize;
+        }
+    </style>
 </head>

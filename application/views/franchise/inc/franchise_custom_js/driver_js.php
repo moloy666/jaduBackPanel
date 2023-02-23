@@ -90,7 +90,7 @@
                 console.log(response);
             },
             success: function(response) {
- 
+
                 let data = response.data;
                 let details = '';
                 $.each(data, function(i, data) {
@@ -101,7 +101,7 @@
                     }
                     details = `<tr>
                         <td>${count}</td>
-                        <td class="title"><a href="<?=base_url()?>${user_type}/driver/details/${data.user_id}">${data.name}</a></td>
+                        <td class="title"><a href="<?= base_url() ?>${user_type}/driver/details/${data.user_id}">${data.name}</a></td>
                         <td>${data.email}</td>
                         <td>${data.mobile}</td>
                         <td class="title">${data.sarathi}</td>
@@ -139,6 +139,8 @@
                         </svg>
                         </button>
 
+                       
+
                         <button class="hdrbtn mx-2 delete_user access_delete" data-toggle="modal" data="${data.user_id}" data-target="#deltmodl" data-toggle="tooltip" data-placement="top" title="Delete" disabled>
 
                         <svg width="20" height="20" fill="#ef242f" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon">
@@ -155,26 +157,22 @@
         });
     }
 
-
-
-
-
+    function view_driver_document(user_id) {
+        location.href = `<?= base_url('administrator/driver/document/') ?>${user_id}`;
+    }
     function download_qrCode(driver_id) {
         location.href = `<?= apiBaseUrl ?>/Qrcode?driverId=${driver_id}`;
         window.open(url, '_blank');
 
     }
-
     function download_ride_history(user_id) {
         var url = `<?= base_url('administrator/driver/ride_history/') ?>${user_id}`;
         window.open(url, '_blank');
     }
-
     function download_ride_history_csv(user_id) {
         var url = `<?= base_url('administrator/driver/ride_history_csv/') ?>${user_id}`;
         window.open(url, '_blank');
     }
-
     function edit_driver(id, name, email, mobile) {
         $('#edit_id').val(id);
         $('#edit_name').val(name);
@@ -265,7 +263,7 @@
                 success: function(data) {
                     if (data.success) {
                         toast(data.message, "center");
-                        
+
                         $('#close_edit_modal').click();
                         count = 1;
                         if (table == 'franchise') {
@@ -273,7 +271,7 @@
                         } else {
                             let subfranchise_id = $('#specific_id').val();
                             get_sarathi_id(subfranchise_id);
-                        } 
+                        }
                         $('#table_details').html('');
                         $('#update_form')[0].reset();
                     } else {
@@ -301,7 +299,7 @@
                 url: "<?= base_url(WEB_PORTAL_FRANCHISE . '/delete_driver') ?>",
                 data: {
                     "id": id,
-                    "specific_id":specific_id,
+                    "specific_id": specific_id,
                     "table": table,
                 },
                 success: function(data) {
@@ -364,7 +362,7 @@
         });
     }
 
-    var access=[
+    var access = [
         "access_insert",
         "access_update",
         "access_status_change",
@@ -380,7 +378,7 @@
             },
             success: function(response) {
                 let permission = response.data.permission;
-               
+
                 let data = permission.split(",");
                 $.each(data, function(i) {
                     $('.' + data[i]).removeAttr('disabled');
@@ -391,14 +389,14 @@
     }
 
     $('#table').on('page.dt', function() {
-            get_panel_access_list();
-        });
+        get_panel_access_list();
+    });
 
-        $('#table').on('order.dt', function() {
-            get_panel_access_list();
-        });
+    $('#table').on('order.dt', function() {
+        get_panel_access_list();
+    });
 
-        $('#table').on('search.dt', function() {
-            get_panel_access_list();
-        });
+    $('#table').on('search.dt', function() {
+        get_panel_access_list();
+    });
 </script>

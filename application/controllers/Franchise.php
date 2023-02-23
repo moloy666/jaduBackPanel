@@ -225,6 +225,7 @@ class Franchise extends CI_Controller
 		if ($this->is_user_logged_in()) {
 			$user_id = $this->session->userdata(session_franchise_user_id);
 			$table = $this->session->userdata(session_franchise_table);
+			
 			$this->init_franchise_model();
 			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
 			$specific_id = $data['specific_id'];
@@ -245,6 +246,26 @@ class Franchise extends CI_Controller
 			redirect(base_url($user_type));
 		}
 	}
+
+	public function view_saathi_request()
+	{
+		if ($this->is_user_logged_in()) {
+			$user_id = $this->session->userdata(session_franchise_user_id);
+			$table = $this->session->userdata(session_franchise_table);
+			$this->init_franchise_model();
+			$data['specific_id'] = $this->Franchise_model->get_specific_id_by_user_id($user_id, $table);
+
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('saathi_request', $data);
+			$this->load_footer();
+			$this->load->view('inc/custom_js/saathi_request_js');
+		} else {
+			$user_type = ($this->uri->segment(1));
+			redirect(base_url($user_type));
+		}
+	}
+
 
 	// public function view_customers(){
 
@@ -933,9 +954,10 @@ class Franchise extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function get_subfranchise_dashboard_data(){
+	public function get_subfranchise_dashboard_data()
+	{
 		$this->init_common_model();
-		
+
 		$subfranchise_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
 		$table = $this->input->post(param_table);
 		$user_id = $this->Common_model->get_user_id_by_specific_id($subfranchise_id, $table);
@@ -953,7 +975,7 @@ class Franchise extends CI_Controller
 			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($subfranchise_id, $table),
 			'totalKmPurchaseToday' => $this->Common_model->total_km_purchase_today($user_id),
 		];
-		
+
 		echo json_encode($data);
 	}
 
@@ -966,7 +988,7 @@ class Franchise extends CI_Controller
 
 		$user_id = $this->Common_model->get_user_id_by_specific_id($specific_id, $table);
 		$data['user_type'] = $this->Sarathi_model->get_user_type_by_user_id($user_id);
-		
+
 
 		if ($table == table_franchise) {
 			$data = [
@@ -1343,4 +1365,17 @@ class Franchise extends CI_Controller
 		$mpdf->Output($name . ".pdf", "D");
 	}
 
+	public function get_address_details(){
+		$user_id = $this->session->userdata(session_franchise_user_id);
+		$this->init_admin_model();
+		$gid = $this->Admin_model->get_gid_by_user_id($user_id);
+		$this->init_common_model();
+		$data = $this->Common_model->get_address_details($gid);
+		if(!empty($data)){
+			$this->response(['success'=>true, 'message'=>'found', 'data'=>$data], 200);
+		}
+		else{
+			$this->response(['success'=>true, 'message'=>'found', 'data'=>$data], 200);
+		}
+	}
 }

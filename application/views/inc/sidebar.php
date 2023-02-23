@@ -20,7 +20,7 @@
              </div>
          </div>
 
-         <input type="hidden" class="form-control" value="<?= $this->session->userdata(field_type_id) ?>" id="user_type">
+         <input type="hidden" class="form-control" value="<?= $this->session->userdata(field_type_id) ?>" id="user_type_id">
 
          <?php $uri_last_segment = end($this->uri->segments); ?>
 
@@ -138,6 +138,27 @@
                      <a href="<?= base_url(WEB_PORTAL_ADMIN . saathi) ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'saathi') ? 'active' : '' ?>">
                          <i class="sidebar-item-icon fa fa-smile-o"></i>
                          <span class="nav-label">Saathi</span>
+                     </a>
+                 </li>
+             <?php
+                }
+                ?>
+             <?php
+                if ($this->session->userdata(field_type_id) == "user_admin") {
+                    if ($this->session->userdata(session_sarathi_data) == "active" || $this->session->userdata(session_sarathi_data) == const_active) { ?>
+                     <li>
+                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/request') ?>" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'request') ? 'active' : '' ?>">
+                             <i class="sidebar-item-icon fa fa-plus"></i>
+                             <span class="nav-label">New Saathi Request</span>
+                         </a>
+                     </li>
+                 <?php
+                    }
+                } else { ?>
+                 <li>
+                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/request') ?>" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'request') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-plus"></i>
+                         <span class="nav-label">New Saathi Request</span>
                      </a>
                  </li>
              <?php
@@ -269,30 +290,6 @@
                      <span class="nav-label">Hotels</span>
                  </a>
              </li>
-
-
-             <?php
-                if ($this->session->userdata(field_type_id) == "user_admin") {
-                    if ($this->session->userdata(session_places) == "active" || $this->session->userdata(session_places) == const_active) { ?>
-                     <li>
-                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/places') ?>" id="coupon" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'places') ? 'active' : '' ?>">
-                             <i class="sidebar-item-icon fa fa-map-marker"></i>
-                             <span class="nav-label">Add Places</span>
-                         </a>
-                     </li>
-                 <?php
-                    }
-                } else { ?>
-                 <li>
-                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/places') ?>" id="coupon" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'places') ? 'active' : '' ?>">
-                         <i class="sidebar-item-icon fa fa-map-marker"></i>
-                         <span class="nav-label">Add Places</span>
-                     </a>
-                 </li>
-             <?php
-                }
-                ?>
-
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
@@ -446,7 +443,7 @@
              <?php
                 }
                 ?>
-                
+
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
                     if ($this->session->userdata(session_reports) == "active" || $this->session->userdata(session_reports) == const_active) { ?>
@@ -525,6 +522,28 @@
                 }
                 ?>
 
+             <?php
+                if ($this->session->userdata(field_type_id) == "user_admin") {
+                    if ($this->session->userdata(session_places) == "active" || $this->session->userdata(session_places) == const_active) { ?>
+                     <li>
+                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/places') ?>" id="coupon" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'places') ? 'active' : '' ?>">
+                             <i class="sidebar-item-icon fa fa-map-marker"></i>
+                             <span class="nav-label">Add Places</span>
+                         </a>
+                     </li>
+                 <?php
+                    }
+                } else { ?>
+                 <li>
+                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/places') ?>" id="coupon" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'places') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-map-marker"></i>
+                         <span class="nav-label">Add Places</span>
+                     </a>
+                 </li>
+             <?php
+                }
+                ?>
+
 
 
          </ul>
@@ -532,8 +551,8 @@
  </nav>
 
  <script>
-     let user_type = $('#user_type').val();
-     if (user_type == "user_admin") {
+     let user_type_id = $('#user_type_id').val();
+     if (user_type_id == "user_admin") {
          $('#admin_page').hide();
 
      }

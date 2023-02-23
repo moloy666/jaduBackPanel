@@ -85,6 +85,21 @@ class Sarathi_model extends CI_Model
         return (!empty($query)) ? $query : null;
     }
 
+    public function show_new_sarathi_request(){
+        $query = $this->db->select('u.uid, u.name, u.mobile, u.email, ua.district_id, ua.state_id')
+        ->from(table_users.' as u')
+        ->join(table_sarathi.' as s', 'u.uid=s.user_id')
+        ->join(table_user_address.' as ua', 'u.gid=ua.gid','left')
+        ->where(['s.'.field_subfranchise_id=>null])
+        ->where('u.' .field_type_id, value_user_sarathi)
+        ->where_not_in('u.' . field_status, const_deleted)
+        ->where_not_in('u.'.field_name, "")
+        ->where_not_in(['u'.field_status=>const_deleted])
+        ->get();
+        $query = $query->result_array();
+        return(!empty($query))?$query:[];
+    }
+
     public function get_subfranchise_name_by_subfranchise_id($subfranchise_id)
     {
         $this->db->select('u.name');

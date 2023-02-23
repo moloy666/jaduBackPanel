@@ -94,6 +94,7 @@ $route['franchise/places'] = 'franchise/view_places';
 $route['franchise/driver/location'] = 'franchise/view_driver_location';
 $route['franchise/recharge_history'] = 'franchise/view_recharge_history';
 $route['franchise/get_panel_access_list'] = 'franchise/get_panel_access_list';
+$route['franchise/saathi/request'] = 'franchise/view_saathi_request';
 
 
 $route['franchise/subfranchise/saathi/(:any)'] = 'franchise/view_subfranchise_details/$1';
@@ -238,6 +239,9 @@ $route['administrator/update_sarathi'] = 'Admin/update_sarathi';
 $route['administrator/delete_sarathi'] = 'Admin/delete_sarathi';
 $route['administrator/get_sarathi'] = 'Admin/get_sarathi';
 $route['administrator/display_bank_details'] = 'Admin/display_bank_details';
+$route['administrator/show_new_sarathi_request'] = 'Admin/show_new_sarathi_request';
+$route['administrator/show_subfranchise_by_district_id'] = 'Admin/show_subfranchise_by_district_id';
+$route['administrator/allocate_subfranchise_to_sarathi'] = 'Admin/allocate_subfranchise_to_sarathi';
 
 $route['administrator/approved_driver_documents'] = 'Admin/approved_driver_documents';
 $route['administrator/deny_driver_documents'] = 'Admin/deny_driver_documents';
@@ -305,6 +309,8 @@ $route['administrator/display_rate_per_km'] = 'Admin/display_rate_per_km';
 $route['administrator/save_kilometer_details'] = 'Admin/save_kilometer_details';
 $route['administrator/add_admin'] = 'Admin/add_admin';
 
+$route['administrator/saathi/request'] = 'Admin/view_saathi_request';
+
 //////////////////////////////////////////////////////////////////////////////
 
 // sarathi details 
@@ -322,6 +328,9 @@ $route['administrator/driver/display_ride_history/(:any)'] = 'Admin/display_ride
 $route['administrator/driver/ride_history_csv/(:any)'] = 'Admin/ride_history_csv/$1';
 $route['administrator/display_driver_location'] = 'Admin/display_driver_location';
 $route['administrator/activate_pending_driver'] = 'Admin/activate_pending_driver';
+
+$route['administrator/driver/document/(:any)'] = 'Admin/view_driver_document/$1';
+
 
 
 // admin settings 
@@ -456,7 +465,7 @@ $route['administrator/total_km_purchase_today'] = 'Admin/total_km_purchase_today
 $route['administrator/get_app_version_list'] = 'Admin/get_app_version_list';
 $route['administrator/save_new_app_release'] = 'Admin/save_new_app_release';
 
-
+////////////////////////////////////////////////////////////////////////////////////////
 
 
 

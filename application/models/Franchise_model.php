@@ -42,15 +42,32 @@ class Franchise_model extends CI_Model
     public function get_franchise_details()
     {
 
-        $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status);
+        $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status.', ua.address_line_1, ua.city_id, ua.state_id, ua.district_id, ua.pincode');
         $this->db->from(table_users);
         $this->db->join(table_franchise, table_users . '.' . field_uid . '=' . table_franchise . '.' . field_user_id);
+        $this->db->join('user_address as ua', 'users.gid = ua.gid');
         $this->db->where_not_in(table_users . '.' . field_status, const_deleted);
         $this->db->where(table_users . '.' . field_type_id, value_user_franchise);
         $query = $this->db->get();
         $query = $query->result_array();
-        // return $query->result();
+        foreach($query as $key=>$value){
+            $state= $this->get_place_name_by_id($value['state_id'], 'state');
+            $district = $this->get_place_name_by_id($value['district_id'], 'district');
+            $city = $this->get_place_name_by_id($value['city_id'], 'city');
+            $address=[
+                'city'=>$city,
+                'state'=>$state,
+                'district'=>$district
+            ];
+            $query[$key]['address'] = $address;
+        }
         return (!empty($query)) ? $query : [];
+    }
+
+    private function get_place_name_by_id($uid, $type){
+        $query = $this->db->select(field_name)->where([field_uid=> $uid, 'type'=>$type])->get(table_place);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_name]:"";
     }
 
     public function delete_franchise_details($uid)

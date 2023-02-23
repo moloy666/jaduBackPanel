@@ -260,6 +260,7 @@ define('table_notification', 'notifications');
 define('table_device_notification_data_firebase', 'device_notification_data_firebase');
 define('table_app_version', 'lists_app_verson');
 define('table_otp_list', 'otp_list');
+define('table_user_address', 'user_address');
 /////////////////////////////////////////////////////
 define('const_deleted', 'DELETED');
 define('const_active', 'ACTIVE');
@@ -519,3 +520,5 @@ define('marker_running_car', 'yellow_car.png');
 define('STATUS_DRIVER_WAITING', 'DRIVER_WAITING');
 define('STATUS_DRIVER_INACTIVE', 'DRIVER_INACTIVE');
 define('STATUS_DRIVER_GO_TO', 'DRIVER_GO_TO');
+////////////////////////////////////////////////////////////////
+define('query_param_id', 'id');

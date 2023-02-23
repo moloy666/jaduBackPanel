@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 // require_once APPPATH.'libraries/vendor/swiftmailer/lib/swift_required.php';
-require_once APPPATH.'libraries/vendor/autoload.php';
+require_once APPPATH . 'libraries/vendor/autoload.php';
 
 class Admin extends CI_Controller
 {
@@ -133,6 +133,10 @@ class Admin extends CI_Controller
 			// redirect(base_url());
 		}
 	}
+
+
+
+
 
 	public function view_compliments()
 	{
@@ -1193,11 +1197,48 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function view_saathi_request()
+	{
+		if ($this->is_user_logged_in()) {
+			if ($this->session->userdata(field_type_id) == const_user_admin) {
+				$admin_id = $this->session->userdata(session_admin_specific_id);
+				$this->init_admin_model();
+				$status = $this->Admin_model->get_access_permission($admin_id, access_sarathi_data);
+			} else {
+				$status = const_active;
+			}
+			if ($status == const_active) {
+				$data['specific_id'] = "";
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load_sidebar();
+				$this->load->view('saathi_request', $data);
+				$this->load_footer();
+				$this->load->view('inc/custom_js/saathi_request_js');
+			} else {
+				redirect(base_url('administrator/dashboard'));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function get_sarathi()
 	{
 		$subfranchise_id = $this->input->post(param_subfranchise_id);
 		$this->init_sarathi_model();
 		$data = $this->Sarathi_model->get_sarathi_details($subfranchise_id);
+		if (!empty($data)) {
+			$this->response(['success' => true, 'message' => 'sarathi found', 'data' => $data], 200);
+		} else {
+			$this->response(['success' => false, 'message' => 'sarathi not found'], 200);
+		}
+	}
+
+	public function show_new_sarathi_request()
+	{
+		$this->init_sarathi_model();
+		$data = $this->Sarathi_model->show_new_sarathi_request();
 		if (!empty($data)) {
 			$this->response(['success' => true, 'message' => 'sarathi found', 'data' => $data], 200);
 		} else {
@@ -1226,7 +1267,6 @@ class Admin extends CI_Controller
 		$name = trim($this->input->post(param_name));
 		$email = trim($this->input->post(param_email));
 		$mobile = trim($this->input->post(param_mobile));
-		// $password = md5(trim($this->input->post(param_mobile)));
 		$permission_ids = $this->input->post('permission');
 		$panel_lists_ids = $this->input->post('panel_list');
 
@@ -1258,7 +1298,6 @@ class Admin extends CI_Controller
 		$gid = $this->Uid_server_model->generate_uid(KEY_GID);
 
 		$refferal_code = $this->generateReferralCode();
-
 		$panel_acess_list = json_encode(implode(',', $panel_lists_ids));
 
 		$panel_access = [
@@ -2071,7 +2110,7 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function display_all_franchise()
+	public function display_all_subfranchise()
 	{
 		$this->init_sub_franchise_model();
 		$data = $this->Subfranchise_model->display_all_franchise();
@@ -2338,6 +2377,7 @@ class Admin extends CI_Controller
 			$this->response([key_success => false, key_message => "Enter a valid Pincode"], 200);
 			return;
 		}
+
 
 		$table = $this->input->post('table');
 		if (!empty($table)) {
@@ -2686,6 +2726,25 @@ class Admin extends CI_Controller
 			redirect(base_url());
 		}
 	}
+
+	public function view_driver_document($user_id)
+	{
+		$this->init_sarathi_details_model();
+		$user[field_user_id] = $user_id;
+		$gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);
+		$user['info'] = $this->Sarathi_details_model->get_name_by_user_id($user_id);
+		$user['documents'] = $this->Sarathi_details_model->get_pending_driver_details($gid);
+
+		if ($this->is_user_logged_in()) {
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('driver_document', $user);
+			$this->load_footer();
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function show_driver_document($user_id)
 	{
 		$this->show_pending_drivers($user_id);
@@ -2787,7 +2846,7 @@ class Admin extends CI_Controller
 			],
 			'totalCustomers' => $this->Customers_model->get_total_customers($specific_id),
 			'totalFranchise' => $this->Franchise_model->get_total_franchise(),
-			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(), 
+			'totalSubFranchise' => $this->Subfranchise_model->get_total_sub_franchise(),
 			'totalCarRunning' =>  $this->Driver_model->get_total_car_running($specific_id),
 			'totalRevenue' => $this->Admin_model->get_total_revenue($specific_id),
 			'revenueStatus' => $this->Admin_model->get_revenue_status($specific_id),
@@ -2872,7 +2931,7 @@ class Admin extends CI_Controller
 		$sarathi_id = $this->input->post(param_id);
 		$this->init_driver_model();
 		$driverData = $this->Driver_model->getdriverData($sarathi_id);
-		
+
 		echo json_encode($driverData);
 	}
 
@@ -4647,7 +4706,7 @@ class Admin extends CI_Controller
 
 			$packages_final[] = [
 				key_id => $value[field_uid],
-				key_name => $value[field_name] . " " . unit_km . " ( + " . $extra_percentage . " % additional )" . " " . STATIC_RUPEE_SIGN . $price. "(+{$gstPercentage}% GST)",
+				key_name => $value[field_name] . " " . unit_km . " ( + " . $extra_percentage . " % additional )" . " " . STATIC_RUPEE_SIGN . $price . "(+{$gstPercentage}% GST)",
 			];
 		}
 
@@ -4869,6 +4928,47 @@ class Admin extends CI_Controller
 			$this->response(["success" => true, "message" => "Changes Save Sucessfully"], 200);
 		} else {
 			$this->response(["success" => false, "message" => "Something went wrong"], 200);
+		}
+	}
+
+	public function show_subfranchise_by_district_id()
+	{
+		$district_id = $this->input->post(param_id);
+		$specific_id = $this->input->post(param_specific_id);
+		$this->init_sub_franchise_model();
+		$data = $this->Subfranchise_model->show_subfranchise_by_district_id($district_id, $specific_id);
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+	}
+
+	public function allocate_subfranchise_to_sarathi()
+	{
+		$sarathi_user_id = $this->input->post(param_id);
+		$sf_id = $this->input->post('sf_id');
+		$this->init_sub_franchise_model();
+		$status = $this->Subfranchise_model->allocate_subfranchise_to_sarathi($sarathi_user_id, $sf_id);
+		if (($status)) {
+			$this->response(["success" => true, "message" => "Subfranchise Allocate to Saathi Successfully"], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something Went Wrong"], 200);
+		}
+	}
+
+	public function regenerate_password(){
+
+		$email = $this->input->get('email');
+		$this->init_common_model();
+		$password = $this->Common_model->randomPassword();
+		$sent = $this->Common_model->reset_password($email, $password);
+		$this->init_mail_model();
+		$this->Mail_model->send_mail($email, $password);
+		if (($sent)) {
+			$this->response(["success" => true, "message" => "New Password Send Sucessfully"], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something Went Wrong"], 200);
 		}
 	}
 }

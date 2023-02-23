@@ -17,80 +17,7 @@ class Common_model extends CI_Model
         return $query[0][field_id];
     }
 
-    // public function get_country_code(){
-    // 	$query = $this->db->get(table_country);
-    // 	return $query->result_array();
-    // }
-
-    // public function get_country_list(){
-    //     $this->db->select(field_id .",". field_name);
-    //     $this->db->where(field_type, STATIC_PLACE_COUNTRY);
-    //     $this->db->where(field_status, STATIC_STATUS_ACTIVE);
-    //     $query = $this->db->get(table_place);
-
-    //     return $query->result_array();
-    // }
-
-    // public function get_state_list($country_id){
-    //     $this->db->select(field_id .",". field_name);
-    //     $this->db->where(field_type, STATIC_PLACE_STATE);
-    //     $this->db->where(field_status, STATIC_STATUS_ACTIVE);
-    //     $this->db->where(field_parent, $country_id);
-    //     $query = $this->db->get(table_place);
-
-    //     return $query->result_array();
-    // }
-
-    // public function get_district_list($state_id){
-    //     $this->db->select(field_id .",". field_name);
-    //     $this->db->where(field_type, STATIC_PLACE_DISTRICT);
-    //     $this->db->where(field_status, STATIC_STATUS_ACTIVE);
-    //     $this->db->where(field_parent, $state_id);
-    //     $query = $this->db->get(table_place);
-
-    //     return $query->result_array();
-    // }
-
-    // public function get_city_list($district_id){
-    //     $this->db->select(field_id .",". field_name);
-    //     $this->db->where(field_type, STATIC_PLACE_CITY);
-    //     $this->db->where(field_status, STATIC_STATUS_ACTIVE);
-    //     $this->db->where(field_parent, $district_id);
-    //     $query = $this->db->get(table_place);
-
-    //     return $query->result_array();
-    // }
-
-    // public function do_upload($path, $send_img){
-    //     $resp = function ($data) {
-    //         $data_final = [
-    //             key_status => $data[0],
-    //             key_message => $data[1],
-    //             key_isadd => $data[2],
-    //         ];
-    //         return $data_final;
-    //     };
-    //     $config[key_upload_path]   = './' . $path;
-    //     $config[key_allowed_types] = type_allowed;
-    //     // $config[key_encrypt_name] = TRUE;
-
-    //     $this->load->library(library_upload, $config);
-    //     $this->upload->initialize($config);
-
-    //     return (!$this->upload->do_upload($send_img)) ? false : true;
-    // }
-
-    // public function get_all_packages($user_type){
-    //     $user_type_id = $this->get_user_type_id($user_type);
-    //     $this->db->select(field_id .",". field_name);
-    //     $this->db->where(field_user_type_id, $user_type_id);
-    //     $this->db->where(field_status, STATIC_STATUS_ACTIVE);
-    //     $query = $this->db->get(table_packages);
-    //     return $query->result_array();
-    // }
-
-
-
+   
     public function is_this_value_exist($field_value, $field_name, $table, $user_type_id)
     {
 
@@ -968,5 +895,45 @@ class Common_model extends CI_Model
         return (!empty($query))?$query[0]['amount']:0;
     }
 
+    public function get_address_details($gid){
+        $query = $this->db->select('address_line_1, city_id, district_id, state_id, pincode')
+        ->where(field_group_id, $gid)
+        ->get(table_user_address);
+        $query = $query->result_array();
+        foreach($query as $key=>$value){
+            $state    = $this->get_place_name_by_id($value['state_id'], 'state');
+            $district = $this->get_place_name_by_id($value['district_id'], 'district');
+            $city     = $this->get_place_name_by_id($value['city_id'], 'city');
+            
+            $arr =[ 
+                "state"    => $state,
+                "district" => $district,
+                "city"     => $city
+            ];
+            $query[$key]['address'] = $arr;
+            unset($query[$key]['city_id']);
+            unset($query[$key]['district_id']);
+            unset($query[$key]['state_id']);
+        }
+        return(!empty($query))?$query[0]:[];
+    }
+    
+    private function get_place_name_by_id($uid, $type){
+        $query = $this->db->select(field_name)->where([field_uid=> $uid, 'type'=>$type])->get(table_place);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_name]:"";
+    }
+
+    public function reset_password($email, $password){
+       $query = $this->db->select(field_uid)->where(field_email, $email)->get(table_users);
+       $query = $query->result_array();
+       $user_id = $query[0][field_uid];
+
+       $data=[
+        field_password=>$password
+       ];
+       $this->db->where(field_user_id, $user_id)->update(table_subfranchise, $data);
+       return ($this->db->affected_rows()==1)?true:false;
+    }
 
 }

@@ -30,6 +30,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
+                                <th class="text-center">District</th>
                                 <th class="text-center">Franchise</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Actions</th>
@@ -468,6 +469,7 @@
                 type: "post",
                 url: "<?= base_url('administrator/get_sub_franchise') ?>",
                 success: function(response) {
+                    // console.log(response);
                     if (response.success) {
 
                         let subfranchise = response.data;
@@ -487,6 +489,7 @@
                                 </td>
                                 <td>${subfranchise[i].email}</td>
                                 <td>${subfranchise[i].mobile}</td>
+                                <td class="title">${subfranchise[i].address.district}</td>
                                 <td class="title">${subfranchise[i].franchise.name}</td>
                                 <td><label class="switch">
                                 <input type="checkbox"  ${subfranchise_status} onclick="status(this,'${subfranchise[i].user_id}')" class="access_status_change" disabled>

@@ -153,7 +153,10 @@ class Sarathi_details_model extends CI_Model
 
     public function deny_driver_documents($gid, $document_id){
 
-        $this->db->set([field_verified=> const_rejected, field_status=>const_deactive]);
+        $this->db->set([
+            field_verified  => const_rejected, 
+            field_status    => const_deactive
+        ]);
         $this->db->where([field_group_id=>$gid, field_uid=>$document_id]);
         $this->db->update(table_documents);
         return ($this->db->affected_rows()==1)? true:false;

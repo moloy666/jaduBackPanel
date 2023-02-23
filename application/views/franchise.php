@@ -42,6 +42,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
+                                <th class="text-center">State</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -453,6 +454,7 @@
                 url: "<?= base_url('administrator/get_franchise') ?>",
                 success: function(data) {
                     let franchise = JSON.parse(data);
+                    // console.log(franchise);
                     let str = '';
                     let franchise_status = "";
                     $.each(franchise, function(i) {
@@ -467,6 +469,7 @@
                                 </td>
                                 <td>${franchise[i].email}</td>
                                 <td>${franchise[i].mobile}</td>
+                                <td>${franchise[i].address.state}</td>
                                 <td><label class="switch">
                                 <input type="checkbox"  ${franchise_status} onclick="status(this,'${franchise[i].uid}')" class="access_status_change" disabled>
                                 <span class="slider round"></span></label>
