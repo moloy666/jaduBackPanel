@@ -52,7 +52,7 @@
                     <span class="input-span"></span>Remember me</label>
             </div>
             <div>
-                <p>Forget Password ? <a href="#" id = "requestNewPassword">Request a new password</a></p>
+                <p>Forget Password ? <span class="text-primary" id="requestNewPassword" style="cursor:pointer">Request a new password</span></p>
             </div>
             <div class="form-group">
                 <button class="btn btn-info btn-block" id="btn_login" type="submit">Login</button>
@@ -135,13 +135,13 @@
                 $.ajax({
                     url: "<?= base_url('franchise/authenticate_user') ?>",
                     type: "post",
-                    beforeSend:function(){
-                        $('#btn_login').html(`<img src="<?=base_url('assets/images/loader3.svg')?>" width="30px">`);
+                    beforeSend: function() {
+                        $('#btn_login').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
                     },
                     data: formData,
                     contentType: false,
                     processData: false,
-                    complete:function(){
+                    complete: function() {
                         $('#btn_login').html(`Login`);
                     },
                     error: function(data) {
@@ -199,33 +199,25 @@
             }
         });
 
-        $("#requestNewPassword").on("click", function(e) {
-            e.preventDefault();
-            let email = document.getElementById("email");
-            $.ajax({
-                url: "<?= base_url('Admin/regenerate_password?email=')?>"+email;
-                type: "GET",
-                beforeSend:function(){
-                    // $('#btn_login').html(`<img src="<?=base_url('assets/images/loader3.svg')?>" width="30px">`);
-                },                
-                contentType: false,
-                processData: false,
-                complete:function(){
-                    
-                },
-                error: function(data) {
-                    console.log(data)
-                },
-                success: function(data) {
-                    toast(data.message);
-                    if (data.success) {
-                        // location.href = data.redirect_to;
-                    } else {
-                        // $('#message').html(data.message);
-                        // toast(data.message);
+        $("#requestNewPassword").click(function() {
+            let email = $("#email").val();
+            let user_type = $('#hidden_user_type').val();
+            if (email == '') {
+                toast("Enter Your Email");
+            } else {
+                $.ajax({
+                    url: "<?= base_url('Admin/regenerate_password') ?>?email=" + email + "&user_type=" + user_type,
+                    type: "GET",
+                    error: function(data) {
+                        console.log(data)
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        toast(data.message);
                     }
-                }
-            });
+                });
+            }
+
         });
     </script>
     <!-- Login Section Script End -->

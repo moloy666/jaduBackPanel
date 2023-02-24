@@ -2110,7 +2110,7 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function display_all_subfranchise()
+	public function display_all_franchise()
 	{
 		$this->init_sub_franchise_model();
 		$data = $this->Subfranchise_model->display_all_franchise();
@@ -4960,9 +4960,19 @@ class Admin extends CI_Controller
 	public function regenerate_password(){
 
 		$email = $this->input->get('email');
+		$user_type =$this->input->get('user_type');
+		if($user_type=='franchise'){
+			$user_type_id = value_user_franchise;
+			$table = table_franchise;
+		}else{
+			$user_type_id = value_user_sub_franchise;
+			$table = table_subfranchise;
+
+		}
+		
 		$this->init_common_model();
 		$password = $this->Common_model->randomPassword();
-		$sent = $this->Common_model->reset_password($email, $password);
+		$sent = $this->Common_model->reset_password($email, $user_type_id, $password, $table);
 		$this->init_mail_model();
 		$this->Mail_model->send_mail($email, $password);
 		if (($sent)) {

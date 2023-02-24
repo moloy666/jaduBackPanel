@@ -924,15 +924,20 @@ class Common_model extends CI_Model
         return(!empty($query))?$query[0][field_name]:"";
     }
 
-    public function reset_password($email, $password){
-       $query = $this->db->select(field_uid)->where(field_email, $email)->get(table_users);
+    public function reset_password($email, $user_type_id, $password, $table){
+       $query = $this->db->select(field_uid)
+       ->where([
+            field_email   => $email,
+            field_type_id => $user_type_id
+            ])
+        ->get(table_users);
        $query = $query->result_array();
        $user_id = $query[0][field_uid];
 
        $data=[
-        field_password=>$password
+        field_password=>md5($password)
        ];
-       $this->db->where(field_user_id, $user_id)->update(table_subfranchise, $data);
+       $this->db->where(field_user_id, $user_id)->update($table, $data);
        return ($this->db->affected_rows()==1)?true:false;
     }
 
