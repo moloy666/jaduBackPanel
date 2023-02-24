@@ -403,6 +403,25 @@ class Franchise extends CI_Controller
 		}
 	}
 
+	public function view_driver_document($user_id)
+	{
+		$this->init_sarathi_details_model();
+		$user[field_user_id] = $user_id;
+		$gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);
+		$user['info'] = $this->Sarathi_details_model->get_name_by_user_id($user_id);
+		$user['documents'] = $this->Sarathi_details_model->get_pending_driver_details($gid);
+
+		if ($this->is_user_logged_in()) {
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('driver_document', $user);
+			$this->load_footer();
+		} else {
+            $user_type = ($this->uri->segment(1));
+			redirect(base_url($user_type));
+		}
+	}
+
 	public function view_incentives()
 	{
 		if ($this->is_user_active()) {
@@ -949,6 +968,7 @@ class Franchise extends CI_Controller
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status($specific_id),
 			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($specific_id, $table),
 			'totalKmPurchaseToday' => $this->Common_model->total_km_purchase_today($user_id),
+			// 'totalCarRunning' => $this->Common_model->get_total_car_running($specific_id),
 
 		];
 		echo json_encode($data);
@@ -961,7 +981,6 @@ class Franchise extends CI_Controller
 		$subfranchise_id = $this->input->post(param_id);  // FRANCHISE || SUBFRANCHISE
 		$table = $this->input->post(param_table);
 		$user_id = $this->Common_model->get_user_id_by_specific_id($subfranchise_id, $table);
-		// print_r("{$subfranchise_id} {$table} {$user_id}");
 		$data = [
 			'totalSarathi' => $this->Common_model->get_total_sarathi_of_sub_franchise($subfranchise_id),
 			'drivers' => [
@@ -974,6 +993,7 @@ class Franchise extends CI_Controller
 			'totalRevenueStatus' =>  $this->Common_model->get_revenue_status_of_subfranchise($subfranchise_id),
 			'totalKmPurchased' =>  $this->Common_model->total_km_purchase($subfranchise_id, $table),
 			'totalKmPurchaseToday' => $this->Common_model->total_km_purchase_today($user_id),
+			'refferalCode' => $this->Common_model->show_refferal_code($subfranchise_id),
 		];
 
 		echo json_encode($data);
@@ -1378,4 +1398,6 @@ class Franchise extends CI_Controller
 			$this->response(['success'=>true, 'message'=>'found', 'data'=>$data], 200);
 		}
 	}
+
+	
 }

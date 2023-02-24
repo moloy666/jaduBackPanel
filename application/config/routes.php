@@ -101,6 +101,7 @@ $route['franchise/subfranchise/saathi/(:any)'] = 'franchise/view_subfranchise_de
 $route['franchise/saathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
 $route['franchise/driver/details/(:any)'] = 'franchise/view_driver_details/$1';
 $route['franchise/download_recharge_history/(:any)'] = 'franchise/download_recharge_history/$1';
+$route['franchise/driver/document/(:any)'] = 'franchise/view_driver_document/$1';
 
 // ============================================================
 
@@ -128,30 +129,19 @@ $route['subfranchise/profile'] = 'franchise/view_profile';
 $route['subfranchise/places'] = 'franchise/view_places';
 $route['subfranchise/driver/location'] = 'franchise/view_driver_location';
 $route['subfranchise/recharge_history'] = 'franchise/view_recharge_history';
+$route['subfranchise/driver/document/(:any)'] = 'franchise/view_driver_document/$1';
 
 $route['subfranchise/get_panel_access_list'] = 'franchise/get_panel_access_list';
 $route['subfranchise/saathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
-
 
 
 // Functions
 
 ///////////////////////////////////FRANCHISE / SUBFRANCHISE PANEL END ////////////////////////////////////////////
 
-// $route['dashboard'] = 'admin/dashboard';
-// $route['sarathi'] = 'admin/sarathi';
-// $route['driver'] = 'admin/driver';
-// $route['franchise'] = 'admin/franchise';
-// $route['sub_franchise'] = 'admin/sub_franchise';
-// $route['admin'] = 'Admin/admin';
-// $route['profile'] = 'Admin/profile';
-// $route['logout'] = 'admin/logout';
-
-
 $route['administrator/get_customer_by_booking_id'] = 'admin/get_customer_by_booking_id';
 
 ////////////////////// SARATHI PANEL ///////////////////////////////////////////
-// $route['sarathi_login'] = 'Sarathi/index';
 
 $route['sarathiData'] = 'Admin/getsarathiData';
 $route['sarathi/login'] = 'Sarathi/index';
@@ -164,11 +154,12 @@ $route['saathi/documents'] = 'Sarathi/view_sarathi_documents';
 $route['saathi/pending_driver_document/(:any)'] = 'sarathi/show_pending_drivers/$1';
 $route['saathi/driver/details/(:any)'] = 'Sarathi/view_driver_details/$1';
 $route['saathi/get_panel_access_list'] = 'Sarathi/get_panel_access_list';
+$route['saathi/driver/document/(:any)'] = 'Sarathi/view_driver_document/$1';
+
 
 $route['saathi'] = 'Sarathi/index';
 $route['saathi/index'] = 'Sarathi/index';
 $route['saathi/login'] = 'Sarathi/index';
-
 
 $route['saathi/dashboard'] = 'sarathi/dashboard';
 $route['saathi/driver'] = 'Sarathi/sarathi_details';
@@ -242,6 +233,8 @@ $route['administrator/display_bank_details'] = 'Admin/display_bank_details';
 $route['administrator/show_new_sarathi_request'] = 'Admin/show_new_sarathi_request';
 $route['administrator/show_subfranchise_by_district_id'] = 'Admin/show_subfranchise_by_district_id';
 $route['administrator/allocate_subfranchise_to_sarathi'] = 'Admin/allocate_subfranchise_to_sarathi';
+$route['administrator/reject_sarathi_request'] = 'Admin/reject_sarathi_request';
+$route['administrator/show_rejected_sarathi_request'] = 'Admin/show_rejected_sarathi_request';
 
 $route['administrator/approved_driver_documents'] = 'Admin/approved_driver_documents';
 $route['administrator/deny_driver_documents'] = 'Admin/deny_driver_documents';
@@ -257,7 +250,6 @@ $route['administrator/deactive_driver'] = 'Admin/deactive_driver';
 $route['administrator/update_driver'] = 'Admin/update_driver';
 $route['administrator/delete_driver'] = 'Admin/delete_driver';
 $route['administrator/get_driver'] = 'Admin/get_driver';
-
 
 // view load
 $route['administrator/dashboard'] = 'Admin/dashboard';
@@ -308,18 +300,15 @@ $route['administrator/display_excess_percentage'] = 'Admin/display_excess_percen
 $route['administrator/display_rate_per_km'] = 'Admin/display_rate_per_km';
 $route['administrator/save_kilometer_details'] = 'Admin/save_kilometer_details';
 $route['administrator/add_admin'] = 'Admin/add_admin';
-
 $route['administrator/saathi/request'] = 'Admin/view_saathi_request';
+$route['administrator/saathi/rejected'] = 'Admin/view_rejected_saathi_request';
 
 //////////////////////////////////////////////////////////////////////////////
-
 // sarathi details 
 $route['administrator/get_pending_drivers'] = 'Admin/get_pending_drivers';
 $route['administrator/total_km_purchase'] = 'Admin/total_km_purchase';
 $route['administrator/get_sarathi_refferral_code'] = 'Admin/get_sarathi_refferral_code';
-
 //////////////////////////////////////////////////////////////////////////////
-
 // driver details
 $route['administrator/pending_driver_document/(:any)'] = 'Admin/show_pending_drivers/$1';
 $route['administrator/driver/details/(:any)'] = 'Admin/display_driver_details/$1';
@@ -328,42 +317,28 @@ $route['administrator/driver/display_ride_history/(:any)'] = 'Admin/display_ride
 $route['administrator/driver/ride_history_csv/(:any)'] = 'Admin/ride_history_csv/$1';
 $route['administrator/display_driver_location'] = 'Admin/display_driver_location';
 $route['administrator/activate_pending_driver'] = 'Admin/activate_pending_driver';
-
 $route['administrator/driver/document/(:any)'] = 'Admin/view_driver_document/$1';
-
-
-
 // admin settings 
 $route['administrator/display_documentation_content'] = 'Admin/display_documentation_content';
 $route['administrator/update_documentation_content'] = 'Admin/update_documentation_content';
 $route['administrator/manage_helpline_number'] = 'Admin/manage_helpline_number';
 $route['administrator/edit_helpline_number'] = 'Admin/edit_helpline_number';
-
 $route['administrator/save_delivery_guideline'] = 'Admin/save_delivery_guideline';
 $route['administrator/display_delivery_guideline'] = 'Admin/display_delivery_guideline';
-
 ///////////////////////////////////////////////////////////////////////////////
-
 // services
-
 $route['administrator/display_service_name'] = 'Admin/display_service_name';
 $route['administrator/display_ride_names'] = 'Admin/display_ride_names';
 $route['administrator/display_cab_names'] = 'Admin/display_cab_names';
 $route['administrator/add_service_type'] = 'Admin/add_service_type';
 $route['administrator/add_ride_type'] = 'Admin/add_ride_type';
 $route['administrator/add_cab_name'] = 'Admin/add_cab_name';
-
 ////////////////////////////////// Help //////////////////////////////
-
 $route['administrator/display_help_list'] = 'Admin/display_help_list';
 $route['administrator/resolve_help'] = 'Admin/resolve_help';
-
-
 /////////////////// Ride History details ////////////////////////////////////
 $route['administrator/generate_ride_history_pdf'] = 'Admin/generate_ride_history_pdf';
-
 /////////////////// Incentives scheme ////////////////////////////////////
-
 $route['administrator/display_incentives_time_list'] = 'Admin/display_incentives_time_list';
 $route['administrator/display_incentives_scheme'] = 'Admin/display_incentives_scheme';
 $route['administrator/update_incentive_scheme_details'] = 'Admin/update_incentive_scheme_details';
@@ -371,9 +346,7 @@ $route['administrator/active_incentive_scheme'] = 'Admin/active_incentive_scheme
 $route['administrator/deactive_incentive_scheme'] = 'Admin/deactive_incentive_scheme';
 $route['administrator/add_incentives_scheme'] = 'Admin/add_incentives_scheme';
 $route['administrator/delete_incentives_scheme'] = 'Admin/delete_incentives_scheme';
-
 //////////////////////////////// ADMIN SPECIAL ACCESS //////////////////////////////////////////////////////
-
 $route['administrator/get_permission_list'] = 'Admin/get_permission_list';
 $route['administrator/send_permission_request'] = 'Admin/send_permission_request';
 $route['administrator/get_permission_request_of_user'] = 'Admin/get_permission_request_of_user';
@@ -383,74 +356,53 @@ $route['administrator/deny_permission_request'] = 'Admin/deny_permission_request
 $route['administrator/display_request_permission_of_admin'] = 'Admin/display_request_permission_of_admin';
 
 //////////////////////////////// RENTAL SLAB | FEATURES| DETAILS //////////////////////////////////////////////////////
-
 $route['administrator/display_rental_slabs'] = 'Admin/display_rental_slabs';
 $route['administrator/add_rental_slabs'] = 'Admin/add_rental_slabs';
 $route['administrator/active_slab_status'] = 'Admin/active_slab_status';
 $route['administrator/deactive_slab_status'] = 'Admin/deactive_slab_status';
 $route['administrator/update_rental_slab'] = 'Admin/update_rental_slab';
 $route['administrator/delete_slab_status'] = 'Admin/delete_slab_status';
-//=======================
 $route['administrator/display_rental_features'] = 'Admin/display_rental_features';
-
-//=======================
 $route['administrator/get_cab_types_for_retail_details'] = 'Admin/get_cab_types_for_retail_details';
 $route['administrator/get_rental_features_for_retail_details'] = 'Admin/get_rental_features_for_retail_details';
 $route['administrator/display_rental_details'] = 'Admin/display_rental_details';
-
 ////////////////////////// Compliments List /////////////////////////////////////////
 $route['administrator/display_compliments_list'] = 'Admin/display_compliments_list';
 $route['administrator/delete_compliments'] = 'Admin/delete_compliments';
-
 ////////////////////////// Achivement List /////////////////////////////////////////
 $route['administrator/display_achievement_list'] = 'Admin/display_achievement_list';
 $route['administrator/delete_achivements'] = 'Admin/delete_achivements';
-
 $route['administrator/get_user_permission_access_list'] = 'Admin/get_user_permission_access_list';
-
 $route['administrator/get_coupon_details'] = 'Admin/get_coupon_details';
 $route['administrator/add_coupon_data'] = 'Admin/add_coupon_data';
 $route['administrator/active_coupon'] = 'Admin/active_coupon';
 $route['administrator/deactive_coupon'] = 'Admin/deactive_coupon';
 $route['administrator/update_coupon_details'] = 'Admin/update_coupon_details';
 $route['administrator/delete_coupons'] = 'Admin/delete_coupons';
-
 ////////////////////////////////////////////////////////
 $route['administrator/display_bank_details'] = 'Admin/display_bank_details';
 $route['administrator/save_bank_details'] = 'Admin/save_bank_details';
-
 $route['administrator/get_key_details'] = 'Admin/get_key_details';
 $route['administrator/save_key_details'] = 'Admin/save_key_details';
-
 $route['administrator/get_panel_access_list'] = 'Admin/get_panel_access_list';
 $route['administrator/display_panel_access_list'] = 'Admin/display_panel_access_list';
-
 /////////////////////////////////////////////////////////////////////////////////
-
 $route['administrator/display_country_name'] = 'Admin/display_country_name';
 $route['administrator/display_state_names'] = 'Admin/display_state_names';
 $route['administrator/display_district_names'] = 'Admin/display_district_names';
 $route['administrator/display_city_names'] = 'Admin/display_city_names';
-
 $route['administrator/add_place_name'] = 'Admin/add_place_name';
 $route['administrator/delete_place_names'] = 'Admin/delete_place_names';
 $route['administrator/get_place_name_by_id'] = 'Admin/get_place_name_by_id';
-
 ///////////////////////////////////////////////////////////////////////////////
 $route['administrator/get_user_panel_access'] = 'Admin/get_user_panel_access';
-
 $route['administrator/get_hotel_details'] = 'Admin/get_hotel_details';
 $route['administrator/active_hotel'] = 'Admin/active_hotel';
 $route['administrator/deactive_hotel'] = 'Admin/deactive_hotel';
-
 $route['administrator/get_ride_type_details'] = 'Admin/get_ride_type_details';
 $route['administrator/update_ride_details'] = 'Admin/update_ride_details';
-
 $route['administrator/get_dormant_account_details'] = 'Admin/get_dormant_account_details';
-
-
 /////////////////////////////////////////////////////////////////////////////
-
 $route['administrator/get_user_details'] = 'Admin/get_user_details';
 $route['administrator/get_packages'] = 'Admin/get_packages';
 $route['administrator/get_package_details'] = 'Admin/get_package_details';
@@ -460,7 +412,6 @@ $route['administrator/active_packages'] = 'Admin/active_packages';
 $route['administrator/deactive_packages'] = 'Admin/deactive_packages';
 $route['administrator/delete_packages'] = 'Admin/delete_packages';
 ///////////////////////////////////////////////////////////////////////////////////
-
 $route['administrator/total_km_purchase_today'] = 'Admin/total_km_purchase_today';
 $route['administrator/get_app_version_list'] = 'Admin/get_app_version_list';
 $route['administrator/save_new_app_release'] = 'Admin/save_new_app_release';

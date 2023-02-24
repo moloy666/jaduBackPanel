@@ -4,7 +4,8 @@
         <div class="page-content fade-in-up">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background:transparent">
-                    <li class="breadcrumb-item"><a href="<?= base_url('administrator/driver') ?>">Driver</a></li>
+                    <?php $base_link = $this->uri->segment(1);?>
+                    <li class="breadcrumb-item"><a href="<?= base_url($base_link.'/driver') ?>">Driver</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Documents</li>
                 </ol>
             </nav>

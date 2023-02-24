@@ -250,12 +250,17 @@
                         </svg>
                         </button>
 
+                        <button class="hdrbtn mx-2 view_user" data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${sarathi[i].user_id}')">            
+                        <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
+                        </button>
+
                         <button class="hdrbtn mx-2 delete_user access_delete" data-toggle="modal" data="${data.user_id}" data-target="#deltmodl" data-toggle="tooltip" data-placement="top" title="Delete" disabled>
 
                         <svg width="20" height="20" fill="#ef242f" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon">
                                     <path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path>
                                 </svg>
                         </button> 
+
                         </div>
                         </td></tr>`;
 
@@ -276,6 +281,11 @@
                 console.log(response);
             }
         });
+    }
+
+    function download_recharge_history(user_id) {
+      var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
+      window.open(url, '_blank');
     }
 
 

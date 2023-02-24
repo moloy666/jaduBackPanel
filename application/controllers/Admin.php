@@ -1223,6 +1223,32 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function view_rejected_saathi_request()
+	{
+		if ($this->is_user_logged_in()) {
+			if ($this->session->userdata(field_type_id) == const_user_admin) {
+				$admin_id = $this->session->userdata(session_admin_specific_id);
+				$this->init_admin_model();
+				$status = $this->Admin_model->get_access_permission($admin_id, access_sarathi_data);
+			} else {
+				$status = const_active;
+			}
+			if ($status == const_active) {
+				$data['specific_id'] = "";
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load_sidebar();
+				$this->load->view('reject_sarathi', $data);
+				$this->load_footer();
+				$this->load->view('inc/custom_js/rejected_sarathi_request_js');
+			} else {
+				redirect(base_url('administrator/dashboard'));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function get_sarathi()
 	{
 		$subfranchise_id = $this->input->post(param_subfranchise_id);
@@ -1285,7 +1311,7 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function generateReferralCode()
+	public function generateReferralCode() // depriciated
 	{
 		return strtoupper(substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 6));
 	}
@@ -1293,11 +1319,12 @@ class Admin extends CI_Controller
 	public function insert_sarathi($mobile, $name, $email, $subfranchise_id, $permission_ids, $panel_lists_ids)
 	{
 		$this->init_uid_server_model();
+		$this->init_common_model();
 		$user_id = $this->Uid_server_model->generate_uid(KEY_USER);
 		$sarathi_id = $this->Uid_server_model->generate_uid(KEY_SARATHI);
 		$gid = $this->Uid_server_model->generate_uid(KEY_GID);
 
-		$refferal_code = $this->generateReferralCode();
+		$refferal_code = $this->Common_model->generateReferralCode();
 		$panel_acess_list = json_encode(implode(',', $panel_lists_ids));
 
 		$panel_access = [
@@ -2357,7 +2384,8 @@ class Admin extends CI_Controller
 		$panel_lists_ids = $this->input->post(param_panel_list);
 
 		$this->init_common_model();
-		$password = $this->Common_model->randomPassword();
+		$password      = $this->Common_model->randomPassword();
+		$refferal_code = $this->Common_model->generateReferralCode();
 
 		$pincode = $this->input->post(param_pincode);
 		$address = $this->input->post(param_address);
@@ -2384,16 +2412,16 @@ class Admin extends CI_Controller
 			$this->init_login_model();
 			$status = $this->Login_model->get_user_status_by_specific_id($franchise_id, $table);
 			if ($status == const_active) {
-				$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id);
+				$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id, $refferal_code);
 			} else {
 				$this->response([key_success => false, key_message => text_account_not_active], 200);
 			}
 		} else {
-			$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id);
+			$this->insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id, $refferal_code);
 		}
 	}
 
-	private function insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id)
+	private function insert_subfranchise_data($mobile, $name, $email, $password, $franchise_id, $permission_ids, $panel_lists_ids, $pincode, $address, $country, $state, $district, $city, $specific_id, $refferal_code)
 	{
 		$this->init_uid_server_model();
 		$subfranchise_id = $this->Uid_server_model->generate_uid(KEY_SUBFRANCHISE);
@@ -2452,7 +2480,7 @@ class Admin extends CI_Controller
 					return;
 				}
 				$this->init_sub_franchise_model();
-				$data = $this->Subfranchise_model->add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel_access, $address_data, $specific_id);
+				$data = $this->Subfranchise_model->add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel_access, $address_data, $specific_id, $refferal_code);
 
 				$this->init_mail_model();
 				$this->Mail_model->send_mail($email, $password);
@@ -4947,7 +4975,7 @@ class Admin extends CI_Controller
 	public function allocate_subfranchise_to_sarathi()
 	{
 		$sarathi_user_id = $this->input->post(param_id);
-		$sf_id = $this->input->post('sf_id');
+		$sf_id           = $this->input->post('sf_id');
 		$this->init_sub_franchise_model();
 		$status = $this->Subfranchise_model->allocate_subfranchise_to_sarathi($sarathi_user_id, $sf_id);
 		if (($status)) {
@@ -4959,26 +4987,47 @@ class Admin extends CI_Controller
 
 	public function regenerate_password(){
 
-		$email = $this->input->get('email');
-		$user_type =$this->input->get('user_type');
-		if($user_type=='franchise'){
+		$email     = $this->input->get('email');
+		$user_type = $this->input->get('user_type');
+		if($user_type == 'franchise'){
 			$user_type_id = value_user_franchise;
-			$table = table_franchise;
+			$table        = table_franchise;
 		}else{
 			$user_type_id = value_user_sub_franchise;
-			$table = table_subfranchise;
+			$table        = table_subfranchise;
 
 		}
 		
 		$this->init_common_model();
 		$password = $this->Common_model->randomPassword();
-		$sent = $this->Common_model->reset_password($email, $user_type_id, $password, $table);
+		$sent     = $this->Common_model->reset_password($email, $user_type_id, $password, $table);
 		$this->init_mail_model();
 		$this->Mail_model->send_mail($email, $password);
 		if (($sent)) {
-			$this->response(["success" => true, "message" => "New Password Send Sucessfully"], 200);
+			$this->response(["success" => true, "message" => "New Password Send To Your Registered Email"], 200);
 		} else {
 			$this->response(["success" => false, "message" => "Something Went Wrong"], 200);
+		}
+	}
+
+	public function reject_sarathi_request(){
+		$user_id = $this->input->get(query_param_id);
+		$this->init_sarathi_model();
+		$status = $this->Sarathi_model->reject_sarathi_request($user_id);
+		if ($status) {
+			$this->response(["success" => true, "message" => "Saathi Request Rejected Successfully"], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something Went Wrong"], 200);
+		}
+	}
+
+	public function show_rejected_sarathi_request(){
+		$this->init_sarathi_model();
+		$data = $this->Sarathi_model->show_rejected_sarathi_request();
+		if (!empty($data)) {
+			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
+		} else {
+			$this->response(["success" => false, "message" => "not found"], 200);
 		}
 	}
 }

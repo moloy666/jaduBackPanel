@@ -139,6 +139,7 @@
                                 <td class="title"><a href="<?= base_url('franchise/subfranchise/saathi/') ?>${data[i].user_id}">${data[i].name}</a></td>
                                 <td>${data[i].email}</td>
                                 <td>${data[i].mobile}</td>
+                                <td>${data[i].refferal_code}</td>
                                 <td><label class="switch">
                                 <input type="checkbox"  ${status} onclick="status(this, '${data[i].user_id}')" class="access_status_change" disabled>
                                 <span class="slider round"></span></label>

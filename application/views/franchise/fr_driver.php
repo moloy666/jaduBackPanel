@@ -11,7 +11,7 @@
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Drivers</h3>
-                    <input type="hidden" value="<?= $user_type=$this->uri->segment(1);?>" id="user_type">
+                    <input type="hidden" value="<?= $user_type = $this->uri->segment(1); ?>" id="panel_user_type">
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">
@@ -25,31 +25,31 @@
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">Saathi</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Ride History</th>
-                                <th class="text-center">Actions</th>
+                                <th class="">#</th>
+                                <th class="">Name</th>
+                                <th class="">Email</th>
+                                <th class="">Mobile</th>
+                                <th class="">Saathi</th>
+                                <th class="">Status</th>
+                                <th class="">Ride History</th>
+                                <th class="">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
 
                             <?php
-                            $count=1;
+                            $count = 1;
                             foreach ($driver_data as $i => $value) {
                                 if (!empty($value)) { ?>
                                     <tr id="row_<?= $value[0]['user_id'] ?>">
-                                        <td class="text-center"><?= $count?></td>
+                                        <td class=""><?= $count ?></td>
 
-                                        <td class="title"> <a href="<?=base_url($user_type.'/driver/details/').$value[0]['user_id']?>"><?= $value[0]['name'] ?></a></td>
+                                        <td class="title"> <a href="<?= base_url($user_type . '/driver/details/') . $value[0]['user_id'] ?>"><?= $value[0]['name'] ?></a></td>
 
-                                        <td class="text-center"><?= $value[0]['mobile'] ?></td>
-                                        <td class="text-center"><?= $value[0]['email'] ?></td>
-                                        <td class="text-center title"><?= $value[0]['sarathi'] ?></td>
-                                        <td class="text-center">
+                                        <td class=""><?= $value[0]['mobile'] ?></td>
+                                        <td class=""><?= $value[0]['email'] ?></td>
+                                        <td class=" title"><?= $value[0]['sarathi'] ?></td>
+                                        <td class="">
                                             <label class="switch">
                                                 <input type="checkbox" <?= ($value[0]['status'] == const_active) ? "checked" : "" ?> class="access_status_change" data="<?= $value[0]['user_id'] ?>" onclick="status(this, '<?= $value[0]['user_id'] ?>')" disabled>
                                                 <span class="slider round"></span></label>
@@ -69,7 +69,7 @@
                                             </div>
                                         </td>
 
-                                        <td class="text-center">
+                                        <td class="">
                                             <div>
                                                 <button class="hdrbtn mx-2 view_user" data-toggle="modal" id=" viewbtn" data-target="#bnkView1" onclick="view_bank_details('<?= $value[0]['user_id'] ?>')" data-toggle="tooltip" data-placement="top" title="Bank Details">
                                                     <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-2">
@@ -90,12 +90,16 @@
                                                     </svg>
                                                 </button>
 
+                                                <button class="hdrbtn mx-2" data-toggle="tooltip" data-placement="top" title="View Document" onclick="view_driver_document('<?= $value[0]['user_id'] ?>')">
+                                                    <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="20px" class="mb-3">
+                                                </button>
+
                                             </div>
                                         </td>
                                     </tr>
 
                             <?php
-                            $count++;
+                                    $count++;
                                 } else {
                                 }
                             } ?>
@@ -210,7 +214,7 @@
                                 <div class="form-group">
                                     <select class="form-control" id="exampleFormControlSelect1">
                                         <option value="0">Select Management </option>
-                                      
+
                                     </select>
                                 </div>
                             </div>

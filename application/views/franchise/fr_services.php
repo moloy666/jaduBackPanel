@@ -11,7 +11,7 @@
             <div class="row align-items-center mb-4">
                 <div class="col-md-8">
                     <h3>Services</h3>
-                    <input type="hidden" id="specific_id" value="<?=$specific_id?>" class="form-control">
+                    <input type="hidden" id="specific_id" value="<?= $specific_id ?>" class="form-control">
                 </div>
             </div>
 
@@ -21,7 +21,9 @@
                         <div class="col-lg-6 w-50">
                             <div class="form-group">
                                 <select name="" id="services" class="form-control title">
-                                    <option value="">Services Not Found</option>
+                                    <option value="">Select Services</option>
+                                    <option value="SERVICE_CAR">Car</option>
+                                    <option value="SERVICE_BIKE">Bike</option>
                                 </select>
                             </div>
                         </div>

@@ -4,7 +4,7 @@
         <div class="page-content fade-in-up">
             <div class="row align-items-center mb-4">
                 <div class="col-md-10">
-                    <h5 class="text-primary">Sarathi Documents</h5>
+                    <h5 class="text-primary">Saathi Documents</h5>
                     
                 </div>
                 

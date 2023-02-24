@@ -49,6 +49,8 @@ class Sarathi_model extends CI_Model
         $this->db->where(table_users . '.' . field_type_id, value_user_sarathi);
         $this->db->where_not_in(table_users . '.' . field_status, const_deleted);
         $this->db->where_not_in(table_users.'.'.field_name, "");
+        $this->db->where_not_in(table_sarathi.'.'.field_subfranchise_id, null);
+        $this->db->where_not_in(table_sarathi.'.'.field_subfranchise_id, "");
     }
 
     public function get_sarathi_details($subfranchise_id)
@@ -94,7 +96,8 @@ class Sarathi_model extends CI_Model
         ->where('u.' .field_type_id, value_user_sarathi)
         ->where_not_in('u.' . field_status, const_deleted)
         ->where_not_in('u.'.field_name, "")
-        ->where_not_in(['u'.field_status=>const_deleted])
+        ->where_not_in(['u'.field_status =>const_deleted])
+        ->where_not_in(['u'.field_status =>const_reject])
         ->get();
         $query = $query->result_array();
         return(!empty($query))?$query:[];
@@ -486,6 +489,25 @@ class Sarathi_model extends CI_Model
         ->where(field_uid, $sarathi_id)->get(table_sarathi);
         $query = $query->result_array();
         return(!empty($query))?$query[0]['refferal_code']: '---';
+    }
+
+    public function reject_sarathi_request($user_id){
+        $data = [
+            field_status       => const_reject,
+            field_modified_at  => date(field_date)
+        ];
+        $this->db->where(field_uid, $user_id)->update(table_users, $data);
+        return($this->db->affected_rows()==1)?true:false;
+    }
+
+    public function show_rejected_sarathi_request(){
+        $query = $this->db->where([
+            field_type_id => value_user_sarathi,
+            field_status  => const_reject
+        ])
+        ->get(table_users);
+        $query = $query->result_array();
+        return(!empty($query))?$query:[];
     }
  
 }

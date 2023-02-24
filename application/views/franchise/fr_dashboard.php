@@ -109,8 +109,18 @@
             }
             ?>
 
-
-
+            <?php if ($this->session->userdata(session_franchise_type_id) == 'user_sub_franchise') { ?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="ibox bg-warning color-white widget-stat">
+                        <div class="ibox-body dashboard-card">
+                            <div class="m-b-5">Refferal Code</div>
+                            <h2 class="m-b-5 font-strong refferalCode">0</h2>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
 
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-info color-white widget-stat">

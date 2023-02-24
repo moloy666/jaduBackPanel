@@ -1,13 +1,4 @@
 <script>
-    // var table = $('#specific_table').val();
-
-    // if (table == 'franchise') {
-    //     get_subfranchise_ids();
-    // } else {
-    //     let subfranchise_id = $('#specific_id').val();
-    //     get_sarathi_id(subfranchise_id);
-    // }
-
     get_panel_access_list();
 
     $('#table').dataTable();
@@ -33,9 +24,7 @@
         });
     }
 
-
     function get_sarathi_id(uid) {
-        // console.log(uid);
         $.ajax({
             type: "POST",
             url: "<?= base_url('franchise/get_sarathi_id') ?>",
@@ -50,7 +39,6 @@
                 let data = response.data;
                 $.each(data, function(i, data) {
                     get_driver_ids(data.uid);
-                    // console.log(data.uid);
                 });
             }
         });
@@ -79,7 +67,7 @@
     var count = 1;
 
     function get_driver_details_by_user_id(user_id) {
-        let user_type = $('#user_type').val();
+        let user_type = $('#panel_user_type').val();
         $.ajax({
             type: "POST",
             url: "<?= base_url('admin/get_driver_details_by_user_id') ?>",
@@ -139,13 +127,15 @@
                         </svg>
                         </button>
 
-                       
-
                         <button class="hdrbtn mx-2 delete_user access_delete" data-toggle="modal" data="${data.user_id}" data-target="#deltmodl" data-toggle="tooltip" data-placement="top" title="Delete" disabled>
 
                         <svg width="20" height="20" fill="#ef242f" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon">
                                     <path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path>
                                 </svg>
+                        </button> 
+
+                        <button class="hdrbtn mx-2" data-toggle="tooltip" data-placement="top" title="View Document" onclick="view_driver_document('${driver[i].user_id}')">
+                            <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="20px" class="mb-3">     
                         </button> 
                         </div>
                         </td></tr>`;
@@ -158,7 +148,8 @@
     }
 
     function view_driver_document(user_id) {
-        location.href = `<?= base_url('administrator/driver/document/') ?>${user_id}`;
+        let user_type = $('#panel_user_type').val();
+        location.href = `<?= base_url() ?>${user_type}/driver/document/${user_id}`;
     }
     function download_qrCode(driver_id) {
         location.href = `<?= apiBaseUrl ?>/Qrcode?driverId=${driver_id}`;

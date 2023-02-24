@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center justify-content-end">
-                        <input type="hidden" value="<?=$specific_id?>" id="specific_id">
+                        <input type="hidden" value="<?= $specific_id ?>" id="specific_id">
                     </div>
                 </div>
             </div>
@@ -19,14 +19,14 @@
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">Allocate Subfranchise</th>
+                                <th class="">#</th>
+                                <th class="">Name</th>
+                                <th class="">Email</th>
+                                <th class="">Mobile</th>
+                                <th class="">Action</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
 
                         </tbody>
                     </table>
@@ -36,11 +36,25 @@
         </div>
     </div>
     </div>
+
     <div class="sidenav-backdrop backdrop"></div>
     <div class="preloader-backdrop">
         <div class="page-preloader">Loading</div>
     </div>
-     
+
+    <div class="modal fade delemodel" id="deltmodl" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content p-4 text-center">
+                <h5 class="mb-4">Are you sure want to
+                    delete this user permanently ?</h5>
+                <div class="d-flex align-items-center justify-content-center">
+                    <button class="btn-secondary btn" data-dismiss="modal" id="close_delete_modal">No</button>
+                    <button class="btn-success btn ml-3" id="btn_delete_data">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade custmmodl" id="sfmodal" tabindex="-1" role="dialog" aria-labelledby="edtView1Title" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered" role="document">
             <div class="modal-content">

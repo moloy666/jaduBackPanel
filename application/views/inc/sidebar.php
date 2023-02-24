@@ -120,46 +120,43 @@
              <?php
                 }
                 ?>
-
+            
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
-                    if ($this->session->userdata(session_sarathi_data) == "active" || $this->session->userdata(session_sarathi_data) == const_active) { ?>
+                    if ($this->session->userdata(session_ride_rental) == "active" || $this->session->userdata(session_ride_rental) == const_active) { ?>
                      <li>
-                         <a href="<?= base_url(WEB_PORTAL_ADMIN . saathi) ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'saathi') ? 'active' : '' ?>">
-                             <i class="sidebar-item-icon fa fa-smile-o"></i>
-                             <span class="nav-label">Sarathi</span>
-                         </a>
+                         <a href="javascript:;" id="sarathi_page"><i class="sidebar-item-icon fa fa-smile-o"></i>
+                             <span class="nav-label">Saathi</span><i class="fa fa-angle-left arrow"></i></a>
+                         <ul class="nav-2-level collapse">
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . saathi) ?>">All Saathi</a>
+                             </li>
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/request') ?>">New Saathi Request</a>
+                             </li>
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/rejected') ?>">Rejected Saathi</a>
+                             </li>
+                         </ul>
                      </li>
                  <?php
                     }
                 } else { ?>
                  <li>
-                     <a href="<?= base_url(WEB_PORTAL_ADMIN . saathi) ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'saathi') ? 'active' : '' ?>">
-                         <i class="sidebar-item-icon fa fa-smile-o"></i>
-                         <span class="nav-label">Saathi</span>
-                     </a>
-                 </li>
-             <?php
-                }
-                ?>
-             <?php
-                if ($this->session->userdata(field_type_id) == "user_admin") {
-                    if ($this->session->userdata(session_sarathi_data) == "active" || $this->session->userdata(session_sarathi_data) == const_active) { ?>
-                     <li>
-                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/request') ?>" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'request') ? 'active' : '' ?>">
-                             <i class="sidebar-item-icon fa fa-plus"></i>
-                             <span class="nav-label">New Saathi Request</span>
-                         </a>
-                     </li>
-                 <?php
-                    }
-                } else { ?>
-                 <li>
-                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/request') ?>" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'request') ? 'active' : '' ?>">
-                         <i class="sidebar-item-icon fa fa-plus"></i>
-                         <span class="nav-label">New Saathi Request</span>
-                     </a>
+                     <a href="javascript:;" id="sarathi_page"><i class="sidebar-item-icon fa fa-smile-o"></i>
+                         <span class="nav-label">Saathi</span><i class="fa fa-angle-left arrow"></i></a>
+                     <ul class="nav-2-level collapse">
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . saathi) ?>">All Saathi</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/request') ?>">New Saathi Request</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/rejected') ?>">Rejected Saathi</a>
+                         </li>
+                     </ul>
                  </li>
              <?php
                 }

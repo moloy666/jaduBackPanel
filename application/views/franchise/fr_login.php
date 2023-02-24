@@ -52,7 +52,10 @@
                     <span class="input-span"></span>Remember me</label>
             </div>
             <div>
-                <p>Forget Password ? <span class="text-primary" id="requestNewPassword" style="cursor:pointer">Request a new password</span></p>
+                <p align='left'>Forget Password ? 
+                    <span class="text-primary" id="requestNewPassword" style="cursor:pointer">Request a new password</span>
+                    <span id="send_mail" style="display:none" class="text-warning">Requesting for new password...</span>
+                </p>
             </div>
             <div class="form-group">
                 <button class="btn btn-info btn-block" id="btn_login" type="submit">Login</button>
@@ -208,9 +211,15 @@
                 $.ajax({
                     url: "<?= base_url('Admin/regenerate_password') ?>?email=" + email + "&user_type=" + user_type,
                     type: "GET",
-                    error: function(data) {
-                        console.log(data)
+                    beforeSend:function(){
+                        $('#send_mail').show();
+                        $('#requestNewPassword').hide();
                     },
+                    complete:function(){
+                        $('#send_mail').hide();
+                        $('#requestNewPassword').show();
+                    },
+                    error: function(data) {},
                     success: function(data) {
                         // console.log(data);
                         toast(data.message);

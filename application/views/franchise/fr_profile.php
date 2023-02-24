@@ -107,41 +107,33 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Full Address</p>
-                        </div>
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                             <p class="text-muted mb-0" id="txt_address"></p>
                         </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-1">
+                            <p class="mb-0">City</p>
+                        </div>
+                        <div class="col-sm-2 mr-3">
+                            <p class="text-muted mb-0" id="txt_city"></p>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <p class="mb-0">District</p>
+                        </div>
+                        <div class="col-sm-2 mr-3">
+                            <p class="text-muted mb-0" id="txt_district"></p>
+                        </div>
+
+                        <div class="col-sm-1">
                             <p class="mb-0">State</p>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-sm-2 mr-3">
                             <p class="text-muted mb-0" id="txt_state"></p>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">District</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0" id="txt_district"></p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">City</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0" id="txt_city"></p>
-                        </div>
-                    </div>
-                    
                 </div>
             </div>
         </div>

@@ -18,20 +18,17 @@ class Common_model extends CI_Model
     }
 
    
-    public function is_this_value_exist($field_value, $field_name, $table, $user_type_id)
-    {
-
+    public function is_this_value_exist($field_value, $field_name, $table, $user_type_id){
         $this->db->select(table_user_type . '.' . field_name);
         $this->db->from($table);
         $this->db->join(table_user_type, $table . '.' . field_type_id . ' = ' . table_user_type . '.' . field_uid);
         $this->db->where(table_users . '.' . $field_name, $field_value);
         $this->db->where('users.type_id', $user_type_id);
+        $this->db->where('users.status', const_active);
         $query = $this->db->get();
         $query = $query->result();
-
         return (!empty($query)) ? $query[0] : [];
     }
-
 
     public function get_user_type_id_by_user_type_name($user_type_name)
     {
@@ -223,6 +220,43 @@ class Common_model extends CI_Model
         $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
             ->where('d.' . field_sarathi_id, $sarathi_id)
             ->where('d.working_status', const_active)
+            ->where_not_in('u.status', const_pending)
+            ->where_not_in('u.status', const_deleted)->get();
+        return $this->db->affected_rows();
+    }
+
+    //=========================================================
+
+    public function get_total_running_drivers($specific_id)
+    {
+        $driver = 0;
+        $query = $this->db->select(field_uid)->where(field_franchise_id, $specific_id)->get(table_subfranchise);
+        $query = $query->result_array();
+        foreach ($query as $key => $val) {
+            $subfranchise_id = $val[field_uid];
+            $driver = $driver + $this->get_sarathi_id_by_subfranchise_id_for_driver($subfranchise_id);
+        }
+        return $driver;
+    }
+
+    public function get_sarathi_id_by_subfranchise_id_for_running_driver($subfranchise_id)
+    {
+        $driver = 0;
+        $query = $this->db->select(field_uid)->where(field_subfranchise_id, $subfranchise_id)->get(table_sarathi);
+        $query = $query->result_array();
+
+        foreach ($query as $key => $val) {
+            $sarathi_id = $val[field_uid];
+            $driver = $driver + $this->get_running_driver_of_sarathi($sarathi_id);
+        }
+        return $driver;
+    }
+
+    public function get_running_driver_of_sarathi($sarathi_id)
+    {
+        $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
+            ->where('d.' . field_sarathi_id, $sarathi_id)
+            ->where('d.working_status_current_value', STATUS_DRIVER_GO_TO)
             ->where_not_in('u.status', const_pending)
             ->where_not_in('u.status', const_deleted)->get();
         return $this->db->affected_rows();
@@ -935,10 +969,22 @@ class Common_model extends CI_Model
        $user_id = $query[0][field_uid];
 
        $data=[
-        field_password=>md5($password)
+        field_password    => md5($password),
+        field_modified_at => date(field_date)
        ];
        $this->db->where(field_user_id, $user_id)->update($table, $data);
        return ($this->db->affected_rows()==1)?true:false;
+    }
+
+    public function generateReferralCode()
+	{
+		return strtoupper(substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 6));
+	}
+
+    public function show_refferal_code($subfranchise_id){
+        $query = $this->db->select(field_refferal_code)->where(field_uid, $subfranchise_id)->get(table_subfranchise);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_refferal_code]:"N/A";
     }
 
 }

@@ -4,7 +4,7 @@
     }
 </style>
 <script>
-    display_service_type();
+    // display_service_type();
     get_panel_access_list();
     // display service names
     function display_service_type() {
@@ -125,10 +125,9 @@
                 // console.log(response);
                 if (response.success) {
                     toast(response.message, "center");
-
                     // $('#service_modal').modal('hide');
                     $('#service_name').val('');
-                    display_service_type();
+                    // display_service_type();
 
                 } else {
                     toast(response.message, "center");
@@ -256,23 +255,19 @@
                 // console.log(response);
                 if (response.success) {
                     if ($('#table_name').val() == 'services') {
-                        display_service_type();
+                        // display_service_type();
                         display_ride_type();
                         display_cab_names();
                         toast(response.message, "center");
-
                     }
                     if ($('#table_name').val() == 'ride_service_type') {
                         display_ride_type();
                         display_cab_names();
                         toast(response.message, "center");
-
-
                     }
                     if ($('#table_name').val() == 'cabs_under_service_type') {
                         display_cab_names();
                         toast(response.message, "center");
-
                     }
 
                     $('#delete_modal').modal('hide');

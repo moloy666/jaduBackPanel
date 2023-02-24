@@ -15,6 +15,7 @@
     } else {
         fetch_recharge_package('<?= value_user_sub_franchise ?>');
         dashboard_data_subfranchise();
+        // show_refferal_code();
     }
 
     function dashboard_data_franchise() {
@@ -50,7 +51,7 @@
 
             },
             error: function(response) {
-                console.log(response);
+                // console.log(response);
             }
         });
     }
@@ -73,7 +74,6 @@
                 $(".totalActiveDrivers").text(data.drivers.active);
                 $(".totalInactiveDrivers").text(data.drivers.inactive);
                 $(".totalSarathi").text(data.totalSarathi);
-                $(".totalOngoingRide").text(data.drivers.active);
                 $(".totalRegisteredCustomers").text(data.totalCustomers);
                 $(".totalKmPurchased").text(data.totalKmPurchased);
                 $(".totalRevenue").text(data.totalRevenue);
@@ -83,11 +83,12 @@
                 } else {
                     $(".totalKmPurchaseToday").text(0);
                 }
+                $(".totalOngoingRide").text(data.totalCarRunning);
+                $(".refferalCode").text(data.refferalCode);
 
             },
             error: function(response) {
-                console.log(2);
-                console.log(response);
+                // console.log(response);
             }
         });
     }
@@ -129,7 +130,7 @@
             load_sarathi_chart();
         },
         error: function(response) {
-            console.log((response));
+            // console.log((response));
         }
     });
 
@@ -186,7 +187,6 @@
                     details += `<option class="title" value="${data.id}">${data.name}</option>`;
                 });
                 $('#select_package').html(details);
-
             }
         });
     }
@@ -194,7 +194,6 @@
     $('#btn_recharge').click(function() {
         let package_id = $('#select_package').val();
         let spcific_id = $('#specific_id').val();
-
         let user_level_type = '';
 
         if ($('#specific_table').val() == '<?=table_franchise?>') {
@@ -202,10 +201,6 @@
         } else {
             user_level_type = 'sub-franchise';
         }
-
-
-        // console.log(spcific_id);
-
         if (package_id == '') {
             toast('Select a package', 'center');
         } else {
@@ -218,10 +213,9 @@
                     'deviceid': ''
                 },
                 error: function(response) {
-                    console.log(response);
+                    // console.log(response);
                 },
                 success: function(response) {
-
                     if (response.isRechargePossible) {
                         let data = response.data;
                         let handler_key = function(response) {
@@ -236,25 +230,28 @@
                                 $('.loaderbg').hide();
                             }, 3000);
                         }
-
                         data.handler = handler_key;
-
                         var rzp1 = new Razorpay(data);
                         rzp1.open();
 
                         $('#rechView1').modal('hide');
-
-
-
                     } else {
-
                         // console.log(response);
                         toast(response.data, 'center');
                     }
                 }
             });
         }
-
     });
+
+    // function show_refferal_code(){
+    //     $.ajax({
+    //         type:"GET",
+    //         url:"<?=base_url(WEB_PORTAL_FRANCHISE.'/show_refferal_code')?>",
+    //         success:function(resp){
+    //             console.log(resp);
+    //         }
+    //     });
+    // }
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

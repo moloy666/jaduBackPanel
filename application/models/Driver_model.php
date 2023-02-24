@@ -60,7 +60,7 @@ class Driver_model extends CI_Model
             $this->db->where('d.sarathi_id', $sarathi_id);
         }
         $this->db->select('u.uid')->from('users as u')->join('driver as d', 'u.uid = d.user_id')
-            ->where('d.' . field_working_status, const_active)
+            ->where('d.' . 'working_status_current_value', STATUS_DRIVER_GO_TO)
             ->where_not_in('u.status', const_deleted)
             ->where_not_in('u.status', const_pending)->get();
         return $this->db->affected_rows();

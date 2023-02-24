@@ -106,7 +106,12 @@
                 position: new google.maps.LatLng(location_details.lat, location_details.lng),
                 map: map,
                 draggable: false,
-                icon: image,
+                icon:{
+                    url: image,
+                    // size: new google.maps.Size(36, 50),
+                    scaledSize: new google.maps.Size(20, 20),
+                    // anchor: new google.maps.Point(0, 50)
+                },
                 title: 'Working Status : ' + working_status
             });
 

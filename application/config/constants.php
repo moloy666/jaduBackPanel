@@ -213,6 +213,7 @@ define('field_version_for', 'version_for');
 define('field_play_store_link', 'play_store_link');
 define('field_code', 'code');
 define('field_skipable', 'is_skipable');
+define('field_refferal_code', 'refferal_code');
 ////////////////////////////////////////////////////////////////
 define('value_administrator', 'administrator');
 define('value_admin', 'admin');
@@ -265,11 +266,13 @@ define('table_user_address', 'user_address');
 define('const_deleted', 'DELETED');
 define('const_active', 'ACTIVE');
 define('const_deactive', 'DEACTIVE');
+define('const_resolved', 'RESOLVED');
+define('const_unresolved', 'UNRESOLVED');
+define('const_reject', 'REJECTED');
+
 define('const_pending', 'pending');
 define('const_submit', 'submit');
 define('const_rejected', 'rejected');
-define('const_resolved', 'RESOLVED');
-define('const_unresolved', 'UNRESOLVED');
 define('const_delivery_guidelines', 'delivery_guidelines');
 define('const_success', 'success');
 define('const_completed', 'completed');

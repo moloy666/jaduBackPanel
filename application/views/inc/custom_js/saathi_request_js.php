@@ -1,6 +1,6 @@
 <script>
+    $('#sarathi_page').addClass('active');
     display_new_sarathi();
-
     function display_new_sarathi() {
         $.ajax({
             type: "GET",
@@ -23,16 +23,21 @@
 
                         details += `
                                 <tr>
-                                <td class="text-center">${i+1}</td>
-                                <td class="text-center uppercase">${data.name}</td>
-                                <td class="text-center">${data.email}</td>
-                                <td class="text-center">${data.mobile}</td>
-                                <td class="text-center">
-                                <button class="btn btn-success" onclick="${onclick_func}">
-                                    Allocate Subfranchise</button>
+                                <td>${i+1}</td>
+                                <td class="uppercase">${data.name}</td>
+                                <td>${data.email}</td>
+                                <td>${data.mobile}</td>
+                                <td>
+                                <div>
+                                    <button class="btn btn-primary mr-2" onclick="${onclick_func}">
+                                        Allocate Subfranchise
+                                    </button>
+                                    <button class="btn btn-danger ml-2" onclick="reject_sarathi_request('${data.uid}')">
+                                        Reject
+                                    </button>
+                                </div>
                                 </td>
-                                </tr>
-                        `
+                                </tr>`
                     });
                     $('#table_details').html(details);
                     $('#table').dataTable();
@@ -63,7 +68,7 @@
                     let details = '<option value="">Select Subfranchise</option>';
                     $.each(data, function(i, data) {
                         details += `
-                    <option value="${data.sf_id}">${data.name}</option>
+                    <option value="${data.sf_id}" class="uppercase">${data.name}</option>
                     `;
                     });
                     $('#subfranchise').html(details);
@@ -108,4 +113,37 @@
             }
         });
     }
+
+    var rejected_user_id = '';
+    function reject_sarathi_request(user_id){
+        $('#deltmodl').modal('show');
+        rejected_user_id = user_id;
+    }
+
+    $('#btn_delete_data').click(function(){
+        reject_sarathi_allocation_request(rejected_user_id);
+    });
+
+    function reject_sarathi_allocation_request(rejected_user_id){
+        $.ajax({
+            type:"GET",
+            url:"<?=base_url(WEB_PORTAL_ADMIN.'/reject_sarathi_request')?>?id="+rejected_user_id,
+            error:function(){
+                console.log(resp);
+            },
+            success:function(resp){
+                // console.log(resp);
+                if(resp.success){
+                    toast(resp.message, 'center');
+                    $('#deltmodl').modal('hide');
+                    rejected_user_id = '';
+                    display_new_sarathi();
+                }
+                else{
+                    toast(resp.message, 'center');
+                }
+            }
+        });
+    }
+
 </script>

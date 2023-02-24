@@ -26,34 +26,31 @@
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">District</th>
-                                <th class="text-center">Franchise</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Actions</th>
+                                <th class="">#</th>
+                                <th class="">Name</th>
+                                <th class="">Email</th>
+                                <th class="">Mobile</th>
+                                <th class="">Refferal Code</th>
+                                <th class="">District</th>
+                                <th class="">Franchise</th>
+                                <th class="">Status</th>
+                                <th class="">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- END PAGE CONTENT-->
     </div>
     </div>
-    <!-- BEGIN THEME CONFIG PANEL-->
-    <!-- END THEME CONFIG PANEL-->
-    <!-- BEGIN PAGA BACKDROPS-->
+   
     <div class="sidenav-backdrop backdrop"></div>
     <div class="preloader-backdrop">
         <div class="page-preloader">Loading</div>
     </div>
-    <!-- END PAGA BACKDROPS-->
-    <!-- CORE PLUGINS-->
+
     <div class="modal fade delemodel" id="deltmodl" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content p-4 text-center">
@@ -478,6 +475,9 @@
                         let count = 1;
                         let subfranchise_status = "";
                         $.each(subfranchise, function(i) {
+                            if(subfranchise[i].refferal_code=='' || subfranchise[i].refferal_code==null){
+                                subfranchise[i].refferal_code='-';
+                            }
                             if (subfranchise[i].status == "active" || subfranchise[i].status == "ACTIVE")
                                 subfranchise_status = "checked";
                             else
@@ -489,6 +489,7 @@
                                 </td>
                                 <td>${subfranchise[i].email}</td>
                                 <td>${subfranchise[i].mobile}</td>
+                                <td>${subfranchise[i].refferal_code}</td>
                                 <td class="title">${subfranchise[i].address.district}</td>
                                 <td class="title">${subfranchise[i].franchise.name}</td>
                                 <td><label class="switch">
@@ -682,21 +683,21 @@
 
         // add new sub franchise
         $('#btn_add_data').on('click', function() {
-            let franchise = $('#select_franchise').val();
-            let admin_id = $('#specific_id').val();
+            let franchise   = $('#select_franchise').val();
+            let admin_id    = $('#specific_id').val();
 
-            let name = $('#add_name').val();
-            let email = $('#add_email').val();
-            let mobile = $('#add_mobile').val();
-            let permission = $('#admin_access_list').val();
-            let panel_list = $('#panel_access_list').val();
+            let name        = $('#add_name').val();
+            let email       = $('#add_email').val();
+            let mobile      = $('#add_mobile').val();
+            let permission  = $('#admin_access_list').val();
+            let panel_list  = $('#panel_access_list').val();
 
-            let pincode = $('#pincode').val();
-            let address = $('#address').val();
-            let country = $('#country').val();
-            let state = $('#state').val();
-            let district = $('#district').val();
-            let city = $('#city').val();
+            let pincode     = $('#pincode').val();
+            let address     = $('#address').val();
+            let country     = $('#country').val();
+            let state       = $('#state').val();
+            let district    = $('#district').val();
+            let city        = $('#city').val();
 
             let flag = 0;
 
@@ -725,21 +726,20 @@
                         $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
                     },
                     data: {
-                        "name": name,
-                        "email": email,
-                        "mobile": mobile,
-                        "franchise_id": franchise,
-                        "permission": permission,
-                        "panel_list": panel_list,
-                        "address": address,
-                        "country": country,
-                        "state": state,
-                        "district": district,
-                        "city": city,
-                        "pincode": pincode,
-                        "specific_id": admin_id,
+                        "name"          : name,
+                        "email"         : email,
+                        "mobile"        : mobile,
+                        "franchise_id"  : franchise,
+                        "permission"    : permission,
+                        "panel_list"    : panel_list,
+                        "address"       : address,
+                        "country"       : country,
+                        "state"         : state,
+                        "district"      : district,
+                        "city"          : city,
+                        "pincode"       : pincode,
+                        "specific_id"   : admin_id,
                     },
-                    async: false,
                     complete: function() {
                         $('#btn_add_data').html(`Add New Sub Franchise`);
                     },

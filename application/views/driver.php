@@ -22,17 +22,17 @@
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">Saathi</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Ride History</th>
-                                <th class="text-center">Actions</th>
+                                <th class="">#</th>
+                                <th class="">Name</th>
+                                <th class="">Email</th>
+                                <th class="">Mobile</th>
+                                <th class="">Saathi</th>
+                                <th class="">Status</th>
+                                <th class="">Ride History</th>
+                                <th class="">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
                         </tbody>
                     </table>
                 </div>
@@ -324,7 +324,7 @@
 
 
         function download_qrCode(driver_id) {
-            location.href = `<?= apiBaseUrl ?>/Qrcode?driverId=${driver_id}`;
+            location.href = `<?= apiBaseUrl ?>qr?driverId=${driver_id}`;
             window.open(url, '_blank');
 
         }

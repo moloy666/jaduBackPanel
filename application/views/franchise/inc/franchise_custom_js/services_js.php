@@ -4,7 +4,7 @@
     }
 </style>
 <script>
-    display_service_type();
+    // display_service_type();
     get_panel_access_list();
 
     // display service names
@@ -130,7 +130,7 @@
 
                     // $('#service_modal').modal('hide');
                     $('#service_name').val('');
-                    display_service_type();
+                    // display_service_type();
 
                 } else {
                     toast(response.message, "center");
@@ -258,7 +258,7 @@
                 // console.log(response);
                 if (response.success) {
                     if ($('#table_name').val() == 'services') {
-                        display_service_type();
+                        // display_service_type();
                         display_ride_type();
                         display_cab_names();
                         toast(response.message, "center");

@@ -29,17 +29,17 @@
           <table class="table table-bordered" id="table">
             <thead class="thead-light">
               <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Mobile</th>
-                <th class="text-center">Refferal Code</th>
-                <th class="text-center">Sub Franchise</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Actions</th>
+                <th class="">#</th>
+                <th class="">Name</th>
+                <th class="">Email</th>
+                <th class="">Mobile</th>
+                <th class="">Refferal Code</th>
+                <th class="">Sub Franchise</th>
+                <th class="">Status</th>
+                <th class="">Actions</th>
               </tr>
             </thead>
-            <tbody class="text-center" id="table_details">
+            <tbody class="" id="table_details">
 
             </tbody>
           </table>
@@ -267,10 +267,12 @@
 
 
   <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
       get_sarathi_details();
+      $('#sarathi_page').addClass('active');
+
     });
-    
+
     get_permission_list();
     display_panel_access_list();
 

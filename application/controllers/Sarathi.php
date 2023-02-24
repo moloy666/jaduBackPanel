@@ -347,6 +347,24 @@ class Sarathi extends CI_Controller
         }
     }
 
+    public function view_driver_document($user_id)
+	{
+		$this->init_sarathi_details_model();
+		$user[field_user_id] = $user_id;
+		$gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);
+		$user['info'] = $this->Sarathi_details_model->get_name_by_user_id($user_id);
+		$user['documents'] = $this->Sarathi_details_model->get_pending_driver_details($gid);
+
+		if ($this->is_sarathi_logged_in()) {
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('driver_document', $user);
+			$this->load_footer();
+		} else {
+            redirect(base_url(WEB_PORTAL_SARATHI . '/index'));
+		}
+	}
+
     public function driver_document($user_id)
     {
         $this->show_pending_drivers($user_id);

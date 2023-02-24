@@ -40,7 +40,7 @@ class Subfranchise_model extends CI_Model
     
     public function condition_to_get_subfranchise()
     {
-        $this->db->select('u.uid, u.name, u.email, u.mobile, u.status, sf.franchise_id, ua.address_line_1, ua.city_id, ua.state_id, ua.district_id, ua.pincode');
+        $this->db->select('u.uid, u.name, u.email, u.mobile, u.status, sf.franchise_id, sf.refferal_code, ua.address_line_1, ua.city_id, ua.state_id, ua.district_id, ua.pincode');
         $this->db->from('users as u');
         $this->db->join('subfranchise as sf', 'sf.user_id = u.uid');
         $this->db->join('user_address as ua', 'u.gid=ua.gid');
@@ -163,27 +163,28 @@ class Subfranchise_model extends CI_Model
         }
     }
 
-    public function add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel, $address_data, $specific_id)
+    public function add_sub_franchise_details($subfranchise_id, $user_id, $gid, $name, $email, $mobile, $user_type_id, $password, $franchise_id, $access, $panel, $address_data, $specific_id, $refferal_code)
     {
         $data = [
-            field_uid => $user_id,
-            field_name => $name,
-            field_group_id => $gid,
-            field_email => $email,
-            field_mobile => $mobile,
-            field_type_id => $user_type_id,
-            field_created_at => date(field_date),
+            field_uid         => $user_id,
+            field_name        => $name,
+            field_group_id    => $gid,
+            field_email       => $email,
+            field_mobile      => $mobile,
+            field_type_id     => $user_type_id,
+            field_created_at  => date(field_date),
             field_modified_at => date(field_date)
         ];
 
         $sub_franchise_data = [
-            field_uid => $subfranchise_id,
-            field_franchise_id => $franchise_id,
-            field_user_id => $user_id,
-            field_password => md5($password),
-            field_created_by=> $specific_id,
-            field_created_at => date(field_date),
-            field_modified_at => date(field_date)
+            field_uid           => $subfranchise_id,
+            field_franchise_id  => $franchise_id,
+            field_user_id       => $user_id,
+            field_password      => md5($password),
+            field_refferal_code => $refferal_code,
+            field_created_by    => $specific_id,
+            field_created_at    => date(field_date),
+            field_modified_at   => date(field_date)
         ];
 
         $insert = $this->db->insert(table_users, $data);

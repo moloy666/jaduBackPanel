@@ -54,13 +54,18 @@
                             </button>
 
                             </div>
-                            </td>
+                        </td>
+                        
                         <td>
                         <div>
 
                         <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${driver[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge Driver">                        
                           <img src="<?= base_url('assets/images/icon_rupee.png') ?>" alt="" width="18px" class="mb-2">                  
                         </button>
+
+                        <button class="hdrbtn mx-2" data-toggle="tooltip" data-placement="top" title="View Document" onclick="view_driver_document('${driver[i].user_id}')">
+                            <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="20px" class="mb-3">     
+                        </button> 
 
                         
                         <button class="hdrbtn mx-2 delete_user access_delete" data-toggle="modal" data="${driver[i].user_id}" data-target="#deltmodl"  data-toggle="tooltip" data-placement="top" title="Delete" disabled>
@@ -85,6 +90,10 @@
                 console.log(response);
             }
         });
+    }
+
+    function view_driver_document(user_id) {
+        location.href = `<?= base_url('saathi/driver/document/') ?>${user_id}`;
     }
 
     function download_ride_history(user_id) {
