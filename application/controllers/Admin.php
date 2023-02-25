@@ -138,6 +138,8 @@ class Admin extends CI_Controller
 
 
 
+
+
 	public function view_compliments()
 	{
 
@@ -1147,6 +1149,31 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function view_reassign_driver()
+	{
+		if ($this->is_user_logged_in()) {
+			if ($this->session->userdata(field_type_id) == const_user_admin) {
+				$admin_id = $this->session->userdata(session_admin_specific_id);
+				$this->init_admin_model();
+				$status = $this->Admin_model->get_access_permission($admin_id, access_driver_data);
+			} else {
+				$status = const_active;
+			}
+			if ($status == const_active) {
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load->view('reassign_driver');
+				$this->load_footer();
+				$this->load->view('inc/custom_js/reassign_driver_js');
+
+			} else {
+				redirect(base_url('administrator/dashboard'));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function view_packages()
 	{
 		if ($this->is_user_logged_in()) {
@@ -1215,6 +1242,32 @@ class Admin extends CI_Controller
 				$this->load->view('saathi_request', $data);
 				$this->load_footer();
 				$this->load->view('inc/custom_js/saathi_request_js');
+			} else {
+				redirect(base_url('administrator/dashboard'));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	public function view_deleted_sarathi()
+	{
+		if ($this->is_user_logged_in()) {
+			if ($this->session->userdata(field_type_id) == const_user_admin) {
+				$admin_id = $this->session->userdata(session_admin_specific_id);
+				$this->init_admin_model();
+				$status = $this->Admin_model->get_access_permission($admin_id, access_sarathi_data);
+			} else {
+				$status = const_active;
+			}
+			if ($status == const_active) {
+				$data['specific_id'] = "";
+				$this->load_header();
+				$this->load_sidebar();
+				$this->load_sidebar();
+				$this->load->view('deleted_sarathi', $data);
+				$this->load_footer();
+				// $this->load->view('inc/custom_js/saathi_request_js');
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -2941,10 +2994,6 @@ class Admin extends CI_Controller
 		$mpdf->WriteHTML($html);
 		$mpdf->Output($name . ".pdf", "D");
 
-		// $this->load_header();
-		// $this->load_sidebar();
-		// $this->load->view('progress_report', $data);
-		// $this->load_footer();
 	}
 
 	public function getsarathiData()
@@ -5028,6 +5077,51 @@ class Admin extends CI_Controller
 			$this->response(["success" => true, "message" => "found", "data" => $data], 200);
 		} else {
 			$this->response(["success" => false, "message" => "not found"], 200);
+		}
+	}
+
+	public function add_to_new_sarathi_list(){
+		$user_id = $this->input->get(query_param_id);
+		$this->init_sarathi_model();
+		$status = $this->Sarathi_model->add_to_new_sarathi_list($user_id);
+		if ($status) {
+			$this->response(["success" => true, "message" => "Saathi Remove From Reject List"], 200);
+		} else {
+			$this->response(["success" => false, "message" => "Something Went Wrong"], 200);
+		}
+	}
+
+	public function show_driver_without_recharge_ride_history(){
+		$this->init_driver_model();
+		$data = $this->Driver_model->show_driver_without_recharge_ride_history();
+		if($data){
+			$this->response(["success"=>true, "message"=>"found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success"=>false, "message"=>"not found"], 200);
+		}
+	}
+
+	public function show_deleted_sarathi(){
+		$this->init_sarathi_model();
+		$data = $this->Sarathi_model->show_deleted_sarathi();
+		if($data){
+			$this->response(["success"=>true, "message"=>"found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success"=>false, "message"=>"not found"], 200);
+		}
+	}
+
+	public function show_sarathi_list_by_district_id(){
+		$district_id = $this->input->get(query_param_id);
+		$this->init_sarathi_model();
+		$data = $this->Sarathi_model->show_sarathi_list_by_district_id($district_id);
+		if($data){
+			$this->response(["success"=>true, "message"=>"found", "data"=>$data], 200);
+		}
+		else{
+			$this->response(["success"=>false, "message"=>"not found"], 200);
 		}
 	}
 }

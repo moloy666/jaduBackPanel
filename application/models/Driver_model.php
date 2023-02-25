@@ -224,17 +224,19 @@ class Driver_model extends CI_Model
     {
 
         $this->db->select('u.name, u.created_at as joined, d.uid as id, d.user_id as userId, v.name as vehicle_name, 
-            d.vehicle_number, d.total_km_purchased, d.rating');
+            d.vehicle_number, d.total_km_purchased, d.rating, u.status');
 
         $this->db->from(table_driver . ' as d');
         $this->db->join(table_users . ' as u', 'd.user_id = u.uid', 'left');
         $this->db->join(table_vehicle_type . ' as v', 'v.uid = d.vehicle_type_id', 'left');
         $this->db->where('d.sarathi_id', $sarathi_id);
         $this->db->where_not_in('u.status', const_deleted);
+        $this->db->where_not_in('u.status', const_pending);
         $query = $this->db->get();
         $query = $query->result_array();
         foreach ($query as $key => $value) {
             $query[$key]['joined'] = date("d/m/Y", strtotime($value['joined']));
+            $query[$key]['color_code'] = ($value['status'] == const_deactive)? DEACTIVE_BGCOLOR:"";
         }
         return (!empty($query)) ? $query : [];
     }
@@ -418,5 +420,37 @@ class Driver_model extends CI_Model
         $query = $this->db->select(field_name)->where(field_uid, $user_id)->get(table_users);
         $query = $query->result_array();
         return (!empty($query)) ? $query[0][field_name] : null;
+    }
+
+    public function show_driver_without_recharge_ride_history(){
+        $query = $this->db
+        ->select('u.uid, u.name, u.email, u.mobile, u.status, d.uid as driver_id, d.sarathi_id, ua.city_id, ua.district_id')
+        ->from(table_users.' as u')
+        ->join(table_driver.' as d', 'u.uid = d.user_id')
+        ->join(table_user_address.' as ua', 'u.gid = ua.gid')
+        ->where('u.'.field_type_id , 'user_driver')
+        ->where(['u.'.field_status => const_deactive, 'u.'.field_status => const_active])
+        ->get();
+        $query = $query->result_array();
+        foreach($query as $i=>$val){
+            $recharge                = $this->check_recharge_history_avaliable($val['uid']);
+            $ride                    = $this->check_ride_history_avaliable($val['driver_id']);
+            $query[$i]['sarathi']    = $this->get_sarathi_name_by_sarathi_id($val['sarathi_id']);
+            if($recharge || $ride){
+                unset($query[$i]);
+            }
+            unset($query[$i]['sarathi_id']);
+        }
+        return (!empty($query))?$query:[];
+    }
+
+    private function check_recharge_history_avaliable($user_id){
+        $this->db->where(field_user_id, $user_id)->get(table_recharge_history);
+        return($this->db->affected_rows() > 0)?true:false;
+    }
+
+    private function check_ride_history_avaliable($driver_id){
+        $this->db->where(field_driver_id, $driver_id)->get(table_ride_normal);
+        return($this->db->affected_rows() > 0)?true:false;
     }
 }

@@ -11,9 +11,12 @@ class Sarathi_model extends CI_Model
 
     public function get_total_sarathi()
     {
-        $this->db->select('s.uid')->from('sarathi as s')->join('users as u', 's.user_id=u.uid')
+        $this->db->select('s.uid')->from('sarathi as s')
+        ->join('users as u', 's.user_id=u.uid')
         ->where_not_in('u.name', "")
-        ->where_not_in('u.status', const_deleted)->get();
+        ->where_not_in('s.sub_franchise_id', "")
+        ->where_not_in('u.status', const_deleted)
+        ->get();
         return $this->db->affected_rows();
     }
 
@@ -92,13 +95,12 @@ class Sarathi_model extends CI_Model
         ->from(table_users.' as u')
         ->join(table_sarathi.' as s', 'u.uid=s.user_id')
         ->join(table_user_address.' as ua', 'u.gid=ua.gid','left')
-        ->where(['s.'.field_subfranchise_id=>null])
+        ->where(['s.'.field_subfranchise_id => null])
         ->where('u.' .field_type_id, value_user_sarathi)
-        ->where_not_in('u.' . field_status, const_deleted)
         ->where_not_in('u.'.field_name, "")
-        ->where_not_in(['u'.field_status =>const_deleted])
-        ->where_not_in(['u'.field_status =>const_reject])
+        ->where_not_in('u.'.field_status , [const_deleted, const_reject])
         ->get();
+
         $query = $query->result_array();
         return(!empty($query))?$query:[];
     }
@@ -224,25 +226,25 @@ class Sarathi_model extends CI_Model
 
     public function getSarahiData()
     {
-        $this->db->select('u.name, u.created_at as joined, s.uid as id, s.user_id as userId, s.refferal_code, s.total_km_purchased');
+        $this->db->select('u.name, u.created_at as joined, s.uid as id, s.user_id as userId, s.refferal_code, s.total_km_purchased, u.status');
         $this->db->from(table_sarathi . ' as s');
         $this->db->join(table_users . ' as u', 's.user_id = u.uid');
-        $this->db->where('u.status', const_active);
         $this->db->where('u.type_id', 'user_sarathi');
+        $this->db->where_not_in('s.sub_franchise_id', "");
+        $this->db->where_not_in('u.status', const_deleted);
         $this->db->where_not_in('u.name', "");
         $query = $this->db->get();
         $query = $query->result_array();
         foreach ($query as $key => $value) {
-            $query[$key]['name'] = strtoupper($value['name']);
-            $query[$key]['joined'] = date("d/m/Y", strtotime($value['joined']));
-            $query[$key]['totalDrivers'] = $this->getDriversCount($value['id']);
-
-            $query[$key]['total_km_purchased'] = (empty($query[$key]['total_km_purchased'])) ? " 0 " : $query[$key]['total_km_purchased'];
-            $query[$key]['total_km_purchased'] .= " KM";
-
-            $query[$key]['refferal_code'] = (empty($query[$key]['refferal_code'])) ? " - " : $query[$key]['refferal_code'];
+            $query[$key]['name']                    = strtoupper($value['name']);
+            $query[$key]['joined']                  = date("d/m/Y", strtotime($value['joined']));
+            $query[$key]['totalDrivers']            = $this->getDriversCount($value['id']);
+            $query[$key]['total_km_purchased']      = (empty($query[$key]['total_km_purchased'])) ? " 0 " : $query[$key]['total_km_purchased'];
+            $query[$key]['total_km_purchased']     .= " KM";
+            $query[$key]['refferal_code']           = (empty($query[$key]['refferal_code'])) ? " - " : $query[$key]['refferal_code'];
+            $query[$key]['color_code']              = ($value['status'] == const_deactive)? DEACTIVE_BGCOLOR :"";
         }
-        return $query;
+        return (!empty($query)) ? $query : [];
     }
 
     public function get_sarathi_id_by_user_id($user_id)
@@ -508,6 +510,60 @@ class Sarathi_model extends CI_Model
         ->get(table_users);
         $query = $query->result_array();
         return(!empty($query))?$query:[];
+    }
+
+    public function add_to_new_sarathi_list($user_id){
+        $data = [
+            field_status      => const_active,
+            field_modified_at => date(field_date)
+        ];
+        $this->db->where(field_uid, $user_id)->update(table_users, $data);
+        return ($this->db->affected_rows()==1)?true:false;
+    }
+
+    public function show_deleted_sarathi(){
+        $this->db->select(table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status . ',' . table_sarathi . '.' . field_subfranchise_id.', sarathi.refferal_code');
+        $this->db->from(table_users);
+        $this->db->join(table_sarathi, table_users . '.' . field_uid . '=' . table_sarathi . '.' . field_user_id);
+        $this->db->where(table_users . '.' . field_type_id, value_user_sarathi);
+        $this->db->where(table_users . '.' . field_status, const_deleted);
+        $this->db->where_not_in(table_users.'.'.field_name, "");
+        $this->db->where_not_in(table_sarathi.'.'.field_subfranchise_id, null);
+        // $this->db->where_not_in(table_sarathi.'.'.field_subfranchise_id, "");
+        $query = $this->db->get();
+        $query = $query->result_array();
+        foreach ($query as $key => $value) {
+            $query[$key]['user_id'] = $value['uid'];
+            unset($query[$key]['uid']);
+            $subfranchise_id = "";
+            $subfranchise_name = "";
+            if (array_key_exists('sub_franchise_id', $value)) {
+                $subfranchise_id = $value['sub_franchise_id'];
+                $subfranchise_name = $this->get_subfranchise_name_by_subfranchise_id($subfranchise_id);
+                $subfranchise_name = (empty($subfranchise_name))? "-": $subfranchise_name;
+            }
+            $arr = [
+                'id' => $subfranchise_id,
+                'name' => ucfirst($subfranchise_name)
+            ];
+            $query[$key]['subfranchise'] = $arr;
+            unset($query[$key]['sub_franchise_id']);
+        }
+        return (!empty($query)) ? $query : null;
+    }
+
+    public function show_sarathi_list_by_district_id($district_id){
+        $query = $this->db->select('u.name, u.uid, s.uid as sarathi_id')
+        ->from(table_users.' as u')
+        ->join(table_sarathi.' as s', 'u.uid = s.user_id')
+        ->join(table_user_address.' as ua', 'u.gid = ua.gid')
+        ->where('u.'.field_type_id, value_user_sarathi)
+        ->where('u.'.field_status, const_active)
+        ->where('ua.'.field_district_id, $district_id)
+        ->get();
+        $query = $query->result_array();
+        return (!empty($query)) ? $query : [];
+
     }
  
 }

@@ -737,6 +737,12 @@
 </div>
 
 <script>
+    // CKEDITOR.editorConfig = function(config) {
+    //     // Define changes to default configuration here. For example:
+    //     // config.language = 'fr';
+    //     // config.uiColor = '#AADC6E';
+    //     config.height = '100%';
+    // };
     CKEDITOR.replace("delivery_guide");
     CKEDITOR.replace("customer_text_value_refund");
     CKEDITOR.replace("driver_text_value_refund");

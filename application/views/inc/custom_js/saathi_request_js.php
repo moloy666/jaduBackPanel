@@ -1,6 +1,8 @@
 <script>
-    $('#sarathi_page').addClass('active');
-    display_new_sarathi();
+    $(document).ready(function() {
+        display_new_sarathi();
+    });
+
     function display_new_sarathi() {
         $.ajax({
             type: "GET",
@@ -14,10 +16,9 @@
                     let data = resp.data;
                     let details = '';
                     $.each(data, function(i, data) {
-                        if(data.district_id) {
+                        if (data.district_id) {
                             var onclick_func = `show_subfranchise_by_district_id('${data.district_id}', '${data.uid}')`;
-                        }
-                        else{
+                        } else {
                             var onclick_func = `show_subfranchise_by_district_id('', '${data.uid}')`;
                         }
 
@@ -27,7 +28,7 @@
                                 <td class="uppercase">${data.name}</td>
                                 <td>${data.email}</td>
                                 <td>${data.mobile}</td>
-                                <td>
+                                <td align="center">
                                 <div>
                                     <button class="btn btn-primary mr-2" onclick="${onclick_func}">
                                         Allocate Subfranchise
@@ -56,7 +57,7 @@
             url: `<?= base_url(WEB_PORTAL_ADMIN . '/show_subfranchise_by_district_id') ?>`,
             data: {
                 "id": district_id,
-                "specific_id":specific_id
+                "specific_id": specific_id
             },
             error: function(resp) {
                 console.log(resp);
@@ -72,8 +73,7 @@
                     `;
                     });
                     $('#subfranchise').html(details);
-                }
-                else{
+                } else {
                     let details = '<option value="">Subfranchise Not Found</option>';
                     $('#subfranchise').html(details);
                 }
@@ -115,35 +115,34 @@
     }
 
     var rejected_user_id = '';
-    function reject_sarathi_request(user_id){
+
+    function reject_sarathi_request(user_id) {
         $('#deltmodl').modal('show');
         rejected_user_id = user_id;
     }
 
-    $('#btn_delete_data').click(function(){
+    $('#btn_delete_data').click(function() {
         reject_sarathi_allocation_request(rejected_user_id);
     });
 
-    function reject_sarathi_allocation_request(rejected_user_id){
+    function reject_sarathi_allocation_request(rejected_user_id) {
         $.ajax({
-            type:"GET",
-            url:"<?=base_url(WEB_PORTAL_ADMIN.'/reject_sarathi_request')?>?id="+rejected_user_id,
-            error:function(){
+            type: "GET",
+            url: "<?= base_url(WEB_PORTAL_ADMIN . '/reject_sarathi_request') ?>?id=" + rejected_user_id,
+            error: function() {
                 console.log(resp);
             },
-            success:function(resp){
+            success: function(resp) {
                 // console.log(resp);
-                if(resp.success){
+                if (resp.success) {
                     toast(resp.message, 'center');
                     $('#deltmodl').modal('hide');
                     rejected_user_id = '';
                     display_new_sarathi();
-                }
-                else{
+                } else {
                     toast(resp.message, 'center');
                 }
             }
         });
     }
-
 </script>

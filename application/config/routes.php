@@ -235,6 +235,8 @@ $route['administrator/show_subfranchise_by_district_id'] = 'Admin/show_subfranch
 $route['administrator/allocate_subfranchise_to_sarathi'] = 'Admin/allocate_subfranchise_to_sarathi';
 $route['administrator/reject_sarathi_request'] = 'Admin/reject_sarathi_request';
 $route['administrator/show_rejected_sarathi_request'] = 'Admin/show_rejected_sarathi_request';
+$route['administrator/add_to_new_sarathi_list'] = 'Admin/add_to_new_sarathi_list';
+$route['administrator/show_deleted_sarathi'] = 'Admin/show_deleted_sarathi';
 
 $route['administrator/approved_driver_documents'] = 'Admin/approved_driver_documents';
 $route['administrator/deny_driver_documents'] = 'Admin/deny_driver_documents';
@@ -250,6 +252,8 @@ $route['administrator/deactive_driver'] = 'Admin/deactive_driver';
 $route['administrator/update_driver'] = 'Admin/update_driver';
 $route['administrator/delete_driver'] = 'Admin/delete_driver';
 $route['administrator/get_driver'] = 'Admin/get_driver';
+$route['administrator/show_driver_without_recharge_ride_history'] = 'Admin/show_driver_without_recharge_ride_history';
+$route['administrator/show_sarathi_list_by_district_id'] = 'Admin/show_sarathi_list_by_district_id';
 
 // view load
 $route['administrator/dashboard'] = 'Admin/dashboard';
@@ -302,6 +306,8 @@ $route['administrator/save_kilometer_details'] = 'Admin/save_kilometer_details';
 $route['administrator/add_admin'] = 'Admin/add_admin';
 $route['administrator/saathi/request'] = 'Admin/view_saathi_request';
 $route['administrator/saathi/rejected'] = 'Admin/view_rejected_saathi_request';
+$route['administrator/saathi/deleted'] = 'Admin/view_deleted_sarathi';
+$route['administrator/driver/reassign'] = 'Admin/view_reassign_driver';
 
 //////////////////////////////////////////////////////////////////////////////
 // sarathi details 

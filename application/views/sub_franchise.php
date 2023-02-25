@@ -45,7 +45,7 @@
         </div>
     </div>
     </div>
-   
+
     <div class="sidenav-backdrop backdrop"></div>
     <div class="preloader-backdrop">
         <div class="page-preloader">Loading</div>
@@ -475,8 +475,8 @@
                         let count = 1;
                         let subfranchise_status = "";
                         $.each(subfranchise, function(i) {
-                            if(subfranchise[i].refferal_code=='' || subfranchise[i].refferal_code==null){
-                                subfranchise[i].refferal_code='-';
+                            if (subfranchise[i].refferal_code == '' || subfranchise[i].refferal_code == null) {
+                                subfranchise[i].refferal_code = '-';
                             }
                             if (subfranchise[i].status == "active" || subfranchise[i].status == "ACTIVE")
                                 subfranchise_status = "checked";
@@ -489,7 +489,7 @@
                                 </td>
                                 <td>${subfranchise[i].email}</td>
                                 <td>${subfranchise[i].mobile}</td>
-                                <td>${subfranchise[i].refferal_code}</td>
+                                <td><div onclick="copyToClipboard('${subfranchise[i].refferal_code}')" style="cursor:pointer">${subfranchise[i].refferal_code}</div></td>
                                 <td class="title">${subfranchise[i].address.district}</td>
                                 <td class="title">${subfranchise[i].franchise.name}</td>
                                 <td><label class="switch">
@@ -528,18 +528,14 @@
                         $('#table').dataTable();
 
                         get_panel_access_list();
-
                         get_user_request_permission();
-
                         $('#admin_access_list').multiselect();
-
                         $('#admin_access_list_input').attr('placeholder', 'Select Management');
                     } else {
                         // console.log(response);
                         get_panel_access_list();
                         $('#table').dataTable();
                     }
-
                 },
                 error: function(response) {
                     console.log(response);
@@ -547,6 +543,11 @@
             });
         }
 
+        function copyToClipboard(refferal) {
+            navigator.clipboard.writeText(refferal).then(() => {
+                toast("Refferal Code Copied To Clipboard", 'center');
+            });
+        }
 
         function download_recharge_history(user_id) {
             var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
@@ -683,21 +684,21 @@
 
         // add new sub franchise
         $('#btn_add_data').on('click', function() {
-            let franchise   = $('#select_franchise').val();
-            let admin_id    = $('#specific_id').val();
+            let franchise = $('#select_franchise').val();
+            let admin_id = $('#specific_id').val();
 
-            let name        = $('#add_name').val();
-            let email       = $('#add_email').val();
-            let mobile      = $('#add_mobile').val();
-            let permission  = $('#admin_access_list').val();
-            let panel_list  = $('#panel_access_list').val();
+            let name = $('#add_name').val();
+            let email = $('#add_email').val();
+            let mobile = $('#add_mobile').val();
+            let permission = $('#admin_access_list').val();
+            let panel_list = $('#panel_access_list').val();
 
-            let pincode     = $('#pincode').val();
-            let address     = $('#address').val();
-            let country     = $('#country').val();
-            let state       = $('#state').val();
-            let district    = $('#district').val();
-            let city        = $('#city').val();
+            let pincode = $('#pincode').val();
+            let address = $('#address').val();
+            let country = $('#country').val();
+            let state = $('#state').val();
+            let district = $('#district').val();
+            let city = $('#city').val();
 
             let flag = 0;
 
@@ -726,19 +727,19 @@
                         $('#btn_add_data').html(`<img src="<?= base_url('assets/images/loader3.svg') ?>" width="30px">`);
                     },
                     data: {
-                        "name"          : name,
-                        "email"         : email,
-                        "mobile"        : mobile,
-                        "franchise_id"  : franchise,
-                        "permission"    : permission,
-                        "panel_list"    : panel_list,
-                        "address"       : address,
-                        "country"       : country,
-                        "state"         : state,
-                        "district"      : district,
-                        "city"          : city,
-                        "pincode"       : pincode,
-                        "specific_id"   : admin_id,
+                        "name": name,
+                        "email": email,
+                        "mobile": mobile,
+                        "franchise_id": franchise,
+                        "permission": permission,
+                        "panel_list": panel_list,
+                        "address": address,
+                        "country": country,
+                        "state": state,
+                        "district": district,
+                        "city": city,
+                        "pincode": pincode,
+                        "specific_id": admin_id,
                     },
                     complete: function() {
                         $('#btn_add_data').html(`Add New Sub Franchise`);
@@ -873,6 +874,8 @@
         $('#table').on('search.dt', function() {
             get_panel_access_list();
         });
+
+
 
 
 

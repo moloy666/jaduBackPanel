@@ -23,7 +23,7 @@
                                 <th class="">Name</th>
                                 <th class="">Email</th>
                                 <th class="">Mobile</th>
-                                <th class="">Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody class="" id="table_details">

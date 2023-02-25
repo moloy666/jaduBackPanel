@@ -120,13 +120,14 @@
              <?php
                 }
                 ?>
-            
+
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
-                    if ($this->session->userdata(session_ride_rental) == "active" || $this->session->userdata(session_ride_rental) == const_active) { ?>
+                    if ($this->session->userdata(session_sarathi_data) == "active" || $this->session->userdata(session_sarathi_data) == const_active) { ?>
                      <li>
-                         <a href="javascript:;" id="sarathi_page"><i class="sidebar-item-icon fa fa-smile-o"></i>
+                         <a href="javascript:;" id="sarathi_page" class="<?= ($uri_last_segment == 'saathi' || $uri_last_segment == 'request' || $uri_last_segment == 'rejected' || $uri_last_segment == 'deleted') ? 'active' : '' ?>">
+                             <i class="sidebar-item-icon fa fa-smile-o"></i>
                              <span class="nav-label">Saathi</span><i class="fa fa-angle-left arrow"></i></a>
                          <ul class="nav-2-level collapse">
                              <li>
@@ -138,13 +139,17 @@
                              <li>
                                  <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/rejected') ?>">Rejected Saathi</a>
                              </li>
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/deleted') ?>">Deleted Saathi</a>
+                             </li>
                          </ul>
                      </li>
                  <?php
                     }
                 } else { ?>
                  <li>
-                     <a href="javascript:;" id="sarathi_page"><i class="sidebar-item-icon fa fa-smile-o"></i>
+                     <a href="javascript:;" id="sarathi_page" class="<?= ($uri_last_segment == 'saathi' || $uri_last_segment == 'request' || $uri_last_segment == 'rejected'|| $uri_last_segment == 'deleted') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-smile-o"></i>
                          <span class="nav-label">Saathi</span><i class="fa fa-angle-left arrow"></i></a>
                      <ul class="nav-2-level collapse">
                          <li>
@@ -156,62 +161,58 @@
                          <li>
                              <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/rejected') ?>">Rejected Saathi</a>
                          </li>
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/saathi/deleted') ?>">Deleted Saathi</a>
+                         </li>
                      </ul>
                  </li>
              <?php
                 }
                 ?>
 
+
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
-                    if ($this->session->userdata(session_driver_data) == "active" || $this->session->userdata(session_driver_data) == const_active) { ?>
+                    if ($this->session->userdata(session_driver_data) == "active" || $this->session->userdata(session_sarathi_data) == const_active) { ?>
                      <li>
-                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>" id="driver_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'driver') ? 'active' : '' ?>">
-                             <i class="sidebar-item-icon fa fa-life-bouy"></i>
-                             <span class="nav-label">Drivers</span>
-                         </a>
+                         <a href="javascript:;" id="driver_page" class="<?= ($uri_last_segment == 'driver' || $uri_last_segment == 'location' || $uri_last_segment == 'reassign') ? 'active' : '' ?>">
+                             <i class="sidebar-item-icon fa fa-smile-o"></i>
+                             <span class="nav-label">Driver</span><i class="fa fa-angle-left arrow"></i></a>
+                         <ul class="nav-2-level collapse">
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>">Driver Details</a>
+                             </li>
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/location') ?>">Driver Location</a>
+                             </li>
+                             <li>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/reassign') ?>">Reassign Driver</a>
+                             </li>
+                         </ul>
                      </li>
                  <?php
                     }
                 } else { ?>
                  <li>
-                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>" id="driver_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'driver') ? 'active' : '' ?>">
-                         <i class="sidebar-item-icon fa fa-life-bouy"></i>
-                         <span class="nav-label">Drivers</span>
-                     </a>
+                     <a href="javascript:;" id="driver_page" class="<?= ($uri_last_segment == 'driver' || $uri_last_segment == 'location' || $uri_last_segment == 'reassign') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-smile-o"></i>
+                         <span class="nav-label">Driver</span><i class="fa fa-angle-left arrow"></i></a>
+                     <ul class="nav-2-level collapse">
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>">Driver Details</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/location') ?>">Driver Location</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/reassign') ?>">Reassign Driver</a>
+                         </li>
+                     </ul>
                  </li>
              <?php
                 }
                 ?>
 
-             <?php
-                if ($this->session->userdata(field_type_id) == "user_admin") {
-                    if ($this->session->userdata(session_driver_data) == "active" || $this->session->userdata(session_driver_data) == const_active) { ?>
-                     <li>
-                         <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/location') ?>" id="" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'location') ? 'active' : '' ?>">
-                             <i class="sidebar-item-icon fa fa-map-marker"></i>
-                             <span class="nav-label">Drivers Location</span>
-                         </a>
-                     </li>
-                 <?php
-                    }
-                } else { ?>
-                 <li>
-                     <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/location') ?>" id="" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'location') ? 'active' : '' ?>">
-                         <i class="sidebar-item-icon fa fa-map-marker"></i>
-                         <span class="nav-label">Drivers Location</span>
-                     </a>
-                 </li>
-             <?php
-                }
-                ?>
-
-             <!-- <li>
-                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/dormant_account') ?>" id="driver_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'dormant_account') ? 'active' : '' ?>">
-                     <i class="sidebar-item-icon fa fa-users"></i>
-                     <span class="nav-label">Dormant Account</span>
-                 </a>
-             </li> -->
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
@@ -235,7 +236,6 @@
                 }
                 ?>
 
-
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {
                     if ($this->session->userdata(session_incentive) == "active" || $this->session->userdata(session_incentive) == const_active) { ?>
@@ -257,7 +257,6 @@
              <?php
                 }
                 ?>
-
 
              <?php
                 if ($this->session->userdata(field_type_id) == "user_admin") {

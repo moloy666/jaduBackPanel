@@ -21,6 +21,24 @@
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body dashboard-card">
+                        <div class="m-b-5">Total Fanchise</div>
+                        <h2 class="m-b-5 font-strong totalFranchise">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-warning color-white widget-stat">
+                    <div class="ibox-body dashboard-card">
+                        <div class="m-b-5">Total Sub-Fanchise</div>
+                        <h2 class="m-b-5 font-strong totalSubFranchise">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-success color-white widget-stat">
+                    <div class="ibox-body dashboard-card">
                         <div class="m-b-5">Total Saathi</div>
                         <h2 class="m-b-5 font-strong totalSarathi">0</h2>
                     </div>
@@ -32,18 +50,8 @@
                     <div class="ibox-body dashboard-card">
                         <div class="m-b-5">Total Drivers</div>
                         <h2 class="m-b-5 font-strong totalDrivers">0</h2>
-
                         <div><i class="fa fa-level-up m-r-5"></i><small><strong>Active</strong> <span class="totalActiveDrivers"></span></small></div>
                         <div><i class="fa fa-level-down m-r-5"></i><small><strong>Inctive</strong> <span class="totalInactiveDrivers"></span></small></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-                <div class="ibox bg-success color-white widget-stat">
-                    <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Registered Customer</div>
-                        <h2 class="m-b-5 font-strong totalRegisteredCustomers">0</h2>
                     </div>
                 </div>
             </div>
@@ -60,12 +68,12 @@
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total KM Purchased</div>
-                        <h2 class="m-b-5 font-strong">0</h2>
+                        <div class="m-b-5">Total Registered Customer</div>
+                        <h2 class="m-b-5 font-strong totalRegisteredCustomers">0</h2>
                     </div>
                 </div>
             </div>
-
+            
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-warning color-white widget-stat">
                     <div class="ibox-body dashboard-card">
@@ -78,17 +86,8 @@
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Fanchise</div>
-                        <h2 class="m-b-5 font-strong totalFranchise">0</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-                <div class="ibox bg-warning color-white widget-stat">
-                    <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Sub-Fanchise</div>
-                        <h2 class="m-b-5 font-strong totalSubFranchise">0</h2>
+                        <div class="m-b-5">Total KM Purchased</div>
+                        <h2 class="m-b-5 font-strong">0</h2>
                     </div>
                 </div>
             </div>
@@ -110,43 +109,7 @@
         </div>
 
         <div class="row">
-
-            <div class="col-md-6">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <div class="ibox-title">Saathi Wise Data</div>
-                    </div>
-                    <div class="ibox-body">
-                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>KM Purchased</th>
-                                    <th>Joined At</th>
-                                    <th>Number Of Driver</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>KM Purchased</th>
-                                    <th>Joined At</th>
-                                    <th>Number Of Driver</th>
-                                </tr>
-                            </tfoot>
-                            <tbody class="sarathiRelatedDataTable">
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="ibox">
                     <div class="ibox-head">
                         <div class="ibox-title">Saathi Wise Data</div>
@@ -157,16 +120,33 @@
                 </div>
             </div>
 
+            <div class="col-md-12">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <div class="ibox-title">Saathi Wise Data</div>
+                    </div>
+                    <div class="ibox-body">
+                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Refferal Code</th>
+                                    <th>KM Purchased</th>
+                                    <th>Joined At</th>
+                                    <th>Number Of Driver</th>
+                                </tr>
+                            </thead>
+                            <tbody class="sarathiRelatedDataTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
-    <!-- END PAGE CONTENT-->
-
 </div>
 </div>
-<!-- BEGIN THEME CONFIG PANEL-->
-
-<!-- END THEME CONFIG PANEL-->
 
 <style type="text/css">
     .totalDrivers {
@@ -197,7 +177,7 @@
             $(".totalFranchise").text(data.totalFranchise);
             $(".totalSubFranchise").text(data.totalSubFranchise);
             $(".revenueStatus").text(data.revenueStatus);
-            
+
             $(".totalRevenue").text(data.totalRevenue);
 
 
@@ -221,10 +201,11 @@
 
                 sarathiName.push(data[i].name);
                 driverCount.push(data[i].totalDrivers);
-
-                html += '<tr>' +
+                count = i + 1;
+                html += `<tr style="background:${data[i].color_code}">` +
+                    '<td class="title">' + count + '</td>' +
                     '<td class="title">' + data[i].name + '</td>' +
-                    '<td class="text-center">' + data[i].refferal_code + '</td>' +
+                    '<td class="">' + data[i].refferal_code + '</td>' +
                     '<td>' + data[i].total_km_purchased + '</td>' +
                     '<td>' + data[i].joined + '</td>' +
                     '<td>' + data[i].totalDrivers + '</td>' +
@@ -252,8 +233,6 @@
                 datasets: [{
                     label: "Driver ",
                     backgroundColor: "#00A78F",
-                    // backgroundColor: "rgba(255, 255, 255, 1.0)",
-                    // borderColor: "rgba(244, 3, 252,1)",
                     borderColor: "#00A78F",
                     data: yValues
                 }]
@@ -262,7 +241,7 @@
                 scales: {
                     xAxes: [{
                         ticks: {
-                            display: false 
+                            display: false
                         }
                     }]
                 },
@@ -273,7 +252,7 @@
                     display: true,
                     text: "Driver Count Of Saathi"
                 },
-                
+
             }
         });
     }

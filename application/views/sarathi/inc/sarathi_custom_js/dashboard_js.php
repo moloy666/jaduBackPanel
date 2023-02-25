@@ -1,6 +1,6 @@
 <style>
     .title {
-        text-transform: capitalize;
+        text-transform: uppercase;
     }
 </style>
 <script type="text/javascript">
@@ -14,7 +14,6 @@
         },
         success: function(response) {
             let data = JSON.parse(response);
-
             $(".totalDrivers").text(data.drivers.total);
             $(".totalActiveDrivers").text(data.drivers.active);
             $(".totalInactiveDrivers").text(data.drivers.inactive);
@@ -22,8 +21,6 @@
             $(".totalRegisteredCustomers").text(data.totalCustomers);
             $(".totalRevenue").text(data.totalRevenue);
             $("#growth").text(data.revenueStatus);
-
-            // console.log(data.revenueStatus);  
         },
         error: function(response) {
             console.log(response);
@@ -77,7 +74,6 @@
 
     function get_driver_data() {
         let sarathi_id = $('#sarathi_id').val();
-        console.log(sarathi_id);
         $.ajax({
             url: "<?= base_url('administrator/driverData') ?>",
             type: "POST",
@@ -85,19 +81,17 @@
                 "id": sarathi_id
             },
             success: function(response) {
-                // console.log(response);
                 let data = JSON.parse(response);
+                // console.log(data);
                 let html = '';
                 $.each(data, function(i) {
-
                     driverName.push(data[i].name);
                     driverKmPurchased.push(data[i].total_km_purchased);
-
                     if (data[i].vehicle_name == null) {
                         data[i].vehicle_name = '-';
                     }
-
-                    html += `<tr>
+                    html += `<tr style="background:${data[i].color_code}">
+                    <td> ${i+1}</td>
                     <td class="title"> ${data[i].name}</td>
                     <td> ${data[i].total_km_purchased} KM</td>
                     <td class="title text-center"> ${data[i].vehicle_name}</td>
@@ -107,7 +101,6 @@
                 });
                 $('.driverRelatedDataTable').html(html);
                 $('#example-table').dataTable();
-
                 load_driver_chart();
             },
             error: function(response) {
@@ -115,7 +108,6 @@
             }
         });
     }
-
 
     function load_driver_chart() {
         var xValues = driverName;
@@ -129,8 +121,6 @@
                 datasets: [{
                     label:'KM Purchased ',
                     backgroundColor: "#00A78F",
-                    // backgroundColor: "rgba(255, 255, 255, 1.0)",
-                    // borderColor: "rgba(244, 3, 252,1)",
                     borderColor: "#00A78F",
                     data: yValues,
                 }]

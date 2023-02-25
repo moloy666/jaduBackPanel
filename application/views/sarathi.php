@@ -269,8 +269,6 @@
   <script>
     $(document).ready(function() {
       get_sarathi_details();
-      $('#sarathi_page').addClass('active');
-
     });
 
     get_permission_list();

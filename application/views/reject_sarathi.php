@@ -27,7 +27,7 @@
                 <th class="">Name</th>
                 <th class="">Email</th>
                 <th class="">Mobile</th>
-                <th class="">Actions</th>
+                <th class="text-center">Actions</th>
               </tr>
             </thead>
             <tbody class="" id="table_details">
@@ -50,10 +50,10 @@
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content p-4 text-center">
         <h5 class="mb-4">Are you sure want to
-          delete this user permanently ?</h5>
+          remove this user from rejected list ?</h5>
         <div class="d-flex align-items-center justify-content-center">
           <button class="btn-secondary btn" data-dismiss="modal" id="close_delete_modal">No</button>
-          <button class="btn-success btn ml-3" id="btn_delete_data">Yes</button>
+          <button class="btn-success btn ml-3" id="btn_remove_from_reject_list">Yes</button>
         </div>
       </div>
     </div>

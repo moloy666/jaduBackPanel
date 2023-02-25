@@ -50,7 +50,7 @@ foreach ($sarathi_data as $data) {
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Registered Customer</div>
+                        <div class="m-b-5">Total Customer</div>
                         <h2 class="m-b-5 font-strong totalRegisteredCustomers">0</h2>
                     </div>
                 </div>
@@ -84,6 +84,15 @@ foreach ($sarathi_data as $data) {
             </div>
 
             <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-success color-white widget-stat">
+                    <div class="ibox-body dashboard-card">
+                        <div class="m-b-5">Refferal Code</div>
+                        <h2 class="m-b-5 font-strong refferal_code">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-info color-white widget-stat">
                     <div class="ibox-body dashboard-card">
                         <div class="m-b-5">Total revenue generated</div>
@@ -97,63 +106,11 @@ foreach ($sarathi_data as $data) {
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-3 col-md-6">
-                <div class="ibox bg-warning color-white widget-stat">
-                    <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Refferal Code</div>
-                        <h2 class="m-b-5 font-strong refferal_code">0</h2>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
 
         <div class="row">
 
-            <div class="col-md-7">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <div class="ibox-title">Driver Wise Data</div>
-                    </div>
-                    <div class="ibox-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                                <thead class="">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>KM Purchased</th>
-                                        <th>Vehicle Type</th>
-                                        <th>Vehicle Number</th>
-                                        <th>Joined At</th>
-
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>KM Purchased</th>
-                                        <th>Vehicle Type</th>
-                                        <th>Vehicle Number</th>
-                                        <th>Joined At</th>
-
-                                    </tr>
-                                </tfoot>
-                                <tbody class="driverRelatedDataTable">
-
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-5">
+            <div class="col-md-12">
                 <div class="ibox">
                     <div class="ibox-head">
                         <div class="ibox-title">Driver Total KM Purchased</div>
@@ -164,17 +121,36 @@ foreach ($sarathi_data as $data) {
                 </div>
             </div>
 
+            <div class="col-md-12">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <div class="ibox-title">Driver Wise Data</div>
+                    </div>
+                    <div class="ibox-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                                <thead class="">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>KM Purchased</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Vehicle Number</th>
+                                        <th>Joined At</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="driverRelatedDataTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
-    <!-- END PAGE CONTENT-->
-
 </div>
 </div>
-<!-- BEGIN THEME CONFIG PANEL-->
-
-<!-- END THEME CONFIG PANEL-->
-
 <style type="text/css">
     .totalDrivers {
         float: right

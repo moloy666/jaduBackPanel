@@ -39,6 +39,8 @@ define('nodeUrl','http://54.251.202.52:3000/');
 // define('nodeUrl','https://node.jaduride.com/');
 //////////////////////////////////////////////////////////////////////
 define('STATIC_GST_RECHARGE_PERCENTAGE', 18);
+define('DEACTIVE_BGCOLOR', '#faafaa');
+
 ////////////////////////// Hotel Section Start //////////////////////////
 
 define('WEB_PORTAL_HOTEL', 'hotel');
@@ -277,6 +279,7 @@ define('const_delivery_guidelines', 'delivery_guidelines');
 define('const_success', 'success');
 define('const_completed', 'completed');
 define('constant_captured', 'captured');
+
 define('CONST_JOINING_KM', '100');
 define('sarathi_title', 'New driver added');
 define('sarathi_body', '100 Km deducted');

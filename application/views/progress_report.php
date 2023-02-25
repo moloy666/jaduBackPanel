@@ -47,6 +47,26 @@
                     <tr>
                         <td>
                             <div>
+                                <div class="m-b-5">Registered Franchise</div>
+                                <h2 class="m-b-5 font-strong totalsf"><?= $totalFranchise ?></h2>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div class="m-b-5">Registered Subfranchise</div>
+                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSubFranchise ?></h2>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div class="m-b-5">Registered Saathi</div>
+                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSarathi ?></h2>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
                                 <div class="m-b-5">Total Drivers</div>
                                 <h2 class="m-b-5 font-strong totalDrivers"><?= $drivers['total'] ?></h2>
 
@@ -67,28 +87,6 @@
                             </div>
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>
-                            <div>
-                                <div class="m-b-5">Registered Franchise</div>
-                                <h2 class="m-b-5 font-strong totalsf"><?= $totalFranchise ?></h2>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <div class="m-b-5">Registered Subfranchise</div>
-                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSubFranchise ?></h2>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <div class="m-b-5">Registered Saathi</div>
-                                <h2 class="m-b-5 font-strong totalsf"><?= $totalSarathi ?></h2>
-                            </div>
-                        </td>
-                    </tr>
-
 
                     <tr>
                         <td>
