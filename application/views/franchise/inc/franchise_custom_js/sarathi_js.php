@@ -222,20 +222,19 @@
                         }
                         details = `<tr>
                         <td>${count}</td>
-                        <td class="title">
+                        <td class="title nowrap">
                         <a href="<?= base_url($this->session->userdata(session_franchise_table) . "/saathi/driver/") ?>${data.user_id}">${data.name}</a></td>
                         <td>${data.mobile}</td>
                         <td>${data.email}</td>
                         <td>${data.refferal_code}</td>
-                        <td class="title">${data.subfranchise.name}</td>
+                        <td class="title nowrap">${data.subfranchise.name}</td>
                      
                         <td><label class="switch">
                         <input type="checkbox"  ${user_status} class="access_status_change" data ="${data.user_id}" onclick="status(this, '${data.user_id}')" disabled>
                         <span class="slider round"></span></label>
                         </td>
-                        <td>
-                        <div>
-
+                        <td class="nowrap">
+                        <div style="width:150px">
                       
                         <button class="hdrbtn mx-2 view_user" data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${data.user_id}')" data-toggle="tooltip" data-placement="top" title="Bank Details">                        
                           <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-2">                  

@@ -5,18 +5,8 @@
         width: 100%;
     }
 
-    #legend_1 {
-        /* width: 160px; */
-        height: 10vh;
-        /* font-family: Arial, sans-serif;
-        background: #fff;
-        padding: 10px;
-        margin: 10px;
-        border: 2px solid #000; */
-    }
-
-    #legend h6 {
-        margin-top: 0;
+    #legend {
+        text-align: center;
     }
 
     strong {
@@ -25,6 +15,7 @@
 
     #legend img {
         vertical-align: middle;
+        width: 1.5rem;
     }
 </style>
 <div class="content-wrapper">
@@ -33,7 +24,7 @@
     <div class='d-flex justify-content-center'>
         <div id="map" class="d-flex justify-content-center align-items-center"></div>
     </div>
-    <div id="legend_1"></div>
+    <div id="legend"></div>
 </div>
 
 <script type="text/javascript">
@@ -106,7 +97,7 @@
                 position: new google.maps.LatLng(location_details.lat, location_details.lng),
                 map: map,
                 draggable: false,
-                icon:{
+                icon: {
                     url: image,
                     // size: new google.maps.Size(36, 50),
                     scaledSize: new google.maps.Size(20, 20),
@@ -134,9 +125,8 @@
     }
 
     function add_legend(map, waiting, inactive, running) {
-        let legend = document.getElementById("legend_1");
+        let legend = document.getElementById("legend");
         legend.innerHTML = `
-    <h6 class="mt-1">Working Status</h6>
     <img src="<?= base_url(marker_path . marker_waiting_car) ?>" alt=""><strong class="ml-3">Waiting (${waiting})</strong>
     <img src="<?= base_url(marker_path . marker_inactive_car) ?>" alt=""><strong class="ml-3">Inactive (${inactive})</strong>
     <img src="<?= base_url(marker_path . marker_running_car) ?>" alt=""><strong class="ml-3">Running (${running})</strong>

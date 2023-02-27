@@ -38,7 +38,8 @@
                 type: "POST",
                 url: "<?= base_url('administrator/display_driver_location') ?>",
                 error: function(response) {},
-                success: function(response) {                
+                success: function(response) {         
+                    // console.log(response);       
                     if (response.success) {
                         var locations = response.data;
                         initMap(locations);
@@ -104,7 +105,9 @@
                         infowindow.setContent(
                             "<b>" + locations[i].driver_name +
                             "<br>Total Travelled : " + locations[i].totalTravelled / 1000 + " KM" +
-                            "<br>Vehicle Number : " + locations[i].vehicle_number + "" +
+                            "<br>Vehicle Number  : " + locations[i].vehicle_number + "" +
+                            "<br>Vehicle Type    : " + locations[i].vehicle_type + "" +
+                            "<br>Vehicle        : " + locations[i].vehicle_name + "" +
                             "</b>"
                         );
 

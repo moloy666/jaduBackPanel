@@ -557,8 +557,9 @@ class Sarathi_model extends CI_Model
         ->from(table_users.' as u')
         ->join(table_sarathi.' as s', 'u.uid = s.user_id')
         ->join(table_user_address.' as ua', 'u.gid = ua.gid')
+        ->where_not_in('s.'.field_subfranchise_id, "")
         ->where('u.'.field_type_id, value_user_sarathi)
-        ->where('u.'.field_status, const_active)
+        ->where('u.'.field_status,  const_active)
         ->where('ua.'.field_district_id, $district_id)
         ->get();
         $query = $query->result_array();

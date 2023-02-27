@@ -265,6 +265,7 @@
 
                 }else{
                     $('#message').text('Not Available');
+                    $('.disabled').attr('disabled', 'disabled');
                 }
 
             }

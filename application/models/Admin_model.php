@@ -1457,10 +1457,11 @@ class Admin_model extends CI_Model
 
     public function display_driver_location()
     {
-
-        $this->db->select('u.uid as user_id, d.uid as driver_id, d.current_lat as lat, d.current_lng as lng, u.name as driver_name, d.working_status_current_value as driver_status, d.totalTravelled, d.vehicle_number');
+        $this->db->select('u.uid as user_id, d.uid as driver_id, d.current_lat as lat, d.current_lng as lng, u.name as driver_name, d.working_status_current_value as driver_status, d.totalTravelled, d.vehicle_number, rst.name as vehicle_type, cst.name as vehicle_name');
         $this->db->from('driver as d');
         $this->db->join('users as u', 'u.uid = d.user_id');
+        $this->db->join(table_ride_service_type.' as rst', 'd.service_type_id = rst.uid');
+        $this->db->join(table_cabs_under_service_type.' as cst', 'd.cabs_under_service_type = cst.uid');
         $this->db->where('u.status', const_active);
         $this->db->where_not_in('d.current_lat', 'NULL');
         $this->db->where_not_in('d.current_lng', 'NULL');
@@ -1470,6 +1471,8 @@ class Admin_model extends CI_Model
 
         foreach ($query as $i => $val) {
             $query[$i]['driver_name'] = ucwords($val['driver_name']);
+            $query[$i]['vehicle_type'] = ucwords($val['vehicle_type']);
+            $query[$i]['vehicle_name'] = ucwords($val['vehicle_name']);
             $query[$i]['recharge_amount'] = $this->get_total_recharge_amount($val['user_id']);
 
         }

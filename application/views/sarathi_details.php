@@ -62,13 +62,13 @@
                         <table class="table table-bordered" id="pending_table">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Email</th>
-                                    <th class="text-center">Mobile</th>
+                                    <th class="">#</th>
+                                    <th class="">Name</th>
+                                    <th class="">Email</th>
+                                    <th class="">Mobile</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-center" id="pending_drivers">
+                            <tbody class="" id="pending_drivers">
                             </tbody>
                         </table>
                     </div>
@@ -82,15 +82,15 @@
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Actions</th>
+                                <th class="">#</th>
+                                <th class="">Name</th>
+                                <th class="">Email</th>
+                                <th class="">Mobile</th>
+                                <th class="">Status</th>
+                                <th class="">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
                         </tbody>
                     </table>
                 </div>
@@ -130,15 +130,15 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="table">
-                                <thead class="thead-light">
+                                <thead class="thead">
                                     <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Permission</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Actions</th>
+                                        <th class="">#</th>
+                                        <th class="">Permission</th>
+                                        <th class="">Status</th>
+                                        <th class="">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-center" id="table_access">
+                                <tbody class="" id="table_access">
 
                                 </tbody>
                             </table>
@@ -307,10 +307,10 @@
                         }
                         details += `
                         <tr>
-                        <td class="text-center">${i + 1} </td>
-                        <td class="text-center title">${data.name}</td>
-                        <td class="text-center" id="status_${data.request_id}">${data.status}</td>
-                        <td class="text-center">
+                        <td class="">${i + 1} </td>
+                        <td class=" title">${data.name}</td>
+                        <td class="" id="status_${data.request_id}">${data.status}</td>
+                        <td class="">
                             <div class="flex justify-content-center">
 
                                 <button class="btn btn-primary mr-2 ${allow_btn}" id="allow_${data.request_id}" onclick="allow_request(this, '${data.user_id}', '${data.request_id}')" ${allow_btn_status}>Allow</button>

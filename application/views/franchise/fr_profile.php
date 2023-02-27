@@ -55,7 +55,7 @@
                                 <p class="mb-0">Full Name</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0" id="txt_name">(097) 234-5678</p>
+                                <p class="text-muted mb-0" id="txt_name"></p>
                                 <input type="text" id="name" class="form-control edit_details">
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                 <p class="mb-0">Date of Birth</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0" id="txt_dob">(097) 234-5678</p>
+                                <p class="text-muted mb-0" id="txt_dob"></p>
                                 <input type="text" id="dob" class="form-control edit_details" placeholder="Date of Birth">
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                 <p class="mb-0">Gender</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0" id="txt_gender">(097) 234-5678</p>
+                                <p class="text-muted mb-0" id="txt_gender"></p>
                                 <div class="form-group">
                                     <select class="form-control edit_details" id="gender">
                                         <option value="">Select Gender</option>
@@ -184,10 +184,10 @@
                             <table class="table table-bordered" id="table">
                                 <thead class="thead">
                                     <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Permission</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Request</th>
+                                        <th class="">#</th>
+                                        <th class="">Permission</th>
+                                        <th class="">Status</th>
+                                        <th class="">Request</th>
                                     </tr>
                                 </thead>
                                 <tbody id="permission_list">

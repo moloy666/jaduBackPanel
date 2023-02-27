@@ -20,17 +20,32 @@
         text-overflow: clip;
     }
 
-    .address{
+    .address {
         width: 400px;
         text-align: left !important;
     }
-
- 
 </style>
 <script>
+    var table = $('#table').DataTable();
     $('#btn_search').click(() => {
-        ride_details();
+
+        table.clear().draw();
+
+        let ride_stage = $('#ride_stage').val();
+        let ride_from = $('#ride_from').val();
+        let ride_to = $('#ride_to').val();
+
+        if (ride_stage == '') {
+            toast('Select Ride Stage', 'center');
+        } else if (ride_from != '' && ride_to == '') {
+            toast('Select Both Date', 'center');
+        } else if (ride_from == '' && ride_to != '') {
+            toast('Select Both Date', 'center');
+        } else {
+            ride_details();
+        }
     });
+
 
     // ride_details();
 
@@ -39,7 +54,6 @@
         let ride_stage = $('#ride_stage').val();
         let ride_from = $('#ride_from').val();
         let ride_to = $('#ride_to').val();
-
 
         let schedule = false;
         if ($("#schedule_ride").prop('checked') == true) {
@@ -62,25 +76,39 @@
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 let data = response.data;
                 let details = '';
-                let customer_gender = '';
-                let driver_gender = '';
 
                 $.each(data, function(i, data) {
+                    // let customer_gender = (data.customer.gender == undefined) ? "" : data.customer.gender.toLowerCase();
+                    // let driver_gender = (data.driver.gender == undefined) ? "" : data.driver.gender.toLowerCase();
 
-                    if (data.customer.gender == 'male') {
-                        customer_gender = '(M)';
-                    } else {
-                        customer_gender = '(F)';
-                    }
+                    // if (customer_gender == 'male') {
+                    //     customer_gender = '(M)';
+                    // } else if (customer_gender == 'female') {
+                    //     customer_gender = '(F)';
+                    // } else if (customer_gender == '') {
+                    //     customer_gender = '(N/A)';
+                    // } else {
+                    //     customer_gender = '';
+                    // }
 
-                    if (data.driver.gender == 'male') {
-                        driver_gender = '(M)';
-                    } else {
-                        driver_gender = '(F)';
-                    }
+                    // if (driver_gender == 'male') {
+                    //     driver_gender = '(M)';
+                    // } else if (driver_gender == 'female') {
+                    //     driver_gender = '(F)';
+                    // } else if (driver_gender == '') {
+                    //     driver_gender = '(N/A)';
+                    // } else {
+                    //     driver_gender = '';
+                    // }
+
+                    data.customer.name = (data.customer.name == undefined)? "N/A":data.customer.name;
+                    data.customer.mobile = (data.customer.mobile == undefined)? "N/A":data.customer.mobile;
+
+                    data.driver.name = (data.driver.name == undefined)? "N/A":data.driver.name;
+                    data.driver.mobile = (data.driver.mobile == undefined)? "N/A":data.driver.mobile;
 
                     details += `
                     <tr>
@@ -88,7 +116,7 @@
 
                         <td class="text-left name_column details">                            
                             <div class="p-0">
-                                <span class="name img_name">${data.customer.name}  ${customer_gender} </span>
+                                <span class="name img_name">${data.customer.name}  </span>
                             </div>
                             <div class="background">
                                 ${data.customer.mobile}
@@ -97,7 +125,7 @@
 
                         <td class="text-left name_column details">    
                             <div class="p-0">                                
-                                <span class="name">${data.driver.name} ${driver_gender}</span>
+                                <span class="name">${data.driver.name} </span>
                             </div>
                             <div class="background">
                                 ${data.driver.mobile}
@@ -132,9 +160,9 @@
                     </tr>`;
 
                 });
+                // table.row.add().draw(false);
                 $('#table_details').html(details);
                 $('#ride_details').show()
-                $('#table').dataTable();
             }
         });
     }

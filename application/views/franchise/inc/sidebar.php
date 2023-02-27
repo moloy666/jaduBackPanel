@@ -59,8 +59,8 @@
                 ?>
 
 
-             <?php
-                if ($this->session->userdata(fr_session_sarathi_data) == "active" || $this->session->userdata(fr_session_sarathi_data) == const_active) { ?>
+             <!-- <?php
+                    if ($this->session->userdata(fr_session_sarathi_data) == "active" || $this->session->userdata(fr_session_sarathi_data) == const_active) { ?>
                  <li>
                      <a href="<?= base_url($user_type . saathi) ?>" id="sarathi_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'saathi') ? 'active' : '' ?>">
                          <i class="sidebar-item-icon fa fa-smile-o"></i>
@@ -68,7 +68,7 @@
                      </a>
                  </li>
              <?php
-                }
+                    }
                 ?>
 
              <?php
@@ -81,12 +81,34 @@
                  </li>
              <?php
                 }
-                ?>
-
-
-
+                ?> -->
 
              <?php
+                if ($this->session->userdata(fr_session_sarathi_data) == "active" || $this->session->userdata(fr_session_sarathi_data) == const_active) { ?>
+                 <li>
+                     <a href="javascript:;" id="sarathi_page" class="<?= ($uri_last_segment == 'saathi' || $uri_last_segment == 'request' || $uri_last_segment == 'rejected' || $uri_last_segment == 'deleted') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-smile-o"></i>
+                         <span class="nav-label">Saathi</span><i class="fa fa-angle-left arrow"></i></a>
+                     <ul class="nav-2-level collapse">
+                         <li>
+                             <a href="<?= base_url($user_type . saathi) ?>">All Saathi</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url($user_type . '/saathi/request') ?>">New Saathi Request</a>
+                         </li>
+                         <!-- <li>
+                             <a href="<?= base_url($user_type . '/saathi/rejected') ?>">Rejected Saathi</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url($user_type . '/saathi/deleted') ?>">Deleted Saathi</a>
+                         </li> -->
+                     </ul>
+                 </li>
+             <?php
+                }
+                ?>
+
+             <!-- <?php
                 if ($this->session->userdata(fr_session_driver_data) == "active" || $this->session->userdata(fr_session_driver_data) == const_active) { ?>
                  <li>
                      <a href="<?= base_url($user_type . '/driver') ?>" id="driver_page" class="<?= (!empty($uri_last_segment) && $uri_last_segment == 'driver') ? 'active' : '' ?>">
@@ -105,6 +127,28 @@
                          <i class="sidebar-item-icon fa fa-life-bouy"></i>
                          <span class="nav-label">Driver Location</span>
                      </a>
+                 </li>
+             <?php
+                }
+                ?> -->
+
+             <?php
+                if ($this->session->userdata(fr_session_driver_data) == "active" || $this->session->userdata(fr_session_driver_data) == const_active) { ?>
+                 <li>
+                     <a href="javascript:;" id="driver_page" class="<?= ($uri_last_segment == 'driver' || $uri_last_segment == 'location' || $uri_last_segment == 'reassign') ? 'active' : '' ?>">
+                         <i class="sidebar-item-icon fa fa-car"></i>
+                         <span class="nav-label">Driver</span><i class="fa fa-angle-left arrow"></i></a>
+                     <ul class="nav-2-level collapse">
+                         <li>
+                             <a href="<?= base_url($user_type . '/driver') ?>">All Driver</a>
+                         </li>
+                         <li>
+                             <a href="<?= base_url($user_type . '/driver/location') ?>">Driver Location</a>
+                         </li>
+                         <!-- <li>
+                             <a href="<?= base_url($user_type . '/driver/reassign') ?>">Reassign Driver</a>
+                         </li> -->
+                     </ul>
                  </li>
              <?php
                 }

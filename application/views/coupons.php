@@ -31,18 +31,18 @@
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Code</th>
-                                <th class="text-center">For</th>
-                                <th class="text-center">Amount Type</th>
-                                <th class="text-center">Value</th>
-                                <th class="text-center">Usage / User</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Expiry Date</th>
-                                <th class="text-center">Actions</th>
+                                <th class="">#</th>
+                                <th class="">Code</th>
+                                <th class="">For</th>
+                                <th class="">Amount Type</th>
+                                <th class="">Value</th>
+                                <th class="">Usage / User</th>
+                                <th class="">Status</th>
+                                <th class="">Expiry Date</th>
+                                <th class="">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
                         </tbody>
                     </table>
                 </div>

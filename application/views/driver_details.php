@@ -32,7 +32,7 @@
                             <h5><?= strtoupper($driver['name']) ?></h5>
                             <h6><?= $driver['email'] ?></h6>
                             <h6><?= $driver['mobile'] ?></h6>
-
+                            <!-- <h6>Vehicle : <?=ucwords($driver['vehicle_type']) ?> <?= $driver['car_name'] ?></h6> -->
                         <?php
                         }
                         ?>

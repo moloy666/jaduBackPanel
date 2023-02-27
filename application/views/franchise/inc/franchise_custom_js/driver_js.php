@@ -89,17 +89,17 @@
                     }
                     details = `<tr>
                         <td>${count}</td>
-                        <td class="title"><a href="<?= base_url() ?>${user_type}/driver/details/${data.user_id}">${data.name}</a></td>
+                        <td class="title nowrap"><a href="<?= base_url() ?>${user_type}/driver/details/${data.user_id}">${data.name}</a></td>
                         <td>${data.email}</td>
                         <td>${data.mobile}</td>
-                        <td class="title">${data.sarathi}</td>
+                        <td class="title nowrap">${data.sarathi}</td>
                      
                         <td><label class="switch">
                         <input type="checkbox"  ${user_status} class="access_status_change" data ="${data.user_id}" onclick="status(this, '${data.user_id}')" disabled>
                         <span class="slider round"></span></label>
                         </td>
-                        <td>
-                            <div>
+                        <td class="nowrap">
+                            <div style="width:150px">
 
                             <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Export as PDF" onclick="download_ride_history('${data.user_id}')">            
                             <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         

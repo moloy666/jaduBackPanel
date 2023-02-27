@@ -176,11 +176,11 @@
                     if ($this->session->userdata(session_driver_data) == "active" || $this->session->userdata(session_sarathi_data) == const_active) { ?>
                      <li>
                          <a href="javascript:;" id="driver_page" class="<?= ($uri_last_segment == 'driver' || $uri_last_segment == 'location' || $uri_last_segment == 'reassign') ? 'active' : '' ?>">
-                             <i class="sidebar-item-icon fa fa-smile-o"></i>
+                             <i class="sidebar-item-icon fa fa-car"></i>
                              <span class="nav-label">Driver</span><i class="fa fa-angle-left arrow"></i></a>
                          <ul class="nav-2-level collapse">
                              <li>
-                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>">Driver Details</a>
+                                 <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>">All Driver</a>
                              </li>
                              <li>
                                  <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/location') ?>">Driver Location</a>
@@ -195,11 +195,11 @@
                 } else { ?>
                  <li>
                      <a href="javascript:;" id="driver_page" class="<?= ($uri_last_segment == 'driver' || $uri_last_segment == 'location' || $uri_last_segment == 'reassign') ? 'active' : '' ?>">
-                         <i class="sidebar-item-icon fa fa-smile-o"></i>
+                         <i class="sidebar-item-icon fa fa-car"></i>
                          <span class="nav-label">Driver</span><i class="fa fa-angle-left arrow"></i></a>
                      <ul class="nav-2-level collapse">
                          <li>
-                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>">Driver Details</a>
+                             <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver') ?>">All Driver</a>
                          </li>
                          <li>
                              <a href="<?= base_url(WEB_PORTAL_ADMIN . '/driver/location') ?>">Driver Location</a>

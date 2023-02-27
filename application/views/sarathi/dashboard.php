@@ -135,6 +135,7 @@ foreach ($sarathi_data as $data) {
                                         <th>Name</th>
                                         <th>KM Purchased</th>
                                         <th>Vehicle Type</th>
+                                        <th>Vehicle Name</th>
                                         <th>Vehicle Number</th>
                                         <th>Joined At</th>
 

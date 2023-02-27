@@ -83,13 +83,15 @@ class Driver_model extends CI_Model
     public function condition_to_get_driver()
     {
 
-        $select = table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status . ',' . table_driver . '.' . field_sarathi_id . ',' . table_driver . '.' . field_total_km_purchased . ',' . table_driver . '.' . field_uid . ' as ' . field_driver_id;
+        $select = table_users . '.' . field_uid . ',' . table_users . '.' . field_name . ',' . table_users . '.' . field_email . ',' . table_users . '.' . field_mobile . ',' . table_users . '.' . field_status . ',' . table_driver . '.' . field_sarathi_id . ',' . table_driver . '.' . field_total_km_purchased . ',' . table_driver . '.' . field_uid . ' as ' . field_driver_id.', rst.name as vehicle_type, cst.name as vehicle_name, driver.vehicle_number';
 
-        $join_user_driver = table_users . '.' . field_uid . '=' . table_driver . '.' . field_user_id;
+        $join_user_driver = table_users . '.' . field_uid . '=' . table_driver . '.' . field_user_id ;
 
         $this->db->select($select);
         $this->db->from(table_users);
         $this->db->join(table_driver, $join_user_driver);
+        $this->db->join(table_ride_service_type.' as rst', 'driver.service_type_id = rst.uid');
+        $this->db->join(table_cabs_under_service_type.' as cst', 'driver.cabs_under_service_type = cst.uid');
         $this->db->where_not_in(table_users . '.' . field_status, const_deleted);
         $this->db->where_not_in(table_users . '.' . field_status, const_pending);
         $this->db->where(table_users . '.' . field_type_id, value_user_driver);
@@ -224,11 +226,13 @@ class Driver_model extends CI_Model
     {
 
         $this->db->select('u.name, u.created_at as joined, d.uid as id, d.user_id as userId, v.name as vehicle_name, 
-            d.vehicle_number, d.total_km_purchased, d.rating, u.status');
+            d.vehicle_number, d.total_km_purchased, d.rating, u.status, rst.name as vehicle_type, cst.name as car_name');
 
         $this->db->from(table_driver . ' as d');
         $this->db->join(table_users . ' as u', 'd.user_id = u.uid', 'left');
         $this->db->join(table_vehicle_type . ' as v', 'v.uid = d.vehicle_type_id', 'left');
+        $this->db->join(table_ride_service_type . ' as rst', 'rst.uid = d.service_type_id', 'left');
+        $this->db->join(table_cabs_under_service_type . ' as cst', 'cst.uid = d.cabs_under_service_type', 'left');
         $this->db->where('d.sarathi_id', $sarathi_id);
         $this->db->where_not_in('u.status', const_deleted);
         $this->db->where_not_in('u.status', const_pending);
@@ -244,9 +248,11 @@ class Driver_model extends CI_Model
 
     public function display_driver_details($user_id)
     {
-        $query = $this->db->select('u.name, u.email, u.mobile, (d.totalTravelled / 1000) as totalTravel, (d.totalRideTime / 60) as totalRide')
+        $query = $this->db->select('u.name, u.email, u.mobile, (d.totalTravelled / 1000) as totalTravel, (d.totalRideTime / 60) as totalRide, rst.name as vehicle_type, cst.name as car_name')
             ->from('driver as d')
             ->join('users as u', 'u.uid = d.user_id')
+            ->join(table_ride_service_type.' as rst', 'rst.uid=d.service_type_id', 'left')
+            ->join(table_cabs_under_service_type.' as cst', 'cst.uid=d.cabs_under_service_type', 'left')
             ->where('d.user_id', $user_id)
             ->get();
         $query = $query->result_array();
@@ -452,5 +458,14 @@ class Driver_model extends CI_Model
     private function check_ride_history_avaliable($driver_id){
         $this->db->where(field_driver_id, $driver_id)->get(table_ride_normal);
         return($this->db->affected_rows() > 0)?true:false;
+    }
+
+    public function reassign_driver_to_new_sarathi($driver_id, $sarathi_id){
+        $data = [
+            field_sarathi_id  => $sarathi_id,
+            field_modified_at => date(field_date)
+        ];
+        $this->db->where(field_user_id, $driver_id)->update(table_driver, $data);
+        return($this->db->affected_rows()==1)?true:false;
     }
 }

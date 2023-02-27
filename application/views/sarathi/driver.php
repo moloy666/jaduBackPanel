@@ -28,13 +28,13 @@ foreach ($sarathi_data as $data) {
                         <table class="table table-bordered" id="pending_table">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Email</th>
-                                    <th class="text-center">Mobile</th>
+                                    <th class="">#</th>
+                                    <th class="">Name</th>
+                                    <th class="">Email</th>
+                                    <th class="">Mobile</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-center" id="pending_drivers">
+                            <tbody class="" id="pending_drivers">
                             </tbody>
                         </table>
                     </div>
@@ -47,17 +47,17 @@ foreach ($sarathi_data as $data) {
                     <table class="table table-bordered" id="table">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Mobile</th>
-                                <th class="text-center">Total KM Purchased</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Ride History</th>
-                                <th class="text-center">Actions</th>
+                                <th class="">#</th>
+                                <th class="">Name</th>
+                                <th class="">Email</th>
+                                <th class="">Mobile</th>
+                                <th class="">Total KM Purchased</th>
+                                <th class="">Status</th>
+                                <th class="">Ride History</th>
+                                <th class="">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
                         </tbody>
                     </table>
                 </div>

@@ -465,6 +465,9 @@
             $.ajax({
                 type: "post",
                 url: "<?= base_url('administrator/get_sub_franchise') ?>",
+                beforeSend: function() {
+                    $('#table_details').html('<tr><td class="text-center" colspan="9">Loading...</td></tr>');
+                },
                 success: function(response) {
                     // console.log(response);
                     if (response.success) {
@@ -484,27 +487,29 @@
                                 subfranchise_status = "";
                             str += `<tr>
                                 <td>${i+1}</td>
-                                <td class="title"><a href="<?= base_url('administrator/subfranchise_details/') ?>${subfranchise[i].user_id}">${subfranchise[i].name}</a>
+                                <td class="title nowrap"><a href="<?= base_url('administrator/subfranchise_details/') ?>${subfranchise[i].user_id}">${subfranchise[i].name}</a>
                                 <span id="${subfranchise[i].user_id}"></span>
                                 </td>
                                 <td>${subfranchise[i].email}</td>
                                 <td>${subfranchise[i].mobile}</td>
                                 <td><div onclick="copyToClipboard('${subfranchise[i].refferal_code}')" style="cursor:pointer">${subfranchise[i].refferal_code}</div></td>
                                 <td class="title">${subfranchise[i].address.district}</td>
-                                <td class="title">${subfranchise[i].franchise.name}</td>
-                                <td><label class="switch">
+                                <td class="title nowrap">${subfranchise[i].franchise.name}</td>
+                                <td>
+                                <label class="switch">
                                 <input type="checkbox"  ${subfranchise_status} onclick="status(this,'${subfranchise[i].user_id}')" class="access_status_change" disabled>
                                 <span class="slider round"></span></label>
                                 </td>
-                                <td>
-                                <div>
 
-                                <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${subfranchise[i].user_id}')">            
+                                <td class="nowrap">
+                                <div style="width:150px">
+
+                                <button class="hdrbtn mx-2" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${subfranchise[i].user_id}')">            
                                 <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
                                 </button>
                                
                                 
-                                <button class="hdrbtn mx-2 view_user  " data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Bank details">                        
+                                <button class="hdrbtn mx-2 view_user" data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${subfranchise[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Bank details">                        
                                 <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-3">                  
                                 </button>
 
@@ -515,7 +520,7 @@
                                     <path d="M19 15V18C19 19.1046 18.1046 20 17 20H6C4.89543 20 4 19.1046 4 18V7C4 5.89543 4.89543 5 6 5H9" stroke="#ef242f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
                                 </button>
-                                <button class="hdrbtn mx-2 delete_sub_franchise access_delete" data-toggle="modal" data="${subfranchise[i].user_id}" data-target="#deltmodl" disabled>
+                                <button class="hdrbtn delete_sub_franchise access_delete" data-toggle="modal" data="${subfranchise[i].user_id}" data-target="#deltmodl" disabled>
 
                                 <svg width="20" height="20" fill="#ef242f" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon">
                                             <path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path>

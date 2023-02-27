@@ -254,6 +254,7 @@ $route['administrator/delete_driver'] = 'Admin/delete_driver';
 $route['administrator/get_driver'] = 'Admin/get_driver';
 $route['administrator/show_driver_without_recharge_ride_history'] = 'Admin/show_driver_without_recharge_ride_history';
 $route['administrator/show_sarathi_list_by_district_id'] = 'Admin/show_sarathi_list_by_district_id';
+$route['administrator/reassign_driver_to_new_sarathi'] = 'Admin/reassign_driver_to_new_sarathi';
 
 // view load
 $route['administrator/dashboard'] = 'Admin/dashboard';

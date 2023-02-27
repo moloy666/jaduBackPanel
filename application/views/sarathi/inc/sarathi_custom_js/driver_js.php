@@ -19,6 +19,9 @@
         $.ajax({
             type: "post",
             url: "<?= base_url('administrator/get_driver') ?>",
+            beforeSend: function() {
+                $('#table_details').html('<tr><td class="text-center" colspan="8">Loading...</td></tr>');
+            },
             data: {
                 "id": sarathi_id
             },
@@ -34,7 +37,8 @@
                             user_status = "";
                         str += `<tr>
                         <td>${i+1}</td>
-                        <td class="title"><a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver/details/') ?>${driver[i].user_id}">${driver[i].name}</a></td>
+                        <td class="title nowrap">
+                        <a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver/details/') ?>${driver[i].user_id}">${driver[i].name}</a></td>
                         <td>${driver[i].email}</td> 
                         <td>${driver[i].mobile}</td>
                         <td>${driver[i].total_km_purchased}</td>
@@ -42,7 +46,7 @@
                         <input type="checkbox"  ${user_status} data ="${driver[i].user_id}" onclick="status(this, '${driver[i].user_id}')" class="access_status_change" disabled>
                         <span class="slider round"></span></label>
                         </td>
-                        <td>
+                        <td >
                             <div>
 
                             <button class="hdrbtn mx-2 view_user" id="viewbtn"  data-toggle="tooltip" data-placement="left" title="Export as PDF" onclick="download_ride_history('${driver[i].user_id}')">            
@@ -56,7 +60,7 @@
                             </div>
                         </td>
                         
-                        <td>
+                        <td class="nowrap">
                         <div>
 
                         <button class="hdrbtn mx-2 view_user access_update" data-toggle="modal" id =" viewbtn"  data-target="#rechView1"  onclick="fetch_recharge_package('${driver[i].user_id}')" data-toggle="tooltip" data-placement="top" title="Recharge Driver">                        
@@ -64,7 +68,7 @@
                         </button>
 
                         <button class="hdrbtn mx-2" data-toggle="tooltip" data-placement="top" title="View Document" onclick="view_driver_document('${driver[i].user_id}')">
-                            <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="20px" class="mb-3">     
+                            <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="18px" class="mb-3">     
                         </button> 
 
                         

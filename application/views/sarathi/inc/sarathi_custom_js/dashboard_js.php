@@ -94,7 +94,8 @@
                     <td> ${i+1}</td>
                     <td class="title"> ${data[i].name}</td>
                     <td> ${data[i].total_km_purchased} KM</td>
-                    <td class="title text-center"> ${data[i].vehicle_name}</td>
+                    <td class="title"> ${data[i].vehicle_type}</td>
+                    <td class="title"> ${data[i].car_name}</td>
                     <td> ${data[i].vehicle_number}</td>
                     <td> ${data[i].joined}</td>
                     </tr>`;

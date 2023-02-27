@@ -26,7 +26,7 @@
          </div>
          <?php $uri_last_segment = end($this->uri->segments) ?>
 
-         <?php $display = ($this->session->userdata(session_sarathi_status) == const_deactive)? "none":"" ?>
+         <?php $display = ($this->session->userdata(session_sarathi_status) == const_deactive) ? "none" : "" ?>
 
          <ul class="side-menu metismenu">
              <li>
@@ -46,19 +46,18 @@
                  </a>
              </li>
 
-
              <li>
-                 <a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver') ?>" id="driver_page">
-                     <i class="sidebar-item-icon fa fa-life-bouy"></i>
-                     <span class="nav-label">Drivers</span>
-                 </a>
-             </li>
-
-             <li>
-                 <a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver/location') ?>" id="driver_location_page">
-                     <i class="sidebar-item-icon fa fa-map-marker"></i>
-                     <span class="nav-label">Driver Location</span>
-                 </a>
+                 <a href="javascript:;" id="driver_page" class="<?= ($uri_last_segment == 'driver' || $uri_last_segment == 'location') ? 'active' : '' ?>">
+                     <i class="sidebar-item-icon fa fa-car"></i>
+                     <span class="nav-label">Driver</span><i class="fa fa-angle-left arrow"></i></a>
+                 <ul class="nav-2-level collapse">
+                     <li>
+                         <a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver') ?>">All Driver</a>
+                     </li>
+                     <li>
+                         <a href="<?= base_url(WEB_PORTAL_SARATHI . '/driver/location') ?>">Driver Location</a>
+                     </li>
+                 </ul>
              </li>
 
              <?php

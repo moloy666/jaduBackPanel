@@ -37,13 +37,34 @@
         <input type="hidden" value="<?= $this->session->userdata(session_franchise_table) ?>" id="specific_table">
         <input type="hidden" value="<?= $this->session->userdata(session_franchise_user_id) ?>" id="user_id">
         <div class="row">
+
+            <?php if ($this->session->userdata(session_franchise_type_id) != 'user_sub_franchise') { ?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="ibox bg-warning color-white widget-stat">
+                        <div class="ibox-body dashboard-card">
+                            <div class="m-b-5">Total Sub Franchise</div>
+                            <h2 class="m-b-5 font-strong totalSubFranchise">0</h2>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-success color-white widget-stat">
+                    <div class="ibox-body dashboard-card">
+                        <div class="m-b-5">Total Saathi</div>
+                        <h2 class="m-b-5 font-strong totalSarathi">0</h2>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-warning color-white widget-stat">
                     <div class="ibox-body dashboard-card">
                         <div class="m-b-5">Total Drivers</div>
                         <h2 class="m-b-5 font-strong totalDrivers">0</h2>
-
-
                         <div><i class="fa fa-level-up m-r-5"></i><small><strong>Active</strong> <span class="totalActiveDrivers">0</span></small></div>
                         <div><i class="fa fa-level-down m-r-5"></i><small><strong>Inctive</strong> <span class="totalInactiveDrivers">0</span></small></div>
                     </div>
@@ -53,7 +74,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Registered Customer</div>
+                        <div class="m-b-5">Total Customer</div>
                         <h2 class="m-b-5 font-strong totalRegisteredCustomers">0</h2>
                     </div>
                 </div>
@@ -85,29 +106,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-lg-3 col-md-6">
-                <div class="ibox bg-success color-white widget-stat">
-                    <div class="ibox-body dashboard-card">
-                        <div class="m-b-5">Total Saathi</div>
-                        <h2 class="m-b-5 font-strong totalSarathi">0</h2>
-                    </div>
-                </div>
-            </div>
-
-            <?php if ($this->session->userdata(session_franchise_type_id) != 'user_sub_franchise') { ?>
-                <div class="col-lg-3 col-md-6">
-                    <div class="ibox bg-warning color-white widget-stat">
-                        <div class="ibox-body dashboard-card">
-                            <div class="m-b-5">Total Sub Franchise</div>
-                            <h2 class="m-b-5 font-strong totalSubFranchise">0</h2>
-                        </div>
-                    </div>
-                </div>
-            <?php
-            }
-            ?>
 
             <?php if ($this->session->userdata(session_franchise_type_id) == 'user_sub_franchise') { ?>
                 <div class="col-lg-3 col-md-6">
@@ -143,42 +141,7 @@
 
         <div class="row">
 
-            <div class="col-md-6">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <div class="ibox-title">Saathi Wise Data</div>
-                    </div>
-                    <div class="ibox-body">
-                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>KM Purchased</th>
-                                    <th>Joined At</th>
-                                    <th>Number Of Driver</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Refferal Code</th>
-                                    <th>KM Purchased</th>
-                                    <th>Joined At</th>
-                                    <th>Number Of Driver</th>
-                                </tr>
-                            </tfoot>
-                            <tbody class="sarathiRelatedDataTable">
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="ibox">
                     <div class="ibox-head">
                         <div class="ibox-title">Saathi Wise Data</div>
@@ -188,6 +151,33 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <div class="ibox-title">Saathi Wise Data</div>
+                    </div>
+                    <div class="ibox-body">
+                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Refferal Code</th>
+                                    <th>KM Purchased</th>
+                                    <th>Joined At</th>
+                                    <th>Number Of Driver</th>
+                                </tr>
+                            </thead>
+                            <tbody class="sarathiRelatedDataTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
 
         </div>
 

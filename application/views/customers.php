@@ -1,8 +1,9 @@
 <style>
-    .title{
+    .title {
         text-transform: uppercase;
     }
 </style>
+
 <body onload="get_customers_details()">
     <div class="content-wrapper">
         <!-- START PAGE CONTENT-->
@@ -11,7 +12,7 @@
                 <div class="col-md-8">
                     <h3>Customer List</h3>
                 </div>
-               
+
             </div>
 
             <div class="card p-2">
@@ -178,9 +179,6 @@
     <script>
         document.getElementById("admin_page").classList.remove('active');
         document.getElementById("customers").classList.add('active');
-        $('#add_new').hide();
-
-        // edit
 
         function edit_customer(id, name, email, mobile) {
             $('#edit_id').val(id);
@@ -193,13 +191,14 @@
             $.ajax({
                 type: "post",
                 url: "<?= base_url('Admin/get_customers_data') ?>",
+                beforeSend: function() {
+                    $('#table_details').html('<tr><td class="text-center" colspan="6">Loading...</td></tr>');
+                },
                 success: function(response) {
                     if (response.success) {
                         let customer = response.data;
                         let str = '';
-                       
                         let user_status = "";
-
                         for (let i = 0; i < customer.length; i++) {
                             if (customer[i].status == "ACTIVE" || customer[i].status == "active")
                                 customer_status = "checked";
@@ -242,7 +241,7 @@
                     }
                 },
                 error: function(data) {
-                   console.log(data);
+                    console.log(data);
                 }
             });
         }
@@ -265,12 +264,12 @@
             });
         }
 
-        function download_ride_history(user_id){
+        function download_ride_history(user_id) {
             var url = `<?= base_url('administrator/customers/ride_history/') ?>${user_id}`;
             window.open(url, '_blank');
         }
 
-        function download_ride_history_csv(user_id){
+        function download_ride_history_csv(user_id) {
             var url = `<?= base_url('administrator/customers/ride_history_csv/') ?>${user_id}`;
             window.open(url, '_blank');
         }

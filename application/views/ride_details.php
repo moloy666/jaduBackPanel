@@ -39,14 +39,14 @@
                             <div class="form-group">
                                 <strong class="ml-1 mb-3">From</strong>
 
-                                <input type="date" class="form-control" id="ride_from" placeholder="Ride From" style="height:40px;"  max="<?= date('Y-m-d') ?>">
+                                <input type="date" class="form-control" id="ride_from" placeholder="Ride From" style="height:40px;"  max="<?= date('Y-m-d') ?>" >
                             </div>
                         </div>
 
                         <div class="col-lg-3 col-md-3">
                             <div class="form-group">
                                 <strong class="ml-1 mb-3">To</strong>
-                                <input type="date" class="form-control" id="ride_to" placeholder="Ride To" style="height:40px;" max="<?= date('Y-m-d') ?>">
+                                <input type="date" class="form-control" id="ride_to" placeholder="Ride To" style="height:40px;" max="<?= date('Y-m-d') ?>" >
                             </div>
                         </div>
 
@@ -66,19 +66,19 @@
                     <table class="table table-bordered" id="table" >
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Customer</th>
-                                <th class="text-center">Driver</th>
-                                <th class="text-center">Origin</th>
-                                <th class="text-center">Destination</th>
-                                <th class="text-center">Service Type</th>
-                                <th class="text-center">Fare</th>
-                                <th class="text-center">Ride Type</th>
-                                <th class="text-center">Start Time</th>
-                                <th class="text-center">End Time</th>
+                                <th class="">#</th>
+                                <th class="">Customer</th>
+                                <th class="">Driver</th>
+                                <th class="">Origin</th>
+                                <th class="">Destination</th>
+                                <th class="">Service Type</th>
+                                <th class="">Fare</th>
+                                <th class="">Ride Type</th>
+                                <th class="">Start Time</th>
+                                <th class="">End Time</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="table_details">
+                        <tbody class="" id="table_details">
                         </tbody>
                     </table>
                 </div>

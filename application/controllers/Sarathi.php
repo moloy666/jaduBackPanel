@@ -447,7 +447,6 @@ class Sarathi extends CI_Controller
 
     public function display_sarathi_documents()
     {
-
         $user_id = $this->session->userdata(session_sarathi_user_id);
         $this->init_sarathi_details_model();
         $gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);

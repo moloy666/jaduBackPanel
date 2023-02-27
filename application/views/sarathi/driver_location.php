@@ -5,25 +5,20 @@
         width: 100%;
     }
     #legend {
-        height: 10vh;
+        text-align: center;
     }
-
-    #legend h6 {
-        margin-top: 0;
-    }
-
     strong {
         font-size: 12px;
     }
-
     #legend img {
         vertical-align: middle;
+        width: 1.5rem;
     }
 </style>
 <div class="content-wrapper">
     <div class='d-flex flex-column justify-content-center'>
         <div id="map" class="d-flex justify-content-center align-items-center"></div>
-        <div id="legend_1"></div>
+        <div id="legend"></div>
     </div>
 </div>
 
@@ -127,13 +122,12 @@
     }
 
     function add_legend(map, waiting, inactive, running) {
-        let legend = document.getElementById("legend_1");
+        let legend = document.getElementById("legend");
 
         legend.innerHTML = `
-        <h6>Working Status</h6>
-            <img src="<?= base_url(marker_path.marker_waiting_car) ?>" alt=""> <strong class="ml-3">Waiting (${waiting})</strong>
-            <img src="<?= base_url(marker_path.marker_inactive_car) ?>" alt="">   <strong class="ml-3">Inactive (${inactive})</strong>
-            <img src="<?= base_url(marker_path.marker_running_car) ?>" alt=""><strong class="ml-3">Running (${running})</strong>
+            <img src="<?= base_url(marker_path.marker_waiting_car) ?>" alt=""> <strong class="ml-1 mr-3">Waiting (${waiting})</strong>
+            <img src="<?= base_url(marker_path.marker_inactive_car) ?>" alt=""> <strong class="ml-1 mr-3">Inactive (${inactive})</strong>
+            <img src="<?= base_url(marker_path.marker_running_car) ?>" alt=""> <strong class="ml-1 mr-3">Running (${running})</strong>
         `;
         
     }

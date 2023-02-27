@@ -1672,6 +1672,8 @@ class Admin extends CI_Controller
 				$this->load_sidebar();
 				$this->load->view(view_driver);
 				$this->load_footer();
+				$this->load->view('inc/custom_js/driver_js');
+
 			} else {
 				redirect(base_url('administrator/dashboard'));
 			}
@@ -5122,6 +5124,20 @@ class Admin extends CI_Controller
 		}
 		else{
 			$this->response(["success"=>false, "message"=>"not found"], 200);
+		}
+	}
+
+	public function reassign_driver_to_new_sarathi(){
+		$driver_id  = $this->input->get(query_param_id);
+		$sarathi_id = $this->input->get(query_param_sarathi_id);	// specific_level_user_id
+		
+		$this->init_driver_model();
+		$status = $this->Driver_model->reassign_driver_to_new_sarathi($driver_id, $sarathi_id);
+		if($status){
+			$this->response(["success"=>true, "message"=>"Driver Transfer To New Sarathi"], 200);
+		}
+		else{
+			$this->response(["success"=>false, "message"=>"Something Went Wrong"], 200);
 		}
 	}
 }

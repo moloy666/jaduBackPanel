@@ -313,6 +313,9 @@
       $.ajax({
         type: "post",
         url: "<?= base_url('Admin/get_admin') ?>",
+        beforeSend:function(){
+          $('#table_details').html('<tr><td class="text-center" colspan="6">Loading...</td></tr>');
+        },
         success: function(data) {
 
           let admin = JSON.parse(data);

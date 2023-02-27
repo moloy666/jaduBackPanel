@@ -183,10 +183,10 @@
             $.each(data, function(i, data) {
                 details += `
                 <tr>
-                    <td class="text-center">${i+1}</td>
-                    <td class="text-center title">${data.name}</td>
-                    <td class="text-center title" id="status_${data.uid}">DEACTIVE</td>
-                    <td class="text-center">
+                    <td class="">${i+1}</td>
+                    <td class=" title">${data.name}</td>
+                    <td class=" title" id="status_${data.uid}">DEACTIVE</td>
+                    <td class="">
                         <button class="btn btn-primary w-50" id="request_${data.uid}" onclick="send_request(this, '${data.uid}')">Send</button>
                     </td>
                   </tr>
@@ -267,6 +267,8 @@
                 }
                 else{
                     $('#message').text('Not Available');
+                    $('.disabled').attr('disabled', 'disabled');
+
                 }
                 
             }

@@ -20,4 +20,25 @@
     <script src="<?= base_url() ?>assets/vendors/DataTables/datatables.min.js" type="text/javascript"></script>
     <!-- Toast -->
     <link href="<?=base_url()?>assets/css/toastify.min.css" rel="stylesheet" />
+
+    <style>
+         .uppercase {
+            text-transform: uppercase;
+        }
+
+        .titlecase {
+            text-transform: capitalize;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+        table tr td {
+            font-size: 12px;
+        }
+
+        .switch {
+            scale: 0.7;
+        }
+    </style>
 </head>

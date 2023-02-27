@@ -106,16 +106,17 @@
         success: function(response) {
             // console.log(response);
             let data = response.data;
-
+            let count = 0;
             let html = '';
             $.each(data, function(i, data) {
                 if (data.name != undefined) {
                     sarathiName.push(data.name);
                     driverCount.push(data.totalDrivers);
-
+                    count++;
                     html += '<tr>' +
+                        '<td>' + count + '</td>' +
                         '<td class="title">' + data.name + '</td>' +
-                        '<td class="text-center">' + data.refferal_code + '</td>' +
+                        '<td>' + data.refferal_code + '</td>' +
                         '<td>' + data.total_km_purchased + '</td>' +
                         '<td>' + data.joined + '</td>' +
                         '<td>' + data.totalDrivers + '</td>' +

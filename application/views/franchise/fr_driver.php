@@ -44,11 +44,11 @@
                                     <tr id="row_<?= $value[0]['user_id'] ?>">
                                         <td class=""><?= $count ?></td>
 
-                                        <td class="title"> <a href="<?= base_url($user_type . '/driver/details/') . $value[0]['user_id'] ?>"><?= $value[0]['name'] ?></a></td>
+                                        <td class="title nowrap"> <a href="<?= base_url($user_type . '/driver/details/') . $value[0]['user_id'] ?>"><?= $value[0]['name'] ?></a></td>
 
                                         <td class=""><?= $value[0]['mobile'] ?></td>
                                         <td class=""><?= $value[0]['email'] ?></td>
-                                        <td class=" title"><?= $value[0]['sarathi'] ?></td>
+                                        <td class=" title nowrap"><?= $value[0]['sarathi'] ?></td>
                                         <td class="">
                                             <label class="switch">
                                                 <input type="checkbox" <?= ($value[0]['status'] == const_active) ? "checked" : "" ?> class="access_status_change" data="<?= $value[0]['user_id'] ?>" onclick="status(this, '<?= $value[0]['user_id'] ?>')" disabled>
@@ -69,8 +69,8 @@
                                             </div>
                                         </td>
 
-                                        <td class="">
-                                            <div>
+                                        <td class="nowrap">
+                                            <div style="width:150px">
                                                 <button class="hdrbtn mx-2 view_user" data-toggle="modal" id=" viewbtn" data-target="#bnkView1" onclick="view_bank_details('<?= $value[0]['user_id'] ?>')" data-toggle="tooltip" data-placement="top" title="Bank Details">
                                                     <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-2">
                                                 </button>
