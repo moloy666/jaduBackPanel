@@ -61,7 +61,7 @@
             </div>
 
 
-            <div class="card p-2" style="display:none" id="ride_details">
+            <div class="card p-2"  id="ride_details">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table" >
                         <thead class="thead-light">
@@ -78,7 +78,7 @@
                                 <th class="">End Time</th>
                             </tr>
                         </thead>
-                        <tbody class="" id="table_details">
+                        <tbody id="table_details">
                         </tbody>
                     </table>
                 </div>

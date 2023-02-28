@@ -38,7 +38,7 @@
                 $(".totalInactiveDrivers").text(data.drivers.inactive);
                 $(".totalSubFranchise").text(data.totalSubFranchise);
                 $(".totalSarathi").text(data.totalSarathi);
-                $(".totalOngoingRide").text(data.drivers.active);
+                // $(".totalOngoingRide").text(data.drivers.active);
                 $(".totalRegisteredCustomers").text(data.totalCustomers);
                 $(".totalKmPurchased").text(data.totalKmPurchased);
                 $(".totalRevenue").text(data.totalRevenue);

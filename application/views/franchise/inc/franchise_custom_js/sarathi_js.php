@@ -234,12 +234,19 @@
                         <span class="slider round"></span></label>
                         </td>
                         <td class="nowrap">
-                        <div style="width:150px">
+                        <div style="width:170px">
+
+                        <button class="hdrbtn mx-2 view_user" data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${data.user_id}')">            
+                        <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
+                        </button>
                       
                         <button class="hdrbtn mx-2 view_user" data-toggle="modal" id=" viewbtn"  data-target="#bnkView1"  onclick="view_bank_details('${data.user_id}')" data-toggle="tooltip" data-placement="top" title="Bank Details">                        
                           <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-2">                  
                         </button>
 
+                        <button class="hdrbtn mx-2" data-toggle="tooltip" data-placement="top" title="View Document" onclick="view_document('${data.user_id}')">
+                            <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="20px" class="mb-3">
+                        </button>
 
                         <button class="hdrbtn mx-2 edit_user access_update" data-toggle="modal" id=" editbtn"  data-target="#edtView1"  onclick="edit_sarathi('${data.user_id}', '${data.name}', '${data.email}', '${data.mobile}')" data-toggle="tooltip" data-placement="top" title="Edit" disabled>
 
@@ -247,10 +254,6 @@
                             <path d="M16.4745 5.40801L18.5917 7.52524M17.8358 3.54289L12.1086 9.27005C11.8131 9.56562 11.6116 9.94206 11.5296 10.3519L11 13L13.6481 12.4704C14.0579 12.3884 14.4344 12.1869 14.7299 11.8914L20.4571 6.16423C21.181 5.44037 21.181 4.26676 20.4571 3.5429C19.7332 2.81904 18.5596 2.81903 17.8358 3.54289Z" stroke="#ef242f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M19 15V18C19 19.1046 18.1046 20 17 20H6C4.89543 20 4 19.1046 4 18V7C4 5.89543 4.89543 5 6 5H9" stroke="#ef242f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-                        </button>
-
-                        <button class="hdrbtn mx-2 view_user" data-toggle="tooltip" data-placement="left" title="Download Recharge History" onclick="download_recharge_history('${sarathi[i].user_id}')">            
-                        <img src="<?= base_url('assets/images/pdf.png') ?>" alt="" width="20px" class="mb-3">         
                         </button>
 
                         <button class="hdrbtn mx-2 delete_user access_delete" data-toggle="modal" data="${data.user_id}" data-target="#deltmodl" data-toggle="tooltip" data-placement="top" title="Delete" disabled>
@@ -283,11 +286,14 @@
     }
 
     function download_recharge_history(user_id) {
-      var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
-      window.open(url, '_blank');
+        var url = `<?= base_url('admin/download_sarathi_recharge_history/') ?>${user_id}`;
+        window.open(url, '_blank');
     }
 
-
+    function view_document(user_id) {
+        let user = $('#specific_table').val();
+        location.href = `<?= base_url() ?>${user}/saathi/document/${user_id}`;
+    }
 
     function get_panel_access_list() {
         $.ajax({

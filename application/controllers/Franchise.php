@@ -845,6 +845,25 @@ class Franchise extends CI_Controller
 		}
 	}
 
+	public function view_sarathi_document($user_id)
+	{
+		$this->init_sarathi_details_model();
+		$user[field_user_id] = $user_id;
+		$gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);
+		$user['info'] = $this->Sarathi_details_model->get_name_by_user_id($user_id);
+		$user['documents'] = $this->Sarathi_details_model->get_pending_driver_details($gid);
+
+		if ($this->is_user_logged_in()) {
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('view_document', $user);
+			$this->load_footer();
+		} else {
+			$user_type = ($this->uri->segment(1));
+			redirect(base_url($user_type));
+		}
+	}
+
 
 
 	/////////////// VIEW END ////////////////////////

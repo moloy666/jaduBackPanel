@@ -20,6 +20,7 @@
             $(".totalCarRunning").text(data.totalCarRunning);
             $(".totalRegisteredCustomers").text(data.totalCustomers);
             $(".totalRevenue").text(data.totalRevenue);
+            $(".totalCarRunning").text(data.totalCarRunning);
             $("#growth").text(data.revenueStatus);
         },
         error: function(response) {

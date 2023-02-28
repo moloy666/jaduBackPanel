@@ -37,22 +37,22 @@
                                 <table class="table table-bordered" id="table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th class="text-center">#</th>
-                                            <th class="text-center">Permission</th>
-                                            <th class="text-center">Status</th>
-                                            <th class="text-center">Actions</th>
+                                            <th class="">#</th>
+                                            <th class="">Permission</th>
+                                            <th class="">Status</th>
+                                            <th class="">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="text-center" id="table_details">
+                                    <tbody class="" id="table_details">
                                         <?php
                                         if (!empty($data)) {
 
                                             foreach ($data as $i => $value) { ?>
                                                 <tr>
-                                                    <td class="text-center"><?= $i + 1 ?></td>
-                                                    <td class="text-center"><?= ucwords($value['name']) ?></td>
-                                                    <td class="text-center" id="status_<?= strtoupper($value['request_id']) ?>"><?= strtoupper($value['status']) ?></td>
-                                                    <td class="text-center">
+                                                    <td class=""><?= $i + 1 ?></td>
+                                                    <td class=""><?= ucwords($value['name']) ?></td>
+                                                    <td class="" id="status_<?= strtoupper($value['request_id']) ?>"><?= strtoupper($value['status']) ?></td>
+                                                    <td class="">
                                                         <div class="flex justify-content-center">
 
                                                             <button class="btn btn-primary mr-2 <?= strtoupper($value['status']) == const_active ? "btn-success" : "" ?>" id="allow_<?= strtoupper($value['request_id']) ?>" onclick="allow_request(this, '<?= strtoupper($value['user_id']) ?>', '<?= strtoupper($value['request_id']) ?>')" <?= strtoupper($value['status']) == const_active ? "disabled" : "" ?>>Allow</button>

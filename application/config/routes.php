@@ -102,6 +102,8 @@ $route['franchise/saathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
 $route['franchise/driver/details/(:any)'] = 'franchise/view_driver_details/$1';
 $route['franchise/download_recharge_history/(:any)'] = 'franchise/download_recharge_history/$1';
 $route['franchise/driver/document/(:any)'] = 'franchise/view_driver_document/$1';
+$route['franchise/saathi/document/(:any)'] = 'franchise/view_sarathi_document/$1';
+
 
 // ============================================================
 
@@ -133,6 +135,8 @@ $route['subfranchise/driver/document/(:any)'] = 'franchise/view_driver_document/
 
 $route['subfranchise/get_panel_access_list'] = 'franchise/get_panel_access_list';
 $route['subfranchise/saathi/driver/(:any)'] = 'franchise/view_sarathi_details/$1';
+$route['subfranchise/saathi/document/(:any)'] = 'franchise/view_sarathi_document/$1';
+
 
 
 // Functions
@@ -237,6 +241,8 @@ $route['administrator/reject_sarathi_request'] = 'Admin/reject_sarathi_request';
 $route['administrator/show_rejected_sarathi_request'] = 'Admin/show_rejected_sarathi_request';
 $route['administrator/add_to_new_sarathi_list'] = 'Admin/add_to_new_sarathi_list';
 $route['administrator/show_deleted_sarathi'] = 'Admin/show_deleted_sarathi';
+$route['administrator/saathi/document/(:any)'] = 'Admin/view_sarathi_document/$1';
+
 
 $route['administrator/approved_driver_documents'] = 'Admin/approved_driver_documents';
 $route['administrator/deny_driver_documents'] = 'Admin/deny_driver_documents';

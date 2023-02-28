@@ -79,6 +79,9 @@
                                 <img src="<?= base_url('assets/images/details-icon.svg') ?>" alt="" width="16px" class="mb-3">                  
                                 </button>
 
+                                <button class="hdrbtn mx-2" data-toggle="tooltip" data-placement="top" title="View Document" onclick="view_driver_document('${driver[i].user_id}')">
+                                    <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="20px" class="mb-3">     
+                                </button> 
 
                                 <button class="hdrbtn mx-2 editUser access_update" data-toggle="modal" id=" editbtn"  data-target="#edtView1"  onclick="edit_driver('${driver[i].user_id}' , '${driver[i].name}' , '${driver[i].email}' , '${driver[i].mobile}')" data-toggle="tooltip" data-placement="top" title="Edit" disabled>
 
@@ -88,9 +91,7 @@
                                 </svg>
                                 </button>
 
-                                <button class="hdrbtn mx-2" data-toggle="tooltip" data-placement="top" title="View Document" onclick="view_driver_document('${driver[i].user_id}')">
-                                    <img src="<?= base_url('assets/images/view_document.png') ?>" alt="" width="20px" class="mb-3">     
-                                </button> 
+                               
 
                                 <button class="hdrbtn mx-2 delete_driver access_delete" data-toggle="modal" data="${driver[i].user_id}" data-target="#deltmodl" data-toggle="tooltip" data-placement="top" title="Delete" disabled>
 

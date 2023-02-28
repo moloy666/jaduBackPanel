@@ -230,6 +230,6 @@
             </script>
             <style>
                 .xzoom {
-                    width: 40%;
+                    width: 40% !important;
                 }
             </style>

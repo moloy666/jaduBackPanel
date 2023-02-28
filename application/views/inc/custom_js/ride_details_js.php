@@ -3,7 +3,6 @@
         font-weight: bold;
         font-size: small;
         text-transform: uppercase;
-
     }
 
     .background {
@@ -26,20 +25,32 @@
     }
 </style>
 <script>
-    var table = $('#table').DataTable();
+    var table = $('#table').DataTable({
+        language: {
+            emptyTable: "No Data Available"
+        },
+        order: [
+            [0, "asc"]
+        ],
+        scrollX: true
+    });
+    
     $('#btn_search').click(() => {
 
-        table.clear().draw();
+        table.clear().draw(false);
 
         let ride_stage = $('#ride_stage').val();
         let ride_from = $('#ride_from').val();
         let ride_to = $('#ride_to').val();
 
         if (ride_stage == '') {
+            table.clear().draw(false);
             toast('Select Ride Stage', 'center');
         } else if (ride_from != '' && ride_to == '') {
+            table.clear().draw(false);
             toast('Select Both Date', 'center');
         } else if (ride_from == '' && ride_to != '') {
+            table.clear().draw(false);
             toast('Select Both Date', 'center');
         } else {
             ride_details();
@@ -63,7 +74,6 @@
             schedule = false;
         }
 
-
         $.ajax({
             type: "GET",
             url: `<?= apiBaseUrl ?>ride/history/all?rideStage=${ride_stage}&from=${ride_from}&to=${ride_to}&scheduleRide=${schedule}`,
@@ -76,93 +86,77 @@
                 console.log(response);
             },
             success: function(response) {
-                // console.log(response);
-                let data = response.data;
-                let details = '';
+                console.log(response);
 
+                var data = response.data;
                 $.each(data, function(i, data) {
-                    // let customer_gender = (data.customer.gender == undefined) ? "" : data.customer.gender.toLowerCase();
-                    // let driver_gender = (data.driver.gender == undefined) ? "" : data.driver.gender.toLowerCase();
+                    var index_no = i + 1;
+                    if (data.customer.name) {
+                        var customer_name = `
+                                    <div class="p-0">
+                                        <span class="name details">${data.customer.name}</span>
+                                    </div>
+                                    <div class="background">
+                                        ${data.customer.mobile}
+                                    </div>
+                                `;
+                    } else {
+                        var customer_name = `
+                                    <div class="p-0">
+                                        <span class="name">N/A</span>
+                                    </div>
+                                `;
+                    }
 
-                    // if (customer_gender == 'male') {
-                    //     customer_gender = '(M)';
-                    // } else if (customer_gender == 'female') {
-                    //     customer_gender = '(F)';
-                    // } else if (customer_gender == '') {
-                    //     customer_gender = '(N/A)';
-                    // } else {
-                    //     customer_gender = '';
-                    // }
+                    if (data.driver.name) {
+                        var driver_name = `
+                                    <div class="p-0">                                
+                                        <span class="name details">${data.driver.name} </span>
+                                    </div>
+                                        <div class="background">
+                                            ${data.driver.mobile}
+                                        </div>
+                            `;
+                    } else {
+                        var driver_name = `
+                                    <div class="p-0">                                
+                                        <span class="name">N/A</span>
+                                    </div>
+                            `;
+                    }
+                    var origin_address = `<div class="address">${data.origin.address}</div>`;
+                    var destination_address = `<div class="address">${data.destinations[0].address}</div>`;
+                    var service = `
+                                    <image src="${data.service.image}" style="width:50px"><br>
+                                    <span class="title">${data.service.name}</span>
+                                        `;
 
-                    // if (driver_gender == 'male') {
-                    //     driver_gender = '(M)';
-                    // } else if (driver_gender == 'female') {
-                    //     driver_gender = '(F)';
-                    // } else if (driver_gender == '') {
-                    //     driver_gender = '(N/A)';
-                    // } else {
-                    //     driver_gender = '';
-                    // }
+                    var fare = `  ₹ ${data.ride.fare} `;
 
-                    data.customer.name = (data.customer.name == undefined)? "N/A":data.customer.name;
-                    data.customer.mobile = (data.customer.mobile == undefined)? "N/A":data.customer.mobile;
-
-                    data.driver.name = (data.driver.name == undefined)? "N/A":data.driver.name;
-                    data.driver.mobile = (data.driver.mobile == undefined)? "N/A":data.driver.mobile;
-
-                    details += `
-                    <tr>
-                        <td class="text-center">${i+1}</td>
-
-                        <td class="text-left name_column details">                            
-                            <div class="p-0">
-                                <span class="name img_name">${data.customer.name}  </span>
-                            </div>
-                            <div class="background">
-                                ${data.customer.mobile}
-                            </div>
-                        </td>
-
-                        <td class="text-left name_column details">    
-                            <div class="p-0">                                
-                                <span class="name">${data.driver.name} </span>
-                            </div>
-                            <div class="background">
-                                ${data.driver.mobile}
-                            </div>
-                        </td>
-
-                        <td class=""><div class="address">${data.origin.address}</div></td>
-                        <td class=""><div class="address">${data.destinations[0].address}</div></td>
-
-                        <td class="text-center">
-                            <image src="${data.service.image}" style="width:50px"><br>
-                            <span class="title">${data.service.name}</span>
-                        </td>
-
-                        <td class="text-center">
-                           ₹ ${data.ride.fare} 
-                        </td>
-
-                        <td class="text-center">
+                    var ride = `
                             <image src="${data.ride.typeImage}" style="width:40px"><br>
                             <span class="title">${data.ride.type}</span>
-                        </td>
+                        `;
 
-                        <td class="text-center">
+                    var start_time = `
                             <span class="title">${data.tripStartTime}</span>
-                        </td>
+                        `;
 
-                        <td class="text-center">
+                    var end_time = `
                             <span class="title">${data.tripEndTime}</span>
-                        </td>
+                        `;
+                    
+                    if(response.totalRide > 0){
 
-                    </tr>`;
+                        table.row.add([index_no, customer_name, driver_name, origin_address, destination_address, service, fare, ride, start_time, end_time]).draw(false);
+                    }
+                    else{
+                        $(`#table tbody .dataTables_empty`).text('Data not found');
+                    }
 
                 });
-                // table.row.add().draw(false);
-                $('#table_details').html(details);
-                $('#ride_details').show()
+
+                $('#ride_details').show();
             }
         });
     }

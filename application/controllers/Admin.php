@@ -2792,8 +2792,7 @@ class Admin extends CI_Controller
 			$this->response([key_success => false, key_message => "Driver Not Found"], 200);
 		}
 	}
-	public function show_pending_drivers($user_id)
-	{   // open pending driver doument page
+	public function show_pending_drivers($user_id){   // open pending driver doument page
 		$this->init_sarathi_details_model();
 		$user[field_user_id] = $user_id;
 		$gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);
@@ -2822,6 +2821,24 @@ class Admin extends CI_Controller
 			$this->load_header();
 			$this->load_sidebar();
 			$this->load->view('driver_document', $user);
+			$this->load_footer();
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	public function view_sarathi_document($user_id)
+	{
+		$this->init_sarathi_details_model();
+		$user[field_user_id] = $user_id;
+		$gid = $this->Sarathi_details_model->get_gid_by_user_id($user_id);
+		$user['info'] = $this->Sarathi_details_model->get_name_by_user_id($user_id);
+		$user['documents'] = $this->Sarathi_details_model->get_pending_driver_details($gid);
+
+		if ($this->is_user_logged_in()) {
+			$this->load_header();
+			$this->load_sidebar();
+			$this->load->view('view_document', $user);
 			$this->load_footer();
 		} else {
 			redirect(base_url());
