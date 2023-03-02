@@ -26,7 +26,9 @@
                                 <th class="">Name</th>
                                 <th class="">Email</th>
                                 <th class="">Mobile</th>
-                                <th class="">Vehicle Details</th>
+                                <th class="">Vehicle Type</th>
+                                <th class="">Vehicle Name</th>
+                                <th class="">Vehicle Number</th>
                                 <th class="">Saathi</th>
                                 <th class="">Status</th>
                                 <th class="">Ride History</th>

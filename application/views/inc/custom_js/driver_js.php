@@ -42,13 +42,9 @@
                                 <a href="<?= base_url('administrator/driver/details/') ?>${driver[i].user_id}">${driver[i].name}</a></td>
                                 <td>${driver[i].email}</td>
                                 <td>${driver[i].mobile}</td>
-                                <td class="title">
-                                <div class="nowrap">
-                                    ${driver[i].vehicle_type}
-                                    ${driver[i].vehicle_name}
-                                </div>
-                                <strong>${driver[i].vehicle_number}</strong>
-                                </td> 
+                                <td class="title nowrap">${driver[i].vehicle_type}</td>
+                                <td class="title nowrap">${driver[i].vehicle_name}</td>
+                                <td>${driver[i].vehicle_number}</td>
                                 <td class="title nowrap">${driver[i].sarathi.name}</td> 
                                 <td><label class="switch">
                                 <input type="checkbox"  ${driver_status} onclick="status(this,'${driver[i].user_id}')" class="access_status_change" disabled>
