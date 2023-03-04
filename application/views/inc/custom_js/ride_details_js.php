@@ -127,14 +127,12 @@
                     var origin_address = `<div class="address">${data.origin.address}</div>`;
                     var destination_address = `<div class="address">${data.destinations[0].address}</div>`;
                     var service = `
-                                    <image src="${data.service.image}" style="width:50px"><br>
                                     <span class="title">${data.service.name}</span>
                                         `;
 
                     var fare = `  ₹ ${data.ride.fare} `;
 
                     var ride = `
-                            <image src="${data.ride.typeImage}" style="width:40px"><br>
                             <span class="title">${data.ride.type}</span>
                         `;
 
@@ -160,4 +158,8 @@
             }
         });
     }
+
+    // <image src="${data.service.image}" style="width:50px"><br>
+    // <image src="${data.ride.typeImage}" style="width:40px"><br>
+
 </script>

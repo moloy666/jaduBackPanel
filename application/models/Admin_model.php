@@ -2031,7 +2031,8 @@ class Admin_model extends CI_Model
             field_name => $name,
             field_play_store_link => $play_store_link,
             field_code => $code,
-            field_skipable => $skipable
+            field_skipable => $skipable,
+            field_created_at => date(field_date)
         ];
 
         $this->db->insert(table_app_version, $data);

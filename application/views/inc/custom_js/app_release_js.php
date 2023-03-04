@@ -18,9 +18,9 @@
         get_all_app_current_version_list('', 'table_details');
     }
 
-    var customer_link='';
-    var sathi_link='';
-    var driver_link='';
+    var customer_link = '';
+    var sathi_link = '';
+    var driver_link = '';
 
     function get_specific_app_version_list(for_app, table) {
         $.ajax({
@@ -37,8 +37,8 @@
                 let data = response.data;
                 let details;
                 $.each(data, function(i, data) {
-                                                        
-                    data.is_skipable = (data.is_skipable == 0) ? true : false;
+
+                    data.is_skipable = (data.is_skipable == 1) ? true : false;
                     data.version_for = (data.version_for == 'sarathi') ? 'sathi' : data.version_for;
                     details += `
                 <tr>
@@ -76,7 +76,7 @@
                     customer_link += (data.version_for == 'customer') ? data.play_store_link : "";
                     driver_link += (data.version_for == 'driver') ? data.play_store_link : "";
 
-                    data.is_skipable = (data.is_skipable == 0) ? true : false;
+                    data.is_skipable = (data.is_skipable == 1) ? true : false;
                     data.version_for = (data.version_for == 'sarathi') ? 'sathi' : data.version_for;
                     details += `
                 <tr>
@@ -90,7 +90,7 @@
                 });
 
                 $('#' + table).html(details);
-               
+
             }
         });
     }
@@ -108,45 +108,56 @@
         let code = $('#code').val();
         let skipable = $('#skipable').val();
 
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url('administrator/save_new_app_release') ?>",
-            data: {
-                "for_app": for_app,
-                "name": name,
-                "play_store_link": link,
-                "code": code,
-                "skipable": skipable
-            },
-            error: function(response) {
-                console.log(response);
-            },
-            success: function(response) {
-                if (response.success) {
-                    get_all_app_version_list();
-                    $('#add_new_release').modal('hide');
-                    toast(response.message, 'center');
-                    $('#version_form')[0].reset();
-                } else {
-                    toast(response.message, 'center');
+        if (skipable == "") {
+            toast('Select Is Skipable', 'center');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url('administrator/save_new_app_release') ?>",
+                data: {
+                    "for_app": for_app,
+                    "name": name,
+                    "play_store_link": link,
+                    "code": code,
+                    "skipable": skipable
+                },
+                error: function(response) {
+                    console.log(response);
+                },
+                success: function(response) {
+                    if (response.success) {
+                        get_all_app_version_list();
+                        $('#add_new_release').modal('hide');
+                        toast(response.message, 'center');
+                        $('#version_form')[0].reset();
+                        customer_link = '';
+                        sathi_link = '';
+                        driver_link = '';
+                    } else {
+                        toast(response.message, 'center');
+                    }
                 }
-            }
-        });
+            });
+        }
+
+
     }
 
 
     $("#for_app").change(() => {
         let for_app = $('#for_app').val();
-        if(for_app == 'sarathi'){
+        if (for_app == '') {
+            $('#link').val('');
+        }
+        if (for_app == 'sarathi') {
             $('#link').val(sathi_link);
         }
-        if(for_app == 'driver'){
+        if (for_app == 'driver') {
             $('#link').val(driver_link);
         }
-        if(for_app == 'customer'){
+        if (for_app == 'customer') {
             $('#link').val(customer_link);
         }
-        
-    });
 
+    });
 </script>
