@@ -755,10 +755,11 @@ class Admin_model extends CI_Model
         $sql = "SELECT rst.name, rst.image, 
             rn.uid id, rn.service_id serviceId, rn.customer_id customerId, rn.driver_id driverId, rn.fare, 
             rn.origin, rn.destination, rn.waypoints, rn.locationText, rn.rideStartDateTime tripStartTime, rn.rideEndDateTime tripEndTime,
-            s.name serviceName, s.image serviceImage, DATE(rn.created_at) AS ride_date, rn.service_id AS serviceId
+            s.name serviceName, s.image serviceImage, DATE(rn.created_at) AS ride_date, rn.service_id AS serviceId, d.cabs_under_service_type
             FROM ride_normal rn 
             LEFT JOIN services s ON rn.service_id = s.uid
             LEFT JOIN ride_service_type rst ON rst.uid = rn.fareServiceTypeId
+            LEFT JOIN driver d ON d.uid = rn.driver_id
             WHERE rn.driver_id = '$specific_id' AND ride_status = 'completed' 
             ";
 
@@ -793,10 +794,11 @@ class Admin_model extends CI_Model
             unset($query[$key]['serviceImage']);
 
             $query[$key]['ride'] = [
-                'id' => $value['id'],
-                'type' => $value['name'],
+                'id'        => $value['id'],
+                'type'      => $value['name'],
                 'typeImage' => base_url() . $value['image'],
-                'fare' => $value['fare']
+                'fare'      => $value['fare'],
+                'cab'       => $this->get_cab_name_by_id($value['cabs_under_service_type'])
             ];
 
             unset($query[$key]['id']);
@@ -808,6 +810,11 @@ class Admin_model extends CI_Model
         return (!empty($query)) ? $query : [];
     }
 
+    private function get_cab_name_by_id($cab_id){
+        $query = $this->db->select(field_name)->where(field_uid, $cab_id)->get(table_cabs_under_service_type);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0][field_name]:null;
+    }
 
     private function decodeLocations($origin, $destination, $waypoints, $locationText)
     {
